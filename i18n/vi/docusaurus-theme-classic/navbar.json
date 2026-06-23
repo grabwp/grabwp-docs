@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "Tài liệu GrabWP Tenancy",
+    "description": "The title in the navbar"
+  },
+  "item.label.Docs": {
+    "message": "Tài liệu",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.grabwp.com": {
+    "message": "grabwp.com",
+    "description": "Navbar item linking back to the main grabwp.com site"
+  }
+}

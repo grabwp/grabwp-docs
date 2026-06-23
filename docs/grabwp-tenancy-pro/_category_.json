@@ -1,0 +1,9 @@
+{
+  "label": "GrabWP Tenancy Pro",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "GrabWP Tenancy Pro",
+    "description": "Pro plugin docs: dedicated database isolation, per-tenant extensions, backup & restore, and tenant cloning."
+  }
+}
