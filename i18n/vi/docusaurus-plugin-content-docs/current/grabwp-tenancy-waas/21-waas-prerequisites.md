@@ -1,81 +1,81 @@
 ---
-title: "Prerequisites"
-description: "What you need before setting up GrabWP WaaS"
+title: "Yêu cầu tiên quyết"
+description: "Những gì bạn cần chuẩn bị trước khi thiết lập GrabWP WaaS"
 order: 21
 section: waas
 ---
 
-# Prerequisites
+# Yêu cầu tiên quyết
 
-What you need before setting up GrabWP WaaS.
+Những gì bạn cần chuẩn bị trước khi thiết lập GrabWP WaaS.
 
-## Required
+## Bắt buộc
 
-### WordPress Hosting with Admin Access
+### Hosting WordPress có quyền Admin
 
-You need a WordPress installation where you can:
+Bạn cần một bản cài WordPress cho phép:
 
-- Install and activate plugins
-- Access the file system (via FTP, SSH, or hosting file manager)
-- Edit `wp-config.php` if needed
+- Cài đặt và kích hoạt plugin
+- Truy cập hệ thống file (qua FTP, SSH, hoặc trình quản lý file của hosting)
+- Chỉnh sửa `wp-config.php` khi cần
 
-**Recommended:** A VPS or dedicated server (e.g., DigitalOcean, Vultr, Hetzner) gives you full control. Shared hosting works but may limit advanced features like custom domains and S3 storage.
+**Khuyến nghị:** VPS hoặc máy chủ riêng (ví dụ: DigitalOcean, Vultr, Hetzner) cho bạn toàn quyền kiểm soát. Shared hosting vẫn dùng được nhưng có thể hạn chế các tính năng nâng cao như tên miền riêng và lưu trữ S3.
 
-### Domain Name
+### Tên miền
 
-A domain pointed to your server (e.g., `yoursaas.com`). Tenant sites will be created as subdomains: `customer1.yoursaas.com`, `customer2.yoursaas.com`, etc.
+Một tên miền đã trỏ về server của bạn (ví dụ: `yoursaas.com`). Các site tenant sẽ được tạo dưới dạng subdomain: `customer1.yoursaas.com`, `customer2.yoursaas.com`, v.v.
 
-### PHP 7.4+ and MySQL 5.7+
+### PHP 7.4+ và MySQL 5.7+
 
-Check your versions:
-- **PHP:** Go to **Tools → Site Health → Info → Server** in WordPress admin
-- **MySQL:** Same location, under **Database**
+Kiểm tra phiên bản:
+- **PHP:** Vào **Công cụ → Site Health → Thông tin → Server** trong trang quản trị WordPress
+- **MySQL:** Cùng vị trí, mục **Database**
 
-### SSL Certificate
+### Chứng chỉ SSL
 
-HTTPS is required for payment processing and tenant security. Most hosts offer free SSL via Let's Encrypt.
+HTTPS là bắt buộc để xử lý thanh toán và bảo mật tenant. Hầu hết hosting cung cấp SSL miễn phí qua Let's Encrypt.
 
-## Recommended
+## Khuyến nghị
 
-### SMTP Plugin
+### Plugin SMTP
 
-WordPress default email uses `wp_mail()` which often lands in spam. Install an SMTP plugin to ensure reliable email delivery for OTP codes and notifications.
+Email mặc định của WordPress dùng `wp_mail()` thường rơi vào thư mục spam. Cài plugin SMTP để đảm bảo gửi email ổn định cho mã OTP và thông báo.
 
-Popular options:
+Các lựa chọn phổ biến:
 - [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/)
 - [FluentSMTP](https://wordpress.org/plugins/fluent-smtp/)
 
-### Polar Account (for paid plans)
+### Tài khoản Polar (cho gói trả phí)
 
-If you want to charge for plans, create a free account at [polar.sh](https://polar.sh). Polar handles payments, subscriptions, and invoicing. Setup details in [Set Up Billing](/grabwp-tenancy-waas/waas-setup-billing).
+Nếu bạn muốn thu phí cho các gói dịch vụ, tạo tài khoản miễn phí tại [polar.sh](https://polar.sh). Polar xử lý thanh toán, đăng ký gói và hóa đơn. Chi tiết thiết lập tại [Thiết lập thanh toán](/vi/grabwp-tenancy-waas/waas-setup-billing).
 
-## Optional
+## Tùy chọn
 
-### Cloudflare (for custom domains)
+### Cloudflare (cho tên miền riêng)
 
-If you want customers to use their own domains (e.g., `mybusiness.com` instead of `mybusiness.yoursaas.com`), Cloudflare's **SaaS Custom Hostnames** feature is the easiest way.
+Nếu bạn muốn khách hàng sử dụng tên miền riêng (ví dụ: `mybusiness.com` thay vì `mybusiness.yoursaas.com`), tính năng **SaaS Custom Hostnames** của Cloudflare là cách dễ nhất.
 
-- Free Cloudflare plan works for basic setup
-- SaaS Custom Hostnames requires contacting Cloudflare to enable on your zone
-- See [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains) for setup
+- Gói Cloudflare miễn phí đủ cho thiết lập cơ bản
+- SaaS Custom Hostnames yêu cầu liên hệ Cloudflare để bật trên zone của bạn
+- Xem [Quản lý tên miền riêng](/vi/grabwp-tenancy-waas/waas-managing-domains) để thiết lập
 
-### S3-Compatible Object Storage
+### Lưu trữ Object Storage tương thích S3
 
-Offload tenant media uploads to cloud storage instead of local disk. Useful for:
-- Reducing server disk usage
-- Serving media via CDN
-- Easier backups and migration
+Chuyển file media của tenant lên cloud storage thay vì lưu trên ổ đĩa server. Hữu ích cho:
+- Giảm dung lượng ổ đĩa server
+- Phân phối media qua CDN
+- Sao lưu và di chuyển dễ dàng hơn
 
-Supported providers: AWS S3, Cloudflare R2, DigitalOcean Spaces, MinIO, any S3-compatible API.
+Nhà cung cấp hỗ trợ: AWS S3, Cloudflare R2, DigitalOcean Spaces, MinIO, bất kỳ API tương thích S3.
 
-See [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage) for setup.
+Xem [Lưu trữ S3 Object Storage](/vi/grabwp-tenancy-waas/waas-optional-s3-storage) để thiết lập.
 
 ### WooCommerce
 
-Alternative billing provider if you prefer WooCommerce over Polar. Useful if you already run a WooCommerce store or need local payment gateways.
+Nhà cung cấp thanh toán thay thế nếu bạn thích WooCommerce hơn Polar. Hữu ích nếu bạn đã có cửa hàng WooCommerce hoặc cần cổng thanh toán nội địa.
 
-See [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce) for setup.
+Xem [Thanh toán WooCommerce](/vi/grabwp-tenancy-waas/waas-optional-woocommerce) để thiết lập.
 
 ---
 
-**Next:** [What You Will Build](/grabwp-tenancy-waas/waas-what-you-will-build)
+**Tiếp theo:** [Bạn sẽ xây dựng gì](/vi/grabwp-tenancy-waas/waas-what-you-will-build)
