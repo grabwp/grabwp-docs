@@ -1,82 +1,82 @@
 ---
-title: "Install Plugins"
-description: "Install GrabWP Tenancy, Pro, and WaaS plugins in the correct order"
+title: "Cài đặt Plugin"
+description: "Cài đặt các plugin GrabWP Tenancy, Pro và WaaS theo đúng thứ tự"
 order: 23
 section: waas
 ---
 
-# Install Plugins
+# Cài đặt Plugin
 
-GrabWP WaaS requires three plugins installed in a specific order. Each plugin depends on the one before it.
+Bạn cần cài đặt ba plugin của GrabWP WaaS theo một thứ tự cụ thể. Mỗi plugin phụ thuộc vào plugin đứng trước nó.
 
-## Installation Order
+## Thứ tự cài đặt
 
 ```
-1. GrabWP Tenancy (base)  ← must be active first
-2. GrabWP Tenancy Pro     ← requires base
-3. GrabWP Tenancy WaaS    ← requires base + pro
+1. GrabWP Tenancy (nền tảng)  ← phải kích hoạt đầu tiên
+2. GrabWP Tenancy Pro         ← cần nền tảng
+3. GrabWP Tenancy WaaS        ← cần nền tảng + pro
 ```
 
-## Step 1: Install GrabWP Tenancy (Base)
+## Bước 1: Cài đặt GrabWP Tenancy (nền tảng)
 
-1. Go to **Plugins → Add New → Upload Plugin**
-2. Upload `grabwp-tenancy.zip`
-3. Click **Install Now**, then **Activate**
-4. You should see a new **Tenancy** menu in the admin sidebar
+1. Vào **Plugins → Add New → Upload Plugin**
+2. Tải lên `grabwp-tenancy.zip`
+3. Nhấn **Install Now**, sau đó **Activate**
+4. Bạn sẽ thấy một menu **Tenancy** mới trong thanh bên trang quản trị
 
-## Step 2: Install GrabWP Tenancy Pro
+## Bước 2: Cài đặt GrabWP Tenancy Pro
 
-1. Go to **Plugins → Add New → Upload Plugin**
-2. Upload `grabwp-tenancy-pro.zip`
-3. Click **Install Now**, then **Activate**
-4. The **Tenancy** menu now shows additional items: **Pro Settings**, **Tenant Extensions**
+1. Vào **Plugins → Add New → Upload Plugin**
+2. Tải lên `grabwp-tenancy-pro.zip`
+3. Nhấn **Install Now**, sau đó **Activate**
+4. Menu **Tenancy** giờ hiển thị thêm các mục: **Pro Settings**, **Tenant Extensions**
 
-> **Note:** If activation fails with a dependency error, make sure GrabWP Tenancy (base) is activated first.
+> **Lưu ý:** Nếu kích hoạt thất bại với lỗi phụ thuộc, hãy đảm bảo GrabWP Tenancy (nền tảng) đã được kích hoạt trước.
 
-## Step 3: Install GrabWP Tenancy WaaS
+## Bước 3: Cài đặt GrabWP Tenancy WaaS
 
-1. Go to **Plugins → Add New → Upload Plugin**
-2. Upload `grabwp-tenancy-waas.zip`
-3. Click **Install Now**, then **Activate**
-4. A new **WaaS** menu appears in the admin sidebar with:
+1. Vào **Plugins → Add New → Upload Plugin**
+2. Tải lên `grabwp-tenancy-waas.zip`
+3. Nhấn **Install Now**, sau đó **Activate**
+4. Một menu **WaaS** mới xuất hiện trong thanh bên trang quản trị với:
    - Dashboard
    - Subscriptions
    - Domains
    - Templates
    - Settings
 
-## Verify Installation
+## Xác minh cài đặt
 
-After activating all three plugins, go to **Tenancy → Status**. This page runs system checks and reports any issues:
+Sau khi kích hoạt cả ba plugin, vào **Tenancy → Status**. Trang này chạy các kiểm tra hệ thống và báo cáo mọi vấn đề:
 
-- File system permissions
-- Required PHP extensions
-- Database compatibility
-- Plugin version compatibility
+- Quyền truy cập hệ thống tệp
+- Các extension PHP bắt buộc
+- Tính tương thích database
+- Tính tương thích phiên bản plugin
 
-Fix any reported issues before proceeding.
+Khắc phục mọi vấn đề được báo cáo trước khi tiếp tục.
 
-## Plugin List
+## Danh sách plugin
 
-Your active plugins should include:
+Các plugin đang kích hoạt của bạn nên bao gồm:
 
-| Plugin | Status |
+| Plugin | Trạng thái |
 |--------|--------|
 | GrabWP Tenancy | Active |
 | GrabWP Tenancy Pro | Active |
 | GrabWP Tenancy WaaS | Active |
 
-![Plugins list](../images/plugins-list.png)
+![Danh sách plugin](../images/plugins-list.png)
 
-## Optional: Install SePay Plugin
+## Tùy chọn: Cài đặt plugin SePay
 
-If you plan to accept Vietnamese bank transfer payments (VietQR), also install:
+Nếu bạn dự định nhận thanh toán chuyển khoản ngân hàng Việt Nam (VietQR), hãy cài thêm:
 
-1. Upload `grabwp-tenancy-sepay.zip`
-2. Activate
+1. Tải lên `grabwp-tenancy-sepay.zip`
+2. Kích hoạt
 
-This adds SePay as a billing provider option in WaaS settings.
+Việc này thêm SePay làm một tùy chọn nhà cung cấp thanh toán trong cài đặt WaaS.
 
 ---
 
-**Next:** [Configure Pro Settings](/grabwp-tenancy-waas/waas-configure-pro-settings)
+**Tiếp theo:** [Cấu hình Pro Settings](/vi/grabwp-tenancy-waas/waas-configure-pro-settings)

@@ -1,159 +1,159 @@
 ---
-title: "Set Up Frontend Pages"
-description: "Create signup, dashboard, and template browser pages using shortcodes or Gutenberg blocks"
+title: "Thiết lập trang Frontend"
+description: "Tạo trang đăng ký, bảng điều khiển và trình duyệt mẫu bằng shortcode hoặc block Gutenberg"
 order: 29
 section: waas
 ---
 
-# Set Up Frontend Pages
+# Thiết lập trang Frontend
 
-Your WaaS platform needs three customer-facing pages: **Signup**, **Dashboard**, and **Templates**. Each page can use either a shortcode or a Gutenberg block.
+Nền tảng WaaS của bạn cần ba trang hướng tới khách hàng: **Signup**, **Dashboard** và **Templates**. Mỗi trang có thể dùng một shortcode hoặc một block Gutenberg.
 
-## Quick Setup (Auto-Create)
+## Thiết lập nhanh (Tự động tạo)
 
-The fastest way: go to **WaaS → Settings → General** and click the **Create/Repair Signup and Dashboard Pages** button. This creates all three pages with the correct shortcodes.
+Cách nhanh nhất: vào **WaaS → Settings → General** và nhấn nút **Create/Repair Signup and Dashboard Pages**. Việc này tạo cả ba trang với các shortcode chính xác.
 
-Then select each page in the corresponding dropdown and save settings.
+Sau đó chọn từng trang trong danh sách thả xuống tương ứng và lưu cài đặt.
 
-## Manual Setup
+## Thiết lập thủ công
 
-### Option A: Using Shortcodes
+### Phương án A: Dùng Shortcode
 
-Create three WordPress pages with these shortcodes:
+Tạo ba trang WordPress với các shortcode sau:
 
-#### 1. Signup Page
+#### 1. Trang Signup
 
-Create a new page (e.g., title: "Signup", slug: `/signup/`).
+Tạo một trang mới (ví dụ: tiêu đề: "Signup", slug: `/signup/`).
 
-Add this shortcode as the page content:
+Thêm shortcode này làm nội dung trang:
 
 ```
 [grabwp_waas_signup]
 ```
 
-This renders the complete signup flow:
-- Plan selection
-- Template picker (if templates exist)
-- Site details form (subdomain, email)
-- Payment redirect (for paid plans)
-- Provisioning status
+Shortcode này hiển thị toàn bộ luồng đăng ký:
+- Chọn gói
+- Bộ chọn mẫu (nếu có mẫu)
+- Form chi tiết site (subdomain, email)
+- Chuyển hướng thanh toán (cho gói trả phí)
+- Trạng thái khởi tạo
 
-#### 2. Dashboard Page
+#### 2. Trang Dashboard
 
-Create a new page (e.g., title: "Dashboard", slug: `/dashboard/`).
+Tạo một trang mới (ví dụ: tiêu đề: "Dashboard", slug: `/dashboard/`).
 
 ```
 [grabwp_waas_dashboard]
 ```
 
-This renders the tenant owner dashboard:
-- Site overview and quick links
-- Subscription status and billing
-- Custom domain management
-- Backup and restore
-- Account settings (email, password)
+Shortcode này hiển thị bảng điều khiển của chủ tenant:
+- Tổng quan site và liên kết nhanh
+- Trạng thái subscription và thanh toán
+- Quản lý tên miền riêng
+- Sao lưu và khôi phục
+- Cài đặt tài khoản (email, mật khẩu)
 
-#### 3. Templates Page
+#### 3. Trang Templates
 
-Create a new page (e.g., title: "Templates", slug: `/templates/`).
+Tạo một trang mới (ví dụ: tiêu đề: "Templates", slug: `/templates/`).
 
 ```
 [grabwp_waas_templates]
 ```
 
-This renders the template browser gallery with:
-- Template cards with thumbnails and descriptions
-- Tag-based filtering (pills and dropdowns)
-- Search
-- Pagination
-- Preview and "Use this template" buttons
+Shortcode này hiển thị thư viện trình duyệt mẫu với:
+- Thẻ mẫu kèm ảnh thu nhỏ và mô tả
+- Lọc theo tag (pill và danh sách thả xuống)
+- Tìm kiếm
+- Phân trang
+- Nút xem trước và "Use this template"
 
-> **Customize the template browser** with shortcode attributes. See [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates) for all options.
+> **Tùy chỉnh trình duyệt mẫu** bằng các thuộc tính shortcode. Xem [Tham chiếu Shortcode](/vi/grabwp-tenancy-waas/waas-shortcode-templates) để biết mọi tùy chọn.
 
-Common configurations:
+Các cấu hình phổ biến:
 
 ```
-// Show all templates, default filters
+// Hiển thị mọi mẫu, bộ lọc mặc định
 [grabwp_waas_templates]
 
-// Show 9 templates per page, industry tags as pills
+// Hiển thị 9 mẫu mỗi trang, tag industry dạng pill
 [grabwp_waas_templates per-page="9" filter-tags="industry"]
 
-// Curated gallery, no filters, no pagination
+// Thư viện tuyển chọn, không bộ lọc, không phân trang
 [grabwp_waas_templates tags="featured" tags-browser="no" per-page="0"]
 ```
 
-### Option B: Using Gutenberg Blocks
+### Phương án B: Dùng block Gutenberg
 
-If you prefer the block editor, use the Gutenberg blocks instead of shortcodes.
+Nếu bạn thích trình soạn thảo block hơn, hãy dùng các block Gutenberg thay cho shortcode.
 
-#### 1. Signup Block
+#### 1. Block Signup
 
-1. Edit your Signup page
-2. Click **+** (block inserter) and search for **"WaaS Signup"**
-3. Insert the block
-4. Save the page
+1. Chỉnh sửa trang Signup của bạn
+2. Nhấn **+** (trình chèn block) và tìm **"WaaS Signup"**
+3. Chèn block
+4. Lưu trang
 
-#### 2. Dashboard Block
+#### 2. Block Dashboard
 
-1. Edit your Dashboard page
-2. Search for **"WaaS Dashboard"**
-3. Insert the block — supports wide and full-width alignment
-4. Save
+1. Chỉnh sửa trang Dashboard của bạn
+2. Tìm **"WaaS Dashboard"**
+3. Chèn block — hỗ trợ căn chỉnh rộng và toàn chiều rộng
+4. Lưu
 
-#### 3. Template Browser Block
+#### 3. Block Template Browser
 
-1. Edit your Templates page
-2. Search for **"GrabWP Template Browser"**
-3. Insert the block
-4. Configure via the **Settings sidebar** (click the gear icon):
+1. Chỉnh sửa trang Templates của bạn
+2. Tìm **"GrabWP Template Browser"**
+3. Chèn block
+4. Cấu hình qua **thanh bên Settings** (nhấn biểu tượng bánh răng):
 
-| Control | What it does |
+| Điều khiển | Chức năng |
 |---------|-------------|
-| **Limit by tags** | Server-side filter — only load templates with these tags |
-| **Show tag browser toolbar** | Toggle the filter toolbar on/off |
-| **Pill filter groups** | Which tag groups show as pill buttons vs. dropdowns |
-| **Cards per page** | Number of template cards per page (0 = show all) |
+| **Limit by tags** | Bộ lọc phía server — chỉ tải các mẫu có những tag này |
+| **Show tag browser toolbar** | Bật/tắt thanh công cụ lọc |
+| **Pill filter groups** | Nhóm tag nào hiển thị dạng nút pill thay vì danh sách thả xuống |
+| **Cards per page** | Số thẻ mẫu mỗi trang (0 = hiển thị tất cả) |
 
-5. Save the page
+5. Lưu trang
 
-> **Note:** Blocks show a placeholder in the editor. The full gallery renders only on the frontend.
+> **Lưu ý:** Block hiển thị một placeholder trong trình soạn thảo. Thư viện đầy đủ chỉ hiển thị trên frontend.
 
-See [Block Walkthrough](/grabwp-tenancy-waas/waas-block-walkthrough) for detailed block usage.
+Xem [Hướng dẫn Block](/vi/grabwp-tenancy-waas/waas-block-walkthrough) để biết cách dùng block chi tiết.
 
-## Link Pages in WaaS Settings
+## Liên kết trang trong cài đặt WaaS
 
-After creating the pages, connect them:
+Sau khi tạo các trang, hãy kết nối chúng:
 
-1. Go to **WaaS → Settings → General**
-2. Set each dropdown:
-   - **Signup Page** → your Signup page
-   - **Dashboard Page** → your Dashboard page
-   - **Templates Page** → your Templates page
-3. Click **Save Settings**
+1. Vào **WaaS → Settings → General**
+2. Đặt từng danh sách thả xuống:
+   - **Signup Page** → trang Signup của bạn
+   - **Dashboard Page** → trang Dashboard của bạn
+   - **Templates Page** → trang Templates của bạn
+3. Nhấn **Save Settings**
 
-![Pages configuration](../images/waas-pages-config.png)
+![Cấu hình trang](../images/waas-pages-config.png)
 
-## Shortcode vs Block Comparison
+## So sánh Shortcode và Block
 
-| Feature | Shortcode | Block |
+| Tính năng | Shortcode | Block |
 |---------|-----------|-------|
-| **Ease of use** | Paste shortcode text | Visual editor insert |
-| **Configuration** | Attributes in shortcode string | Inspector sidebar controls |
-| **Preview in editor** | Shows shortcode text | Shows placeholder |
-| **Frontend output** | Identical | Identical |
-| **Theme compatibility** | Works everywhere | Requires block-compatible theme |
+| **Dễ sử dụng** | Dán văn bản shortcode | Chèn qua trình soạn thảo trực quan |
+| **Cấu hình** | Thuộc tính trong chuỗi shortcode | Điều khiển trên thanh bên Inspector |
+| **Xem trước trong trình soạn thảo** | Hiển thị văn bản shortcode | Hiển thị placeholder |
+| **Kết quả frontend** | Giống hệt | Giống hệt |
+| **Tương thích theme** | Hoạt động mọi nơi | Cần theme tương thích block |
 
-Both produce the same frontend output. Choose whichever you're more comfortable with.
+Cả hai đều tạo ra cùng kết quả frontend. Chọn cái nào bạn thấy thoải mái hơn.
 
-## Test the Pages
+## Kiểm thử các trang
 
-After setup, visit each page on the frontend:
+Sau khi thiết lập, truy cập từng trang trên frontend:
 
-1. **Signup page** — should show plan selection and signup form
-2. **Templates page** — should show the template gallery with your templates
-3. **Dashboard page** — should show login/OTP form (when not logged in) or the dashboard (when logged in)
+1. **Trang Signup** — nên hiển thị phần chọn gói và form đăng ký
+2. **Trang Templates** — nên hiển thị thư viện mẫu với các mẫu của bạn
+3. **Trang Dashboard** — nên hiển thị form đăng nhập/OTP (khi chưa đăng nhập) hoặc bảng điều khiển (khi đã đăng nhập)
 
 ---
 
-**Next:** [Go-Live Checklist](/grabwp-tenancy-waas/waas-go-live-checklist)
+**Tiếp theo:** [Danh sách kiểm tra Go-Live](/vi/grabwp-tenancy-waas/waas-go-live-checklist)

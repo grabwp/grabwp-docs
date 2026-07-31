@@ -1,108 +1,108 @@
 ---
-title: "S3 Object Storage"
-description: "Offload tenant media uploads to Cloudflare R2, AWS S3, DigitalOcean Spaces, or any S3-compatible provider"
+title: "Lưu trữ đối tượng S3"
+description: "Chuyển dữ liệu tải lên media của tenant sang Cloudflare R2, AWS S3, DigitalOcean Spaces hoặc bất kỳ nhà cung cấp tương thích S3 nào"
 order: 33
 section: waas
 ---
 
-# S3 Object Storage (Optional)
+# Lưu trữ đối tượng S3 (Tùy chọn)
 
-Offload tenant media uploads to S3-compatible cloud storage instead of storing them on your server's local disk.
+Chuyển dữ liệu tải lên media của tenant sang dịch vụ lưu trữ đám mây tương thích S3 thay vì lưu trên ổ đĩa cục bộ của máy chủ.
 
-## When to Use S3
+## Khi nào nên dùng S3
 
-- **Disk space:** Your server has limited storage and tenants upload lots of media
-- **CDN delivery:** Serve images/files from a global CDN for faster load times
-- **Scalability:** Decouple storage from compute — scale independently
-- **Backups:** Cloud storage providers handle redundancy and durability
+- **Dung lượng đĩa:** Máy chủ của bạn có dung lượng lưu trữ hạn chế và tenant tải lên nhiều media
+- **Phân phối qua CDN:** Phục vụ hình ảnh/tệp từ CDN toàn cầu để cải thiện thời gian tải
+- **Khả năng mở rộng:** Tách riêng lưu trữ khỏi hạ tầng tính toán — mở rộng độc lập
+- **Sao lưu:** Nhà cung cấp lưu trữ đám mây đảm trách tính dư thừa và độ bền dữ liệu
 
-## Supported Providers
+## Nhà cung cấp được hỗ trợ
 
-Any S3-compatible API works:
+Mọi API tương thích S3 đều hoạt động:
 
-| Provider | Endpoint Example | Notes |
+| Nhà cung cấp | Ví dụ endpoint | Ghi chú |
 |----------|-----------------|-------|
-| **Cloudflare R2** | `https://ACCOUNT_ID.r2.cloudflarestorage.com` | No egress fees. Region: `auto` |
-| **AWS S3** | `https://s3.us-east-1.amazonaws.com` | Most mature. Many regions. |
-| **DigitalOcean Spaces** | `https://nyc3.digitaloceanspaces.com` | Simple pricing. Built-in CDN. |
-| **MinIO** | `https://minio.yourdomain.com` | Self-hosted. Enable path-style. |
-| **Backblaze B2** | `https://s3.us-west-002.backblazeb2.com` | Low cost. S3-compatible API. |
+| **Cloudflare R2** | `https://ACCOUNT_ID.r2.cloudflarestorage.com` | Không tính phí egress. Region: `auto` |
+| **AWS S3** | `https://s3.us-east-1.amazonaws.com` | Hoàn thiện nhất. Nhiều region. |
+| **DigitalOcean Spaces** | `https://nyc3.digitaloceanspaces.com` | Giá đơn giản. CDN tích hợp. |
+| **MinIO** | `https://minio.yourdomain.com` | Tự lưu trữ. Bật path-style. |
+| **Backblaze B2** | `https://s3.us-west-002.backblazeb2.com` | Chi phí thấp. API tương thích S3. |
 
-## Configuration
+## Cấu hình
 
-Navigate to **Tenancy → Pro Settings → Object Storage** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
+Đi đến **Tenancy → Pro Settings → Object Storage** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
 
-1. Set **Storage Driver** to **S3**
-2. Fill in:
+1. Đặt **Storage Driver** thành **S3**
+2. Điền các trường:
 
-| Field | Description | Example |
+| Trường | Mô tả | Ví dụ |
 |-------|-------------|---------|
-| **S3 Endpoint URL** | Full endpoint URL for your provider | `https://ACCOUNT.r2.cloudflarestorage.com` |
-| **Bucket Name** | Name of the bucket you created | `grabwp-uploads` |
-| **Region** | AWS region or `auto` for R2 | `auto` |
-| **Access Key ID** | API key ID | |
-| **Secret Access Key** | API secret (stored encrypted) | |
-| **CDN URL** (optional) | Public URL prefix for serving files | `https://cdn.yoursaas.com` |
-| **Path-Style Endpoint** | Enable for MinIO and some providers | Check if needed |
+| **S3 Endpoint URL** | URL endpoint đầy đủ của nhà cung cấp | `https://ACCOUNT.r2.cloudflarestorage.com` |
+| **Bucket Name** | Tên bucket bạn đã tạo | `grabwp-uploads` |
+| **Region** | AWS region hoặc `auto` cho R2 | `auto` |
+| **Access Key ID** | ID khóa API | |
+| **Secret Access Key** | Bí mật API (được lưu mã hóa) | |
+| **CDN URL** (tùy chọn) | Tiền tố URL công khai để phục vụ tệp | `https://cdn.yoursaas.com` |
+| **Path-Style Endpoint** | Bật cho MinIO và một số nhà cung cấp | Chọn nếu cần |
 
-3. Click **Test Connection** to verify credentials and bucket access
-4. Click **Save Settings**
+3. Nhấp **Test Connection** để xác minh thông tin xác thực và quyền truy cập bucket
+4. Nhấp **Save Settings**
 
-## Provider Setup Guides
+## Hướng dẫn thiết lập nhà cung cấp
 
 ### Cloudflare R2
 
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/)
-2. Go to **R2 Object Storage → Create Bucket**
-3. Name it (e.g., `grabwp-uploads`)
-4. Go to **R2 → Manage R2 API Tokens → Create API token**
-5. Set permissions: **Object Read & Write**
-6. Copy the Access Key ID and Secret Access Key
+1. Đăng nhập [bảng điều khiển Cloudflare](https://dash.cloudflare.com/)
+2. Đi đến **R2 Object Storage → Create Bucket**
+3. Đặt tên (ví dụ: `grabwp-uploads`)
+4. Đi đến **R2 → Manage R2 API Tokens → Create API token**
+5. Đặt quyền: **Object Read & Write**
+6. Sao chép Access Key ID và Secret Access Key
 7. Endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`
 8. Region: `auto`
 
-> **Cloudflare R2 docs:** [R2 documentation](https://developers.cloudflare.com/r2/)
+> **Tài liệu Cloudflare R2:** [Tài liệu R2](https://developers.cloudflare.com/r2/)
 
 ### AWS S3
 
-1. Create a bucket in the [AWS S3 Console](https://s3.console.aws.amazon.com/)
-2. Create an IAM user with `AmazonS3FullAccess` policy (or scoped to your bucket)
-3. Generate Access Key under the IAM user's security credentials
-4. Use the regional endpoint for your bucket
+1. Tạo bucket trong [AWS S3 Console](https://s3.console.aws.amazon.com/)
+2. Tạo người dùng IAM với policy `AmazonS3FullAccess` (hoặc giới hạn phạm vi theo bucket của bạn)
+3. Tạo Access Key trong thông tin xác thực bảo mật của người dùng IAM
+4. Sử dụng endpoint khu vực cho bucket của bạn
 
-> **AWS S3 docs:** [Getting started with S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
+> **Tài liệu AWS S3:** [Bắt đầu với S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
 
 ### DigitalOcean Spaces
 
-1. Create a Space in [DigitalOcean](https://cloud.digitalocean.com/spaces)
-2. Go to **API → Spaces Keys → Generate New Key**
+1. Tạo một Space trong [DigitalOcean](https://cloud.digitalocean.com/spaces)
+2. Đi đến **API → Spaces Keys → Generate New Key**
 3. Endpoint: `https://<REGION>.digitaloceanspaces.com`
 
-> **DO Spaces docs:** [Spaces documentation](https://docs.digitalocean.com/products/spaces/)
+> **Tài liệu DO Spaces:** [Tài liệu Spaces](https://docs.digitalocean.com/products/spaces/)
 
-## Bulk Migration
+## Di chuyển hàng loạt
 
-After configuring S3, migrate existing tenant uploads:
+Sau khi cấu hình S3, hãy di chuyển các tệp tải lên hiện có của tenant:
 
-1. In Pro Settings → Object Storage, click **Migrate All Tenants to S3**
-2. Wait for the migration to complete — this uploads all local tenant files to S3
-3. Verify a few tenant sites to ensure images load correctly
+1. Trong Pro Settings → Object Storage, nhấp **Migrate All Tenants to S3**
+2. Chờ quá trình di chuyển hoàn tất — thao tác này tải toàn bộ tệp tenant cục bộ lên S3
+3. Kiểm tra một vài site tenant để bảo đảm hình ảnh tải đúng
 
-To migrate back to local storage: click **Migrate All Tenants to Local**.
+Để di chuyển trở lại lưu trữ cục bộ: nhấp **Migrate All Tenants to Local**.
 
-> **Note:** Migration can take a while depending on the amount of data. The page shows progress and results.
+> **Lưu ý:** Quá trình di chuyển có thể mất một lúc, tùy vào lượng dữ liệu. Trang sẽ hiển thị tiến trình và kết quả.
 
-## CDN Configuration
+## Cấu hình CDN
 
-If you set a **CDN URL**, files are served from that URL instead of using pre-signed S3 URLs.
+Nếu bạn đặt **CDN URL**, các tệp sẽ được phục vụ từ URL đó thay vì dùng URL S3 được ký trước.
 
-For Cloudflare R2:
-1. Go to R2 → your bucket → Settings → Public Access
-2. Enable public access or add a custom domain
-3. Enter the public URL as CDN URL in Pro Settings
+Đối với Cloudflare R2:
+1. Đi đến R2 → bucket của bạn → Settings → Public Access
+2. Bật quyền truy cập công khai hoặc thêm tên miền tùy chỉnh
+3. Nhập URL công khai làm CDN URL trong Pro Settings
 
-Without a CDN URL, files are served using time-limited pre-signed URLs (secure but slightly slower).
+Không có CDN URL, các tệp được phục vụ qua URL được ký trước có thời hạn (an toàn nhưng chậm hơn một chút).
 
 ---
 
-**Next:** [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce)
+**Tiếp theo:** [Thanh toán WooCommerce](/vi/grabwp-tenancy-waas/waas-optional-woocommerce)

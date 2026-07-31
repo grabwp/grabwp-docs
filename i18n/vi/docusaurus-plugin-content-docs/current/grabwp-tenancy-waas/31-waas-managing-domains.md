@@ -1,106 +1,106 @@
 ---
-title: "Managing Custom Domains"
-description: "Let customers use their own domains via Cloudflare SaaS or direct IP mode"
+title: "Quản lý tên miền riêng"
+description: "Cho phép khách hàng sử dụng tên miền riêng qua Cloudflare SaaS hoặc chế độ IP trực tiếp"
 order: 31
 section: waas
 ---
 
-# Managing Custom Domains
+# Quản lý tên miền riêng
 
-Custom domains let your customers use their own domain (e.g., `mybusiness.com`) instead of a subdomain (`mybusiness.yoursaas.com`). GrabWP WaaS supports two methods.
+Tên miền riêng cho phép khách hàng dùng tên miền của họ (ví dụ: `mybusiness.com`) thay vì subdomain (`mybusiness.yoursaas.com`). GrabWP WaaS hỗ trợ hai phương thức.
 
-Navigate to **WaaS → Domains** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-domains`).
+Điều hướng đến **WaaS → Domains** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-domains`).
 
-![Domains admin](../images/waas-domains.png)
+![Quản trị tên miền](../images/waas-domains.png)
 
-## Domain Modes
+## Chế độ tên miền
 
-Configure the mode in **WaaS → Settings → General → Custom Domains**.
+Cấu hình chế độ trong **WaaS → Settings → General → Custom Domains**.
 
-| Mode | How it works | Best for |
+| Chế độ | Cách hoạt động | Phù hợp nhất với |
 |------|-------------|----------|
-| **Cloudflare SaaS** | Customer adds a CNAME record to your fallback origin. Cloudflare handles SSL and routing. | Production platforms, automatic SSL, scalable |
-| **Direct IP** | Customer adds an A record to your server IP. You configure the domain on your server. | Simple setups, non-Cloudflare hosting |
+| **Cloudflare SaaS** | Khách hàng thêm bản ghi CNAME trỏ tới fallback origin của bạn. Cloudflare xử lý SSL và định tuyến. | Nền tảng production, SSL tự động, khả năng mở rộng |
+| **Direct IP** | Khách hàng thêm bản ghi A trỏ tới IP server của bạn. Bạn cấu hình tên miền trên server. | Thiết lập đơn giản, hosting không dùng Cloudflare |
 
-## Cloudflare SaaS Custom Hostnames
+## Custom Hostnames của Cloudflare SaaS
 
-This is the recommended approach for production. Cloudflare handles SSL certificates automatically for every custom domain.
+Đây là phương án được khuyến nghị cho môi trường production. Cloudflare tự động xử lý chứng chỉ SSL cho mọi tên miền riêng.
 
-### One-Time Setup (Your Side)
+### Thiết lập một lần (phía bạn)
 
-1. **Add your domain to Cloudflare** (if not already)
-2. **Enable Cloudflare for SaaS** on your zone:
-   - Contact Cloudflare support or use the dashboard → SSL/TLS → Custom Hostnames
-   - This feature may require a paid Cloudflare plan
-3. **Set a fallback origin:**
-   - In Cloudflare dashboard → SSL/TLS → Custom Hostnames → Add Fallback Origin
-   - Set it to your platform subdomain (e.g., `cdn.saas.yoursaas.com`)
-   - Create a DNS A record for this subdomain pointing to your server
-4. **Configure in WaaS:**
-   - Go to WaaS → Settings → General → Custom Domains
-   - Set Domain Mode to **Cloudflare SaaS**
-   - Enter your CNAME Target (e.g., `cdn.saas.yoursaas.com`)
+1. **Thêm tên miền của bạn vào Cloudflare** (nếu chưa thêm)
+2. **Bật Cloudflare for SaaS** cho zone của bạn:
+   - Liên hệ bộ phận hỗ trợ Cloudflare hoặc dùng dashboard → SSL/TLS → Custom Hostnames
+   - Tính năng này có thể yêu cầu gói Cloudflare trả phí
+3. **Đặt fallback origin:**
+   - Trong dashboard Cloudflare → SSL/TLS → Custom Hostnames → Add Fallback Origin
+   - Đặt thành subdomain nền tảng của bạn (ví dụ: `cdn.saas.yoursaas.com`)
+   - Tạo bản ghi DNS A cho subdomain này trỏ tới server của bạn
+4. **Cấu hình trong WaaS:**
+   - Vào WaaS → Settings → General → Custom Domains
+   - Đặt Domain Mode thành **Cloudflare SaaS**
+   - Nhập CNAME Target của bạn (ví dụ: `cdn.saas.yoursaas.com`)
 
-> **Cloudflare docs:** [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/) — covers setup, SSL, and API automation.
+> **Tài liệu Cloudflare:** [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/) — bao gồm thiết lập, SSL và tự động hóa API.
 
-### Per-Customer Flow
+### Luồng cho từng khách hàng
 
-When a customer wants to use their own domain:
+Khi khách hàng muốn dùng tên miền riêng:
 
-1. **Customer side:** Add a CNAME record in their DNS:
+1. **Phía khách hàng:** Thêm bản ghi CNAME vào DNS của họ:
    ```
    mybusiness.com  →  CNAME  →  cdn.saas.yoursaas.com
    ```
 
-2. **Your side (admin):** Add the domain in WaaS → Domains or the customer can add it via the tenant dashboard:
-   - Click **Add Domain**
-   - Enter the custom domain
-   - Click **Verify** — checks DNS propagation
+2. **Phía bạn (admin):** Thêm tên miền trong WaaS → Domains hoặc khách hàng có thể thêm qua Dashboard tenant:
+   - Nhấn **Add Domain**
+   - Nhập tên miền riêng
+   - Nhấn **Verify** — kiểm tra việc truyền DNS
 
-3. **Cloudflare** automatically provisions an SSL certificate for the custom domain
+3. **Cloudflare** tự động cấp chứng chỉ SSL cho tên miền riêng
 
-4. The tenant site is now accessible at `mybusiness.com`
+4. Site tenant hiện có thể truy cập tại `mybusiness.com`
 
-### Customer Instructions Template
+### Mẫu hướng dẫn cho khách hàng
 
-Share this with your customers when they request a custom domain:
+Chia sẻ nội dung này với khách hàng khi họ yêu cầu tên miền riêng:
 
-> **To connect your domain:**
-> 1. Log in to your domain registrar (GoDaddy, Namecheap, etc.)
-> 2. Go to DNS settings
-> 3. Add a CNAME record:
->    - **Name/Host:** `@` or `www` (or your subdomain)
+> **Để kết nối tên miền của bạn:**
+> 1. Đăng nhập vào nhà đăng ký tên miền của bạn (GoDaddy, Namecheap, v.v.)
+> 2. Vào cài đặt DNS
+> 3. Thêm một bản ghi CNAME:
+>    - **Name/Host:** `@` hoặc `www` (hoặc subdomain của bạn)
 >    - **Value/Target:** `cdn.saas.yoursaas.com`
->    - **TTL:** Automatic or 300
-> 4. Wait 5-10 minutes for DNS propagation
-> 5. Go to your Dashboard → Domains → Add Domain
-> 6. Enter your domain and click Verify
+>    - **TTL:** Automatic hoặc 300
+> 4. Chờ 5–10 phút để DNS được truyền
+> 5. Vào Dashboard → Domains → Add Domain
+> 6. Nhập tên miền của bạn và nhấn Verify
 
-## Direct IP Mode
+## Chế độ Direct IP
 
-Simpler but requires manual server configuration for each domain.
+Đơn giản hơn nhưng đòi hỏi cấu hình server thủ công cho từng tên miền.
 
-### Setup
+### Thiết lập
 
-1. In WaaS → Settings → General → Custom Domains:
-   - Set Domain Mode to **Direct IP**
-   - Enter your **Server Public IP**
+1. Trong WaaS → Settings → General → Custom Domains:
+   - Đặt Domain Mode thành **Direct IP**
+   - Nhập **Server Public IP** của bạn
 
-2. For each custom domain, you need to:
-   - Add a server block (Nginx) or virtual host (Apache) for the domain
-   - Point it to your WordPress installation
-   - Set up SSL (e.g., via Let's Encrypt / Certbot)
+2. Với mỗi tên miền riêng, bạn cần:
+   - Thêm server block (Nginx) hoặc virtual host (Apache) cho tên miền
+   - Trỏ nó tới bản cài đặt WordPress của bạn
+   - Thiết lập SSL (ví dụ: qua Let's Encrypt / Certbot)
 
-### Per-Customer Flow
+### Luồng cho từng khách hàng
 
-1. **Customer:** Add an A record in their DNS:
+1. **Khách hàng:** Thêm bản ghi A vào DNS của họ:
    ```
    mybusiness.com  →  A  →  203.0.113.50
    ```
 
-2. **You:** Add the domain to your web server config:
+2. **Bạn:** Thêm tên miền vào cấu hình web server:
 
-   **Nginx example:**
+   **Ví dụ Nginx:**
    ```nginx
    server {
        listen 80;
@@ -109,33 +109,33 @@ Simpler but requires manual server configuration for each domain.
    }
    ```
 
-   Then run Certbot for SSL:
+   Sau đó chạy Certbot cho SSL:
    ```bash
    sudo certbot --nginx -d mybusiness.com
    ```
 
-3. **Admin panel:** Add and verify the domain in WaaS → Domains
+3. **Trang quản trị:** Thêm và xác minh tên miền trong WaaS → Domains
 
-> **Note:** Direct IP requires manual server work per domain. Cloudflare SaaS is recommended if you expect many custom domains.
+> **Lưu ý:** Direct IP yêu cầu thao tác server thủ công cho mỗi tên miền. Cloudflare SaaS được khuyến nghị nếu bạn dự kiến có nhiều tên miền riêng.
 
-## Domain Management from Tenant Dashboard
+## Quản lý tên miền từ Dashboard tenant
 
-Customers can also manage domains from their tenant dashboard (your `/dashboard/` page):
+Khách hàng cũng có thể quản lý tên miền từ Dashboard tenant của họ (trang `/dashboard/` của bạn):
 
-- **Add Domain** — enter a custom domain
-- **Verify** — check DNS propagation
-- **Set Primary** — make a domain the primary URL for their site
-- **Remove** — disconnect a custom domain
+- **Add Domain** — nhập tên miền riêng
+- **Verify** — kiểm tra việc truyền DNS
+- **Set Primary** — đặt một tên miền làm URL chính cho site của họ
+- **Remove** — ngắt kết nối một tên miền riêng
 
-## Domain Verification
+## Xác minh tên miền
 
-After adding a domain, verification checks:
-- DNS record exists and points correctly (CNAME or A record)
-- Domain resolves to your server
-- SSL is working (for Cloudflare SaaS, this is automatic)
+Sau khi thêm tên miền, quá trình xác minh kiểm tra:
+- Bản ghi DNS tồn tại và trỏ đúng (CNAME hoặc bản ghi A)
+- Tên miền phân giải tới server của bạn
+- SSL hoạt động (với Cloudflare SaaS, việc này là tự động)
 
-Verification can take a few minutes depending on DNS propagation.
+Quá trình xác minh có thể mất vài phút tùy vào việc truyền DNS.
 
 ---
 
-**Next:** [Managing Subscriptions](/grabwp-tenancy-waas/waas-managing-subscriptions)
+**Tiếp theo:** [Quản lý gói đăng ký](/vi/grabwp-tenancy-waas/waas-managing-subscriptions)

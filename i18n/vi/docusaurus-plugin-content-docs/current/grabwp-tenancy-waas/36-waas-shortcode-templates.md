@@ -1,23 +1,23 @@
 ---
-title: "Shortcode Reference: Template Browser"
-description: "All attributes for [grabwp_waas_templates] — pool filtering, tag pills, pagination, and URL parameters"
+title: "Tham chiếu Shortcode: Trình duyệt mẫu"
+description: "Toàn bộ thuộc tính của [grabwp_waas_templates] — lọc pool, pill tag, phân trang và tham số URL"
 order: 36
 section: waas
 ---
 
-# `[grabwp_waas_templates]` — Shortcode Reference
+# `[grabwp_waas_templates]` — Tham chiếu Shortcode
 
-Renders the template browser gallery with optional server-side pre-filtering and configurable client-side filter toolbar.
+Hiển thị thư viện trình duyệt mẫu, với tùy chọn lọc trước phía máy chủ và thanh công cụ lọc phía trình duyệt có thể cấu hình.
 
 ---
 
-## Shortcode Attributes
+## Thuộc tính Shortcode
 
 ### `tags`
-**Type:** comma-separated tag slugs  
-**Default:** _(empty — show all active templates)_
+**Kiểu:** slug tag phân tách bằng dấu phẩy<br />
+**Mặc định:** _(trống — hiển thị mọi mẫu đang hoạt động)_
 
-Server-side pool filter. Only templates that carry **at least one** of the listed tags are loaded into the gallery. Reduces the card pool before anything else runs.
+Bộ lọc pool phía máy chủ. Chỉ những mẫu mang **ít nhất một** trong các tag được liệt kê mới được tải vào thư viện. Điều này thu hẹp pool thẻ trước khi bất kỳ xử lý nào khác diễn ra.
 
 ```
 [grabwp_waas_templates tags="ecommerce,portfolio"]
@@ -26,18 +26,18 @@ Server-side pool filter. Only templates that carry **at least one** of the liste
 ---
 
 ### `filter-tags`
-**Type:** comma-separated **tag group** slugs  
-**Default:** _(empty)_
+**Kiểu:** slug **nhóm tag** phân tách bằng dấu phẩy<br />
+**Mặc định:** _(trống)_
 
-Controls which tags appear as **pill buttons** in the primary filter row, and which groups get secondary `<select>` dropdowns.
+Xác định tag nào xuất hiện dưới dạng **nút pill** ở hàng bộ lọc chính, và nhóm nào có danh sách thả xuống `<select>` phụ.
 
-| `filter-tags` value | Pill row | Secondary selects |
+| Giá trị `filter-tags` | Hàng pill | Select phụ |
 |---|---|---|
-| _(empty)_ | All pool tags | None (everything is in pills) |
-| `"industry"` | Tags from the `industry` group | All other groups with ≥ 2 values |
-| `"industry,feature"` | Tags from `industry` + `feature` | All remaining groups with ≥ 2 values |
+| _(trống)_ | Mọi tag trong pool | Không có (mọi thứ đều là pill) |
+| `"industry"` | Tag từ nhóm `industry` | Mọi nhóm khác có ≥ 2 giá trị |
+| `"industry,feature"` | Tag từ `industry` + `feature` | Mọi nhóm còn lại có ≥ 2 giá trị |
 
-> **Note:** A group is either pills **or** a select — never both.
+> **Lưu ý:** Một nhóm chỉ có thể là pill **hoặc** select — không bao giờ đồng thời cả hai.
 
 ```
 [grabwp_waas_templates filter-tags="industry"]
@@ -46,10 +46,10 @@ Controls which tags appear as **pill buttons** in the primary filter row, and wh
 ---
 
 ### `tags-browser`
-**Type:** `yes` / `no`  
-**Default:** `yes`
+**Kiểu:** `yes` / `no`<br />
+**Mặc định:** `yes`
 
-Set to `no` to hide the entire filter toolbar (pill row + selects + search box). Useful for pages that show a curated, pre-filtered subset with no user-facing filters.
+Đặt thành `no` để ẩn toàn bộ thanh công cụ lọc (hàng pill + select + ô tìm kiếm). Hữu ích cho các trang hiển thị tập hợp được tuyển chọn, đã lọc trước mà không có bộ lọc dành cho người dùng.
 
 ```
 [grabwp_waas_templates tags="portfolio" tags-browser="no"]
@@ -58,10 +58,10 @@ Set to `no` to hide the entire filter toolbar (pill row + selects + search box).
 ---
 
 ### `per-page`
-**Type:** integer  
-**Default:** `12`
+**Kiểu:** số nguyên<br />
+**Mặc định:** `12`
 
-Number of template cards per page. Set to `0` to disable pagination and show all templates at once.
+Số thẻ mẫu trên mỗi trang. Đặt thành `0` để tắt phân trang và hiển thị toàn bộ mẫu cùng lúc.
 
 ```
 [grabwp_waas_templates per-page="9"]
@@ -70,33 +70,33 @@ Number of template cards per page. Set to `0` to disable pagination and show all
 
 ---
 
-## URL Parameters
+## Tham số URL
 
-Recognised on page load. Ignored when `tags-browser="no"`.
+Được nhận diện khi tải trang. Bị bỏ qua khi `tags-browser="no"`.
 
 ### `template_tag`
-**Type:** tag slug
+**Kiểu:** slug tag
 
-Pre-selects a tag pill on page load, equivalent to the user clicking that pill. Works on top of any server-side `tags=` filter.
+Chọn trước một pill tag khi tải trang, tương đương việc người dùng nhấp pill đó. Hoạt động cùng với mọi bộ lọc `tags=` phía máy chủ.
 
 ```
 https://example.com/templates/?template_tag=ecommerce
 ```
 
-Combine with `tags=` to pre-filter the pool **and** pre-select a pill:
+Kết hợp với `tags=` để lọc trước pool **và** chọn trước một pill:
 
 ```
 /templates/?template_tag=woocommerce
 ```
 Shortcode: `[grabwp_waas_templates tags="ecommerce" filter-tags="industry"]`  
-Effect: pool is pre-filtered to ecommerce templates, then `woocommerce` pill is highlighted on load.
+Kết quả: pool được lọc trước thành các mẫu ecommerce, sau đó pill `woocommerce` được tô sáng khi tải.
 
 ---
 
 ### `grabwp_waas_preview`
-**Type:** template slug
+**Kiểu:** slug mẫu
 
-Bypasses the normal page render entirely and serves the iframe preview for the given template. Added automatically by "Preview" buttons; not for shortcode use.
+Bỏ qua hoàn toàn quá trình render trang thông thường và phục vụ iframe xem trước cho mẫu đã cho. Tham số này được các nút "Preview" tự động thêm vào; không dùng cho shortcode.
 
 ```
 https://example.com/?grabwp_waas_preview=el-restaurant-pro
@@ -104,24 +104,24 @@ https://example.com/?grabwp_waas_preview=el-restaurant-pro
 
 ---
 
-## Client-Side Filters (Toolbar)
+## Bộ lọc phía trình duyệt (Thanh công cụ)
 
-All filters are applied in the browser without a page reload. They stack — all active conditions must match.
+Mọi bộ lọc được áp dụng trong trình duyệt mà không tải lại trang. Chúng được kết hợp với nhau — mọi điều kiện đang hoạt động đều phải khớp.
 
-| Filter | UI element | Matches against | Data attribute |
+| Bộ lọc | Phần tử UI | Đối chiếu với | Thuộc tính dữ liệu |
 |---|---|---|---|
-| Tag pill | Button row | `data-tags` (space-separated tag slugs) | `data-filter-dim="tag"` |
-| Group select | `<select>` per tag group | `data-tags` (any tag in the group) | `data-filter-select="tag-group"` |
-| Category select | `<select>` | `data-cat` | `data-filter-select="cat"` |
-| Text search | `<input type="search">` | `data-name` + `data-tags` | `id="grabwp-waas-tpl-search"` |
+| Pill tag | Hàng nút | `data-tags` (slug tag phân tách bằng dấu cách) | `data-filter-dim="tag"` |
+| Select nhóm | `<select>` cho mỗi nhóm tag | `data-tags` (bất kỳ tag nào trong nhóm) | `data-filter-select="tag-group"` |
+| Select danh mục | `<select>` | `data-cat` | `data-filter-select="cat"` |
+| Tìm kiếm văn bản | `<input type="search">` | `data-name` + `data-tags` | `id="grabwp-waas-tpl-search"` |
 
-> Category select only appears when there are no tag pills **and** more than one distinct category exists in the pool.
+> Select danh mục chỉ xuất hiện khi không có pill tag **và** pool có hơn một danh mục riêng biệt.
 
-> Group selects appear automatically for any tag group that has **≥ 2 distinct values** present in the pool and is **not** listed in `filter-tags`.
+> Select nhóm tự động xuất hiện với mọi nhóm tag có **≥ 2 giá trị riêng biệt** trong pool và **không** được liệt kê trong `filter-tags`.
 
 ---
 
-## Common Recipes
+## Công thức thường dùng
 
 ```
 // Full browser — all templates, all tags as pills
@@ -143,4 +143,4 @@ All filters are applied in the browser without a page reload. They stack — all
 
 ---
 
-**See also:** [Block Walkthrough](/grabwp-tenancy-waas/waas-block-walkthrough) — Gutenberg block equivalent with visual Inspector UI
+**Xem thêm:** [Hướng dẫn Block](/vi/grabwp-tenancy-waas/waas-block-walkthrough) — block Gutenberg tương đương với Inspector UI trực quan
