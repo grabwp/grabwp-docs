@@ -1,95 +1,95 @@
 ---
-title: "Configure Pro Settings"
-description: "Set up tenant isolation, database type, directory paths, and S3 storage defaults"
+title: "Cấu hình Pro Settings"
+description: "Thiết lập cô lập tenant, loại database, đường dẫn thư mục và mặc định lưu trữ S3"
 order: 24
 section: waas
 ---
 
-# Configure Pro Settings
+# Cấu hình Pro Settings
 
-Pro Settings control how tenant sites are isolated and where their data is stored. These are **defaults** — individual tenants can override them later.
+Pro Settings kiểm soát cách cô lập các site tenant và nơi lưu trữ dữ liệu của chúng. Đây là các giá trị **mặc định** — từng tenant có thể ghi đè sau này.
 
-Navigate to **Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
+Điều hướng đến **Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
 
-![Pro Settings page](../images/pro-settings.png)
+![Trang Pro Settings](../images/pro-settings.png)
 
-## Content Isolation Defaults
+## Mặc định cô lập nội dung
 
-These settings determine what gets isolated for each new tenant.
+Các cài đặt này xác định những gì được cô lập cho mỗi tenant mới.
 
-| Setting | Recommended | What it does |
+| Cài đặt | Khuyến nghị | Chức năng |
 |---------|-------------|-------------|
-| **Content + Themes Isolation** | On | Each tenant gets its own `wp-content` and themes directories |
-| **Plugins Isolation** | Off (for most setups) | Each tenant gets its own plugins directory. Increases disk usage. |
-| **Uploads Isolation** | On | Each tenant gets its own uploads directory (media files) |
+| **Content + Themes Isolation** | Bật | Mỗi tenant có thư mục `wp-content` và theme riêng |
+| **Plugins Isolation** | Tắt (cho hầu hết thiết lập) | Mỗi tenant có thư mục plugins riêng. Tăng dung lượng ổ đĩa. |
+| **Uploads Isolation** | Bật | Mỗi tenant có thư mục uploads riêng (file media) |
 
-> **Tip:** Keep Plugins Isolation off unless tenants need different plugin sets. With it off, all tenants share the same plugins (controlled via Tenant Extensions), saving disk space.
+> **Mẹo:** Giữ Plugins Isolation ở trạng thái tắt trừ khi các tenant cần bộ plugin khác nhau. Khi tắt, tất cả tenant chia sẻ cùng bộ plugin (được kiểm soát qua Tenant Extensions), giúp tiết kiệm dung lượng ổ đĩa.
 
-## Database Defaults
+## Mặc định database
 
-Choose how tenant databases are structured.
+Chọn cách cấu trúc database của tenant.
 
-| Option | Best for | Description |
+| Tùy chọn | Phù hợp nhất cho | Mô tả |
 |--------|----------|-------------|
-| **Shared** | Getting started, small scale | All tenants share one MySQL database with table-prefix isolation. Simplest setup. |
-| **MySQL Isolated** | Production, compliance | Each tenant gets a dedicated MySQL database. Better isolation but requires more database resources. |
-| **SQLite Isolated** | Lightweight tenants | Each tenant gets a SQLite file. No extra MySQL setup needed. Requires the [SQLite Database Integration](https://wordpress.org/plugins/sqlite-database-integration/) plugin. |
+| **Shared** | Bắt đầu, quy mô nhỏ | Tất cả tenant chia sẻ một database MySQL với cô lập bằng table-prefix. Thiết lập đơn giản nhất. |
+| **MySQL Isolated** | Sản xuất, tuân thủ | Mỗi tenant có một database MySQL riêng. Cô lập tốt hơn nhưng cần nhiều tài nguyên database hơn. |
+| **SQLite Isolated** | Tenant nhẹ | Mỗi tenant có một file SQLite. Không cần thiết lập MySQL thêm. Cần plugin [SQLite Database Integration](https://wordpress.org/plugins/sqlite-database-integration/). |
 
-**For this tutorial:** Start with **Shared**. You can migrate tenants to isolated databases later.
+**Cho hướng dẫn này:** Bắt đầu với **Shared**. Sau này, bạn có thể chuyển tenant sang database cô lập.
 
-### MySQL Isolated Settings (if selected)
+### Cài đặt MySQL Isolated (nếu chọn)
 
-If you choose MySQL Isolated, configure default credentials:
+Nếu bạn chọn MySQL Isolated, hãy cấu hình thông tin đăng nhập mặc định:
 
-| Field | Description |
+| Trường | Mô tả |
 |-------|-------------|
-| **MySQL Host** | Database server (e.g., `localhost` or `localhost:3306`) |
-| **MySQL Database** | Default database name for new tenants |
-| **MySQL Username** | Database user with CREATE TABLE permissions |
+| **MySQL Host** | Máy chủ database (ví dụ: `localhost` hoặc `localhost:3306`) |
+| **MySQL Database** | Tên database mặc định cho tenant mới |
+| **MySQL Username** | User database có quyền CREATE TABLE |
 
-> **Note:** These are defaults. You can set per-tenant credentials when creating individual tenants.
+> **Lưu ý:** Đây là các giá trị mặc định. Bạn có thể đặt thông tin đăng nhập riêng cho từng tenant khi tạo tenant.
 
-## Directory Configuration
+## Cấu hình thư mục
 
-Where GrabWP stores tenant data on disk.
+Đây là nơi GrabWP lưu trữ dữ liệu tenant trên ổ đĩa.
 
-| Field | Default | Description |
+| Trường | Mặc định | Mô tả |
 |-------|---------|-------------|
-| **Tenant Base Dir** | `wp-content/grabwp-tenancy` | Root directory for tenant uploads and data |
-| **Pro Config Dir** | `wp-content/grabwp-tenancy-pro` | Configuration files for each tenant |
-| **SQLite Database Dir** | `wp-content/grabwp-tenancy-sqlite` | SQLite database files (if using SQLite isolation) |
+| **Tenant Base Dir** | `wp-content/grabwp-tenancy` | Thư mục gốc cho uploads và dữ liệu tenant |
+| **Pro Config Dir** | `wp-content/grabwp-tenancy-pro` | File cấu hình cho mỗi tenant |
+| **SQLite Database Dir** | `wp-content/grabwp-tenancy-sqlite` | File database SQLite (nếu dùng cô lập SQLite) |
 
-**Usually the defaults are fine.** Only change these if you need tenant data on a different partition or mount point.
+**Thông thường, các giá trị mặc định là phù hợp.** Chỉ thay đổi nếu bạn cần đặt dữ liệu tenant trên một phân vùng hoặc điểm mount khác.
 
-> You can also lock these paths via `wp-config.php` constants. If a constant is set, the field shows "set in wp-config.php" and cannot be changed from the UI.
+> Bạn cũng có thể khóa các đường dẫn này qua hằng số trong `wp-config.php`. Nếu một hằng số được đặt, trường sẽ hiển thị "set in wp-config.php" và không thể thay đổi từ giao diện.
 
 ## Domain Symlink
 
-Enable clean URLs for tenant content directories. Instead of serving tenant assets from a path like `/wp-content/grabwp-tenancy/tenant-123/uploads/`, symlinks let them appear under the tenant's own domain path.
+Bật URL sạch cho các thư mục nội dung của tenant. Thay vì phục vụ tài nguyên tenant từ đường dẫn như `/wp-content/grabwp-tenancy/tenant-123/uploads/`, symlink cho phép chúng xuất hiện dưới đường dẫn tên miền của chính tenant.
 
-| Field | Description |
+| Trường | Mô tả |
 |-------|-------------|
-| **Enable Domain Symlink** | Turn on symlink-based clean URLs. Requires `symlink()` PHP function. |
-| **Domains Directory** | Absolute path where domain symlinks are created |
+| **Enable Domain Symlink** | Bật URL sạch dựa trên symlink. Cần hàm PHP `symlink()`. |
+| **Domains Directory** | Đường dẫn tuyệt đối nơi tạo các domain symlink |
 
-> **Requires Nginx configuration.** The settings page shows a copy-paste ready Nginx config block. Add it to your server configuration and reload Nginx.
+> **Cần cấu hình Nginx.** Trang cài đặt hiển thị một khối cấu hình Nginx sẵn sàng để sao chép-dán. Thêm nó vào cấu hình server của bạn và tải lại Nginx.
 
-**For this tutorial:** You can skip this initially and enable it later when setting up custom domains.
+**Cho hướng dẫn này:** Bạn có thể bỏ qua bước này lúc đầu và bật sau khi thiết lập tên miền riêng.
 
 ## Object Storage (S3)
 
-Offload tenant media to S3-compatible storage. This section is covered in detail in [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage).
+Chuyển media của tenant sang lưu trữ tương thích S3. Phần này được đề cập chi tiết trong [Lưu trữ S3 Object Storage](/vi/grabwp-tenancy-waas/waas-optional-s3-storage).
 
-| Field | Description |
+| Trường | Mô tả |
 |-------|-------------|
-| **Storage Driver** | `Local` (default) or `S3` |
+| **Storage Driver** | `Local` (mặc định) hoặc `S3` |
 
-**For this tutorial:** Leave as **Local**. Configure S3 later if needed.
+**Cho hướng dẫn này:** Để nguyên là **Local**. Cấu hình S3 sau nếu cần.
 
-## Save Settings
+## Lưu cài đặt
 
-Click **Save Settings** at the bottom of the page. A success message confirms the save.
+Nhấn **Save Settings** ở cuối trang. Một thông báo thành công sẽ xác nhận việc lưu.
 
 ---
 
-**Next:** [Configure WaaS General Settings](/grabwp-tenancy-waas/waas-configure-general)
+**Tiếp theo:** [Cấu hình WaaS General Settings](/vi/grabwp-tenancy-waas/waas-configure-general)

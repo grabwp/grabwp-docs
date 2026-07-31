@@ -1,101 +1,101 @@
 ---
-title: "Set Up Billing"
-description: "Connect Polar as a payment provider for subscription billing"
+title: "Thiết lập thanh toán"
+description: "Kết nối Polar làm nhà cung cấp thanh toán cho việc thanh toán subscription"
 order: 27
 section: waas
 ---
 
-# Set Up Billing
+# Thiết lập thanh toán
 
-Billing connects your plans to a payment provider so customers can pay for subscriptions. GrabWP WaaS supports **Polar** (primary) and **WooCommerce** (alternative).
+Thiết lập thanh toán kết nối các gói dịch vụ của bạn với nhà cung cấp thanh toán để khách hàng có thể thanh toán cho gói đăng ký. GrabWP WaaS hỗ trợ **Polar** (chính) và **WooCommerce** (thay thế).
 
-This guide covers Polar. For WooCommerce, see [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce).
+Hướng dẫn này trình bày về Polar. Với WooCommerce, xem [Thanh toán WooCommerce](/vi/grabwp-tenancy-waas/waas-optional-woocommerce).
 
-Navigate to **WaaS → Settings → Billing** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
+Điều hướng đến **WaaS → Settings → Billing** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
 
-![Billing settings](../images/waas-billing-settings.png)
+![Cài đặt thanh toán](../images/waas-billing-settings.png)
 
-## Step 1: Create a Polar Account
+## Bước 1: Tạo tài khoản Polar
 
-1. Go to [polar.sh](https://polar.sh) and create an account
-2. Create an **Organization** if you don't have one
-3. Note your organization dashboard URL — you'll need it
+1. Vào [polar.sh](https://polar.sh) và tạo một tài khoản
+2. Tạo một **Organization** nếu bạn chưa có
+3. Ghi lại URL bảng điều khiển organization của bạn — bạn sẽ cần đến nó
 
-## Step 2: Create Products in Polar
+## Bước 2: Tạo sản phẩm trong Polar
 
-For each paid plan, create a matching product in Polar.
+Với mỗi gói trả phí, tạo một sản phẩm tương ứng trong Polar.
 
-1. In Polar dashboard, go to **Products**
-2. Click **Create Product**
-3. Set up your product:
+1. Trong bảng điều khiển Polar, vào **Products**
+2. Nhấn **Create Product**
+3. Thiết lập sản phẩm của bạn:
 
-| Field | Value |
+| Trường | Giá trị |
 |-------|-------|
-| **Name** | Same as your plan name (e.g., "Pro Monthly") |
+| **Name** | Giống tên gói của bạn (ví dụ: "Pro Monthly") |
 | **Type** | Subscription |
-| **Price** | Must match your plan price (e.g., $9.99/month) |
-| **Billing Interval** | Monthly (or Yearly for yearly products) |
+| **Price** | Phải khớp với giá gói của bạn (ví dụ: $9.99/tháng) |
+| **Billing Interval** | Monthly (hoặc Yearly cho sản phẩm hàng năm) |
 
-4. After creating the product, copy its **Product ID** (UUID) from the product settings page
+4. Sau khi tạo sản phẩm, sao chép **Product ID** (UUID) của nó từ trang cài đặt sản phẩm
 
-> **Create separate products for monthly and yearly billing.** For example: "Pro Monthly" ($9.99/month) and "Pro Yearly" ($99.99/year).
+> **Tạo các sản phẩm riêng cho thanh toán hàng tháng và hàng năm.** Ví dụ: "Pro Monthly" ($9.99/tháng) và "Pro Yearly" ($99.99/năm).
 
-## Step 3: Configure Polar in WaaS
+## Bước 3: Cấu hình Polar trong WaaS
 
-On the Billing Providers tab:
+Trên tab Billing Providers:
 
-1. Find the **Polar** provider card
-2. Check **Enable this provider**
-3. Fill in:
+1. Tìm thẻ nhà cung cấp **Polar**
+2. Đánh dấu **Enable this provider**
+3. Điền vào:
 
-| Field | Description |
+| Trường | Mô tả |
 |-------|-------------|
-| **API URL** | `https://api.polar.sh` (production) or `https://sandbox-api.polar.sh` (testing) |
-| **Access Token** | Your Polar API token — generate in Polar → Settings → API |
-| **Webhook Secret** | Secret string to verify webhook authenticity |
+| **API URL** | `https://api.polar.sh` (sản xuất) hoặc `https://sandbox-api.polar.sh` (thử nghiệm) |
+| **Access Token** | Token API Polar của bạn — tạo trong Polar → Settings → API |
+| **Webhook Secret** | Chuỗi bí mật để xác minh tính xác thực của webhook |
 
-4. Click **Save Settings**
+4. Nhấn **Save Settings**
 
-## Step 4: Set Up Webhook
+## Bước 4: Thiết lập Webhook
 
-WaaS needs to receive payment events from Polar to activate subscriptions.
+WaaS cần nhận các sự kiện thanh toán từ Polar để kích hoạt gói đăng ký.
 
-1. In Polar dashboard, go to **Webhooks**
-2. Click **Add Endpoint**
-3. Set the URL to:
+1. Trong bảng điều khiển Polar, vào **Webhooks**
+2. Nhấn **Add Endpoint**
+3. Đặt URL thành:
    ```
    https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar
    ```
-4. Select events to send:
+4. Chọn các sự kiện để gửi:
    - `subscription.created`
    - `subscription.updated`
    - `subscription.canceled`
    - `order.created`
-5. Copy the **Webhook Secret** and paste it into WaaS → Settings → Billing → Polar → Webhook Secret
-6. Save both Polar and WaaS settings
+5. Sao chép **Webhook Secret** và dán vào WaaS → Settings → Billing → Polar → Webhook Secret
+6. Lưu cả cài đặt Polar và WaaS
 
-> **Test webhooks:** Use the Polar dashboard → Webhooks → Delivery log to verify events are being received. Check WaaS → Settings → Billing → "Last webhook received" timestamp.
+> **Kiểm thử webhook:** Dùng bảng điều khiển Polar → Webhooks → Delivery log để xác minh các sự kiện đang được nhận. Kiểm tra dấu thời gian "Last webhook received" tại WaaS → Settings → Billing.
 
-## Step 5: Link Products to Plans
+## Bước 5: Liên kết sản phẩm với gói
 
-Go back to **WaaS → Settings → Plans** and edit your paid plan:
+Quay lại **WaaS → Settings → Plans** và chỉnh sửa gói trả phí của bạn:
 
-1. Paste the **Polar Monthly Product ID** into the matching field
-2. Paste the **Polar Yearly Product ID** if you created a yearly product
-3. Save the plan
+1. Dán **Polar Monthly Product ID** vào trường tương ứng
+2. Dán **Polar Yearly Product ID** nếu bạn đã tạo sản phẩm hàng năm
+3. Lưu gói
 
-## Step 6: Test a Payment
+## Bước 6: Kiểm thử một giao dịch thanh toán
 
-Before going live, test the full payment flow:
+Trước khi ra mắt, hãy kiểm thử toàn bộ luồng thanh toán:
 
-1. Set Polar API URL to the **sandbox** endpoint: `https://sandbox-api.polar.sh`
-2. Create sandbox products in the Polar sandbox dashboard
-3. Go through the signup flow on your site, select the paid plan
-4. Complete payment using Polar's sandbox test cards
-5. Verify the tenant site is provisioned and subscription is active in WaaS → Subscriptions
+1. Đặt API URL của Polar thành endpoint **sandbox**: `https://sandbox-api.polar.sh`
+2. Tạo sản phẩm sandbox trong bảng điều khiển sandbox của Polar
+3. Thực hiện quy trình đăng ký trên site của bạn và chọn gói trả phí
+4. Hoàn tất thanh toán bằng thẻ thử nghiệm sandbox của Polar
+5. Xác minh site tenant đã được khởi tạo và gói đăng ký ở trạng thái active trong WaaS → Subscriptions
 
-Once verified, switch back to the production API URL and production products.
+Sau khi xác minh, chuyển lại về API URL sản xuất và các sản phẩm sản xuất.
 
 ---
 
-**Next:** [Set Up Templates](/grabwp-tenancy-waas/waas-setup-templates)
+**Tiếp theo:** [Thiết lập mẫu giao diện](/vi/grabwp-tenancy-waas/waas-setup-templates)
