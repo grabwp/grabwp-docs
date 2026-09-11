@@ -25,7 +25,7 @@ Once enabled, the **Extensions** link appears in the tenant's row in the tenant 
 2. Find the site and click the **Extensions** row action link
 3. You'll see all plugins and themes available from your main installation
 
-![Extensions — install method and installable plugins](../images/grabwp-tenancy-pro-tenant-extension.jpg)
+![Extensions — install method and installable plugins](../images/grabwp-tenancy-pro-tenant-extension.png)
 
 ### Making a Plugin Available to a Site
 

@@ -14,7 +14,7 @@ section: base
 3. Choose **"I have a domain"** to enter a domain now, or **"I'll set up a domain later"** to use path routing immediately
 4. Click **Create**
 
-![Add New Tenant — domain now or later](../images/grabwp-tenancy-pro-tenant-add.jpg)
+![Add New Tenant — domain now or later](../images/grabwp-tenancy-pro-tenant-add.png)
 
 The system assigns a unique 6-character ID (e.g., `abc123`) and automatically creates its database tables and upload folder.
 
@@ -22,7 +22,7 @@ The system assigns a unique 6-character ID (e.g., `abc123`) and automatically cr
 
 After creation, find the site in the tenant list. Each row shows action icons:
 
-![Tenant list with row actions (visit, admin, edit, delete)](../images/grabwp-tenancy-pro-tenant-list.jpg)
+![Tenant list with row actions (visit, admin, edit, delete)](../images/grabwp-tenancy-pro-tenant-list.png)
 
 | Icon | Action |
 |------|--------|
@@ -49,7 +49,7 @@ Click the **Edit icon** to:
 - View the path URL (with a copy button)
 - Add or remove custom domains
 
-![Edit tenant — path URL and domains](../images/grabwp-tenancy-pro-tenant-edit.jpg)
+![Edit tenant — path URL and domains](../images/grabwp-tenancy-pro-tenant-edit.png)
 
 ## Adding More Domains
 

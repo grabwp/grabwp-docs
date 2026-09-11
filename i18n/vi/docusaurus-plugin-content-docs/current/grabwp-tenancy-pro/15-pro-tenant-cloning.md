@@ -15,7 +15,7 @@ Pro cho phép bạn sao chép bất kỳ tenant site hiện có nào sang một 
 - Hãy tạo tenant đích trước dưới dạng site rỗng, sau đó mới nhân bản vào đó
 - Dữ liệu hiện có của site đích sẽ bị ghi đè bởi bản nhân bản
 
-![Clone — chọn site nguồn từ danh sách tenant](../images/grabwp-tenancy-pro-tenant-clone-main-site.jpg)
+![Clone — chọn site nguồn từ danh sách tenant](../images/grabwp-tenancy-pro-tenant-clone-main-site.png)
 
 ## Cách nhân bản
 
@@ -24,15 +24,15 @@ Pro cho phép bạn sao chép bất kỳ tenant site hiện có nào sang một 
 3. Chọn **site đích** từ danh sách thả xuống
 4. Nhấn **Start Clone**
 
-![Clone — chọn tenant đích](../images/grabwp-tenancy-pro-tenant-clone-1.jpg)
+![Clone — chọn tenant đích](../images/grabwp-tenancy-pro-tenant-clone-1.png)
 
 Quá trình nhân bản chạy qua 7 bước và hiển thị tiến trình trực tiếp trong trình duyệt:
 
-![Clone — xuất dữ liệu và tiến trình](../images/grabwp-tenancy-pro-tenant-clone-2.jpg)
+![Clone — xuất dữ liệu và tiến trình](../images/grabwp-tenancy-pro-tenant-clone-2.png)
 
-![Clone — nhập dữ liệu và sao chép uploads](../images/grabwp-tenancy-pro-tenant-clone-3.jpg)
+![Clone — nhập dữ liệu và sao chép uploads](../images/grabwp-tenancy-pro-tenant-clone-3.png)
 
-![Clone — sửa URL và hoàn tất](../images/grabwp-tenancy-pro-tenant-clone-4.jpg)
+![Clone — sửa URL và hoàn tất](../images/grabwp-tenancy-pro-tenant-clone-4.png)
 
 | Bước | Diễn ra điều gì |
 |------|-------------|

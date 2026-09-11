@@ -35,7 +35,7 @@ Go to **GrabWP Tenancy → Status** and check that the Pro plugin is shown as ac
 
 Once Pro is active, each tenant site in the list gets additional row action links:
 
-![Tenant list with Pro actions — Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.jpg)
+![Tenant list with Pro actions — Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.png)
 
 - **Extensions** — manage which plugins and themes are available to the site
 - **Backup** — create a backup of the site
@@ -45,7 +45,7 @@ The tenant **Edit** form also gains additional fields for per-site isolation set
 
 A new **GrabWP Tenancy → Pro Settings** submenu page is added for configuring default isolation settings for new sites.
 
-![Pro Settings — default directories and uploads](../images/grabwp-tenancy-pro-settings-dir.jpg)
+![Pro Settings — default directories and uploads](../images/grabwp-tenancy-pro-settings-dir.png)
 
 ## Deactivating Pro
 

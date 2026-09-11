@@ -13,7 +13,7 @@ Pro lets you configure how each tenant site's data is isolated from others.
 
 Go to **GrabWP Tenancy → Tenants → Edit** the site. The Pro fields appear in the edit form below the domain settings.
 
-![Edit tenant — database type and isolation options](../images/grabwp-tenancy-pro-tenant-edit.jpg)
+![Edit tenant — database type and isolation options](../images/grabwp-tenancy-pro-tenant-edit.png)
 
 ### Shared Database (Default)
 All sites share one MySQL database with unique table prefixes — same as the free plugin. Simplest setup, lowest overhead.
@@ -53,4 +53,4 @@ Go to **GrabWP Tenancy → Pro Settings** to set default isolation options. All 
 
 Default directory and upload paths are configured on the same Pro Settings screen (see [Installing Pro](/grabwp-tenancy-pro/pro-installation)). Use the toggles below for default **content**, **plugins**, and **uploads** isolation for new sites:
 
-![Pro Settings — default content and plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.jpg)
+![Pro Settings — default content and plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.png)

@@ -1,0 +1,36 @@
+{
+  "_comment": "SSOT map: docs/images/<key> is GENERATED from the admin-screenshot library. Source of truth = ~/project-hub/grabwp/assets/admin-screenshots (slug = <NN>-<page>.png). Run scripts/sync_docs_images.py after every library re-shoot. auto entries copy (optionally crop) library/<src>.png -> docs/images/<key>; manual entries are hand-made (wizard step crops / non-GrabWP screens), left untouched and reported by the script. Docs keys keep their historical base names (extension standardised to .png).",
+  "_library_dir": "~/project-hub/grabwp/assets/admin-screenshots",
+  "auto": {
+    "grabwp-status.png":                        { "src": "09-status-general" },
+    "grabwp-tenancy-pro-tenant-add.png":        { "src": "07-tenancy-create" },
+    "grabwp-tenancy-pro-tenant-list.png":       { "src": "06-tenancy-all" },
+    "grabwp-tenancy-pro-tenant-edit.png":       { "src": "12-tenant-edit" },
+    "grabwp-tenancy-pro-tenant-backup.png":     { "src": "12-tenant-backup" },
+    "grabwp-tenancy-pro-tenant-extension.png":  { "src": "12-tenant-extensions" },
+    "grabwp-tenancy-pro-settings-isolation.png":{ "src": "11-pro-settings-isolation" },
+    "grabwp-tenancy-pro-settings-dir.png":      { "src": "11-pro-settings-directories" },
+    "waas-general-settings.png":   { "src": "05-waas-settings-general" },
+    "waas-plans-list.png":         { "src": "05-waas-settings-plans" },
+    "waas-billing-settings.png":   { "src": "05-waas-settings-billing" },
+    "waas-subscriptions.png":      { "src": "02-waas-subscriptions" },
+    "waas-domains.png":            { "src": "03-waas-domains-all" },
+    "waas-templates-list.png":     { "src": "04-waas-templates" }
+  },
+  "manual": {
+    "grabwp-settings.png":         { "reason": "WP admin menu shot, not a GrabWP screen in the library" },
+    "plugins-list.png":            { "reason": "core WP Plugins list, not a GrabWP screen" },
+    "pro-settings.png":            { "reason": "generic pro-settings hero; pick a specific 11-pro-settings-* screen when revisited" },
+    "waas-pages-config.png":       { "reason": "crop of WaaS General Settings pages section" },
+    "waas-plan-edit.png":          { "reason": "plan edit form; library has no dedicated edit screen" },
+    "waas-template-edit.png":      { "reason": "template edit form; library has no dedicated edit screen" },
+    "waas-subscription-detail.png":{ "reason": "subscription detail view; library has no dedicated screen" },
+    "grabwp-tenancy-pro-tenant-clone-main-site.png":{ "reason": "clone wizard step (source pick); library has one merged 12-tenant-clone" },
+    "grabwp-tenancy-pro-tenant-clone-1.png":{ "reason": "clone wizard step 1 crop" },
+    "grabwp-tenancy-pro-tenant-clone-2.png":{ "reason": "clone wizard step 2 crop" },
+    "grabwp-tenancy-pro-tenant-clone-3.png":{ "reason": "clone wizard step 3 crop" },
+    "grabwp-tenancy-pro-tenant-clone-4.png":{ "reason": "clone wizard step 4 crop" },
+    "grabwp-tenancy-pro-tenant-restore-1.png":{ "reason": "restore wizard step 1 crop" },
+    "grabwp-tenancy-pro-tenant-restore-2.png":{ "reason": "restore wizard step 2 crop" }
+  }
+}
