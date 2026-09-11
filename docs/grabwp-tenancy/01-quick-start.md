@@ -19,7 +19,7 @@ section: base
 2. Search for **GrabWP Tenancy**
 3. Click **Install Now**, then **Activate**
 
-The plugin automatically sets up everything it needs on activation — no manual file editing required.
+The plugin automatically sets up everything it needs on activation - no manual file editing required.
 
 > **Tip:** After activation, go to **GrabWP Tenancy → Status** to confirm all components are installed correctly. If anything shows a warning, click **Auto Fix**.
 
@@ -36,7 +36,7 @@ The plugin assigns a unique 6-character ID (e.g., `abc123`) and creates the site
 
 You have two ways to reach a tenant site:
 
-### Option A — Path Routing (no DNS needed)
+### Option A - Path Routing (no DNS needed)
 
 Access the site immediately using the path URL:
 
@@ -48,7 +48,7 @@ Example: `https://yoursite.com/site/abc123`
 
 No domain setup, no DNS changes needed. Works right away on Apache/LiteSpeed. For Nginx, see the [Domain & DNS Setup guide](/grabwp-tenancy/hosting-dns-setup).
 
-### Option B — Custom Domain
+### Option B - Custom Domain
 
 Point a separate domain (e.g., `client1.com`) to the tenant site. Requires hosting + DNS configuration.
 

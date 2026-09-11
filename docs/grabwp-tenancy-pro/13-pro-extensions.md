@@ -7,7 +7,7 @@ section: pro
 
 # Per-Site Plugins & Themes
 
-With Pro, each tenant site can have its own set of plugins and themes — separate from your main site and from each other.
+With Pro, each tenant site can have its own set of plugins and themes - separate from your main site and from each other.
 
 ## Before You Start
 
@@ -25,18 +25,18 @@ Once enabled, the **Extensions** link appears in the tenant's row in the tenant 
 2. Find the site and click the **Extensions** row action link
 3. You'll see all plugins and themes available from your main installation
 
-![Extensions — install method and installable plugins](../images/grabwp-tenancy-pro-tenant-extension.png)
+![Extensions - install method and installable plugins](../images/grabwp-tenancy-pro-tenant-extension.png)
 
 ### Making a Plugin Available to a Site
 
 1. Find the plugin in the list
-2. Click **Install** — it's installed into the tenant site's directory (copied or symlinked, based on the Install Method setting)
+2. Click **Install** - it's installed into the tenant site's directory (copied or symlinked, based on the Install Method setting)
 3. The tenant admin can then activate it from their own Plugins page
 
 ### Removing a Plugin from a Site
 
 1. Find the plugin in the list
-2. Click **Remove** — it's removed from the tenant site's directory
+2. Click **Remove** - it's removed from the tenant site's directory
 
 ## Installation Methods
 

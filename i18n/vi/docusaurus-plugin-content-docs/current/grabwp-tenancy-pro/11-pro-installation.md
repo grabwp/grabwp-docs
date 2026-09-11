@@ -35,17 +35,17 @@ Vào **GrabWP Tenancy → Status** và xác nhận plugin Pro đang hiển thị
 
 Khi Pro được kích hoạt, mỗi tenant site trong danh sách sẽ có thêm các liên kết thao tác:
 
-![Danh sách tenant với các thao tác Pro — Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.png)
+![Danh sách tenant với các thao tác Pro - Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.png)
 
-- **Extensions** — quản lý plugin và theme khả dụng cho site
-- **Backup** — tạo bản sao lưu cho site
-- **Restore** — khôi phục site từ file ZIP sao lưu
+- **Extensions** - quản lý plugin và theme khả dụng cho site
+- **Backup** - tạo bản sao lưu cho site
+- **Restore** - khôi phục site từ file ZIP sao lưu
 
 Form **Edit** của tenant cũng sẽ có thêm các trường cho thiết lập cô lập theo site như loại cơ sở dữ liệu và cô lập nội dung.
 
 Một trang submenu mới **GrabWP Tenancy → Pro Settings** cũng được thêm vào để cấu hình các thiết lập cô lập mặc định cho site mới.
 
-![Pro Settings — thư mục mặc định và uploads](../images/grabwp-tenancy-pro-settings-dir.png)
+![Pro Settings - thư mục mặc định và uploads](../images/grabwp-tenancy-pro-settings-dir.png)
 
 ## Tắt Pro
 

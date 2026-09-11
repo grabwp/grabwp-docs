@@ -67,7 +67,7 @@ Walk through the complete customer experience:
 2. Verify all active templates display with thumbnails
 3. Test tag filters work correctly
 4. Test search functionality
-5. Click "Preview" on a template — verify the preview loads
+5. Click "Preview" on a template - verify the preview loads
 
 ## Performance
 

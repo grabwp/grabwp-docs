@@ -9,13 +9,13 @@ section: pro
 
 ## Before You Start
 
-> **Required:** Install and activate the free **GrabWP Tenancy** base plugin first. Pro is an add-on that extends the base plugin — it will not work without it.
+> **Required:** Install and activate the free **GrabWP Tenancy** base plugin first. Pro is an add-on that extends the base plugin - it will not work without it.
 
 → [Install the free plugin first](/grabwp-tenancy/installation-guide)
 
 ## Get Your Pro Plugin ZIP
 
-After purchase, **Polar** (our payment processor) sends a confirmation email to your address. That email contains a **Customer Portal** link — open it to download your Pro plugin ZIP file.
+After purchase, **Polar** (our payment processor) sends a confirmation email to your address. That email contains a **Customer Portal** link - open it to download your Pro plugin ZIP file.
 
 If you can't find the email, check your spam folder or search for "Polar" or "GrabWP".
 
@@ -35,17 +35,17 @@ Go to **GrabWP Tenancy → Status** and check that the Pro plugin is shown as ac
 
 Once Pro is active, each tenant site in the list gets additional row action links:
 
-![Tenant list with Pro actions — Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.png)
+![Tenant list with Pro actions - Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.png)
 
-- **Extensions** — manage which plugins and themes are available to the site
-- **Backup** — create a backup of the site
-- **Restore** — restore the site from a backup ZIP
+- **Extensions** - manage which plugins and themes are available to the site
+- **Backup** - create a backup of the site
+- **Restore** - restore the site from a backup ZIP
 
 The tenant **Edit** form also gains additional fields for per-site isolation settings (database type, content isolation).
 
 A new **GrabWP Tenancy → Pro Settings** submenu page is added for configuring default isolation settings for new sites.
 
-![Pro Settings — default directories and uploads](../images/grabwp-tenancy-pro-settings-dir.png)
+![Pro Settings - default directories and uploads](../images/grabwp-tenancy-pro-settings-dir.png)
 
 ## Deactivating Pro
 

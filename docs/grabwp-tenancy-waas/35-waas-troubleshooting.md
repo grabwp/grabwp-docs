@@ -1,6 +1,6 @@
 ---
 title: "Troubleshooting"
-description: "Fix common WaaS issues — provisioning failures, webhook problems, template errors, domain verification, and email delivery"
+description: "Fix common WaaS issues - provisioning failures, webhook problems, template errors, domain verification, and email delivery"
 order: 35
 section: waas
 ---
@@ -16,7 +16,7 @@ Common issues and how to fix them.
 **Symptoms:** Signup completes payment but site is never created, or spinner runs indefinitely.
 
 **Check:**
-1. Go to **WaaS → Settings → Provisioning** — look for stuck intents
+1. Go to **WaaS → Settings → Provisioning** - look for stuck intents
 2. Check the **Activity Log** (WaaS → Settings → Activity tab) for error details
 3. Verify file system permissions:
    ```bash
@@ -28,8 +28,8 @@ Common issues and how to fix them.
 **Common causes:**
 - Insufficient disk space
 - File permission issues (web server can't create directories)
-- PHP memory limit too low — increase `memory_limit` in `php.ini`
-- PHP max execution time — increase `max_execution_time` for long provisioning tasks
+- PHP memory limit too low - increase `memory_limit` in `php.ini`
+- PHP max execution time - increase `max_execution_time` for long provisioning tasks
 
 ### Provisioning intent stuck in "pending"
 
@@ -55,7 +55,7 @@ Common issues and how to fix them.
 **Common causes:**
 - Wrong webhook URL (typo, HTTP instead of HTTPS)
 - Firewall blocking incoming webhooks
-- Webhook secret mismatch — copy-paste carefully, the `whsec_` prefix is required
+- Webhook secret mismatch - copy-paste carefully, the `whsec_` prefix is required
 - Site behind basic auth or maintenance mode
 
 ### Payment succeeds but site not provisioned
@@ -84,7 +84,7 @@ Common issues and how to fix them.
 
 ### Template preview not loading
 
-- The preview URL uses `?grabwp_waas_preview=<slug>` — make sure your server/caching layer doesn't block this parameter
+- The preview URL uses `?grabwp_waas_preview=<slug>` - make sure your server/caching layer doesn't block this parameter
 - Check that the source tenant site is accessible
 - Verify there are no PHP errors in the tenant site
 
@@ -128,7 +128,7 @@ Common issues and how to fix them.
 ### Tenant admin is inaccessible
 
 - Try accessing via `tenant-slug.yoursaas.com/wp-admin/`
-- If login fails, the tenant user may not have been created — check provisioning logs
+- If login fails, the tenant user may not have been created - check provisioning logs
 - For WaaS Auth mode: tenants log in via OTP on the dashboard, not wp-login.php
 
 ## Email
@@ -165,7 +165,7 @@ chown -R www-data:www-data wp-content/uploads/
 2. Verify access key and secret key are correct
 3. For MinIO: enable **Path-Style Endpoint** checkbox
 4. Check that the bucket exists and the credentials have read/write permission
-5. Verify network connectivity — your server must be able to reach the S3 endpoint
+5. Verify network connectivity - your server must be able to reach the S3 endpoint
 
 ## Performance
 
@@ -174,11 +174,11 @@ chown -R www-data:www-data wp-content/uploads/
 - Increase PHP `memory_limit` to at least 256M
 - Increase `max_execution_time` to at least 120 seconds
 - For SQLite tenants: ensure SSD storage
-- For S3 storage: provisioning uploads are slower than local — expected behavior
+- For S3 storage: provisioning uploads are slower than local - expected behavior
 
 ### Admin dashboard slow
 
-- The subscriptions and domains list tables query the database — ensure indexes are intact
+- The subscriptions and domains list tables query the database - ensure indexes are intact
 - If you have hundreds of tenants, consider MySQL performance tuning
 - Clear object cache if using a caching plugin
 
@@ -186,9 +186,9 @@ chown -R www-data:www-data wp-content/uploads/
 
 If you've tried the above and still have issues:
 
-1. **Check the Activity Log** — WaaS → Settings → Activity for detailed error records
-2. **Check PHP error log** — usually at `/var/log/php-fpm/error.log` or in your hosting control panel
-3. **Check WordPress debug log** — enable `WP_DEBUG_LOG` in `wp-config.php`:
+1. **Check the Activity Log** - WaaS → Settings → Activity for detailed error records
+2. **Check PHP error log** - usually at `/var/log/php-fpm/error.log` or in your hosting control panel
+3. **Check WordPress debug log** - enable `WP_DEBUG_LOG` in `wp-config.php`:
    ```php
    define('WP_DEBUG', true);
    define('WP_DEBUG_LOG', true);

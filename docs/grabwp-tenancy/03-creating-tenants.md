@@ -14,7 +14,7 @@ section: base
 3. Choose **"I have a domain"** to enter a domain now, or **"I'll set up a domain later"** to use path routing immediately
 4. Click **Create**
 
-![Add New Tenant — domain now or later](../images/grabwp-tenancy-pro-tenant-add.png)
+![Add New Tenant - domain now or later](../images/grabwp-tenancy-pro-tenant-add.png)
 
 The system assigns a unique 6-character ID (e.g., `abc123`) and automatically creates its database tables and upload folder.
 
@@ -31,11 +31,11 @@ After creation, find the site in the tenant list. Each row shows action icons:
 | Edit | Edit domain settings |
 | Trash | Delete the site |
 
-For domain-based tenants, clicking the **Dashboard icon** opens the tenant's admin with a secure token automatically embedded — no password needed. For path-only tenants, it opens the path-based admin URL directly.
+For domain-based tenants, clicking the **Dashboard icon** opens the tenant's admin with a secure token automatically embedded - no password needed. For path-only tenants, it opens the path-based admin URL directly.
 
 ## Accessing via Path URL
 
-Every tenant site is accessible at its path URL — no domain required:
+Every tenant site is accessible at its path URL - no domain required:
 
 ```
 https://yoursite.com/site/{tenant-id}
@@ -49,7 +49,7 @@ Click the **Edit icon** to:
 - View the path URL (with a copy button)
 - Add or remove custom domains
 
-![Edit tenant — path URL and domains](../images/grabwp-tenancy-pro-tenant-edit.png)
+![Edit tenant - path URL and domains](../images/grabwp-tenancy-pro-tenant-edit.png)
 
 ## Adding More Domains
 
@@ -57,15 +57,15 @@ A single site can respond to multiple domains (e.g., `www.site.com` and `site.co
 
 1. Click **Edit** on the site
 2. Add additional domains
-3. Save — then configure the new domains in your hosting control panel too
+3. Save - then configure the new domains in your hosting control panel too
 
 ## Deleting a Site
 
-> ⚠ **Warning:** Deleting a site permanently removes all its data — database tables and uploads cannot be recovered.
+> ⚠ **Warning:** Deleting a site permanently removes all its data - database tables and uploads cannot be recovered.
 
 1. Click the **Trash icon** on the site
 2. A prompt will ask you to type the site's ID to confirm
-3. Enter the ID exactly — deletion proceeds only if it matches
+3. Enter the ID exactly - deletion proceeds only if it matches
 
 ## Tenant Admin Notes
 

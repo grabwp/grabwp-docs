@@ -7,7 +7,7 @@ section: pro
 
 # Tenant Cloning
 
-Pro lets you duplicate any existing tenant site into a new one. Cloning copies the database, uploads, isolated content, and Pro config — then rewrites URLs to match the new site. Useful for staging environments, pre-configured site templates, or rapid provisioning.
+Pro lets you duplicate any existing tenant site into a new one. Cloning copies the database, uploads, isolated content, and Pro config - then rewrites URLs to match the new site. Useful for staging environments, pre-configured site templates, or rapid provisioning.
 
 ## Before You Start
 
@@ -15,7 +15,7 @@ Pro lets you duplicate any existing tenant site into a new one. Cloning copies t
 - Create the destination tenant first (empty), then clone into it
 - The destination site's existing data will be overwritten by the clone
 
-![Clone — choose source site from the tenant list](../images/grabwp-tenancy-pro-tenant-clone-main-site.png)
+![Clone - choose source site from the tenant list](../images/grabwp-tenancy-pro-tenant-clone-main-site.png)
 
 ## How to Clone
 
@@ -24,15 +24,15 @@ Pro lets you duplicate any existing tenant site into a new one. Cloning copies t
 3. Select the **destination** site from the dropdown
 4. Click **Start Clone**
 
-![Clone — select destination tenant](../images/grabwp-tenancy-pro-tenant-clone-1.png)
+![Clone - select destination tenant](../images/grabwp-tenancy-pro-tenant-clone-1.png)
 
 The clone runs 7 steps and shows live progress in your browser:
 
-![Clone — export and progress steps](../images/grabwp-tenancy-pro-tenant-clone-2.png)
+![Clone - export and progress steps](../images/grabwp-tenancy-pro-tenant-clone-2.png)
 
-![Clone — import and copy uploads](../images/grabwp-tenancy-pro-tenant-clone-3.png)
+![Clone - import and copy uploads](../images/grabwp-tenancy-pro-tenant-clone-3.png)
 
-![Clone — URL fix and completion](../images/grabwp-tenancy-pro-tenant-clone-4.png)
+![Clone - URL fix and completion](../images/grabwp-tenancy-pro-tenant-clone-4.png)
 
 | Step | What Happens |
 |------|-------------|
@@ -48,7 +48,7 @@ The clone runs 7 steps and shows live progress in your browser:
 
 - Visit the destination site and verify content, theme, and plugins loaded correctly
 - If the destination uses a different domain, check that all media URLs resolve correctly
-- The destination site has its own independent database — changes to one won't affect the other
+- The destination site has its own independent database - changes to one won't affect the other
 
 ## Notes
 

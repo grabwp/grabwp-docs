@@ -7,7 +7,7 @@ section: waas
 
 # Configure WaaS General Settings
 
-The WaaS General Settings define your platform identity — domain, authentication, and the pages customers interact with.
+The WaaS General Settings define your platform identity - domain, authentication, and the pages customers interact with.
 
 Navigate to **WaaS → Settings → General** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings`).
 
@@ -104,7 +104,7 @@ API keys allow external systems to interact with your WaaS platform via REST API
 To generate a key:
 1. Enter an optional **Key Label** (e.g., "CI/CD pipeline")
 2. Click **Generate New API Key**
-3. **Copy the key immediately** — it is shown only once
+3. **Copy the key immediately** - it is shown only once
 
 Existing keys are listed with their label, prefix, and creation date. Click **Revoke** to deactivate a key.
 

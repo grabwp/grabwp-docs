@@ -1,11 +1,11 @@
 ---
 title: "Shortcode Reference: Template Browser"
-description: "All attributes for [grabwp_waas_templates] — pool filtering, tag pills, pagination, and URL parameters"
+description: "All attributes for [grabwp_waas_templates] - pool filtering, tag pills, pagination, and URL parameters"
 order: 36
 section: waas
 ---
 
-# `[grabwp_waas_templates]` — Shortcode Reference
+# `[grabwp_waas_templates]` - Shortcode Reference
 
 Renders the template browser gallery with optional server-side pre-filtering and configurable client-side filter toolbar.
 
@@ -15,7 +15,7 @@ Renders the template browser gallery with optional server-side pre-filtering and
 
 ### `tags`
 **Type:** comma-separated tag slugs  
-**Default:** _(empty — show all active templates)_
+**Default:** _(empty - show all active templates)_
 
 Server-side pool filter. Only templates that carry **at least one** of the listed tags are loaded into the gallery. Reduces the card pool before anything else runs.
 
@@ -37,7 +37,7 @@ Controls which tags appear as **pill buttons** in the primary filter row, and wh
 | `"industry"` | Tags from the `industry` group | All other groups with ≥ 2 values |
 | `"industry,feature"` | Tags from `industry` + `feature` | All remaining groups with ≥ 2 values |
 
-> **Note:** A group is either pills **or** a select — never both.
+> **Note:** A group is either pills **or** a select - never both.
 
 ```
 [grabwp_waas_templates filter-tags="industry"]
@@ -106,7 +106,7 @@ https://example.com/?grabwp_waas_preview=el-restaurant-pro
 
 ## Client-Side Filters (Toolbar)
 
-All filters are applied in the browser without a page reload. They stack — all active conditions must match.
+All filters are applied in the browser without a page reload. They stack - all active conditions must match.
 
 | Filter | UI element | Matches against | Data attribute |
 |---|---|---|---|
@@ -124,7 +124,7 @@ All filters are applied in the browser without a page reload. They stack — all
 ## Common Recipes
 
 ```
-// Full browser — all templates, all tags as pills
+// Full browser - all templates, all tags as pills
 [grabwp_waas_templates]
 
 // Industry tag pills + theme/builder selects in secondary bar
@@ -133,7 +133,7 @@ All filters are applied in the browser without a page reload. They stack — all
 // Pre-filtered to Elementor templates, 9 per page
 [grabwp_waas_templates tags="elementor" per-page="9"]
 
-// Curated showcase — no filters, no pagination
+// Curated showcase - no filters, no pagination
 [grabwp_waas_templates tags="featured" tags-browser="no" per-page="0"]
 
 // Page linked to with ?template_tag=restaurant pre-selected
@@ -143,4 +143,4 @@ All filters are applied in the browser without a page reload. They stack — all
 
 ---
 
-**See also:** [Block Walkthrough](/grabwp-tenancy-waas/waas-block-walkthrough) — Gutenberg block equivalent with visual Inspector UI
+**See also:** [Block Walkthrough](/grabwp-tenancy-waas/waas-block-walkthrough) - Gutenberg block equivalent with visual Inspector UI

@@ -25,7 +25,7 @@ Sau khi bật, liên kết **Extensions** sẽ xuất hiện trong dòng của t
 2. Tìm site rồi nhấn liên kết thao tác **Extensions**
 3. Bạn sẽ thấy toàn bộ plugin và theme hiện có từ cài đặt chính
 
-![Extensions — phương thức cài đặt và các plugin có thể cài](../images/grabwp-tenancy-pro-tenant-extension.png)
+![Extensions - phương thức cài đặt và các plugin có thể cài](../images/grabwp-tenancy-pro-tenant-extension.png)
 
 ### Cấp quyền dùng plugin cho một site
 

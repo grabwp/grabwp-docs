@@ -7,7 +7,7 @@ section: waas
 
 # Create Plans
 
-Plans define what your customers can sign up for — free trials, basic tiers, premium offerings. Each plan has pricing, features, and can be linked to a billing provider product.
+Plans define what your customers can sign up for - free trials, basic tiers, premium offerings. Each plan has pricing, features, and can be linked to a billing provider product.
 
 Navigate to **WaaS → Settings → Plans** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=plans`).
 
@@ -17,8 +17,8 @@ Navigate to **WaaS → Settings → Plans** (`/wp-admin/admin.php?page=grabwp-te
 
 A WaaS installation starts with a default **free** plan. You'll create plans to match your offering. For this tutorial, we set up:
 
-- **Free** — no payment, limited features
-- **Pro** — monthly paid plan via Polar
+- **Free** - no payment, limited features
+- **Pro** - monthly paid plan via Polar
 
 ## Create the Free Plan
 
@@ -62,7 +62,7 @@ Click **Add New Plan** and fill in:
 | **Name** | `Pro` | |
 | **Description** | `Everything you need to grow your business` | |
 | **Monthly Price** | `9.99` | Price in your primary currency |
-| **Yearly Price** | `99.99` | Optional — leave blank if you only offer monthly |
+| **Yearly Price** | `99.99` | Optional - leave blank if you only offer monthly |
 | **Polar Monthly Product ID** | _(set after Polar setup)_ | UUID from Polar. See [Set Up Billing](/grabwp-tenancy-waas/waas-setup-billing). |
 | **Polar Yearly Product ID** | _(set after Polar setup)_ | UUID from Polar, if offering yearly billing |
 | **Features** | See below | |
