@@ -32,7 +32,7 @@ Plugin sẽ tự động cài mọi thành phần cần thiết khi kích hoạt
 
 Sau khi kích hoạt, vào **Dashboard → GrabWP Tenancy → Status**.
 
-![Trang Status của GrabWP Tenancy hiển thị kiểm tra các thành phần](../images/grabwp-status.jpg)
+![Trang Status của GrabWP Tenancy hiển thị kiểm tra các thành phần](../images/grabwp-status.png)
 
 Trang Status sẽ tự động kiểm tra tất cả thành phần:
 
@@ -46,7 +46,7 @@ Khi tất cả mục đều hiển thị màu xanh, bạn đã sẵn sàng tạo
 
 Các tùy chọn và công cụ của plugin nằm trong menu **GrabWP Tenancy** trong trang quản trị WordPress, bao gồm **Status**, **Tenants** và **Settings** nếu có.
 
-![GrabWP Tenancy trong menu quản trị WordPress](../images/grabwp-settings.jpg)
+![GrabWP Tenancy trong menu quản trị WordPress](../images/grabwp-settings.png)
 
 ## Gỡ cài đặt
 

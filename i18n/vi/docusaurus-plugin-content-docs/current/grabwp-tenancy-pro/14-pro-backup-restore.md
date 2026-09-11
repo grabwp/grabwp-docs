@@ -15,7 +15,7 @@ Pro cho phép bạn sao lưu và khôi phục từng tenant site riêng lẻ, ba
 2. Tìm site rồi nhấn liên kết thao tác **Backup**
 3. Nhấn **Start Backup**
 
-![Backup — bắt đầu sao lưu cho tenant site](../images/grabwp-tenancy-pro-tenant-backup.jpg)
+![Backup — bắt đầu sao lưu cho tenant site](../images/grabwp-tenancy-pro-tenant-backup.png)
 
 Quá trình sao lưu chạy từng bước ngay trong trình duyệt:
 
@@ -36,13 +36,13 @@ Khi hoàn tất, một file ZIP sẽ được tạo. **Hãy tải và lưu file 
 3. Tải lên file ZIP sao lưu
 4. Nhấn **Upload & Start Restore**
 
-![Restore — tải lên file ZIP sao lưu](../images/grabwp-tenancy-pro-tenant-restore-1.jpg)
+![Restore — tải lên file ZIP sao lưu](../images/grabwp-tenancy-pro-tenant-restore-1.png)
 
 > ⚠ **Cảnh báo:** Khôi phục sẽ ghi đè hoàn toàn cơ sở dữ liệu, uploads và cấu hình hiện tại của site. Không thể hoàn tác. Hãy sao lưu trạng thái hiện tại trước nếu bạn cần giữ lại.
 
 Quá trình khôi phục chạy qua 8 bước và hiển thị tiến trình trực tiếp trong trình duyệt.
 
-![Restore — tiến trình theo từng bước](../images/grabwp-tenancy-pro-tenant-restore-2.jpg)
+![Restore — tiến trình theo từng bước](../images/grabwp-tenancy-pro-tenant-restore-2.png)
 
 ## Quản lý file sao lưu
 

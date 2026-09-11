@@ -32,7 +32,7 @@ The plugin automatically installs all required components on activation — MU-p
 
 After activation, go to **Dashboard → GrabWP Tenancy → Status**.
 
-![GrabWP Tenancy Status page showing component checks](../images/grabwp-status.jpg)
+![GrabWP Tenancy Status page showing component checks](../images/grabwp-status.png)
 
 The Status page checks all components automatically:
 
@@ -46,7 +46,7 @@ Once all items are green, you're ready to create tenant sites.
 
 Plugin options and tools are available under **GrabWP Tenancy** in the WordPress admin menu (including **Status**, **Tenants**, and **Settings** where applicable).
 
-![GrabWP Tenancy in the WordPress admin menu](../images/grabwp-settings.jpg)
+![GrabWP Tenancy in the WordPress admin menu](../images/grabwp-settings.png)
 
 ## Uninstalling
 

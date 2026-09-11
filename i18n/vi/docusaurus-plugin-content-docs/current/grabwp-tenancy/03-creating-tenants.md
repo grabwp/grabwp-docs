@@ -14,7 +14,7 @@ section: base
 3. Chọn **"I have a domain"** để nhập domain ngay, hoặc **"I'll set up a domain later"** để dùng định tuyến theo path ngay lập tức
 4. Nhấn **Create**
 
-![Add New Tenant — thêm domain ngay hoặc sau](../images/grabwp-tenancy-pro-tenant-add.jpg)
+![Add New Tenant — thêm domain ngay hoặc sau](../images/grabwp-tenancy-pro-tenant-add.png)
 
 Hệ thống sẽ gán một ID gồm 6 ký tự duy nhất (ví dụ: `abc123`) và tự động tạo bảng cơ sở dữ liệu cùng thư mục upload.
 
@@ -22,7 +22,7 @@ Hệ thống sẽ gán một ID gồm 6 ký tự duy nhất (ví dụ: `abc123`)
 
 Sau khi tạo, tìm site trong danh sách tenant. Mỗi dòng hiển thị các biểu tượng thao tác:
 
-![Danh sách tenant với các thao tác theo dòng (visit, admin, edit, delete)](../images/grabwp-tenancy-pro-tenant-list.jpg)
+![Danh sách tenant với các thao tác theo dòng (visit, admin, edit, delete)](../images/grabwp-tenancy-pro-tenant-list.png)
 
 | Biểu tượng | Thao tác |
 |------|--------|
@@ -49,7 +49,7 @@ Nhấn **biểu tượng Edit** để:
 - Xem URL theo path (kèm nút copy)
 - Thêm hoặc xóa domain tùy chỉnh
 
-![Chỉnh sửa tenant — URL theo path và các domain](../images/grabwp-tenancy-pro-tenant-edit.jpg)
+![Chỉnh sửa tenant — URL theo path và các domain](../images/grabwp-tenancy-pro-tenant-edit.png)
 
 ## Thêm nhiều domain hơn
 
