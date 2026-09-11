@@ -49,12 +49,12 @@ Giao diện quản trị mở rộng với các khu vực cấu hình riêng the
 | Upload tách biệt cho từng site | ✓ | ✓ |
 | Cơ sở dữ liệu MySQL dùng chung | ✓ | ✓ |
 | Token truy cập admin | ✓ | ✓ |
-| Cơ sở dữ liệu riêng cho từng site (MySQL hoặc SQLite) | — | ✓ |
-| Plugin & theme riêng theo site | — | ✓ |
-| Kiểm soát cô lập nội dung | — | ✓ |
-| Sao lưu & khôi phục theo site | — | ✓ |
-| Nhân bản tenant | — | ✓ |
-| Quản lý domain symlink | — | ✓ |
+| Cơ sở dữ liệu riêng cho từng site (MySQL hoặc SQLite) | - | ✓ |
+| Plugin & theme riêng theo site | - | ✓ |
+| Kiểm soát cô lập nội dung | - | ✓ |
+| Sao lưu & khôi phục theo site | - | ✓ |
+| Nhân bản tenant | - | ✓ |
+| Quản lý domain symlink | - | ✓ |
 
 ## Mua Pro
 

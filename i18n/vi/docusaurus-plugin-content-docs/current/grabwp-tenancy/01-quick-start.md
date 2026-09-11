@@ -36,7 +36,7 @@ Plugin sẽ gán một ID gồm 6 ký tự duy nhất (ví dụ: `abc123`) và t
 
 Bạn có hai cách để truy cập tenant site:
 
-### Tùy chọn A — Định tuyến theo path (không cần DNS)
+### Tùy chọn A - Định tuyến theo path (không cần DNS)
 
 Truy cập site ngay bằng URL theo đường dẫn:
 
@@ -48,7 +48,7 @@ Ví dụ: `https://yoursite.com/site/abc123`
 
 Không cần cấu hình domain, không cần thay đổi DNS. Hoạt động ngay trên Apache/LiteSpeed. Với Nginx, xem [Hướng dẫn Domain & DNS](/grabwp-tenancy/hosting-dns-setup).
 
-### Tùy chọn B — Domain tùy chỉnh
+### Tùy chọn B - Domain tùy chỉnh
 
 Trỏ một domain riêng (ví dụ: `client1.com`) đến tenant site. Cần cấu hình hosting và DNS.
 

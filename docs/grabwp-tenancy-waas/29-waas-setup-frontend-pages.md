@@ -98,7 +98,7 @@ If you prefer the block editor, use the Gutenberg blocks instead of shortcodes.
 
 1. Edit your Dashboard page
 2. Search for **"WaaS Dashboard"**
-3. Insert the block — supports wide and full-width alignment
+3. Insert the block - supports wide and full-width alignment
 4. Save
 
 #### 3. Template Browser Block
@@ -110,7 +110,7 @@ If you prefer the block editor, use the Gutenberg blocks instead of shortcodes.
 
 | Control | What it does |
 |---------|-------------|
-| **Limit by tags** | Server-side filter — only load templates with these tags |
+| **Limit by tags** | Server-side filter - only load templates with these tags |
 | **Show tag browser toolbar** | Toggle the filter toolbar on/off |
 | **Pill filter groups** | Which tag groups show as pill buttons vs. dropdowns |
 | **Cards per page** | Number of template cards per page (0 = show all) |
@@ -150,9 +150,9 @@ Both produce the same frontend output. Choose whichever you're more comfortable 
 
 After setup, visit each page on the frontend:
 
-1. **Signup page** — should show plan selection and signup form
-2. **Templates page** — should show the template gallery with your templates
-3. **Dashboard page** — should show login/OTP form (when not logged in) or the dashboard (when logged in)
+1. **Signup page** - should show plan selection and signup form
+2. **Templates page** - should show the template gallery with your templates
+3. **Dashboard page** - should show login/OTP form (when not logged in) or the dashboard (when logged in)
 
 ---
 

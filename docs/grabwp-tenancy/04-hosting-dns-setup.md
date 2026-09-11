@@ -7,11 +7,11 @@ section: base
 
 # Domain & DNS Setup
 
-You have two ways to route visitors to a tenant site. Path routing requires no setup at all — custom domains require hosting and DNS configuration.
+You have two ways to route visitors to a tenant site. Path routing requires no setup at all - custom domains require hosting and DNS configuration.
 
-## Option A — Path Routing (Recommended for Quick Setup)
+## Option A - Path Routing (Recommended for Quick Setup)
 
-Access any tenant site via a URL path on your existing domain — no DNS changes, no hosting configuration:
+Access any tenant site via a URL path on your existing domain - no DNS changes, no hosting configuration:
 
 ```
 https://yoursite.com/site/{tenant-id}
@@ -36,9 +36,9 @@ Add this block inside your existing WordPress `server {}` block, then reload Ngi
 
 ---
 
-## Option B — Query-String Routing
+## Option B - Query-String Routing
 
-Access a tenant site by appending its ID as a query parameter — useful for testing or when you can't modify server config:
+Access a tenant site by appending its ID as a query parameter - useful for testing or when you can't modify server config:
 
 ```
 https://yoursite.com/?site={tenant-id}
@@ -50,7 +50,7 @@ No server configuration needed. Works on any host. Not recommended for productio
 
 ---
 
-## Option C — Custom Domain
+## Option C - Custom Domain
 
 Give each tenant site its own domain (e.g., `client.com` or `client.yoursite.com`). Requires two steps: hosting setup and DNS configuration.
 
@@ -75,12 +75,12 @@ Log into your hosting control panel and add the domain:
 
 ### Step 2: Update DNS
 
-**For subdomains** — add an A record at your DNS provider:
+**For subdomains** - add an A record at your DNS provider:
 - **Name:** subdomain (e.g., `client`)
 - **Type:** A
 - **Value:** your server's IP address
 
-**For external domains** — update nameservers at the registrar to point to your host, or add an A record if you manage DNS separately.
+**For external domains** - update nameservers at the registrar to point to your host, or add an A record if you manage DNS separately.
 
 ### Step 3: Wait for Propagation
 
@@ -88,7 +88,7 @@ DNS changes take 5–30 minutes, sometimes up to 24 hours. Use [dnschecker.org](
 
 ### Testing
 
-Visit the domain — you should see the tenant site's WordPress screen. If you see your hosting's default page, the document root isn't pointing to your WordPress directory.
+Visit the domain - you should see the tenant site's WordPress screen. If you see your hosting's default page, the document root isn't pointing to your WordPress directory.
 
 ## Domain Format Rules
 

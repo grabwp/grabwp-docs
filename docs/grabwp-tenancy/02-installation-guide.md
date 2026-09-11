@@ -20,7 +20,7 @@ section: base
 2. Search for **GrabWP Tenancy**
 3. Click **Install Now** → **Activate**
 
-The plugin automatically installs all required components on activation — MU-plugin, rewrite rules, and directory structure. No manual file editing needed.
+The plugin automatically installs all required components on activation - MU-plugin, rewrite rules, and directory structure. No manual file editing needed.
 
 ## Install Manually (ZIP Upload)
 
@@ -39,8 +39,8 @@ The Status page checks all components automatically:
 | Indicator | Meaning |
 |-----------|---------|
 | ✓ Green | Everything working |
-| ⚠ Warning | Minor issue — click **Auto Fix** |
-| ✗ Error | Needs attention — click **Auto Fix** or follow on-screen instructions |
+| ⚠ Warning | Minor issue - click **Auto Fix** |
+| ✗ Error | Needs attention - click **Auto Fix** or follow on-screen instructions |
 
 Once all items are green, you're ready to create tenant sites.
 
@@ -52,4 +52,4 @@ Plugin options and tools are available under **GrabWP Tenancy** in the WordPress
 
 Deactivating the plugin removes all injected components (MU-plugin, rewrite rules, wp-config.php loader).
 
-**Your tenant sites' data is NOT deleted on deactivation** — database tables and uploads are preserved. You can safely reactivate the plugin at any time and all sites will be restored.
+**Your tenant sites' data is NOT deleted on deactivation** - database tables and uploads are preserved. You can safely reactivate the plugin at any time and all sites will be restored.

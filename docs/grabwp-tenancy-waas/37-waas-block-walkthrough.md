@@ -5,7 +5,7 @@ order: 37
 section: waas
 ---
 
-# Template Browser — Gutenberg Block Walkthrough
+# Template Browser - Gutenberg Block Walkthrough
 
 The `grabwp-waas/template-browser` block gives site editors a visual Inspector UI to configure the template gallery without touching shortcode strings. The original `[grabwp_waas_templates]` shortcode is fully preserved and works exactly as before.
 
@@ -13,9 +13,9 @@ The `grabwp-waas/template-browser` block gives site editors a visual Inspector U
 
 1. Open any page in the block editor
 2. Click **+** (block inserter) and search for **"GrabWP Template Browser"**
-3. Insert the block — it shows a descriptive placeholder in the editor canvas
+3. Insert the block - it shows a descriptive placeholder in the editor canvas
 4. Configure via the **Settings sidebar → Block settings** (gear icon)
-5. Save/publish — the frontend renders the full template gallery
+5. Save/publish - the frontend renders the full template gallery
 
 > **Note:** The block shows a placeholder in the editor. The live gallery renders only on the frontend.
 
@@ -71,4 +71,4 @@ Both produce identical frontend output. Choose based on your workflow:
 
 ---
 
-**See also:** [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates) — all shortcode attributes and URL parameters
+**See also:** [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates) - all shortcode attributes and URL parameters

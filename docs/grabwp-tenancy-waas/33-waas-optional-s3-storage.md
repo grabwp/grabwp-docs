@@ -13,7 +13,7 @@ Offload tenant media uploads to S3-compatible cloud storage instead of storing t
 
 - **Disk space:** Your server has limited storage and tenants upload lots of media
 - **CDN delivery:** Serve images/files from a global CDN for faster load times
-- **Scalability:** Decouple storage from compute — scale independently
+- **Scalability:** Decouple storage from compute - scale independently
 - **Backups:** Cloud storage providers handle redundancy and durability
 
 ## Supported Providers
@@ -85,7 +85,7 @@ Navigate to **Tenancy → Pro Settings → Object Storage** (`/wp-admin/admin.ph
 After configuring S3, migrate existing tenant uploads:
 
 1. In Pro Settings → Object Storage, click **Migrate All Tenants to S3**
-2. Wait for the migration to complete — this uploads all local tenant files to S3
+2. Wait for the migration to complete - this uploads all local tenant files to S3
 3. Verify a few tenant sites to ensure images load correctly
 
 To migrate back to local storage: click **Migrate All Tenants to Local**.

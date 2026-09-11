@@ -16,7 +16,7 @@ Use WooCommerce as a billing provider instead of (or alongside) Polar. This is u
 | Simple subscription billing, international | **Polar** |
 | Existing WooCommerce store, need local gateways | **WooCommerce** |
 | Vietnamese bank transfers (VietQR) | **SePay** (separate plugin) |
-| Multiple payment options for customers | **Both** — enable multiple providers |
+| Multiple payment options for customers | **Both** - enable multiple providers |
 
 ## Setup Overview
 
@@ -42,7 +42,7 @@ In **WooCommerce → Settings → Payments**, enable the payment gateways you wa
 
 ### Step 3: Create Anchor Product
 
-WaaS uses a shared **anchor product** — a hidden WooCommerce product used for dynamic pricing at checkout. You don't need separate products per plan.
+WaaS uses a shared **anchor product** - a hidden WooCommerce product used for dynamic pricing at checkout. You don't need separate products per plan.
 
 1. Go to **WaaS → Settings → General**
 2. Click the **Create/Repair WooCommerce Anchor Product** button
@@ -71,7 +71,7 @@ Unlike Polar (which uses external checkout), WooCommerce checkout happens on you
 4. Customer completes payment using your configured gateway
 5. On order completion, WaaS automatically provisions the site
 
-No webhooks needed — WooCommerce uses WordPress action hooks internally.
+No webhooks needed - WooCommerce uses WordPress action hooks internally.
 
 ## WooCommerce Subscriptions (Optional)
 

@@ -19,7 +19,7 @@ Navigate to **WaaS → Settings → Billing** (`/wp-admin/admin.php?page=grabwp-
 
 1. Go to [polar.sh](https://polar.sh) and create an account
 2. Create an **Organization** if you don't have one
-3. Note your organization dashboard URL — you'll need it
+3. Note your organization dashboard URL - you'll need it
 
 ## Step 2: Create Products in Polar
 
@@ -51,7 +51,7 @@ On the Billing Providers tab:
 | Field | Description |
 |-------|-------------|
 | **API URL** | `https://api.polar.sh` (production) or `https://sandbox-api.polar.sh` (testing) |
-| **Access Token** | Your Polar API token — generate in Polar → Settings → API |
+| **Access Token** | Your Polar API token - generate in Polar → Settings → API |
 | **Webhook Secret** | Secret string to verify webhook authenticity |
 
 4. Click **Save Settings**

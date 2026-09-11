@@ -52,13 +52,13 @@ Click a subscription to view its details.
 
 The detail page shows:
 
-- **Status badge** — current status with color indicator
-- **Plan** — which plan the tenant is on
-- **Provider** — billing provider handling payments
-- **Billing Cycle** — Monthly or Yearly
-- **Period End** — when the current period ends / renewal date
-- **Provider Subscription ID** — reference ID in the billing provider
-- **Cancellation status** — whether cancellation is scheduled at period end
+- **Status badge** - current status with color indicator
+- **Plan** - which plan the tenant is on
+- **Provider** - billing provider handling payments
+- **Billing Cycle** - Monthly or Yearly
+- **Period End** - when the current period ends / renewal date
+- **Provider Subscription ID** - reference ID in the billing provider
+- **Cancellation status** - whether cancellation is scheduled at period end
 
 ## Admin Actions
 
@@ -69,7 +69,7 @@ Use the action dropdown on the subscription detail page to manage subscriptions:
 Extend the current billing period by a number of days. Useful for giving extra time to a customer having issues.
 
 - **Days:** 1–365 (default: 30)
-- **Reason:** Required — document why you're extending
+- **Reason:** Required - document why you're extending
 
 ### Change Plan
 
@@ -145,9 +145,9 @@ A daily cron job checks for expired subscriptions:
 
 Tenants can manage their own subscription from the dashboard page:
 
-- **Cancel subscription** — schedules cancellation at period end
-- **Revert cancellation** — if they change their mind before period end
-- **Upgrade plan** — redirects to checkout for the higher plan
+- **Cancel subscription** - schedules cancellation at period end
+- **Revert cancellation** - if they change their mind before period end
+- **Upgrade plan** - redirects to checkout for the higher plan
 
 ---
 

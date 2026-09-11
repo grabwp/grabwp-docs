@@ -41,7 +41,7 @@ This is the recommended approach for production. Cloudflare handles SSL certific
    - Set Domain Mode to **Cloudflare SaaS**
    - Enter your CNAME Target (e.g., `cdn.saas.yoursaas.com`)
 
-> **Cloudflare docs:** [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/) — covers setup, SSL, and API automation.
+> **Cloudflare docs:** [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/) - covers setup, SSL, and API automation.
 
 ### Per-Customer Flow
 
@@ -55,7 +55,7 @@ When a customer wants to use their own domain:
 2. **Your side (admin):** Add the domain in WaaS → Domains or the customer can add it via the tenant dashboard:
    - Click **Add Domain**
    - Enter the custom domain
-   - Click **Verify** — checks DNS propagation
+   - Click **Verify** - checks DNS propagation
 
 3. **Cloudflare** automatically provisions an SSL certificate for the custom domain
 
@@ -122,10 +122,10 @@ Simpler but requires manual server configuration for each domain.
 
 Customers can also manage domains from their tenant dashboard (your `/dashboard/` page):
 
-- **Add Domain** — enter a custom domain
-- **Verify** — check DNS propagation
-- **Set Primary** — make a domain the primary URL for their site
-- **Remove** — disconnect a custom domain
+- **Add Domain** - enter a custom domain
+- **Verify** - check DNS propagation
+- **Set Primary** - make a domain the primary URL for their site
+- **Remove** - disconnect a custom domain
 
 ## Domain Verification
 

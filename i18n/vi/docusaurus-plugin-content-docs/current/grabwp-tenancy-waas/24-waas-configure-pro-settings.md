@@ -7,7 +7,7 @@ section: waas
 
 # Configure Pro Settings
 
-Pro Settings control how tenant sites are isolated and where their data is stored. These are **defaults** — individual tenants can override them later.
+Pro Settings control how tenant sites are isolated and where their data is stored. These are **defaults** - individual tenants can override them later.
 
 Navigate to **Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
 

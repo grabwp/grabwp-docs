@@ -13,7 +13,7 @@ Pro cho phép bạn cấu hình cách dữ liệu của từng tenant site đư�
 
 Vào **GrabWP Tenancy → Tenants → Edit** site. Các trường Pro sẽ xuất hiện trong form chỉnh sửa bên dưới phần cài đặt domain.
 
-![Chỉnh sửa tenant — loại cơ sở dữ liệu và các tùy chọn cô lập](../images/grabwp-tenancy-pro-tenant-edit.png)
+![Chỉnh sửa tenant - loại cơ sở dữ liệu và các tùy chọn cô lập](../images/grabwp-tenancy-pro-tenant-edit.png)
 
 ### Cơ sở dữ liệu dùng chung (Mặc định)
 Tất cả site dùng chung một cơ sở dữ liệu MySQL với tiền tố bảng riêng, tương tự bản miễn phí. Thiết lập đơn giản nhất, chi phí vận hành thấp nhất.
@@ -53,4 +53,4 @@ Vào **GrabWP Tenancy → Pro Settings** để cấu hình các tùy chọn cô 
 
 Đường dẫn thư mục mặc định và đường dẫn uploads cũng được cấu hình trong cùng màn hình Pro Settings (xem [Cài đặt Pro](/grabwp-tenancy-pro/pro-installation)). Dùng các công tắc bên dưới để đặt mặc định cho **content**, **plugins** và **uploads** isolation của site mới:
 
-![Pro Settings — mặc định cho content và plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
+![Pro Settings - mặc định cho content và plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
