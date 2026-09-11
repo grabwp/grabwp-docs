@@ -47,7 +47,7 @@ Các lựa chọn phổ biến:
 
 ### Tài khoản Polar (cho gói trả phí)
 
-Nếu bạn muốn thu phí cho các gói dịch vụ, tạo tài khoản miễn phí tại [polar.sh](https://polar.sh). Polar xử lý thanh toán, đăng ký gói và hóa đơn. Chi tiết thiết lập tại [Thiết lập thanh toán](/vi/grabwp-tenancy-waas/waas-setup-billing).
+Nếu bạn muốn thu phí cho các gói dịch vụ, tạo tài khoản miễn phí tại [polar.sh](https://polar.sh). Polar xử lý thanh toán, đăng ký gói và hóa đơn. Chi tiết thiết lập tại [Thiết lập thanh toán](/grabwp-tenancy-waas/waas-setup-billing).
 
 ## Tùy chọn
 
@@ -57,7 +57,7 @@ Nếu bạn muốn khách hàng sử dụng tên miền riêng (ví dụ: `mybus
 
 - Gói Cloudflare miễn phí đủ cho thiết lập cơ bản
 - SaaS Custom Hostnames yêu cầu liên hệ Cloudflare để bật trên zone của bạn
-- Xem [Quản lý tên miền riêng](/vi/grabwp-tenancy-waas/waas-managing-domains) để thiết lập
+- Xem [Quản lý tên miền riêng](/grabwp-tenancy-waas/waas-managing-domains) để thiết lập
 
 ### Lưu trữ Object Storage tương thích S3
 
@@ -68,14 +68,14 @@ Chuyển file media của tenant lên cloud storage thay vì lưu trên ổ đĩ
 
 Nhà cung cấp hỗ trợ: AWS S3, Cloudflare R2, DigitalOcean Spaces, MinIO, bất kỳ API tương thích S3.
 
-Xem [Lưu trữ S3 Object Storage](/vi/grabwp-tenancy-waas/waas-optional-s3-storage) để thiết lập.
+Xem [Lưu trữ S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage) để thiết lập.
 
 ### WooCommerce
 
 Nhà cung cấp thanh toán thay thế nếu bạn thích WooCommerce hơn Polar. Hữu ích nếu bạn đã có cửa hàng WooCommerce hoặc cần cổng thanh toán nội địa.
 
-Xem [Thanh toán WooCommerce](/vi/grabwp-tenancy-waas/waas-optional-woocommerce) để thiết lập.
+Xem [Thanh toán WooCommerce](/grabwp-tenancy-waas/waas-optional-woocommerce) để thiết lập.
 
 ---
 
-**Tiếp theo:** [Bạn sẽ xây dựng gì](/vi/grabwp-tenancy-waas/waas-what-you-will-build)
+**Tiếp theo:** [Bạn sẽ xây dựng gì](/grabwp-tenancy-waas/waas-what-you-will-build)
