@@ -66,8 +66,6 @@ Your active plugins should include:
 | GrabWP Tenancy Pro | Active |
 | GrabWP Tenancy WaaS | Active |
 
-![Plugins list](../images/plugins-list.png)
-
 ## Optional: Install SePay Plugin
 
 If you plan to accept Vietnamese bank transfer payments (VietQR), also install:
