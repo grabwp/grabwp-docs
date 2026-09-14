@@ -15,16 +15,16 @@
     "waas-billing-settings.png":   { "src": "05-waas-settings-billing" },
     "waas-subscriptions.png":      { "src": "02-waas-subscriptions" },
     "waas-domains.png":            { "src": "03-waas-domains-all" },
-    "waas-templates-list.png":     { "src": "04-waas-templates" }
+    "waas-templates-list.png":     { "src": "04-waas-templates" },
+    "waas-plan-edit.png":          { "src": "05b-waas-plans-edit" },
+    "waas-template-edit.png":      { "src": "04b-waas-templates-edit" },
+    "waas-subscription-detail.png":{ "src": "02a-waas-subscription-detail" },
+    "pro-settings.png":            { "src": "11-pro-settings-isolation" }
   },
   "manual": {
     "grabwp-settings.png":         { "reason": "WP admin menu shot, not a GrabWP screen in the library" },
     "plugins-list.png":            { "reason": "core WP Plugins list, not a GrabWP screen" },
-    "pro-settings.png":            { "reason": "generic pro-settings hero; pick a specific 11-pro-settings-* screen when revisited" },
     "waas-pages-config.png":       { "reason": "crop of WaaS General Settings pages section" },
-    "waas-plan-edit.png":          { "reason": "plan edit form; library has no dedicated edit screen" },
-    "waas-template-edit.png":      { "reason": "template edit form; library has no dedicated edit screen" },
-    "waas-subscription-detail.png":{ "reason": "subscription detail view; library has no dedicated screen" },
     "grabwp-tenancy-pro-tenant-clone-main-site.png":{ "reason": "clone wizard step (source pick); library has one merged 12-tenant-clone" },
     "grabwp-tenancy-pro-tenant-clone-1.png":{ "reason": "clone wizard step 1 crop" },
     "grabwp-tenancy-pro-tenant-clone-2.png":{ "reason": "clone wizard step 2 crop" },
