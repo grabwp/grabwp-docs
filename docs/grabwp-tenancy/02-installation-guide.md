@@ -44,9 +44,15 @@ The Status page checks all components automatically:
 
 Once all items are green, you're ready to create tenant sites.
 
-Plugin options and tools are available under **GrabWP Tenancy** in the WordPress admin menu (including **Status**, **Tenants**, and **Settings** where applicable).
+Plugin options and tools live under **GrabWP Tenancy** in the WordPress admin menu (**Status**, **Tenants**, and **Settings** where applicable). Open **GrabWP Tenancy → Settings** to review the defaults applied to every tenant site.
 
-![GrabWP Tenancy in the WordPress admin menu](../images/grabwp-settings.png)
+The **Tenant Capabilities** tab controls what tenant administrators can do inside their own site:
+
+![GrabWP Tenancy Settings, Tenant Capabilities tab](../images/tenancy-settings-capabilities.png)
+
+The **Performance & Security** tab sets the resource and hardening defaults inherited by each tenant:
+
+![GrabWP Tenancy Settings, Performance and Security tab](../images/tenancy-settings-perf.png)
 
 ## Uninstalling
 

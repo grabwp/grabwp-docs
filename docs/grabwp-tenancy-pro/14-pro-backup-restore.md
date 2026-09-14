@@ -15,7 +15,7 @@ Pro lets you back up and restore any individual tenant site - including its data
 2. Find the site and click the **Backup** row action link
 3. Click **Start Backup**
 
-![Backup - start backup for a tenant site](../images/grabwp-tenancy-pro-tenant-backup.png)
+![Backup tenant screen with the Start Backup action](../images/grabwp-tenancy-pro-tenant-backup.png)
 
 The backup runs step-by-step in your browser:
 
@@ -29,6 +29,10 @@ The backup runs step-by-step in your browser:
 
 When complete, a ZIP archive is created. **Download and save this file** - it is stored on your server and you'll need it to restore.
 
+You can also schedule automatic backups per tenant from the **Auto Backup** tab:
+
+![Backup tenant screen, Auto Backup schedule tab](../images/grabwp-tenancy-pro-tenant-backup-auto.png)
+
 ## Restoring from a Backup
 
 1. Go to **GrabWP Tenancy → Tenants**
@@ -36,13 +40,11 @@ When complete, a ZIP archive is created. **Download and save this file** - it is
 3. Upload the backup ZIP file
 4. Click **Upload & Start Restore**
 
-![Restore - upload backup ZIP](../images/grabwp-tenancy-pro-tenant-restore-1.png)
-
 > ⚠ **Warning:** Restoring completely overwrites the site's current database, uploads, and config. This cannot be undone. Back up the current state first if you need to keep it.
 
 The restore runs 8 steps and shows progress in your browser.
 
-![Restore - step-by-step progress](../images/grabwp-tenancy-pro-tenant-restore-2.png)
+![Restore tenant screen with the backup upload and restore action](../images/grabwp-tenancy-pro-tenant-restore.png)
 
 ## Managing Backup Files
 

@@ -44,9 +44,15 @@ Trang Status sẽ tự động kiểm tra tất cả thành phần:
 
 Khi tất cả mục đều hiển thị màu xanh, bạn đã sẵn sàng tạo tenant site.
 
-Các tùy chọn và công cụ của plugin nằm trong menu **GrabWP Tenancy** trong trang quản trị WordPress, bao gồm **Status**, **Tenants** và **Settings** nếu có.
+Các tùy chọn và công cụ của plugin nằm trong menu **GrabWP Tenancy** trong trang quản trị WordPress (**Status**, **Tenants** và **Settings** nếu có). Mở **GrabWP Tenancy → Settings** để xem các mặc định áp dụng cho mọi tenant site.
 
-![GrabWP Tenancy trong menu quản trị WordPress](../images/grabwp-settings.png)
+Tab **Tenant Capabilities** kiểm soát những gì quản trị viên tenant được phép làm bên trong site của họ:
+
+![Settings của GrabWP Tenancy, tab Tenant Capabilities](../images/tenancy-settings-capabilities.png)
+
+Tab **Performance & Security** đặt các mặc định về tài nguyên và bảo mật mà mỗi tenant kế thừa:
+
+![Settings của GrabWP Tenancy, tab Performance and Security](../images/tenancy-settings-perf.png)
 
 ## Gỡ cài đặt
 
