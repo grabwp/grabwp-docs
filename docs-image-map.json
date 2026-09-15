@@ -2,30 +2,90 @@
   "_comment": "SSOT map: docs/images/<key> is GENERATED from the admin-screenshot library. Source of truth = ~/project-hub/grabwp/assets/admin-screenshots (slug = <NN>-<page>.png). Run scripts/sync_docs_images.py after every library re-shoot. auto entries copy (optionally crop) library/<src>.png -> docs/images/<key>; manual entries are hand-made (wizard step crops / non-GrabWP screens), left untouched and reported by the script. Docs keys keep their historical base names (extension standardised to .png).",
   "_library_dir": "~/project-hub/grabwp/assets/admin-screenshots",
   "auto": {
-    "grabwp-status.png":                        { "src": "09-status-general" },
-    "tenancy-settings-capabilities.png":        { "src": "08-tenancy-settings-capabilities" },
-    "tenancy-settings-perf.png":                { "src": "08-tenancy-settings-perf" },
-    "grabwp-tenancy-pro-tenant-add.png":        { "src": "07-tenancy-create" },
-    "grabwp-tenancy-pro-tenant-list.png":       { "src": "06-tenancy-all" },
-    "grabwp-tenancy-pro-tenant-edit.png":       { "src": "12-tenant-edit" },
-    "grabwp-tenancy-pro-tenant-clone.png":      { "src": "12-tenant-clone" },
-    "grabwp-tenancy-pro-tenant-backup.png":     { "src": "12-tenant-backup" },
-    "grabwp-tenancy-pro-tenant-backup-auto.png":{ "src": "12-tenant-backup-auto" },
-    "grabwp-tenancy-pro-tenant-restore.png":    { "src": "12-tenant-restore" },
-    "grabwp-tenancy-pro-tenant-extension.png":  { "src": "12-tenant-extensions" },
-    "grabwp-tenancy-pro-settings-isolation.png":{ "src": "11-pro-settings-isolation" },
-    "grabwp-tenancy-pro-settings-dir.png":      { "src": "11-pro-settings-directories" },
-    "waas-general-settings.png":   { "src": "05-waas-settings-general" },
-    "waas-pages-config.png":       { "src": "05-waas-settings-general" },
-    "waas-plans-list.png":         { "src": "05-waas-settings-plans" },
-    "waas-billing-settings.png":   { "src": "05-waas-settings-billing" },
-    "waas-subscriptions.png":      { "src": "02-waas-subscriptions" },
-    "waas-domains.png":            { "src": "03-waas-domains-all" },
-    "waas-templates-list.png":     { "src": "04-waas-templates" },
-    "waas-plan-edit.png":          { "src": "05b-waas-plans-edit" },
-    "waas-template-edit.png":      { "src": "04b-waas-templates-edit" },
-    "waas-subscription-detail.png":{ "src": "02a-waas-subscription-detail" },
-    "pro-settings.png":            { "src": "11-pro-settings-isolation" }
+    "grabwp-status.png": {
+      "src": "09-status-general"
+    },
+    "tenancy-settings-capabilities.png": {
+      "src": "08-tenancy-settings-capabilities"
+    },
+    "tenancy-settings-perf.png": {
+      "src": "08-tenancy-settings-perf"
+    },
+    "grabwp-tenancy-pro-tenant-add.png": {
+      "src": "07-tenancy-create"
+    },
+    "grabwp-tenancy-pro-tenant-list.png": {
+      "src": "06-tenancy-all"
+    },
+    "grabwp-tenancy-pro-tenant-edit.png": {
+      "src": "12-tenant-edit"
+    },
+    "grabwp-tenancy-pro-tenant-clone.png": {
+      "src": "12-tenant-clone"
+    },
+    "grabwp-tenancy-pro-tenant-backup.png": {
+      "src": "12-tenant-backup"
+    },
+    "grabwp-tenancy-pro-tenant-backup-auto.png": {
+      "src": "12-tenant-backup-auto"
+    },
+    "grabwp-tenancy-pro-tenant-restore.png": {
+      "src": "12-tenant-restore"
+    },
+    "grabwp-tenancy-pro-tenant-extension.png": {
+      "src": "12-tenant-extensions"
+    },
+    "grabwp-tenancy-pro-settings-isolation.png": {
+      "src": "11-pro-settings-isolation"
+    },
+    "grabwp-tenancy-pro-settings-dir.png": {
+      "src": "11-pro-settings-directories"
+    },
+    "waas-general-settings.png": {
+      "src": "05-waas-settings-general"
+    },
+    "waas-pages-config.png": {
+      "src": "05-waas-settings-general"
+    },
+    "waas-plans-list.png": {
+      "src": "05-waas-settings-plans"
+    },
+    "waas-billing-settings.png": {
+      "src": "05-waas-settings-billing"
+    },
+    "waas-subscriptions.png": {
+      "src": "02-waas-subscriptions"
+    },
+    "waas-domains.png": {
+      "src": "03-waas-domains-all"
+    },
+    "waas-templates-list.png": {
+      "src": "04-waas-templates"
+    },
+    "waas-plan-edit.png": {
+      "src": "05b-waas-plans-edit"
+    },
+    "waas-template-edit.png": {
+      "src": "04b-waas-templates-edit"
+    },
+    "waas-subscription-detail.png": {
+      "src": "02a-waas-subscription-detail"
+    },
+    "pro-settings.png": {
+      "src": "11-pro-settings-isolation"
+    },
+    "waas-addons.png": {
+      "src": "05-waas-settings-addons"
+    },
+    "waas-currency-settings.png": {
+      "src": "05-waas-settings-billing"
+    },
+    "grabwp-tenancy-pro-tenant-overrides.png": {
+      "src": "12-tenant-overrides"
+    },
+    "grabwp-tenancy-pro-tenant-extension-themes.png": {
+      "src": "12-tenant-extensions-themes"
+    }
   },
   "manual": {}
 }

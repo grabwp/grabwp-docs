@@ -54,3 +54,16 @@ Go to **GrabWP Tenancy → Pro Settings** to set default isolation options. All 
 Default directory and upload paths are configured on the same Pro Settings screen (see [Installing Pro](/grabwp-tenancy-pro/pro-installation)). Use the toggles below for default **content**, **plugins**, and **uploads** isolation for new sites:
 
 ![Pro Settings - default content and plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
+
+## Per-Tenant Setting Overrides
+
+Pro also lets you override individual GrabWP Tenancy settings for one tenant without changing the global defaults.
+
+1. Go to **GrabWP Tenancy → Tenants**
+2. Open the tenant's action pages and select the **Overrides** tab (**Tenant Overrides**)
+3. For each setting, check **Override**, then set On/Off (or the setting's own control)
+4. Click **Save Overrides**
+
+Unchecked rows inherit the global value. Each row shows a **Global:** hint with the current global value so you can compare before overriding. Clear every override checkbox to make the tenant inherit all global settings again.
+
+![Tenant Overrides](../images/grabwp-tenancy-pro-tenant-overrides.png)

@@ -15,6 +15,23 @@ Navigate to **WaaS → Settings → Billing** (`/wp-admin/admin.php?page=grabwp-
 
 ![Billing settings](../images/waas-billing-settings.png)
 
+## Currency Settings
+
+Above the provider cards, the **Currency Settings** section controls how plan prices are stored, displayed, and converted when a billing provider needs a different currency.
+
+![Currency settings](../images/waas-currency-settings.png)
+
+| Field | Description |
+|-------|-------------|
+| **Primary Currency** | The currency shown to customers on pricing pages and invoices. Plan prices are stored in this currency. Default: USD. |
+| **Secondary Currency** | Optional. Set this when a billing provider requires a different currency than primary (e.g. Sepay requires VND). Choose **None (single currency)** for a single-currency site. |
+| **Exchange Rate** | How many secondary units equal 1 primary unit. WaaS applies this rate before charging providers that require the secondary currency (e.g. Sepay). Polar and Stripe charge in their own catalog currency and do not use this rate for the charged amount. |
+| **Currency Position** | Display formatting: Left (`$99.99`), Left with space, Right, or Right with space. |
+| **Decimal Separator** | Character used between whole and fractional amounts. |
+| **Thousand Separator** | Character used to group thousands. |
+
+> **Tip:** Leave **Secondary Currency** as **None (single currency)** for single-currency mode (no conversion). When a secondary currency is set, plan and template prices stored in the primary currency are converted to the provider's charge currency before Polar combo/one-time products are created, and the converted currency is recorded so renewals charge the correct amount. If a target currency falls outside the configured pair, conversion returns an error instead of silently charging an unconverted amount. A provider that requires a specific currency (e.g. Sepay requires VND) is blocked at save time unless that currency is set as primary or secondary.
+
 ## Step 1: Create a Polar Account
 
 1. Go to [polar.sh](https://polar.sh) and create an account

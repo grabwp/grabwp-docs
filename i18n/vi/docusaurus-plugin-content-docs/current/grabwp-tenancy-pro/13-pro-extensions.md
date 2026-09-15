@@ -38,6 +38,14 @@ Sau khi bật, liên kết **Extensions** sẽ xuất hiện trong dòng của t
 1. Tìm plugin trong danh sách
 2. Nhấn **Remove**, plugin sẽ bị xóa khỏi thư mục của tenant site
 
+### Themes
+
+Trang Extensions có hai sub-tab: **Plugins** (mặc định) và **Themes**. Tab **Themes** hoạt động giống **Plugins**: Install / Remove / kích hoạt theo từng tenant, với cùng **Install Method** (**Symlink** hoặc **Own Copy**).
+
+![Extensions Themes tab](../images/grabwp-tenancy-pro-tenant-extension-themes.png)
+
+Các thao tác plugin và theme (install, remove, sync, convert, copy to main, activate, deactivate) cập nhật ngay dòng bị ảnh hưởng thay vì tải lại cả trang, nên tab hiện tại và vị trí cuộn được giữ nguyên.
+
 ## Phương thức cài đặt
 
 Ở đầu trang Extensions, bạn có thể đặt **Install Method** cho site:

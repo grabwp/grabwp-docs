@@ -21,6 +21,8 @@ Example: `https://yoursite.com/site/abc123`
 
 This works automatically on **Apache** and **LiteSpeed** servers (the plugin configures `.htaccess` rewrite rules on activation).
 
+> **Tip:** The `site` path segment is configurable. Define `GRABWP_TENANCY_PATH_PREFIX` in `wp-config.php` or the tenancy config (default: `site`) to change it everywhere rewrite rules, `.htaccess`, admin URLs, and the status page use the prefix. For example, set it to `app` so tenant URLs become `/app/{tenant-id}`.
+
 ### Nginx Setup
 
 Nginx doesn't use `.htaccess`, so you need to add a server block rule manually:

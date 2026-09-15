@@ -66,6 +66,20 @@ Your active plugins should include:
 | GrabWP Tenancy Pro | Active |
 | GrabWP Tenancy WaaS | Active |
 
+## Khám phá Add-ons chính thức
+
+Cách khuyến nghị để lấy các add-on chính thức của GrabWP (nhà cung cấp thanh toán Stripe, Sepay, Xendit, và các add-on khác) là tab **Add-ons** trong WaaS Settings, thay vì tự tìm file ZIP. Vào **WaaS → Settings → Add-ons** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=addons`). Catalog được nhóm theo danh mục, hỗ trợ song ngữ, và được cache trong sáu giờ (có bản dự phòng last-known-good nếu máy chủ catalog không truy cập được). Các add-on tương thích tải về bằng một cú nhấp ZIP từ admin; license key và URL site được gắn phía máy chủ, không bao giờ lộ trong HTML trang. Màn hình Billing Providers cũng có liên kết **Browse Add-ons** dẫn tới tab này.
+
+![WaaS Add-ons tab](../images/waas-addons.png)
+
+| Huy hiệu | Ý nghĩa |
+|-------|---------|
+| **Available** | Tương thích và sẵn sàng tải về |
+| **Installed** | Đã tải về nhưng chưa kích hoạt |
+| **Active** | Đã cài và đang chạy |
+| **Update Available** | Có phiên bản tương thích mới hơn |
+| **Requires WaaS Update** | Phiên bản WaaS của bạn quá cũ cho add-on này |
+
 ## Optional: Install SePay Plugin
 
 If you plan to accept Vietnamese bank transfer payments (VietQR), also install:

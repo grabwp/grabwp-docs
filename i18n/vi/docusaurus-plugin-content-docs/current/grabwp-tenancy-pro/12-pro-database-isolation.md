@@ -54,3 +54,16 @@ Vào **GrabWP Tenancy → Pro Settings** để cấu hình các tùy chọn cô 
 Đường dẫn thư mục mặc định và đường dẫn uploads cũng được cấu hình trong cùng màn hình Pro Settings (xem [Cài đặt Pro](/grabwp-tenancy-pro/pro-installation)). Dùng các công tắc bên dưới để đặt mặc định cho **content**, **plugins** và **uploads** isolation của site mới:
 
 ![Pro Settings - mặc định cho content và plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
+
+## Ghi đè thiết lập theo từng tenant
+
+Pro cũng cho phép bạn ghi đè từng thiết lập GrabWP Tenancy cho một tenant mà không đổi giá trị mặc định toàn cục.
+
+1. Vào **GrabWP Tenancy → Tenants**
+2. Mở các trang thao tác của tenant rồi chọn tab **Overrides** (**Tenant Overrides**)
+3. Với mỗi thiết lập, đánh dấu **Override**, rồi đặt On/Off (hoặc điều khiển riêng của thiết lập đó)
+4. Nhấn **Save Overrides**
+
+Các dòng chưa đánh dấu sẽ kế thừa giá trị toàn cục. Mỗi dòng hiển thị gợi ý **Global:** với giá trị toàn cục hiện tại để bạn so sánh trước khi ghi đè. Bỏ hết các ô Override để tenant kế thừa lại toàn bộ thiết lập toàn cục.
+
+![Tenant Overrides](../images/grabwp-tenancy-pro-tenant-overrides.png)
