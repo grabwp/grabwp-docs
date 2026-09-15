@@ -15,6 +15,23 @@ Navigate to **WaaS → Settings → Billing** (`/wp-admin/admin.php?page=grabwp-
 
 ![Billing settings](../images/waas-billing-settings.png)
 
+## Cài đặt tiền tệ
+
+Phía trên các thẻ nhà cung cấp, phần **Currency Settings** kiểm soát cách giá gói được lưu, hiển thị và quy đổi khi nhà cung cấp thanh toán cần một loại tiền khác.
+
+![Currency settings](../images/waas-currency-settings.png)
+
+| Trường | Mô tả |
+|-------|-------------|
+| **Primary Currency** | Loại tiền hiển thị cho khách trên trang giá và hóa đơn. Giá gói được lưu bằng loại tiền này. Mặc định: USD. |
+| **Secondary Currency** | Tùy chọn. Đặt khi nhà cung cấp thanh toán yêu cầu loại tiền khác với primary (ví dụ Sepay yêu cầu VND). Chọn **None (single currency)** cho site dùng một loại tiền. |
+| **Exchange Rate** | Bao nhiêu đơn vị secondary tương đương 1 đơn vị primary. WaaS áp dụng tỷ giá này trước khi thu phí qua nhà cung cấp yêu cầu secondary currency (ví dụ Sepay). Polar và Stripe thu theo loại tiền catalog của riêng họ và không dùng tỷ giá này cho số tiền bị charge. |
+| **Currency Position** | Định dạng hiển thị: Left (`$99.99`), Left with space, Right, hoặc Right with space. |
+| **Decimal Separator** | Ký tự ngăn cách phần nguyên và phần thập phân. |
+| **Thousand Separator** | Ký tự nhóm hàng nghìn. |
+
+> **Tip:** Để **Secondary Currency** là **None (single currency)** khi dùng chế độ một loại tiền (không quy đổi). Khi đã đặt secondary currency, giá gói và mẫu lưu bằng primary currency sẽ được quy đổi sang loại tiền charge của nhà cung cấp trước khi tạo sản phẩm Polar combo/one-time, và loại tiền đã quy đổi được ghi lại để gia hạn thu đúng số tiền. Nếu loại tiền đích nằm ngoài cặp đã cấu hình, quy đổi trả lỗi thay vì lặng lẽ thu số tiền chưa quy đổi. Nhà cung cấp yêu cầu một loại tiền cụ thể (ví dụ Sepay yêu cầu VND) sẽ bị chặn lúc lưu trừ khi loại tiền đó được đặt làm primary hoặc secondary.
+
 ## Step 1: Create a Polar Account
 
 1. Go to [polar.sh](https://polar.sh) and create an account

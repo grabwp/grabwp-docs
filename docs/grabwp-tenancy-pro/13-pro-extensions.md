@@ -38,6 +38,14 @@ Once enabled, the **Extensions** link appears in the tenant's row in the tenant 
 1. Find the plugin in the list
 2. Click **Remove** - it's removed from the tenant site's directory
 
+### Themes
+
+The Extensions page has two sub-tabs: **Plugins** (default) and **Themes**. The **Themes** tab works the same way as **Plugins**: Install / Remove / activate per tenant, with the same **Install Method** (**Symlink** or **Own Copy**).
+
+![Extensions Themes tab](../images/grabwp-tenancy-pro-tenant-extension-themes.png)
+
+Plugin and theme actions (install, remove, sync, convert, copy to main, activate, deactivate) update the affected row in place instead of reloading the whole page, so the current tab and scroll position are kept.
+
 ## Installation Methods
 
 At the top of the Extensions page, you can set the **Install Method** for the site:

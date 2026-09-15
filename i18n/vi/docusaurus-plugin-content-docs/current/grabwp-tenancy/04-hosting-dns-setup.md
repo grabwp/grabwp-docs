@@ -21,6 +21,8 @@ Ví dụ: `https://yoursite.com/site/abc123`
 
 Tính năng này hoạt động tự động trên máy chủ **Apache** và **LiteSpeed** vì plugin sẽ cấu hình rewrite rules trong `.htaccess` khi kích hoạt.
 
+> **Tip:** Đoạn path `site` có thể cấu hình. Định nghĩa `GRABWP_TENANCY_PATH_PREFIX` trong `wp-config.php` hoặc file cấu hình tenancy (mặc định: `site`) để đổi prefix ở mọi chỗ dùng tới: rewrite rules, `.htaccess`, URL admin và trang status. Ví dụ, đặt thành `app` thì URL tenant trở thành `/app/{tenant-id}`.
+
 ### Cấu hình Nginx
 
 Nginx không dùng `.htaccess`, vì vậy bạn cần thêm rule server block thủ công:

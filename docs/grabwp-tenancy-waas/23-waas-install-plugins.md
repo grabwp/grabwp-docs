@@ -66,6 +66,20 @@ Your active plugins should include:
 | GrabWP Tenancy Pro | Active |
 | GrabWP Tenancy WaaS | Active |
 
+## Discovering Official Add-ons
+
+The recommended way to get official GrabWP add-ons (Stripe, Sepay, Xendit billing providers, and more) is the **Add-ons** tab in WaaS Settings, rather than hunting for ZIP files. Go to **WaaS → Settings → Add-ons** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=addons`). The catalog is grouped by category, bilingual, and cached for six hours (with a last-known-good fallback if the catalog server is unreachable). Compatible add-ons download as a one-click ZIP from the admin; the license key and site URL are appended server-side and never exposed in page HTML. The Billing Providers screen also has a **Browse Add-ons** link that jumps here.
+
+![WaaS Add-ons tab](../images/waas-addons.png)
+
+| Badge | Meaning |
+|-------|---------|
+| **Available** | Compatible and ready to download |
+| **Installed** | Downloaded but not activated |
+| **Active** | Installed and running |
+| **Update Available** | A newer compatible version is available |
+| **Requires WaaS Update** | Your WaaS version is too old for this add-on |
+
 ## Optional: Install SePay Plugin
 
 If you plan to accept Vietnamese bank transfer payments (VietQR), also install:
