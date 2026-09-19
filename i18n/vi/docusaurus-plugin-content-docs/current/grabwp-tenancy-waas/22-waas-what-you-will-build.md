@@ -1,29 +1,29 @@
 ---
-title: "What You Will Build"
-description: "Tutorial goals, architecture, and customer signup flow for your WaaS platform"
+title: "Bạn sẽ xây dựng gì"
+description: "Mục tiêu bài hướng dẫn, kiến trúc hệ thống và luồng đăng ký của khách hàng cho nền tảng WaaS của bạn"
 order: 22
 section: waas
 ---
 
-# What You Will Build
+# Bạn sẽ xây dựng gì
 
-By the end of this guide, you will have a working WordPress-as-a-Service platform where visitors can self-service sign up, pick a site template, choose a plan, and receive a fully provisioned WordPress site.
+Kết thúc bài hướng dẫn này, bạn sẽ có một nền tảng WordPress-as-a-Service hoạt động hoàn chỉnh, nơi khách truy cập có thể tự đăng ký, chọn template cho website, chọn plan và nhận được một trang WordPress đã hoàn tất provisioning.
 
-## Tutorial Goals
+## Mục tiêu bài hướng dẫn
 
-| Component | What you will set up |
+| Thành phần | Những gì bạn sẽ thiết lập |
 |-----------|---------------------|
-| **Plans** | 1 free plan (basic features, no payment required) + 1 paid plan (monthly via Polar) |
-| **Billing** | Polar as primary payment provider |
-| **Templates** | At least 1 site template customers can choose from |
-| **Frontend** | Signup page, template browser, tenant dashboard |
-| **Flow** | End-to-end: visitor → select template → pick plan → pay (if paid) → site created |
+| **Plans** | 1 plan miễn phí (tính năng cơ bản, không cần thanh toán) + 1 plan trả phí (thanh toán hàng tháng qua Polar) |
+| **Billing** | Polar làm cổng thanh toán chính |
+| **Templates** | Ít nhất 1 template để khách hàng có thể lựa chọn |
+| **Frontend** | Trang đăng ký, thư viện template, dashboard của tenant |
+| **Luồng hoạt động** | Từ đầu đến cuối: khách truy cập → chọn template → chọn plan → thanh toán (nếu là plan trả phí) → khởi tạo website |
 
-## Architecture
+## Kiến trúc hệ thống
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                 YOUR MAIN SITE                  │
+│              WEBSITE CHÍNH CỦA BẠN              │
 │            (yoursaas.com/wp-admin)              │
 │                                                 │
 │  ┌──────────┐  ┌──────────┐  ┌──────────────┐  │
@@ -32,12 +32,12 @@ By the end of this guide, you will have a working WordPress-as-a-Service platfor
 │  └──────────┘  └──────────┘  └──────────────┘  │
 │                                                 │
 │  ┌──────────────────────────────────────────┐   │
-│  │           PUBLIC PAGES                   │   │
+│  │             CÁC TRANG PUBLIC             │   │
 │  │  /signup  /templates  /dashboard         │   │
 │  └──────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────┘
                       │
-          Provisioning Engine
+            Hệ thống Provisioning
                       │
      ┌────────────────┼────────────────┐
      ▼                ▼                ▼
@@ -48,44 +48,44 @@ By the end of this guide, you will have a working WordPress-as-a-Service platfor
 └─────────┘    └─────────┘    └─────────────┘
 ```
 
-## Customer Signup Flow
+## Luồng đăng ký của khách hàng
 
-Here is what your customers experience:
+Dưới đây là trải nghiệm thực tế của khách hàng:
 
-1. **Visit signup page** - sees available plans and pricing
-2. **Pick a template** - browses the template gallery with tags/filters
-3. **Choose a plan** - free or paid
-4. **Enter site details** - subdomain slug, email
-5. **Pay** (if paid plan) - redirected to Polar checkout
-6. **Site provisioned** - customer receives their WordPress site URL
-7. **Access dashboard** - manage site, billing, custom domain, backups
+1. **Truy cập trang đăng ký** - xem các plan và mức giá
+2. **Chọn template** - duyệt qua thư viện template cùng với các tag và bộ lọc
+3. **Chọn plan** - plan miễn phí hoặc trả phí
+4. **Nhập thông tin website** - subdomain và email
+5. **Thanh toán** (nếu là plan trả phí) - chuyển hướng đến trang checkout của Polar
+6. **Hoàn tất provisioning** - khách hàng nhận được URL trang WordPress của họ
+7. **Truy cập dashboard** - quản lý website, billing, tên miền riêng và backup
 
-## What Each Plugin Does
+## Nhiệm vụ của từng plugin
 
 ### GrabWP Tenancy (Base)
 
-The foundation. Handles tenant routing (subdomain → correct database tables), table-prefix isolation, and basic tenant management. Every tenant shares the same MySQL database but has isolated tables.
+Đây là nền tảng cốt lõi. Plugin này xử lý việc định tuyến tenant (subdomain → đúng bảng database), cách ly dữ liệu bằng table prefix và quản lý tenant cơ bản. Tất cả các tenant dùng chung một database MySQL nhưng có các bảng dữ liệu hoàn toàn cách ly với nhau.
 
 ### GrabWP Tenancy Pro
 
-Adds advanced isolation and management:
-- **Dedicated databases** - each tenant gets its own MySQL database or SQLite file
-- **Content isolation** - separate themes, plugins, uploads directories per tenant
-- **S3 storage** - offload uploads to cloud storage
-- **Backup & restore** - per-tenant backup and restore
-- **Tenant cloning** - create templates by cloning existing tenants
+Bổ sung các tính năng cách ly và quản lý nâng cao:
+- **Database riêng biệt** - mỗi tenant được cấp một database MySQL hoặc file SQLite độc lập
+- **Cách ly nội dung** - thư mục theme, plugin và uploads riêng biệt cho từng tenant
+- **Lưu trữ S3** - offload các file uploads lên lưu trữ đám mây
+- **Backup & restore** - tính năng backup và restore cho từng tenant
+- **Nhân bản tenant** - tạo các template bằng cách nhân bản (clone) từ các tenant có sẵn
 
 ### GrabWP Tenancy WaaS
 
-The self-service layer that turns your WordPress into a SaaS platform:
-- **Plans** - define free and paid tiers with features and pricing
-- **Billing** - Polar and WooCommerce integration for payments
-- **Templates** - template gallery with tags, groups, and plan restrictions
-- **Signup flow** - complete provisioning pipeline from signup to site delivery
-- **Tenant dashboard** - customer-facing dashboard for site management
-- **Custom domains** - let customers use their own domains
-- **Subscriptions** - lifecycle management with grace periods
+Lớp tự phục vụ (self-service) giúp biến WordPress thành một nền tảng SaaS thực thụ:
+- **Plans** - cấu hình các plan miễn phí và trả phí cùng với tính năng và bảng giá đi kèm
+- **Billing** - tích hợp Polar và WooCommerce để xử lý thanh toán
+- **Templates** - thư viện template hỗ trợ tag, nhóm và giới hạn theo plan
+- **Luồng đăng ký** - toàn bộ quy trình provisioning từ lúc đăng ký đến khi bàn giao website
+- **Dashboard của tenant** - giao diện dashboard dành cho khách hàng để quản lý website
+- **Custom domains** - cho phép khách hàng sử dụng tên miền riêng của họ
+- **Subscriptions** - quản lý vòng đời subscription cùng với thời gian ân hạn (grace period)
 
 ---
 
-**Next:** [Install Plugins](/grabwp-tenancy-waas/waas-install-plugins)
+**Tiếp theo:** [Cài đặt plugins](/grabwp-tenancy-waas/waas-install-plugins)

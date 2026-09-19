@@ -1,5 +1,5 @@
 ---
-title: "Yêu cầu tiên quyết"
+title: "Trước khi bắt đầu"
 description: "Những gì bạn cần chuẩn bị trước khi thiết lập GrabWP WaaS"
 order: 21
 section: waas

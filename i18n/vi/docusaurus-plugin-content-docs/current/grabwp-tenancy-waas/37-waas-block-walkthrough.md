@@ -1,45 +1,45 @@
 ---
-title: "Block Walkthrough: Template Browser"
-description: "Configure the GrabWP Template Browser Gutenberg block using the visual Inspector sidebar"
+title: "Hướng dẫn sử dụng block: Template Browser"
+description: "Cấu hình Gutenberg block GrabWP Template Browser thông qua thanh bên Inspector trực quan"
 order: 37
 section: waas
 ---
 
-# Template Browser - Gutenberg Block Walkthrough
+# Template Browser: Hướng dẫn chi tiết Gutenberg block
 
-The `grabwp-waas/template-browser` block gives site editors a visual Inspector UI to configure the template gallery without touching shortcode strings. The original `[grabwp_waas_templates]` shortcode is fully preserved and works exactly as before.
+Block `grabwp-waas/template-browser` cung cấp cho người quản lý nội dung một giao diện Inspector trực quan để cấu hình thư viện template mà không cần đụng đến các chuỗi shortcode. Shortcode `[grabwp_waas_templates]` gốc vẫn được giữ lại hoàn toàn và hoạt động y hệt như trước đây.
 
-## How to Use the Block
+## Cách sử dụng block
 
-1. Open any page in the block editor
-2. Click **+** (block inserter) and search for **"GrabWP Template Browser"**
-3. Insert the block - it shows a descriptive placeholder in the editor canvas
-4. Configure via the **Settings sidebar → Block settings** (gear icon)
-5. Save/publish - the frontend renders the full template gallery
+1. Mở một trang bất kỳ trong trình soạn thảo block.
+2. Bấm vào biểu tượng **+** (thêm block) và tìm kiếm **"GrabWP Template Browser"**.
+3. Chèn block vào trang, bạn sẽ thấy một khối giữ chỗ (placeholder) có tính mô tả xuất hiện trên khung soạn thảo.
+4. Tiến hành cấu hình thông qua phần **Settings sidebar → Block settings** (biểu tượng bánh răng).
+5. Lưu hoặc xuất bản trang, phần frontend sẽ tự động hiển thị đầy đủ thư viện template.
 
-> **Note:** The block shows a placeholder in the editor. The live gallery renders only on the frontend.
+> **Lưu ý:** Block chỉ hiển thị khối giữ chỗ trong trình soạn thảo. Thư viện thực tế chỉ được render trên frontend.
 
-## Inspector Controls
+## Các điều khiển Inspector
 
-Open the block sidebar (gear icon) to configure:
+Mở thanh bên của block (biểu tượng bánh răng) để tiến hành thiết lập:
 
-| Control | Inspector label | Shortcode equivalent |
+| Loại điều khiển | Nhãn Inspector | Shortcode tương đương |
 |---|---|---|
 | Text | **Limit by tags (pool filter)** | `tags="ecommerce,blog"` |
 | Toggle | **Show tag browser toolbar** | `tags-browser="no"` |
 | Text | **Pill filter groups** | `filter-tags="industry"` |
-| Range (0–60, step 4) | **Cards per page** | `per-page="12"` |
+| Range (0 đến 60, bước nhảy 4) | **Cards per page** | `per-page="12"` |
 
-## Shortcode Attribute Mapping
+## Ánh xạ thuộc tính shortcode
 
-| Shortcode attr | Block attribute | Type |
+| Thuộc tính shortcode | Thuộc tính block | Kiểu dữ liệu |
 |---|---|---|
 | `tags` | `tags` | string |
 | `filter-tags` | `filterTags` | string |
 | `tags-browser` (`yes`/`no`) | `tagsBrowser` | boolean |
 | `per-page` | `perPage` | integer |
 
-## How It Works
+## Cách hệ thống hoạt động
 
 ```
 block.json
@@ -56,19 +56,19 @@ GrabWP_Tenancy_WaaS_Blocks
   └─ enqueue_block_assets → loads CSS/JS only when block is present
 ```
 
-> No build step (Node/npm) is required. `index.js` is plain ES5/ES2015 using globally available `wp.*` packages that WordPress loads automatically in the block editor.
+> Không yêu cầu bước build (Node/npm). File `index.js` sử dụng mã ES5/ES2015 thuần túy cùng các gói `wp.*` ở phạm vi toàn cục mà WordPress tự động tải vào trong trình soạn thảo block.
 
-## Block vs Shortcode
+## So sánh block và shortcode
 
-Both produce identical frontend output. Choose based on your workflow:
+Cả hai cách đều tạo ra kết quả frontend giống hệt nhau. Hãy lựa chọn dựa theo quy trình làm việc của bạn:
 
 | | Shortcode | Block |
 |---|---|---|
-| **Configure** | Edit attribute strings | Visual sidebar controls |
-| **Preview** | Shows shortcode text | Shows placeholder |
-| **Theme support** | Works everywhere | Requires block-compatible theme |
-| **Best for** | Developers, copy-paste setup | Site editors, visual workflow |
+| **Cấu hình** | Sửa các chuỗi thuộc tính | Sử dụng các điều khiển trực quan ở thanh bên |
+| **Xem trước** | Hiển thị mã shortcode | Hiển thị khối giữ chỗ (placeholder) |
+| **Hỗ trợ theme** | Hoạt động ở mọi nơi | Yêu cầu theme tương thích với block |
+| **Phù hợp nhất cho** | Developer, thao tác nhanh bằng cách copy và paste | Người quản lý nội dung, làm việc với giao diện trực quan |
 
 ---
 
-**See also:** [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates) - all shortcode attributes and URL parameters
+**Xem thêm:** [Tham khảo shortcode](/grabwp-tenancy-waas/waas-shortcode-templates) (chi tiết tất cả các thuộc tính shortcode và tham số URL)
