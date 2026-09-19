@@ -1,119 +1,119 @@
 ---
-title: "Configure WaaS General Settings"
-description: "Set up platform domain, authentication mode, frontend pages, custom domains, and API keys"
+title: "Cấu hình cài đặt chung cho WaaS"
+description: "Thiết lập platform domain, phương thức xác thực, các trang frontend, custom domain và API key"
 order: 25
 section: waas
 ---
 
-# Configure WaaS General Settings
+# Cấu hình cài đặt chung cho WaaS
 
-The WaaS General Settings define your platform identity - domain, authentication, and the pages customers interact with.
+Các thiết lập WaaS General Settings định hình danh tính nền tảng của bạn: domain, phương thức xác thực và các trang frontend mà khách hàng sẽ thao tác.
 
-Navigate to **WaaS → Settings → General** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings`).
+Bạn hãy truy cập vào **WaaS → Settings → General** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings`).
 
-![WaaS General Settings](../images/waas-general-settings.png)
+![Cấu hình WaaS General Settings](../images/waas-general-settings.png)
 
-## Platform Settings
+## Cài đặt nền tảng
 
 ### Platform Domain
 
-The domain used for tenant subdomains.
+Đây là domain gốc dùng để cấp subdomain cho các tenant.
 
-| Field | Example | Notes |
+| Trường | Ví dụ | Ghi chú |
 |-------|---------|-------|
-| **Platform Domain** | `yoursaas.com` | Tenants get subdomains like `customer.yoursaas.com` |
+| **Platform Domain** | `yoursaas.com` | Tenant sẽ nhận các subdomain dạng `customer.yoursaas.com` |
 
-Enter your root domain without `http://` or trailing slash. Wildcard DNS must point `*.yoursaas.com` to your server.
+Nhập tên domain gốc của bạn, bỏ qua phần `http://` hoặc dấu gạch chéo ở cuối. Bạn cần cấu hình wildcard DNS để trỏ `*.yoursaas.com` về server của mình.
 
-> **DNS Setup:** Add a wildcard A record in your DNS:
+> **Thiết lập DNS:** Thêm một bản ghi wildcard A vào cấu hình DNS của bạn:
 > ```
 > *.yoursaas.com  →  A  →  YOUR_SERVER_IP
 > ```
-> This ensures all subdomains resolve to your server.
+> Bước này đảm bảo mọi subdomain đều phân giải đúng về server.
 
 ### WaaS Data Directory
 
-Where WaaS stores its operational data (templates, provisioning intents, etc.).
+Vị trí để WaaS lưu trữ các dữ liệu vận hành (như template, thông tin provisioning).
 
-| Field | Default |
+| Trường | Mặc định |
 |-------|---------|
 | **WaaS Data Directory** | `grabwp-tenancy-waas` |
 
-Relative to your WordPress uploads directory. The default is usually fine.
+Đường dẫn này mang tính tương đối so với thư mục uploads của WordPress. Thông thường bạn cứ giữ nguyên giá trị mặc định là ổn.
 
 ### Authentication Mode
 
-How customers authenticate on your platform.
+Phương thức xác thực khi khách hàng đăng nhập vào nền tảng.
 
-| Mode | Description |
+| Chế độ | Mô tả |
 |------|-------------|
-| **WaaS Auth** (recommended) | Creates a new user during signup. Customers log in via OTP (one-time password sent to email). No WordPress login form needed. |
-| **WP Auth** | Requires an existing WordPress account before creating a site. Customers use standard WordPress login. |
+| **WaaS Auth** (khuyên dùng) | Hệ thống tự động tạo user mới trong lúc đăng ký. Khách hàng đăng nhập qua mã OTP (mã dùng một lần gửi về email). Không cần dùng đến form đăng nhập mặc định của WordPress. |
+| **WP Auth** | Yêu cầu khách phải có sẵn tài khoản WordPress mới tạo được site. Khách hàng sử dụng form đăng nhập WordPress chuẩn. |
 
-**Recommended:** Use **WaaS Auth** for a self-service SaaS experience.
+**Khuyên dùng:** Hãy chọn **WaaS Auth** để mang lại trải nghiệm SaaS self-service mượt mà nhất.
 
-## Pages Configuration
+## Cấu hình trang frontend
 
-WaaS needs three WordPress pages for the customer-facing frontend. You can either create them manually or use the auto-create button.
+WaaS cần ba trang WordPress cơ bản làm giao diện cho khách hàng. Bạn có thể tự tạo tay hoặc dùng chức năng tạo tự động.
 
-### Auto-Create Pages
+### Tạo trang tự động
 
-Click the **Create/Repair Signup and Dashboard Pages** button at the bottom of the settings page. This creates the three pages with the correct shortcodes automatically.
+Bạn chỉ cần bấm nút **Create/Repair Signup and Dashboard Pages** ở cuối trang cài đặt. Hệ thống sẽ tự động sinh ra ba trang này kèm theo các shortcode chuẩn.
 
-### Manual Setup
+### Thiết lập thủ công
 
-If you prefer to create pages yourself:
+Nếu bạn muốn tự thiết kế các trang này:
 
-1. Create a page named **Signup** with content: `[grabwp_waas_signup]`
-2. Create a page named **Dashboard** with content: `[grabwp_waas_dashboard]`
-3. Create a page named **Templates** with content: `[grabwp_waas_templates]`
+1. Tạo một trang tên là **Signup** với nội dung: `[grabwp_waas_signup]`
+2. Tạo một trang tên là **Dashboard** với nội dung: `[grabwp_waas_dashboard]`
+3. Tạo một trang tên là **Templates** với nội dung: `[grabwp_waas_templates]`
 
-Then select each page in the dropdowns:
+Sau đó, hãy chọn từng trang tương ứng trong menu xổ xuống:
 
-| Setting | Page | Content |
+| Cài đặt | Trang | Nội dung |
 |---------|------|---------|
-| **Signup Page** | Signup | `[grabwp_waas_signup]` or Signup block |
-| **Dashboard Page** | Dashboard | `[grabwp_waas_dashboard]` or Dashboard block |
-| **Templates Page** | Templates | `[grabwp_waas_templates]` or Template Browser block |
+| **Signup Page** | Signup | `[grabwp_waas_signup]` hoặc dùng block Signup |
+| **Dashboard Page** | Dashboard | `[grabwp_waas_dashboard]` hoặc dùng block Dashboard |
+| **Templates Page** | Templates | `[grabwp_waas_templates]` hoặc dùng block Template Browser |
 
-> **Tip:** You can also use Gutenberg blocks instead of shortcodes. See [Set Up Frontend Pages](/grabwp-tenancy-waas/waas-setup-frontend-pages) for details.
+> **Mẹo:** Bạn cũng có thể dùng các block Gutenberg thay cho shortcode. Xem thêm chi tiết tại [Thiết lập trang frontend](/grabwp-tenancy-waas/waas-setup-frontend-pages).
 
-## Custom Domains Settings
+## Cài đặt custom domain
 
-Configure how tenant custom domains work. This determines the DNS instructions shown to your customers.
+Phần này cấu hình cách custom domain của tenant hoạt động, đồng thời quyết định hướng dẫn DNS nào sẽ được hiển thị cho khách hàng.
 
-| Setting | Options | Description |
+| Cài đặt | Tùy chọn | Mô tả |
 |---------|---------|-------------|
-| **Domain Mode** | Cloudflare SaaS / Direct IP | How customers connect their domains |
-| **CNAME Target** | e.g., `cdn.saas.yoursaas.com` | (Cloudflare mode) Value customers set in their CNAME record |
-| **Server Public IP** | e.g., `203.0.113.50` | (Direct IP mode) Value customers set in their A record |
+| **Domain Mode** | Cloudflare SaaS / Direct IP | Phương thức để khách hàng kết nối domain của họ |
+| **CNAME Target** | ví dụ, `cdn.saas.yoursaas.com` | (Chế độ Cloudflare) Giá trị để khách hàng nhập vào bản ghi CNAME của họ |
+| **Server Public IP** | ví dụ, `203.0.113.50` | (Chế độ Direct IP) Giá trị để khách nhập vào bản ghi A của họ |
 
-**For this tutorial:** Choose either mode. Details in [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains).
+**Trong bài hướng dẫn này:** Bạn chọn chế độ nào cũng được. Xem chi tiết tại [Quản lý custom domain](/grabwp-tenancy-waas/waas-managing-domains).
 
-## Activity Log
+## Activity log
 
-| Setting | Default | Description |
+| Cài đặt | Mặc định | Mô tả |
 |---------|---------|-------------|
-| **Retention (days)** | 90 | How long to keep activity log entries (7–365 days) |
-| **Grace Period (days)** | 7 | Days before tenant is suspended after subscription cancellation. 0 = immediate suspension. |
+| **Retention (days)** | 90 | Thời gian lưu trữ các bản ghi activity log (từ 7 đến 365 ngày) |
+| **Grace Period (days)** | 7 | Số ngày gia hạn trước khi tenant bị đình chỉ do hủy subscription. Đặt 0 = đình chỉ ngay lập tức. |
 
-## API Keys
+## API key
 
-API keys allow external systems to interact with your WaaS platform via REST API.
+API key cho phép các hệ thống bên ngoài tương tác với nền tảng WaaS của bạn thông qua REST API.
 
-To generate a key:
-1. Enter an optional **Key Label** (e.g., "CI/CD pipeline")
-2. Click **Generate New API Key**
-3. **Copy the key immediately** - it is shown only once
+Để tạo một key mới:
+1. Nhập một cái tên gợi nhớ vào **Key Label** (ví dụ, "CI/CD pipeline"), không bắt buộc
+2. Bấm **Generate New API Key**
+3. **Copy the key immediately** (sao chép key ngay lập tức), vì hệ thống chỉ hiển thị mã này một lần duy nhất
 
-Existing keys are listed with their label, prefix, and creation date. Click **Revoke** to deactivate a key.
+Các key đã tạo sẽ được liệt kê bên dưới kèm theo label, prefix và ngày tạo. Bạn có thể bấm **Revoke** để vô hiệu hóa một key bất kỳ.
 
-> **Note:** API keys are for programmatic access only. Most setups don't need them unless you're integrating with external tools.
+> **Lưu ý:** API key chủ yếu dùng cho programmatic access (truy cập qua code/script). Hầu hết các setup thông thường sẽ không cần tới chúng trừ khi bạn muốn tích hợp với các công cụ bên ngoài.
 
-## Save Settings
+## Lưu cài đặt
 
-Click **Save Settings**. Verify the success message appears at the top of the page.
+Bấm **Save Settings**. Đảm bảo bạn nhìn thấy thông báo thành công hiện lên ở đầu trang nhé.
 
 ---
 
-**Next:** [Create Plans](/grabwp-tenancy-waas/waas-create-plans)
+**Tiếp theo:** [Tạo plan](/grabwp-tenancy-waas/waas-create-plans)

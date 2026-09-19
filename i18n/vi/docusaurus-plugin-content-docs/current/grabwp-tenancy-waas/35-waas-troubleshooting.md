@@ -1,156 +1,156 @@
 ---
-title: "Troubleshooting"
-description: "Fix common WaaS issues - provisioning failures, webhook problems, template errors, domain verification, and email delivery"
+title: "Xử lý sự cố"
+description: "Khắc phục các sự cố WaaS phổ biến - lỗi provisioning, vấn đề webhook, lỗi template, xác minh custom domain và gửi email"
 order: 35
 section: waas
 ---
 
-# Troubleshooting
+# Xử lý sự cố
 
-Common issues and how to fix them.
+Các vấn đề phổ biến và cách khắc phục.
 
 ## Provisioning
 
-### Site provisioning fails or hangs
+### Quá trình provisioning thất bại hoặc bị treo
 
-**Symptoms:** Signup completes payment but site is never created, or spinner runs indefinitely.
+**Triệu chứng:** Người dùng đăng ký và thanh toán thành công nhưng trang không bao giờ được tạo, hoặc biểu tượng tải chạy mãi không dừng.
 
-**Check:**
-1. Go to **WaaS → Settings → Provisioning** - look for stuck intents
-2. Check the **Activity Log** (WaaS → Settings → Activity tab) for error details
-3. Verify file system permissions:
+**Cách kiểm tra:**
+1. Vào **WaaS → Settings → Provisioning** - tìm các tác vụ đang bị kẹt.
+2. Kiểm tra **Activity Log** (WaaS → Settings → tab Activity) để xem chi tiết lỗi.
+3. Xác minh quyền thư mục:
    ```bash
-   # The WaaS data directory must be writable by the web server
+   # Thư mục dữ liệu WaaS phải có quyền ghi bởi web server
    ls -la wp-content/uploads/grabwp-tenancy-waas/
    ```
-4. Check PHP error log for fatal errors during provisioning
+4. Kiểm tra PHP error log để xem có lỗi nghiêm trọng (fatal error) trong quá trình provisioning không.
 
-**Common causes:**
-- Insufficient disk space
-- File permission issues (web server can't create directories)
-- PHP memory limit too low - increase `memory_limit` in `php.ini`
-- PHP max execution time - increase `max_execution_time` for long provisioning tasks
+**Nguyên nhân phổ biến:**
+- Hết dung lượng ổ cứng.
+- Vấn đề quyền file (web server không thể tạo thư mục).
+- Giới hạn bộ nhớ PHP quá thấp - hãy tăng `memory_limit` trong `php.ini`.
+- Thời gian thực thi tối đa của PHP - hãy tăng `max_execution_time` cho các tác vụ provisioning chạy lâu.
 
-### Provisioning intent stuck in "pending"
+### Tác vụ provisioning bị kẹt ở trạng thái "pending"
 
-1. Go to WaaS → Settings → Provisioning
-2. Find the stuck intent
-3. Click **Retry** to re-queue it, or **Dismiss** to discard it
+1. Vào WaaS → Settings → Provisioning
+2. Tìm tác vụ đang bị kẹt
+3. Nhấp vào **Retry** để đưa vào hàng đợi chạy lại, hoặc **Dismiss** để loại bỏ tác vụ này.
 
-## Payment & Billing
+## Thanh toán và billing
 
-### Polar webhook not received
+### Không nhận được webhook của Polar
 
-**Symptoms:** Customer pays but subscription stays pending. "Last webhook received" timestamp doesn't update.
+**Triệu chứng:** Khách hàng đã thanh toán nhưng subscription vẫn ở trạng thái pending. Thời gian "Last webhook received" không cập nhật.
 
-**Check:**
-1. Verify the webhook URL in Polar dashboard matches exactly:
+**Cách kiểm tra:**
+1. Xác minh URL webhook trong dashboard Polar khớp chính xác:
    ```
    https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar
    ```
-2. Check that your site is accessible from the internet (not localhost)
-3. Verify the webhook secret matches between Polar and WaaS settings
-4. Check Polar dashboard → Webhooks → Delivery log for failed attempts
+2. Đảm bảo trang web của bạn có thể truy cập được từ internet (không phải localhost).
+3. Xác minh webhook secret khớp giữa Polar và cài đặt WaaS.
+4. Kiểm tra dashboard Polar → Webhooks → Delivery log để xem các lần gửi thất bại.
 
-**Common causes:**
-- Wrong webhook URL (typo, HTTP instead of HTTPS)
-- Firewall blocking incoming webhooks
-- Webhook secret mismatch - copy-paste carefully, the `whsec_` prefix is required
-- Site behind basic auth or maintenance mode
+**Nguyên nhân phổ biến:**
+- Sai URL webhook (gõ nhầm, dùng HTTP thay vì HTTPS).
+- Tường lửa chặn webhook đến.
+- Sai webhook secret - hãy copy-paste cẩn thận, bắt buộc phải có tiền tố `whsec_`.
+- Trang web đang bật basic auth hoặc chế độ bảo trì (maintenance mode).
 
-### Payment succeeds but site not provisioned
+### Thanh toán thành công nhưng chưa tạo trang
 
-1. Check if the webhook was received (WaaS → Settings → Billing → last webhook timestamp)
-2. If webhook received: check provisioning queue (WaaS → Settings → Provisioning)
-3. If webhook not received: see "Polar webhook not received" above
-4. Check Activity Log for errors
+1. Kiểm tra xem đã nhận được webhook chưa (WaaS → Settings → Billing → thời gian nhận webhook cuối cùng).
+2. Nếu đã nhận webhook: kiểm tra hàng đợi provisioning (WaaS → Settings → Provisioning).
+3. Nếu chưa nhận webhook: xem phần "Không nhận được webhook của Polar" ở trên.
+4. Kiểm tra Activity Log để xem có lỗi không.
 
-### WooCommerce checkout redirects to empty cart
+### Trang checkout WooCommerce chuyển hướng về giỏ hàng trống
 
-- Verify the **Anchor Product** exists and is published (even if hidden)
-- Click **Create/Repair WooCommerce Anchor Product** in WaaS → Settings → General
-- Clear any WooCommerce cache plugins
+- Xác minh **Anchor Product** đã được tạo và publish (ngay cả khi bị ẩn).
+- Nhấp vào **Create/Repair WooCommerce Anchor Product** trong WaaS → Settings → General.
+- Xóa cache của bất kỳ plugin WooCommerce cache nào.
 
 ## Templates
 
-### Templates not appearing in gallery
+### Templates không hiển thị trong gallery
 
-**Check:**
-1. Is the template marked as **Active**? (WaaS → Templates → Edit)
-2. Is the source tenant still active? (Tenancy → All Tenants)
-3. Is the template restricted to specific plans? Check **Allowed Plans** on the template
-4. Does the template have a **thumbnail**? Templates without thumbnails may appear broken
-5. Clear any page caching on the templates page
+**Cách kiểm tra:**
+1. Template đã được đánh dấu là **Active** chưa? (WaaS → Templates → Edit)
+2. Tenant gốc (source tenant) còn hoạt động không? (Tenancy → All Tenants)
+3. Template có bị giới hạn ở các plan cụ thể không? Hãy kiểm tra **Allowed Plans** trên template.
+4. Template có **thumbnail** (ảnh đại diện) chưa? Templates không có thumbnails có thể trông như bị lỗi.
+5. Xóa page cache trên trang hiển thị templates.
 
-### Template preview not loading
+### Bản xem trước của template không tải được
 
-- The preview URL uses `?grabwp_waas_preview=<slug>` - make sure your server/caching layer doesn't block this parameter
-- Check that the source tenant site is accessible
-- Verify there are no PHP errors in the tenant site
+- URL xem trước sử dụng `?grabwp_waas_preview=<slug>` - đảm bảo server hoặc hệ thống cache của bạn không chặn tham số này.
+- Kiểm tra xem trang tenant gốc có truy cập được không.
+- Xác minh không có lỗi PHP nào trên trang tenant.
 
-## Custom Domains
+## Custom domains
 
-### Domain verification fails
+### Xác minh domain thất bại
 
-**Check:**
-1. DNS propagation may take up to 48 hours (usually 5-30 minutes)
-2. Use a DNS checker to verify the record is visible:
+**Cách kiểm tra:**
+1. Quá trình cập nhật DNS có thể mất đến 48 giờ (thường từ 5-30 phút).
+2. Dùng công cụ kiểm tra DNS để xác minh bản ghi đã nhận:
    ```bash
-   dig mybusiness.com CNAME    # For Cloudflare SaaS mode
-   dig mybusiness.com A        # For Direct IP mode
+   dig mybusiness.com CNAME    # Cho chế độ Cloudflare SaaS
+   dig mybusiness.com A        # Cho chế độ Direct IP
    ```
-3. Ensure the record value is correct:
-   - CNAME mode: must point to your CNAME Target exactly
-   - Direct IP mode: must point to your server IP exactly
+3. Đảm bảo giá trị bản ghi chính xác:
+   - Chế độ CNAME: phải trỏ chính xác đến CNAME Target của bạn.
+   - Chế độ Direct IP: phải trỏ chính xác đến IP server của bạn.
 
-### Custom domain shows wrong site or SSL error
+### Custom domain trỏ sai trang hoặc lỗi SSL
 
 **Cloudflare SaaS:**
-- Check that the fallback origin is correctly configured in Cloudflare
-- Verify the custom hostname is added in Cloudflare dashboard
-- SSL provisioning can take a few minutes
+- Kiểm tra fallback origin đã được cấu hình đúng trong Cloudflare chưa.
+- Xác minh custom hostname đã được thêm vào dashboard Cloudflare.
+- Quá trình cấp phát SSL có thể mất vài phút.
 
 **Direct IP:**
-- Ensure your web server (Nginx/Apache) has a server block for the custom domain
-- Run Certbot or equivalent for SSL on the new domain
-- Reload/restart your web server after config changes
+- Đảm bảo web server (Nginx/Apache) của bạn có server block cho custom domain.
+- Chạy Certbot hoặc công cụ tương đương để cài SSL cho domain mới.
+- Tải lại/khởi động lại web server sau khi thay đổi cấu hình.
 
-## Tenant Sites
+## Trang tenant
 
-### Tenant site not loading (404 or blank page)
+### Trang tenant không tải được (lỗi 404 hoặc trang trắng)
 
-1. Check domain/subdomain DNS resolves correctly
-2. Verify the tenant exists in **Tenancy → All Tenants**
-3. Check the tenant's database tables exist
-4. Look for PHP errors in the error log
-5. Verify wildcard DNS is configured: `*.yoursaas.com → your server IP`
+1. Kiểm tra domain/subdomain DNS đã trỏ đúng chưa.
+2. Xác minh tenant tồn tại trong **Tenancy → All Tenants**.
+3. Kiểm tra các bảng database của tenant có tồn tại không.
+4. Tìm lỗi PHP trong error log.
+5. Xác minh wildcard DNS đã được cấu hình: `*.yoursaas.com → IP server của bạn`.
 
-### Tenant admin is inaccessible
+### Không thể truy cập vào admin của tenant
 
-- Try accessing via `tenant-slug.yoursaas.com/wp-admin/`
-- If login fails, the tenant user may not have been created - check provisioning logs
-- For WaaS Auth mode: tenants log in via OTP on the dashboard, not wp-login.php
+- Thử truy cập qua `tenant-slug.yoursaas.com/wp-admin/`.
+- Nếu đăng nhập thất bại, user của tenant có thể chưa được tạo - hãy kiểm tra log provisioning.
+- Ở chế độ WaaS Auth: tenants đăng nhập qua mã OTP trên dashboard, không qua `wp-login.php`.
 
 ## Email
 
-### OTP codes not arriving
+### Không nhận được mã OTP
 
-1. Check your spam/junk folder
-2. Verify SMTP plugin is configured and working
-3. Send a test email from **WP Mail SMTP → Email Test** (or your SMTP plugin's test feature)
-4. In development: check Mailpit at `http://yourserver:8025/`
+1. Kiểm tra thư mục spam/junk.
+2. Xác minh plugin SMTP đã được cấu hình và hoạt động.
+3. Gửi email test từ **WP Mail SMTP → Email Test** (hoặc tính năng test của plugin SMTP bạn dùng).
+4. Trong môi trường dev: kiểm tra Mailpit tại `http://yourserver:8025/`.
 
-**Common causes:**
-- No SMTP plugin installed (default `wp_mail()` often rejected by mail servers)
-- SMTP credentials incorrect
-- Port blocked by hosting provider (port 25/465/587)
-- Sender email domain has no SPF/DKIM records
+**Nguyên nhân phổ biến:**
+- Chưa cài plugin SMTP (hàm `wp_mail()` mặc định thường bị các mail server từ chối).
+- Sai thông tin đăng nhập SMTP.
+- Port bị nhà cung cấp hosting chặn (port 25/465/587).
+- Domain của email gửi đi không có bản ghi SPF/DKIM.
 
-## File Permissions
+## Quyền file
 
-### "Permission denied" errors
+### Lỗi "Permission denied"
 
-The web server user (usually `www-data` or `nginx`) needs write access to:
+User của web server (thường là `www-data` hoặc `nginx`) cần quyền ghi vào:
 
 ```bash
 chown -R www-data:www-data wp-content/grabwp-tenancy/
@@ -159,43 +159,43 @@ chown -R www-data:www-data wp-content/uploads/grabwp-tenancy-waas/
 chown -R www-data:www-data wp-content/uploads/
 ```
 
-### S3 connection test fails
+### Kiểm tra kết nối S3 thất bại
 
-1. Double-check endpoint URL, bucket name, region
-2. Verify access key and secret key are correct
-3. For MinIO: enable **Path-Style Endpoint** checkbox
-4. Check that the bucket exists and the credentials have read/write permission
-5. Verify network connectivity - your server must be able to reach the S3 endpoint
+1. Kiểm tra kỹ endpoint URL, tên bucket, region.
+2. Xác minh access key và secret key chính xác.
+3. Đối với MinIO: bật tùy chọn **Path-Style Endpoint**.
+4. Kiểm tra bucket có tồn tại và credentials có quyền đọc/ghi không.
+5. Xác minh kết nối mạng - server của bạn phải có thể kết nối đến endpoint S3.
 
-## Performance
+## Hiệu suất
 
-### Slow provisioning
+### Provisioning chậm
 
-- Increase PHP `memory_limit` to at least 256M
-- Increase `max_execution_time` to at least 120 seconds
-- For SQLite tenants: ensure SSD storage
-- For S3 storage: provisioning uploads are slower than local - expected behavior
+- Tăng `memory_limit` của PHP lên ít nhất 256M.
+- Tăng `max_execution_time` lên ít nhất 120 giây.
+- Đối với các tenants dùng SQLite: đảm bảo bạn dùng ổ cứng SSD.
+- Đối với lưu trữ S3: việc upload file provisioning lên S3 sẽ chậm hơn so với lưu cục bộ - đây là điều bình thường.
 
-### Admin dashboard slow
+### Admin dashboard chậm
 
-- The subscriptions and domains list tables query the database - ensure indexes are intact
-- If you have hundreds of tenants, consider MySQL performance tuning
-- Clear object cache if using a caching plugin
+- Bảng danh sách subscriptions và domains cần query database - hãy đảm bảo các index hoạt động tốt.
+- Nếu bạn có hàng trăm tenants, hãy cân nhắc tinh chỉnh hiệu suất MySQL.
+- Xóa object cache nếu bạn đang dùng plugin cache.
 
-## Getting Help
+## Nhận hỗ trợ
 
-If you've tried the above and still have issues:
+Nếu bạn đã thử các cách trên mà vẫn gặp sự cố:
 
-1. **Check the Activity Log** - WaaS → Settings → Activity for detailed error records
-2. **Check PHP error log** - usually at `/var/log/php-fpm/error.log` or in your hosting control panel
-3. **Check WordPress debug log** - enable `WP_DEBUG_LOG` in `wp-config.php`:
+1. **Kiểm tra Activity Log** - WaaS → Settings → Activity để xem chi tiết lỗi.
+2. **Kiểm tra PHP error log** - thường ở `/var/log/php-fpm/error.log` hoặc trong control panel hosting của bạn.
+3. **Kiểm tra WordPress debug log** - bật `WP_DEBUG_LOG` trong `wp-config.php`:
    ```php
    define('WP_DEBUG', true);
    define('WP_DEBUG_LOG', true);
    define('WP_DEBUG_DISPLAY', false);
    ```
-   Logs are written to `wp-content/debug.log`
+   Các log sẽ được ghi vào file `wp-content/debug.log`.
 
 ---
 
-**Back to:** [WaaS Documentation Index](/grabwp-tenancy-waas/waas-overview)
+**Quay lại:** [Danh mục tài liệu WaaS](/grabwp-tenancy-waas/waas-overview)
