@@ -1,73 +1,93 @@
 ---
 title: "Quản lý tenant site"
-description: "Tạo, chỉnh sửa và xóa tenant site"
-order: 4
-section: base
+description: "Tạo, sửa và xóa tenant site"
+order: 3
+section: tenancy
 ---
 
 # Quản lý tenant site
 
-## Tạo site mới
+Mỗi tenant là một site WordPress riêng trên cài đặt này. Hãy gán cho mỗi tenant một domain riêng.
 
-1. Vào **GrabWP Tenancy → Tenants**
-2. Nhấn **Add New**
-3. Chọn **"I have a domain"** để nhập domain ngay, hoặc **"I'll set up a domain later"** để dùng định tuyến theo path ngay lập tức
-4. Nhấn **Create**
+## Mở danh sách tenant
 
-![Add New Tenant - thêm domain ngay hoặc sau](../images/grabwp-tenancy-pro-tenant-add.png)
+**Vào Tenancy → All Tenants** (`page=grabwp-tenancy`).
 
-Hệ thống sẽ gán một ID gồm 6 ký tự duy nhất (ví dụ: `abc123`) và tự động tạo bảng cơ sở dữ liệu cùng thư mục upload.
+![All Tenants](../images/grabwp-tenancy-pro-tenant-list.png)
 
-## Truy cập tenant site
+Tiêu đề trang là **GrabWP Tenancy**. Dòng giới thiệu là **Manage your multi-tenant WordPress sites.**
 
-Sau khi tạo, tìm site trong danh sách tenant. Mỗi dòng hiển thị các biểu tượng thao tác:
+| Cột | Ghi chú |
+|--------|--------|
+| Tenant ID | ID 6 ký tự. Bản cài chính là dòng **Main Site** có ngôi sao. |
+| Domains | Domain gắn với tenant đó. **Path access only** nghĩa là chưa có domain. **No domains assigned** nghĩa là mapping trống. |
+| Actions | Liên kết dạng icon. Di chuột để thấy nhãn. |
 
-![Danh sách tenant với các thao tác theo dòng (visit, admin, edit, delete)](../images/grabwp-tenancy-pro-tenant-list.png)
+Pro thêm cột **Database**, **Storage**, và **Isolation**. Chữ viết tắt isolation: **WPC** (WP Content), **Th** (Themes), **Plg** (Plugins), **Up** (Uploads).
 
-| Biểu tượng | Thao tác |
-|------|--------|
-| Home | Mở site (giao diện người dùng) |
-| Dashboard | Mở trang quản trị WordPress của tenant |
-| Edit | Chỉnh sửa cài đặt domain |
-| Trash | Xóa site |
+Tìm bằng **Search by ID or domain...** và **Search**.
 
-Với tenant dùng domain riêng, khi nhấn **biểu tượng Dashboard**, trang quản trị của tenant sẽ mở kèm token bảo mật được chèn tự động, không cần nhập mật khẩu. Với tenant chỉ dùng path, hệ thống sẽ mở trực tiếp URL quản trị theo path.
+### Thao tác trên dòng
 
-## Truy cập bằng URL theo path
+| Nhãn | Việc nó làm |
+|-------|----------------|
+| Visit Site | Mở trang front end. |
+| Admin | Mở WordPress admin của tenant. Liên kết kèm access token sống ngắn (mặc định 30 phút). |
+| Settings | Mở **Edit Tenant**. |
+| Delete | Icon thùng rác. Yêu cầu gõ tenant ID. |
 
-Mọi tenant site đều có thể truy cập bằng URL theo path, không cần domain:
+Dòng **Main Site** chỉ có **Visit Site**. Pro thêm **Clone to Tenant** trên dòng đó.
 
-```
-https://yoursite.com/site/{tenant-id}
-```
+Khi Pro đang bật, dòng tenant còn có **Plugins & Themes**, **Fix URLs**, **Clone Tenant**, **Backup Tenant**, và **Restore Tenant**, chèn trước icon thùng rác. Các màn đó nằm trong phần Pro.
 
-ID tenant được hiển thị trong trang Edit tại mục **Path URL**.
+Danh sách trống hiện **No Tenants Found** và **Create Your First Tenant**.
 
-## Chỉnh sửa tenant site
+## Tạo tenant
 
-Nhấn **biểu tượng Edit** để:
-- Xem URL theo path (kèm nút copy)
-- Thêm hoặc xóa domain tùy chỉnh
+**Vào Tenancy → Add New** (`page=grabwp-tenancy-create`), hoặc nhấn **Add New** trên danh sách.
 
-![Chỉnh sửa tenant - URL theo path và các domain](../images/grabwp-tenancy-pro-tenant-edit.png)
+![Add New Tenant](../images/grabwp-tenancy-pro-tenant-add.png)
 
-## Thêm nhiều domain hơn
+1. Trong **Domain Setup**, giữ **I have a domain**.
+2. Nhập domain. Placeholder: **Enter domain (e.g. mysite.com)**. Dùng **Clear** hoặc **Remove** trên một dòng. Không kèm `http://` hay `www`.
+3. Nhấn **Create Tenant**.
 
-Một site có thể phản hồi trên nhiều domain khác nhau (ví dụ: `www.site.com` và `site.com`):
+**Cancel** quay lại **All Tenants**.
 
-1. Nhấn **Edit** trên site
-2. Thêm các domain bổ sung
-3. Lưu lại, sau đó cấu hình các domain mới trong control panel hosting của bạn
+> **Note:** **I'll set up a domain later** tạo tenant khi chưa có domain công khai. Danh sách hiện **Path access only**. Màn Edit có **Path URL** và nút **Copy** để xem trước tạm thời cho đến khi domain được gắn. Thêm domain và làm [Domain & DNS Setup](/grabwp-tenancy/hosting-dns-setup) trước khi khách dùng site.
 
-## Xóa site
+Pro thêm **Content Isolation Options**, **Database Configuration**, và **Storage Driver** (chỉ sau khi S3 đã được cấu hình) vào form này. Xem [Database & Content Isolation](/grabwp-tenancy-pro/pro-database-isolation).
 
-> ⚠ **Cảnh báo:** Xóa site sẽ xóa vĩnh viễn toàn bộ dữ liệu của site. Các bảng cơ sở dữ liệu và file upload không thể khôi phục.
+**Verify:** ID mới xuất hiện trên **All Tenants** cùng domain bạn đã nhập.
 
-1. Nhấn **biểu tượng Trash** trên site
-2. Hệ thống sẽ yêu cầu bạn nhập ID của site để xác nhận
-3. Nhập chính xác ID, việc xóa chỉ tiếp tục nếu ID khớp
+## Sửa domain
 
-## Lưu ý về quản trị tenant
+Nhấn **Settings** trên dòng, hoặc mở `page=grabwp-tenancy-edit` với tenant đó.
 
-- Để đặt lại mật khẩu admin của tenant: dùng liên kết "Forgot Password" trên trang đăng nhập của tenant site
-- Nếu tenant cần tự quản lý cài đặt plugin của họ: họ có thể kích hoạt plugin GrabWP Tenancy từ trang Plugins của riêng họ
+![Edit Tenant](../images/grabwp-tenancy-pro-tenant-edit.png)
+
+Tiêu đề là **Edit Tenant:** cộng tenant ID. Với Pro, các tab phía trên là **Edit**, **Extensions**, **Clone**, **Fix URLs**, **Backup**, **Restore**, **Settings**, **Overrides** (khi được hỗ trợ), **Homepage**, và **WP Admin**.
+
+| Trường | Ghi chú |
+|-------|--------|
+| Tenant ID | Chỉ đọc. |
+| Path URL | Địa chỉ xem trước tạm thời, có **Copy**. Hiện cho đến khi path alias thay thế. |
+| Domains | Một ô cho mỗi domain. **Remove** xóa một dòng. **Add New Domain** thêm một dòng. |
+
+Chữ trợ giúp domain: **Valid format: example.com, subdomain.example.com (no http:// or www)**.
+
+Nhấn **Update Tenant**. Thông báo thành công: **Tenant updated successfully.**
+
+Một site có thể trả lời trên nhiều domain (ví dụ `www` và apex). Thêm từng domain ở đây, rồi trỏ mỗi domain về thư mục WordPress này trong hosting và DNS.
+
+> **Note:** Khách nên dùng domain bạn thêm ở đây. **Path URL** chỉ là bản xem trước trước khi domain được gắn.
+
+## Xóa tenant
+
+> **Warning:** Xóa sẽ gỡ bảng cơ sở dữ liệu và upload của tenant đó. Không hoàn tác được.
+
+1. Nhấn icon thùng rác trên dòng.
+2. Khi được hỏi **To confirm deletion, type the tenant ID:**, nhập đúng ID.
+3. Nhập sai sẽ hiện **Incorrect tenant ID. Deletion cancelled.**
+
+**Verify:** Sau khi sửa, cột **Domains** khớp những gì bạn đã lưu. Sau khi xóa, ID không còn trên danh sách.

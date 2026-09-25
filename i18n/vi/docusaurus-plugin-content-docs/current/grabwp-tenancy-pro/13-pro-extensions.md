@@ -1,58 +1,64 @@
 ---
-title: "Plugin & Theme theo từng site"
-description: "Quản lý plugin và theme độc lập cho từng tenant site"
+title: "Plugin và theme theo site"
+description: "Cài và kích hoạt plugin, theme cho một tenant"
 order: 13
 section: pro
 ---
 
-# Plugin & Theme theo từng site
+# Plugin và theme theo site
 
-Với Pro, mỗi tenant site có thể có bộ plugin và theme riêng, tách biệt với site chính của bạn và với các site khác.
+Mỗi tenant có thể có plugin và theme riêng khi isolation được bật cho site đó.
 
-## Trước khi bắt đầu
+## Bật isolation
 
-Trước tiên bạn phải bật cô lập plugin và theme cho site:
+1. Mở tenant: **Tenancy → All Tenants**, rồi **Settings** trên dòng (`page=grabwp-tenancy-edit`).
+2. Bật **Plugins Isolation** và/hoặc **Content + Themes Isolation**.
+3. Nhấn **Update Tenant**.
 
-1. Vào **GrabWP Tenancy → Tenants → Edit** site
-2. Trong phần các trường cô lập của Pro, bật **Plugins Isolation** và/hoặc **Content + Themes Isolation**
-3. Lưu lại
+Không có **Plugins Isolation**, bảng Plugins hiện **Plugins Isolation is disabled for this tenant. Enable it in the tenant edit form to manage plugins here.** Không có **Content + Themes Isolation**, bảng Themes hiện **Content + Themes Isolation is disabled for this tenant. Enable it in the tenant edit form to manage themes here.**
 
-Sau khi bật, liên kết **Extensions** sẽ xuất hiện trong dòng của tenant ở danh sách tenant.
+## Mở Extensions
 
-## Quản lý extensions cho một site
+**Vào Tenancy → All Tenants**, rồi **Plugins & Themes** trên dòng (`page=grabwp-tenancy-pro-extensions`).
 
-1. Vào **GrabWP Tenancy → Tenants**
-2. Tìm site rồi nhấn liên kết thao tác **Extensions**
-3. Bạn sẽ thấy toàn bộ plugin và theme hiện có từ cài đặt chính
+Bạn cũng có thể mở tab **Extensions** trên tenant.
 
-![Extensions - phương thức cài đặt và các plugin có thể cài](../images/grabwp-tenancy-pro-tenant-extension.png)
+![Extensions, Plugins](../images/grabwp-tenancy-pro-tenant-extension.png)
 
-### Cấp quyền dùng plugin cho một site
+Tiêu đề là **Extensions:** cộng tenant ID. Dòng dưới các tab hiện **Primary Domain** và **Install Method**.
 
-1. Tìm plugin trong danh sách
-2. Nhấn **Install**, plugin sẽ được cài vào thư mục của tenant site theo kiểu copy hoặc symlink dựa trên thiết lập Install Method
-3. Tenant admin sau đó có thể kích hoạt plugin từ trang Plugins của riêng họ
+| Install Method | Ghi chú |
+|----------------|--------|
+| Symlink | Tenant trỏ tới file plugin hoặc theme của site chính. Cập nhật trên site chính áp dụng cho tenant. Tốn ít dung lượng hơn. |
+| Own Copy | File được sao chép vào thư mục tenant. Tenant không theo bản cập nhật sau trên site chính cho đến khi bạn nhấn **Sync**. |
 
-### Gỡ plugin khỏi một site
+Đổi **Install Method** sẽ lưu ngay (**Saved!**) và tải lại trang. Việc này không chuyển các extension đã cài. Dùng **Convert to Copy** hoặc **Convert to Symlink** trên một dòng để đổi extension đó. Nút convert hiện ra tùy method bạn đã chọn.
 
-1. Tìm plugin trong danh sách
-2. Nhấn **Remove**, plugin sẽ bị xóa khỏi thư mục của tenant site
+**Install All from Config** hiện khi `extensions.php` liệt kê plugin hoặc theme chưa được cài. **Fix All Broken Symlinks** hiện khi đích của một symlink bị thiếu.
 
-### Themes
+### Plugins và Themes
 
-Trang Extensions có hai sub-tab: **Plugins** (mặc định) và **Themes**. Tab **Themes** hoạt động giống **Plugins**: Install / Remove / kích hoạt theo từng tenant, với cùng **Install Method** (**Symlink** hoặc **Own Copy**).
+Tab: **Plugins** và **Themes**.
 
-![Extensions Themes tab](../images/grabwp-tenancy-pro-tenant-extension-themes.png)
+![Extensions, Themes](../images/grabwp-tenancy-pro-tenant-extension-themes.png)
 
-Các thao tác plugin và theme (install, remove, sync, convert, copy to main, activate, deactivate) cập nhật ngay dòng bị ảnh hưởng thay vì tải lại cả trang, nên tab hiện tại và vị trí cuộn được giữ nguyên.
+Cột: **Plugin** (hoặc **Theme**), **Source**, **Status**, **Activation**, **Actions**.
 
-## Phương thức cài đặt
+Huy hiệu nguồn: **Main**, **Supported**, **Custom**, **Unknown**. Nút lọc **All**, **Main**, **Supported**, và **Custom** chỉ hiện khi nguồn đó tồn tại. **Installed** lọc bảng và được nhớ lại. Placeholder ô tìm là **Filter plugins...** hoặc **Filter themes...**.
 
-Ở đầu trang Extensions, bạn có thể đặt **Install Method** cho site:
+| Status | Thao tác |
+|--------|---------|
+| Not installed | **Install** |
+| Symlink | **Remove**, và **Convert to Copy** khi Install Method là **Own Copy** |
+| Own Copy | **Remove**, **Sync**, và **Convert to Symlink** khi Install Method là **Symlink** |
+| Broken Symlink | **Fix Symlink**, **Remove broken link** |
 
-| Phương thức | Cách hoạt động | Khi nào nên dùng |
-|--------|-------------|-------------|
-| **Symlink** | Một symlink trỏ tới file plugin của site chính | Tiết kiệm dung lượng; khi cập nhật plugin ở site chính thì site tenant cũng nhận cập nhật |
-| **Own Copy** | File plugin được sao chép vào thư mục của tenant | Khi tenant cần bộ file hoàn toàn độc lập |
+Khi đọc được database của tenant, dòng đã cài còn có **Activate** hoặc **Deactivate**. Huy hiệu kích hoạt là **Active** và **Inactive**. Nếu không đọc được database, phần kích hoạt hiện **?**.
 
-Khi đổi phương thức và lưu lại, toàn bộ extensions đã cài sẽ được chuyển đổi lại tự động.
+Install, remove, sync, convert, activate, và deactivate cập nhật đúng dòng đó. Tab và vị trí cuộn được giữ.
+
+### Orphaned Extensions
+
+Nếu một plugin hoặc theme nằm trong thư mục tenant nhưng không có trong thư mục nguồn, **Orphaned Extensions** liệt kê nó. Thao tác gồm **Copy to Main Site** và **Remove** (hoặc **Remove broken link**).
+
+**Verify:** Sau **Install** và **Activate**, dòng hiện **Active**, và plugin hoặc theme có trong wp-admin của tenant đó (tab **WP Admin**).

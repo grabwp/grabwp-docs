@@ -1,109 +1,82 @@
 ---
-title: "Checklist trước khi ra mắt"
-description: "Kiểm tra DNS, SSL, billing, templates và toàn bộ quá trình signup trước khi mở cho khách hàng"
+title: "Danh sách trước khi ra mắt"
+description: "Kiểm tra DNS, trang, plan, billing và một lượt signup đầy đủ trước khi có khách"
 order: 30
 section: waas
 ---
 
-# Checklist trước khi ra mắt
+# Danh sách trước khi ra mắt
 
-Trước khi mở nền tảng WaaS cho khách hàng thật, hãy kiểm tra theo checklist này để đảm bảo mọi thứ hoạt động trơn tru từ đầu đến cuối.
+Đi qua danh sách này trên site production trước khi đưa khách tới signup.
 
-## Kiểm tra cài đặt
+## Settings
 
-- [ ] **Platform Domain** đã được thiết lập và wildcard DNS (`*.yoursaas.com`) trỏ về server của bạn
-- [ ] **SSL certificate** đã bao gồm các subdomain dạng wildcard (`*.yoursaas.com`)
-- [ ] Các trang **Signup, Dashboard, Templates** đã được tạo và liên kết trong WaaS → Settings → General
-- [ ] **Ít nhất một plan** đang hoạt động (WaaS → Settings → Plans)
-- [ ] **Ít nhất một template** đang hoạt động (WaaS → Templates)
-- [ ] **Billing provider** đã được bật và trạng thái hiển thị "Active" (cho các plan trả phí)
-- [ ] **Auth mode** đã được thiết lập (khuyên dùng WaaS Auth cho self-service)
+- [ ] **Platform Domain** đã đặt ở **Waas → Settings → General**, và `*.yoursaas.com` phân giải về server
+- [ ] HTTPS chạy trên platform domain và trên một subdomain tenant
+- [ ] Đã chọn **Signup Page**, **Dashboard Page**, **Templates Page** và **Pricing Page**
+- [ ] **Auth Mode** đúng chế độ bạn muốn (**WAAS Auth (Email signup)** cho self-service)
+- [ ] **Tenancy → Pro Settings**: **Database** và **Isolation** khớp cách bạn muốn cho tenant mới
+- [ ] Ít nhất một plan **Active** ở **Waas → Settings → Plans**
+- [ ] Ít nhất một template đang active ở **Waas → Templates**
+- [ ] Provider bạn dùng để thu phí hiện **Active** trên **Billing Providers**
+- [ ] Plan trả phí có product ID hoặc price ID trên **Payment Configuration**, hoặc bạn đã lưu để provider tự tạo các ID đó
+- [ ] **API Base URL** của Polar.sh là `https://api.polar.sh/v1`, không phải URL sandbox
 
-## Kiểm tra luồng signup
+## Signup plan Free
 
-Hãy đi qua toàn bộ trải nghiệm của khách hàng:
+Dùng cửa sổ trình duyệt riêng tư.
 
-### Đăng ký plan miễn phí
+1. Mở trang templates và bắt đầu signup từ một template, hoặc mở thẳng `/signup/`
+2. Ở **Create your account**, nhập **Your Name** và **Email Address**
+3. Chọn plan **Free**
+4. Hoàn tất wizard. **Payment Method** giữ ẩn khi đơn không cần thanh toán
+5. Ở **Tenancy → All Tenants**, xác nhận tenant mới có mặt
+6. Mở tenant trên subdomain platform (`something.yoursaas.com`)
 
-1. Mở trang signup của bạn (ví dụ: `https://yoursaas.com/signup/`) trong cửa sổ ẩn danh (incognito/private)
-2. Chọn plan **Free**
-3. Chọn một template
-4. Nhập site slug (ví dụ: `test-free`) và địa chỉ email
-5. Hoàn tất xác thực OTP (kiểm tra email của bạn hoặc Mailpit ở môi trường dev)
-6. Đợi quá trình provisioning hoàn tất
-7. Kiểm tra xem tenant site có tải đúng ở `test-free.yoursaas.com` không
+Subdomain được tạo cho khách. Bạn không gõ nó ở bước account.
 
-### Đăng ký plan trả phí
+Nếu site không xuất hiện, mở **Waas → Settings → Provisioning** và xem intent.
 
-1. Mở trang signup trong một cửa sổ ẩn danh mới
-2. Chọn plan **Pro**
-3. Chọn một template
-4. Nhập site slug và email
-5. Hoàn tất thanh toán qua trang checkout của Polar
-6. Kiểm tra xem webhook đã nhận được chưa (kiểm tra trong WaaS → Settings → Billing → "Last webhook received")
-7. Kiểm tra xem tenant site đã được provision thành công chưa
+## Signup plan trả phí
 
-### Truy cập dashboard
+1. Mở signup trong cửa sổ riêng tư mới
+2. Chọn plan trả phí và billing cycle
+3. Ở **Payment Method**, hoàn tất checkout với provider bạn đã bật
+4. Trên **Billing Providers**, mở provider đó và xem tip **Webhook URL** có **Last webhook received**
+5. Xác nhận tenant ở **Tenancy → All Tenants** và dòng ở **Waas → Subscriptions**
 
-1. Vào trang dashboard của bạn (ví dụ: `https://yoursaas.com/dashboard/`)
-2. Đăng nhập bằng email đã dùng khi signup
-3. Kiểm tra xem bạn có thấy các phần sau không:
-   - Site overview kèm link vào trang admin của tenant
-   - Thông tin subscription
-   - Phần quản lý tên miền (domain)
-   - Thiết lập tài khoản (account settings)
+## Dashboard
 
-## Gửi email
+1. Mở trang dashboard
+2. Bạn sẽ thấy **Sign in to your dashboard**
+3. Nhập email lúc signup và bấm **Send verification code**
+4. Nhập mã từ email và xác nhận dashboard mở
 
-- [ ] Gửi thành công email OTP (nhớ kiểm tra thư mục spam)
-- [ ] Sử dụng một SMTP plugin thực thụ trên production (không dùng mặc định của `wp_mail()`)
-- [ ] Test thử với một địa chỉ email bình thường (không phải email dev)
+> **Note:** Gửi mail OTP bằng plugin SMTP. Thử với hộp thư bạn kiểm soát được, và xem cả spam.
 
-> **Môi trường dev:** Sử dụng Mailpit (`http://yourserver:8025/`) để bắt tất cả các email thay vì gửi thật.
+## Template gallery và pricing
 
-## Thư viện template
+1. Trang templates hiện template đang active, thumbnail và bộ lọc tag
+2. Tìm kiếm và một bộ lọc tag đều đổi danh sách
+3. Trang pricing hiện plan đang active và giá bạn đã lưu
 
-1. Truy cập vào trang templates
-2. Kiểm tra xem tất cả các template đang active có hiển thị ảnh thumbnail không
-3. Test xem bộ lọc tag có hoạt động đúng không
-4. Test tính năng tìm kiếm
-5. Click "Preview" trên một template để kiểm tra xem bản preview có load đúng không
+## Dọn sau khi thử
 
-## Hiệu suất
+1. Xóa tenant thử từ **Tenancy → All Tenants**
+2. Gỡ subscription thử mà bạn không muốn giữ
+3. Nếu đã thử Polar.sh với sandbox, đặt **API Base URL** về `https://api.polar.sh/v1` và dùng credential production
 
-- [ ] Trang signup load dưới 3 giây
-- [ ] Thư viện template hiển thị mượt mà với số lượng template bạn có
-- [ ] Quá trình provisioning hoàn tất trong thời gian hợp lý (thường là 10-30 giây)
+## Trước khi thông báo
 
-## Bảo mật
-
-- [ ] HTTPS hoạt động trên site chính
-- [ ] HTTPS hoạt động trên các subdomain của tenant
-- [ ] Các trang admin không cho phép người dùng không có quyền admin truy cập
-- [ ] API keys được tạo và lưu giữ an toàn (không bị lộ ra frontend)
-- [ ] File `wp-config.php` không thể bị truy cập công khai
-
-## Dọn dẹp
-
-Sau khi test xong:
-
-1. Xóa các tenant site test đã tạo trong quá trình kiểm tra (Tenancy → All Tenants → Delete)
-2. Kiểm tra xem các test subscription đã được dọn sạch chưa
-3. Nếu dùng Polar sandbox để test, hãy chuyển sang production API URL và tạo các product thật
-
-## Sẵn sàng lên production
-
-| Hạng mục | Trạng thái |
-|------|--------|
-| Cấu hình wildcard DNS | |
-| Kích hoạt wildcard SSL | |
-| Cấu hình SMTP email | |
-| Production key của Polar (không dùng sandbox) | |
-| Chiến lược backup cho main site | |
-| Giám sát/kiểm tra uptime | |
-| Đã tạo trang Điều khoản dịch vụ (Terms of Service) | |
-| Đã tạo trang Chính sách bảo mật (Privacy Policy) | |
+| Hạng mục | Xong |
+|----------|------|
+| Wildcard DNS | |
+| Wildcard HTTPS | |
+| Đã thử gửi SMTP | |
+| Credential billing production | |
+| Backup site chính | |
+| Trang điều khoản và quyền riêng tư, nếu bạn yêu cầu | |
 
 ---
 
-**Tiếp theo:** [Quản lý custom domains](/grabwp-tenancy-waas/waas-managing-domains)
+**Tiếp theo:** [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains)

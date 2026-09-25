@@ -1,69 +1,85 @@
 ---
-title: "Cô lập cơ sở dữ liệu & nội dung"
-description: "Cấu hình cơ sở dữ liệu và mức cô lập nội dung theo từng site"
+title: "Database và cô lập nội dung"
+description: "Chọn kiểu database và tùy chọn isolation cho từng tenant"
 order: 12
 section: pro
 ---
 
-# Cô lập cơ sở dữ liệu & nội dung
+# Database và cô lập nội dung
 
-Pro cho phép bạn cấu hình cách dữ liệu của từng tenant site được tách biệt với các site khác.
+Đặt mặc định cho tenant mới trong **Pro Settings**, rồi chỉnh một tenant trên **Add New** hoặc **Edit**.
 
-## Tùy chọn cơ sở dữ liệu
+## Đặt mặc định
 
-Vào **GrabWP Tenancy → Tenants → Edit** site. Các trường Pro sẽ xuất hiện trong form chỉnh sửa bên dưới phần cài đặt domain.
+**Vào Tenancy → Pro Settings** (`page=grabwp-tenancy-pro-settings`).
 
-![Chỉnh sửa tenant - loại cơ sở dữ liệu và các tùy chọn cô lập](../images/grabwp-tenancy-pro-tenant-edit.png)
+### Isolation
 
-### Cơ sở dữ liệu dùng chung (Mặc định)
-Tất cả site dùng chung một cơ sở dữ liệu MySQL với tiền tố bảng riêng, tương tự bản miễn phí. Thiết lập đơn giản nhất, chi phí vận hành thấp nhất.
+![Pro Settings, Isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
 
-### Cơ sở dữ liệu MySQL cô lập
-Mỗi site kết nối tới một cơ sở dữ liệu MySQL riêng. Cô lập hoàn toàn ở cấp cơ sở dữ liệu.
+**Content Isolation Defaults** áp dụng khi bạn tạo tenant.
 
-Để cấu hình:
-1. Mở **Edit** cho site
-2. Trong **Database Type**, chọn **Isolated MySQL Database**
-3. Nhập thông tin kết nối cơ sở dữ liệu gồm host, tên DB, user và password
-4. Lưu lại
+| Trường | Ghi chú |
+|-------|--------|
+| Content + Themes Isolation | **Enable content and themes isolation by default for new tenants**. Thư mục `wp-content` và themes riêng. |
+| Plugins Isolation | **Enable plugins isolation by default for new tenants**. Thư mục plugins riêng. |
+| Uploads Isolation | **Enable uploads isolation by default for new tenants**. Thư mục uploads riêng. |
 
-### Cơ sở dữ liệu SQLite cô lập
-Mỗi site dùng một file SQLite thay cho MySQL.
+### Database
 
-Để cấu hình:
-1. Mở **Edit** cho site
-2. Trong **Database Type**, chọn **Isolated SQLite Database**
-3. Lưu lại, file SQLite sẽ được tạo tự động
+![Pro Settings, Database](../images/11-pro-settings-database.png)
 
-## Cô lập nội dung
+**Database Defaults** đặt **Database Type** cho tenant tiếp theo:
 
-Kiểm soát những phần nào được cô lập trong từng tenant site. Trong form **Edit** của site:
+| Tùy chọn | Ghi chú |
+|--------|--------|
+| Shared Database (with table prefixes) | Cùng database MySQL với site chính, table prefix riêng. |
+| Isolated MySQL Database | Database MySQL riêng. Hiện **Default MySQL Connection**. |
+| Isolated SQLite Database | File SQLite cho tenant đó. Thư viện đi kèm Pro. |
 
-| Thiết lập | Phần được kiểm soát |
-|---------|-----------------|
-| Content + Themes Isolation | Tenant có thư mục `wp-content` và themes riêng |
-| Plugins Isolation | Tenant có thư mục plugins riêng |
-| Uploads Isolation | Tenant có thư mục uploads riêng |
+**Default MySQL Connection** (chỉ khi chọn **Isolated MySQL Database**): **MySQL Host**, **MySQL Database**, **MySQL Username**. Các giá trị này được điền sẵn trên **Add New Tenant**. Mật khẩu nhập theo từng tenant, không lưu làm mặc định toàn cục trên màn này.
 
-Bật hoặc tắt từng thiết lập theo nhu cầu cho mỗi site.
+Nhấn **Save Pro Settings**.
 
-## Thiết lập mặc định cho site mới
+Đường dẫn thư mục cho file tenant, gồm **SQLite Database Dir**, nằm ở tab **Directories**. Xem [Pro Settings](/grabwp-tenancy-pro/pro-settings).
 
-Vào **GrabWP Tenancy → Pro Settings** để cấu hình các tùy chọn cô lập mặc định. Mọi site mới tạo sẽ kế thừa các giá trị này và bạn vẫn có thể ghi đè cho từng site bất kỳ lúc nào.
+## Đặt tùy chọn cho một tenant
 
-Đường dẫn thư mục mặc định và đường dẫn uploads cũng được cấu hình trong cùng màn hình Pro Settings (xem [Cài đặt Pro](/grabwp-tenancy-pro/pro-installation)). Dùng các công tắc bên dưới để đặt mặc định cho **content**, **plugins** và **uploads** isolation của site mới:
+**Vào Tenancy → Add New** (`page=grabwp-tenancy-create`) hoặc mở **Edit** của tenant có sẵn (`page=grabwp-tenancy-edit`).
 
-![Pro Settings - mặc định cho content và plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
+![Edit Tenant, isolation và database](../images/grabwp-tenancy-pro-tenant-edit.png)
 
-## Ghi đè thiết lập theo từng tenant
+### Content Isolation Options
 
-Pro cũng cho phép bạn ghi đè từng thiết lập GrabWP Tenancy cho một tenant mà không đổi giá trị mặc định toàn cục.
+| Checkbox | Khi bật |
+|----------|----------------|
+| Content + Themes Isolation | Thư mục content và themes riêng. Theme phải được cài sau (Extensions). |
+| Plugins Isolation | Thư mục plugins riêng. Plugin phải được cài sau. |
+| Uploads Isolation | Thư mục uploads riêng. |
 
-1. Vào **GrabWP Tenancy → Tenants**
-2. Mở các trang thao tác của tenant rồi chọn tab **Overrides** (**Tenant Overrides**)
-3. Với mỗi thiết lập, đánh dấu **Override**, rồi đặt On/Off (hoặc điều khiển riêng của thiết lập đó)
-4. Nhấn **Save Overrides**
+Mục không chọn sẽ dùng đường dẫn WordPress chính.
 
-Các dòng chưa đánh dấu sẽ kế thừa giá trị toàn cục. Mỗi dòng hiển thị gợi ý **Global:** với giá trị toàn cục hiện tại để bạn so sánh trước khi ghi đè. Bỏ hết các ô Override để tenant kế thừa lại toàn bộ thiết lập toàn cục.
+### Database Configuration
 
-![Tenant Overrides](../images/grabwp-tenancy-pro-tenant-overrides.png)
+| Tùy chọn | Ghi chú |
+|--------|--------|
+| Shared Database (with table prefixes) | MySQL dùng chung, cô lập bằng prefix. |
+| Isolated MySQL Database | Hiện **MySQL Host**, **Database Name**, **Username**, **Password**, và **Test Connection**. Khi sửa, để trống **Password** để giữ mật khẩu hiện tại. |
+| Isolated SQLite Database | File SQLite. Chữ trợ giúp: **Uses SQLite database file for lightweight, portable storage.** |
+
+Nhấn **Test Connection** trước **Create Tenant** hoặc **Update Tenant** khi dùng MySQL tách biệt.
+
+### Storage Driver
+
+**Storage Driver** chỉ hiện sau khi S3 được cấu hình trong **Pro Settings → Storage**.
+
+| Tùy chọn | Ghi chú |
+|--------|--------|
+| Local Filesystem | Upload nằm trên máy chủ này. |
+| S3-Compatible Object Storage | Upload mới vào bucket đã cấu hình. |
+
+Với tenant có sẵn, **Saving a different driver does NOT move existing files.** Nhấn **Migrate uploads now** để sao chép file trước khi đổi. Chuyển từ S3 sang local mà không migrate sẽ làm hỏng media hiện có.
+
+**Verify:** Trên **All Tenants**, huy hiệu **Database** khớp kiểu bạn đã lưu (**Shared MySQL**, **Isolated MySQL**, hoặc **Isolated SQLite**), và **Isolation** hiện các nhãn ngắn bạn đã bật (**WPC**, **Th**, **Plg**, **Up**).
+
+Bản sao theo tenant của các checkbox **Settings** toàn cục nằm ở [Tenant Settings & Overrides](/grabwp-tenancy-pro/pro-tenant-settings).

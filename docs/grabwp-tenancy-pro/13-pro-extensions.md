@@ -1,58 +1,64 @@
 ---
 title: "Per-Site Plugins & Themes"
-description: "Manage plugins and themes independently per tenant site"
+description: "Install and activate plugins and themes for one tenant"
 order: 13
 section: pro
 ---
 
 # Per-Site Plugins & Themes
 
-With Pro, each tenant site can have its own set of plugins and themes - separate from your main site and from each other.
+Each tenant can have its own plugins and themes when isolation is enabled for that site.
 
-## Before You Start
+## Turn isolation on
 
-Plugins and themes isolation must be enabled for the site first:
+1. Open the tenant: **Tenancy → All Tenants**, then **Settings** on the row (`page=grabwp-tenancy-edit`).
+2. Enable **Plugins Isolation** and/or **Content + Themes Isolation**.
+3. Click **Update Tenant**.
 
-1. Go to **GrabWP Tenancy → Tenants → Edit** the site
-2. Under the Pro isolation fields, enable **Plugins Isolation** and/or **Content + Themes Isolation**
-3. Save
+Without **Plugins Isolation**, the Plugins table shows **Plugins Isolation is disabled for this tenant. Enable it in the tenant edit form to manage plugins here.** Without **Content + Themes Isolation**, the Themes table shows **Content + Themes Isolation is disabled for this tenant. Enable it in the tenant edit form to manage themes here.**
 
-Once enabled, the **Extensions** link appears in the tenant's row in the tenant list.
+## Open Extensions
 
-## Managing Extensions for a Site
+**Navigate to Tenancy → All Tenants**, then **Plugins & Themes** on the row (`page=grabwp-tenancy-pro-extensions`).
 
-1. Go to **GrabWP Tenancy → Tenants**
-2. Find the site and click the **Extensions** row action link
-3. You'll see all plugins and themes available from your main installation
+You can also open the **Extensions** tab on the tenant.
 
-![Extensions - install method and installable plugins](../images/grabwp-tenancy-pro-tenant-extension.png)
+![Extensions, Plugins](../images/grabwp-tenancy-pro-tenant-extension.png)
 
-### Making a Plugin Available to a Site
+The title is **Extensions:** plus the tenant ID. The line under the tabs shows **Primary Domain** and **Install Method**.
 
-1. Find the plugin in the list
-2. Click **Install** - it's installed into the tenant site's directory (copied or symlinked, based on the Install Method setting)
-3. The tenant admin can then activate it from their own Plugins page
+| Install Method | Notes |
+|----------------|--------|
+| Symlink | The tenant points at the main site's plugin or theme files. Updates on the main site apply to the tenant. Uses less disk. |
+| Own Copy | Files are copied into the tenant directory. The tenant does not follow later main-site updates until you click **Sync**. |
 
-### Removing a Plugin from a Site
+Changing **Install Method** saves immediately (**Saved!**) and reloads the page. It does not convert extensions that are already installed. Use **Convert to Copy** or **Convert to Symlink** on a row to change that extension. The convert button that appears depends on the method you selected.
 
-1. Find the plugin in the list
-2. Click **Remove** - it's removed from the tenant site's directory
+**Install All from Config** appears when `extensions.php` lists plugins or themes that are not installed yet. **Fix All Broken Symlinks** appears when a symlink target is missing.
 
-### Themes
+### Plugins and Themes
 
-The Extensions page has two sub-tabs: **Plugins** (default) and **Themes**. The **Themes** tab works the same way as **Plugins**: Install / Remove / activate per tenant, with the same **Install Method** (**Symlink** or **Own Copy**).
+Tabs: **Plugins** and **Themes**.
 
-![Extensions Themes tab](../images/grabwp-tenancy-pro-tenant-extension-themes.png)
+![Extensions, Themes](../images/grabwp-tenancy-pro-tenant-extension-themes.png)
 
-Plugin and theme actions (install, remove, sync, convert, copy to main, activate, deactivate) update the affected row in place instead of reloading the whole page, so the current tab and scroll position are kept.
+Columns: **Plugin** (or theme name), **Source**, **Status**, **Activation**, **Actions**.
 
-## Installation Methods
+Source badges: **Main**, **Supported**, **Custom**, **Unknown**. Filter buttons **All**, **Main**, **Supported**, and **Custom** show up only when that source exists. **Installed** filters the table and is remembered. The search box placeholder is **Filter plugins...** or **Filter themes...**.
 
-At the top of the Extensions page, you can set the **Install Method** for the site:
+| Status | Actions |
+|--------|---------|
+| Not installed | **Install** |
+| Symlink | **Remove**, and **Convert to Copy** when Install Method is **Own Copy** |
+| Own Copy | **Remove**, **Sync**, and **Convert to Symlink** when Install Method is **Symlink** |
+| Broken Symlink | **Fix Symlink**, **Remove broken link** |
 
-| Method | How it works | When to use |
-|--------|-------------|-------------|
-| **Symlink** | A symlink points to the main site's plugin files | Saves disk space; plugin updates on the main site apply automatically |
-| **Own Copy** | Plugin files are copied into the tenant's directory | Tenant needs fully independent files |
+When the tenant database can be read, an installed row also has **Activate** or **Deactivate**. Activation badges are **Active** and **Inactive**. If the database cannot be read, activation shows **?**.
 
-Changing the method and saving reconverts all installed extensions automatically.
+Install, remove, sync, convert, activate, and deactivate update that row in place. The tab and scroll position stay put.
+
+### Orphaned Extensions
+
+If a plugin or theme exists in the tenant directory but not in a source directory, **Orphaned Extensions** lists it. Actions include **Copy to Main Site** and remove.
+
+**Verify:** After **Install** and **Activate**, the row shows **Active**, and the plugin or theme is available in that tenant's wp-admin (**WP Admin** tab).

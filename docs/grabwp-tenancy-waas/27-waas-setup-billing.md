@@ -1,117 +1,110 @@
 ---
 title: "Set Up Billing"
-description: "Connect Polar as a payment provider for subscription billing"
+description: "Enable Polar.sh, set currency, and connect plan product IDs"
 order: 27
 section: waas
 ---
 
 # Set Up Billing
 
-Billing connects your plans to a payment provider so customers can pay for subscriptions. GrabWP WaaS supports **Polar** (primary) and **WooCommerce** (alternative).
+Billing connects paid plans to a payment provider. WaaS registers **Polar.sh** itself. **WooCommerce** is registered only while WooCommerce is active. **Stripe**, **Sepay**, and **Xendit** appear after you install those add-on plugins. See [Install Plugins](/grabwp-tenancy-waas/waas-install-plugins).
 
-This guide covers Polar. For WooCommerce, see [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce).
+This page walks through **Polar.sh**, then lists what the other cards need. WooCommerce checkout details are in [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce).
 
-Navigate to **WaaS → Settings → Billing** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
+Navigate to **Waas → Settings → Billing Providers** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
 
-![Billing settings](../images/waas-billing-settings.png)
+![Billing Providers](../images/waas-billing-settings.png)
+
+The intro line is **Browse Add-ons** and **Enable providers below. The first enabled provider is the default fallback.**
+
+Each provider is a card. A card is **Disabled** until you check **Enable this provider**. **Polar.sh** shows **Needs Config** until **API Token** and **Webhook Secret** are saved, then **Active**. Other enabled providers show **Active**. The fallback provider is badged **Default**. Click **Save Billing Providers** when the fields are filled. Success notice: **Billing provider settings saved.**
 
 ## Currency Settings
 
-Above the provider cards, the **Currency Settings** section controls how plan prices are stored, displayed, and converted when a billing provider needs a different currency.
+**Currency Settings** is the card under the provider list. Open it before you enable a provider that requires a specific currency.
 
-![Currency settings](../images/waas-currency-settings.png)
+| Field | Notes |
+|-------|-------|
+| **Primary Currency** | Shown on pricing pages. Plan prices are stored in this currency. If WooCommerce is active, this select is locked to the WooCommerce store currency. |
+| **Secondary Currency** | Optional. **None (single currency)** keeps a single currency. Set this when a provider needs a different currency than primary (Sepay requires VND). |
+| **Exchange Rate** | How many secondary units equal 1 primary unit. Applied before charging a provider that requires the secondary currency. Polar.sh and Stripe charge their catalog currency and do not use this rate for the charged amount. |
+| **Display formatting** | Nested accordion: **Currency Position**, **Thousand Separator**, **Decimal Separator** |
 
-| Field | Description |
-|-------|-------------|
-| **Primary Currency** | The currency shown to customers on pricing pages and invoices. Plan prices are stored in this currency. Default: USD. |
-| **Secondary Currency** | Optional. Set this when a billing provider requires a different currency than primary (e.g. Sepay requires VND). Choose **None (single currency)** for a single-currency site. |
-| **Exchange Rate** | How many secondary units equal 1 primary unit. WaaS applies this rate before charging providers that require the secondary currency (e.g. Sepay). Polar and Stripe charge in their own catalog currency and do not use this rate for the charged amount. |
-| **Currency Position** | Display formatting: Left (`$99.99`), Left with space, Right, or Right with space. |
-| **Decimal Separator** | Character used between whole and fractional amounts. |
-| **Thousand Separator** | Character used to group thousands. |
+**Currency Position** options: **Left ($99.99)**, **Left with space ($ 99.99)**, **Right (99.99$)**, **Right with space (99.99 $)**.
 
-> **Tip:** Leave **Secondary Currency** as **None (single currency)** for single-currency mode (no conversion). When a secondary currency is set, plan and template prices stored in the primary currency are converted to the provider's charge currency before Polar combo/one-time products are created, and the converted currency is recorded so renewals charge the correct amount. If a target currency falls outside the configured pair, conversion returns an error instead of silently charging an unconverted amount. A provider that requires a specific currency (e.g. Sepay requires VND) is blocked at save time unless that currency is set as primary or secondary.
+> **Tip:** A provider that requires a currency (Sepay requires VND) cannot be enabled unless that currency is primary or secondary. The error starts with **Currency change blocked:**
 
-## Step 1: Create a Polar Account
+## Step 1: Polar.sh Account
 
-1. Go to [polar.sh](https://polar.sh) and create an account
-2. Create an **Organization** if you don't have one
-3. Note your organization dashboard URL - you'll need it
+1. Create an account at [polar.sh](https://polar.sh)
+2. Create an organization
+3. Create an API token in the Polar organization settings
+4. Copy the organization ID
 
-## Step 2: Create Products in Polar
+You do not have to create Polar products by hand. Saving a plan with Polar configured can create them. You can still paste an existing product UUID.
 
-For each paid plan, create a matching product in Polar.
+## Step 2: Enable Polar.sh
 
-1. In Polar dashboard, go to **Products**
-2. Click **Create Product**
-3. Set up your product:
+On the **Polar.sh** card (`polar`):
+
+1. Check **Enable this provider**
+2. Fill in:
 
 | Field | Value |
 |-------|-------|
-| **Name** | Same as your plan name (e.g., "Pro Monthly") |
-| **Type** | Subscription |
-| **Price** | Must match your plan price (e.g., $9.99/month) |
-| **Billing Interval** | Monthly (or Yearly for yearly products) |
+| **API Base URL** | `https://api.polar.sh/v1` for production. Sandbox: `https://sandbox-api.polar.sh/v1` |
+| **API Token** | Polar API token. Use **Show** to reveal it. |
+| **Webhook Secret** | Secret Polar uses to sign webhooks |
+| **Organization ID** | Polar organization ID |
 
-4. After creating the product, copy its **Product ID** (UUID) from the product settings page
+3. Copy **Webhook URL** with **Copy**. It looks like `https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar`
+4. In Polar, add that URL as a webhook endpoint and paste the same secret into **Webhook Secret**
+5. Click **Save Billing Providers**
 
-> **Create separate products for monthly and yearly billing.** For example: "Pro Monthly" ($9.99/month) and "Pro Yearly" ($99.99/year).
+The help tip on **Webhook URL** shows **Last webhook received:** after the first event, or **No webhook events received yet.**
 
-## Step 3: Configure Polar in WaaS
+The card stays **Needs Config** until **API Token** and **Webhook Secret** are saved. After that it shows **Active**.
 
-On the Billing Providers tab:
+## Step 3: Link Plans
 
-1. Find the **Polar** provider card
-2. Check **Enable this provider**
-3. Fill in:
+Go to **Waas → Settings → Plans**, edit the paid plan, and open **Payment Configuration**.
 
-| Field | Description |
-|-------|-------------|
-| **API URL** | `https://api.polar.sh` (production) or `https://sandbox-api.polar.sh` (testing) |
-| **Access Token** | Your Polar API token - generate in Polar → Settings → API |
-| **Webhook Secret** | Secret string to verify webhook authenticity |
+1. Leave **Polar Monthly Product ID** and **Polar Yearly Product ID** blank to auto-create, or paste UUIDs
+2. Or click **Find existing** to pick a product already in Polar
+3. Click **Save Plan**
 
-4. Click **Save Settings**
+**Resync** on **Polar.sh Configuration** refreshes the linked catalog objects. A value WaaS created is badged **Auto-created**.
 
-## Step 4: Set Up Webhook
+## Other Providers
 
-WaaS needs to receive payment events from Polar to activate subscriptions.
+Install Stripe, Sepay, or Xendit from **Add-ons** before their cards appear. Then enable the card you want. The first enabled provider is the fallback used when signup does not pick another one.
 
-1. In Polar dashboard, go to **Webhooks**
-2. Click **Add Endpoint**
-3. Set the URL to:
-   ```
-   https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar
-   ```
-4. Select events to send:
-   - `subscription.created`
-   - `subscription.updated`
-   - `subscription.canceled`
-   - `order.created`
-5. Copy the **Webhook Secret** and paste it into WaaS → Settings → Billing → Polar → Webhook Secret
-6. Save both Polar and WaaS settings
+| Provider | Plugin | Fields on the card |
+|----------|--------|--------------------|
+| **Polar.sh** | Built in | **API Base URL**, **API Token**, **Webhook Secret**, **Organization ID**, **Webhook URL** |
+| **Stripe** | GrabWP Tenancy Stripe | **Secret Key**, **Publishable Key**, **Webhook Signing Secret**, **Thin Signing Secret (v2 Events)** (optional), **Webhook URL** |
+| **Sepay** | GrabWP Tenancy Sepay | **API URL**, **QR URL**, **API Key**, **Bank**, **Account Number**, **Account Holder**, **Payment Code Prefix**, **Webhook URL**. Requires VND as primary or secondary. |
+| **Xendit** | GrabWP Tenancy Xendit | **Secret API Key**, **Webhook Verification Token**, **Charge Currency**, **Country**, **Webhook URL**. No per-plan product IDs. |
+| **WooCommerce** | WooCommerce plugin, not an add-on | **Anchor Product**. Leave `0` to auto-create on first checkout, or run **Create/Repair WooCommerce Anchor Product** on **General**. |
 
-> **Test webhooks:** Use the Polar dashboard → Webhooks → Delivery log to verify events are being received. Check WaaS → Settings → Billing → "Last webhook received" timestamp.
+Stripe plan fields (**Stripe Monthly Price ID**, **Stripe Yearly Price ID**) are on the plan's **Payment Configuration** tab, with the same leave-blank-to-auto-create behavior as Polar.
 
-## Step 5: Link Products to Plans
+Webhook URLs follow `https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/{provider}` where `{provider}` is `polar`, `stripe`, `sepay`, or `xendit`. Use the **Copy** button on the card rather than typing the URL.
 
-Go back to **WaaS → Settings → Plans** and edit your paid plan:
+## Step 4: Test a Payment
 
-1. Paste the **Polar Monthly Product ID** into the matching field
-2. Paste the **Polar Yearly Product ID** if you created a yearly product
-3. Save the plan
+1. Point **API Base URL** at `https://sandbox-api.polar.sh/v1` and use sandbox credentials
+2. Open the signup page, choose the paid plan, and finish Polar checkout
+3. Confirm the **Webhook URL** tip shows a last-received time
+4. Confirm the tenant exists under **Tenancy → All Tenants** and the subscription appears under **Waas → Subscriptions**
 
-## Step 6: Test a Payment
+Switch **API Base URL** back to `https://api.polar.sh/v1` and production credentials before launch.
 
-Before going live, test the full payment flow:
+## Verify
 
-1. Set Polar API URL to the **sandbox** endpoint: `https://sandbox-api.polar.sh`
-2. Create sandbox products in the Polar sandbox dashboard
-3. Go through the signup flow on your site, select the paid plan
-4. Complete payment using Polar's sandbox test cards
-5. Verify the tenant site is provisioned and subscription is active in WaaS → Subscriptions
-
-Once verified, switch back to the production API URL and production products.
+1. The provider you will charge with shows **Active**
+2. **Currency Settings** includes every currency that provider requires
+3. The paid plan's **Payment Configuration** has a product or price ID for each cycle you sell, or you have saved the plan once so WaaS can auto-create them
 
 ---
 

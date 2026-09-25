@@ -85,6 +85,129 @@
     },
     "grabwp-tenancy-pro-tenant-extension-themes.png": {
       "src": "12-tenant-extensions-themes"
+    },
+    "01-waas-dashboard.png": {
+      "src": "01-waas-dashboard"
+    },
+    "03-waas-domains-pending.png": {
+      "src": "03-waas-domains-pending"
+    },
+    "03-waas-domains-verified.png": {
+      "src": "03-waas-domains-verified"
+    },
+    "04-waas-bulk.png": {
+      "src": "04-waas-bulk"
+    },
+    "04-waas-tags.png": {
+      "src": "04-waas-tags"
+    },
+    "04-waas-tags-group.png": {
+      "src": "04-waas-tags-group"
+    },
+    "05-waas-settings-activity.png": {
+      "src": "05-waas-settings-activity"
+    },
+    "05-waas-settings-addons.png": {
+      "src": "05-waas-settings-addons"
+    },
+    "05-waas-settings-appearance.png": {
+      "src": "05-waas-settings-appearance"
+    },
+    "05-waas-settings-appearance-main.png": {
+      "src": "05-waas-settings-appearance-main"
+    },
+    "05-waas-settings-appearance-plans.png": {
+      "src": "05-waas-settings-appearance-plans"
+    },
+    "05-waas-settings-appearance-status.png": {
+      "src": "05-waas-settings-appearance-status"
+    },
+    "05-waas-settings-benefits.png": {
+      "src": "05-waas-settings-benefits"
+    },
+    "05-waas-settings-general-d02.png": {
+      "src": "05-waas-settings-general-d02"
+    },
+    "05-waas-settings-provisioning.png": {
+      "src": "05-waas-settings-provisioning"
+    },
+    "05-waas-settings-services.png": {
+      "src": "05-waas-settings-services"
+    },
+    "05-waas-settings-signup-flow.png": {
+      "src": "05-waas-settings-signup-flow"
+    },
+    "05-waas-settings-signup-flow-edit.png": {
+      "src": "05-waas-settings-signup-flow-edit"
+    },
+    "05a-waas-plans-new-benefits.png": {
+      "src": "05a-waas-plans-new-benefits"
+    },
+    "05b-waas-plans-edit-benefits.png": {
+      "src": "05b-waas-plans-edit-benefits"
+    },
+    "05b-waas-plans-edit-display.png": {
+      "src": "05b-waas-plans-edit-display"
+    },
+    "05b-waas-plans-edit-payment.png": {
+      "src": "05b-waas-plans-edit-payment"
+    },
+    "05c-waas-services-add.png": {
+      "src": "05c-waas-services-add"
+    },
+    "05c-waas-services-add-benefits.png": {
+      "src": "05c-waas-services-add-benefits"
+    },
+    "05c-waas-services-add-display.png": {
+      "src": "05c-waas-services-add-display"
+    },
+    "05d-waas-services-edit.png": {
+      "src": "05d-waas-services-edit"
+    },
+    "05d-waas-services-edit-benefits.png": {
+      "src": "05d-waas-services-edit-benefits"
+    },
+    "05d-waas-services-edit-display.png": {
+      "src": "05d-waas-services-edit-display"
+    },
+    "05e-waas-benefits-add.png": {
+      "src": "05e-waas-benefits-add"
+    },
+    "05f-waas-benefits-edit.png": {
+      "src": "05f-waas-benefits-edit"
+    },
+    "09-status-base.png": {
+      "src": "09-status-base"
+    },
+    "09-status-pro.png": {
+      "src": "09-status-pro"
+    },
+    "10-license.png": {
+      "src": "10-license"
+    },
+    "11-pro-settings-backup.png": {
+      "src": "11-pro-settings-backup"
+    },
+    "11-pro-settings-database.png": {
+      "src": "11-pro-settings-database"
+    },
+    "11-pro-settings-routing.png": {
+      "src": "11-pro-settings-routing"
+    },
+    "11-pro-settings-storage.png": {
+      "src": "11-pro-settings-storage"
+    },
+    "11-pro-settings-symlink.png": {
+      "src": "11-pro-settings-symlink"
+    },
+    "12-tenant-backup-previous.png": {
+      "src": "12-tenant-backup-previous"
+    },
+    "12-tenant-fix-urls.png": {
+      "src": "12-tenant-fix-urls"
+    },
+    "12-tenant-settings.png": {
+      "src": "12-tenant-settings"
     }
   },
   "manual": {}

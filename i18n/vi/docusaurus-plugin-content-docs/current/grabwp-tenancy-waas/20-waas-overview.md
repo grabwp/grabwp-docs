@@ -1,69 +1,78 @@
 ---
 title: "GrabWP WaaS - Tổng quan"
-description: "Xây dựng nền tảng WordPress-as-a-Service với đăng ký tự động, mẫu giao diện và thanh toán"
+description: "Xây nền tảng WordPress-as-a-Service với signup, template, plan và billing"
 order: 20
 section: waas
 ---
 
 # Tài liệu GrabWP WaaS
 
-**Xây dựng nền tảng WordPress-as-a-Service của riêng bạn.** Cho phép khách hàng đăng ký, chọn mẫu giao diện, chọn gói dịch vụ và nhận một trang WordPress được cung cấp đầy đủ - tất cả đều tự phục vụ.
+**Xây nền tảng WordPress-as-a-Service của riêng bạn.** Khách chọn template, chọn plan, rồi nhận một site WordPress trên subdomain của platform domain.
 
 ## Cách hoạt động
 
 ```
-Khách truy cập → Chọn mẫu → Chọn gói → Thanh toán → Site được khởi tạo
-                                                           ↓
-                                                  Bảng điều khiển
-                                             (tên miền riêng, sao lưu,
-                                              thanh toán, cài đặt tài khoản)
+Visitor → Template gallery → Signup (account, plan, services, payment) → Site provisioned
+                                                                              ↓
+                                                                     Tenant dashboard
+                                                          (domain, billing, account)
 ```
 
-GrabWP WaaS hoạt động dựa trên ba plugin:
+Preset signup mặc định có thể chỉnh. Xem [Signup Flow](/grabwp-tenancy-waas/waas-signup-flow).
+
+GrabWP WaaS chạy trên ba plugin:
 
 | Plugin | Vai trò |
 |--------|---------|
-| **GrabWP Tenancy** (nền tảng) | Engine đa tenant - định tuyến, cô lập bằng table-prefix, quản lý tenant |
-| **GrabWP Tenancy Pro** | Cô lập nâng cao - database riêng, lưu trữ S3, sao lưu, nhân bản |
-| **GrabWP Tenancy WaaS** | Lớp tự phục vụ - gói dịch vụ, thanh toán, mẫu giao diện, luồng đăng ký, bảng điều khiển tenant |
+| **GrabWP Tenancy** (base) | Engine multi-tenant: danh sách tenant, tạo mới, settings và status |
+| **GrabWP Tenancy Pro** | Mặc định isolation, database, thư mục, storage, backup, license |
+| **GrabWP Tenancy WaaS** | Plan, billing, template, signup, dashboard, domain, subscription |
+
+Provider có sẵn trong WaaS là **Polar.sh** và **WooCommerce** (khi WooCommerce đang active). **Stripe**, **Sepay** và **Xendit** là plugin add-on riêng, cài từ **Waas → Settings → Add-ons**.
 
 ## Tổng quan hướng dẫn
 
 ### Bắt đầu
 
-1. [Yêu cầu tiên quyết](/vi/grabwp-tenancy-waas/waas-prerequisites) - những gì bạn cần trước khi cài đặt
-2. [Bạn sẽ xây dựng gì](/vi/grabwp-tenancy-waas/waas-what-you-will-build) - mục tiêu và kiến trúc hướng dẫn
-3. [Cài đặt Plugin](/vi/grabwp-tenancy-waas/waas-install-plugins) - cài đặt và kích hoạt
+1. [Prerequisites](/grabwp-tenancy-waas/waas-prerequisites)
+2. [What You Will Build](/grabwp-tenancy-waas/waas-what-you-will-build)
+3. [Install Plugins](/grabwp-tenancy-waas/waas-install-plugins)
 
 ### Cấu hình
 
-4. [Cấu hình Pro Settings](/vi/grabwp-tenancy-waas/waas-configure-pro-settings) - lưu trữ, database, thư mục
-5. [Cấu hình WaaS General Settings](/vi/grabwp-tenancy-waas/waas-configure-general) - domain nền tảng, xác thực, trang
-6. [Tạo gói dịch vụ](/vi/grabwp-tenancy-waas/waas-create-plans) - gói miễn phí và trả phí
-7. [Thiết lập thanh toán](/vi/grabwp-tenancy-waas/waas-setup-billing) - tích hợp thanh toán Polar
-8. [Thiết lập mẫu giao diện](/vi/grabwp-tenancy-waas/waas-setup-templates) - mẫu, tag, nhóm tag
-9. [Thiết lập trang Frontend](/vi/grabwp-tenancy-waas/waas-setup-frontend-pages) - đăng ký, bảng điều khiển, trình duyệt mẫu
+4. [Configure Pro Settings](/grabwp-tenancy-waas/waas-configure-pro-settings)
+5. [Configure WaaS General Settings](/grabwp-tenancy-waas/waas-configure-general)
+6. [Create Plans](/grabwp-tenancy-waas/waas-create-plans)
+7. [Set Up Billing](/grabwp-tenancy-waas/waas-setup-billing)
+8. [Set Up Templates](/grabwp-tenancy-waas/waas-setup-templates)
+9. [Set Up Frontend Pages](/grabwp-tenancy-waas/waas-setup-frontend-pages)
 
 ### Ra mắt
 
-10. [Danh sách kiểm tra Go-Live](/vi/grabwp-tenancy-waas/waas-go-live-checklist) - xác minh mọi thứ trước khi mở cho khách hàng
+10. [Go-Live Checklist](/grabwp-tenancy-waas/waas-go-live-checklist)
 
 ### Vận hành
 
-11. [Quản lý tên miền riêng](/vi/grabwp-tenancy-waas/waas-managing-domains) - Cloudflare SaaS và trỏ IP trực tiếp
-12. [Quản lý gói đăng ký](/vi/grabwp-tenancy-waas/waas-managing-subscriptions) - vòng đời subscription và thao tác quản trị
+11. [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains)
+12. [Managing Subscriptions](/grabwp-tenancy-waas/waas-managing-subscriptions)
 
 ### Tích hợp tùy chọn
 
-13. [Lưu trữ S3 Object Storage](/vi/grabwp-tenancy-waas/waas-optional-s3-storage) - chuyển media sang lưu trữ tương thích S3
-14. [Thanh toán WooCommerce](/vi/grabwp-tenancy-waas/waas-optional-woocommerce) - sử dụng WooCommerce làm nhà cung cấp thanh toán
+13. [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage)
+14. [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce)
 
-### Tham khảo
+### Tham chiếu
 
-15. [Xử lý sự cố](/vi/grabwp-tenancy-waas/waas-troubleshooting) - các vấn đề thường gặp và cách khắc phục
-- [Tham chiếu Shortcode: Trình duyệt mẫu](/vi/grabwp-tenancy-waas/waas-shortcode-templates)
-- [Hướng dẫn Block: Trình duyệt mẫu](/vi/grabwp-tenancy-waas/waas-block-walkthrough)
+Các màn hình sâu hơn, không thuộc đường cài lần đầu:
+
+- [Signup Flow](/grabwp-tenancy-waas/waas-signup-flow)
+- [Appearance](/grabwp-tenancy-waas/waas-appearance)
+- [Services and Benefits](/grabwp-tenancy-waas/waas-services-benefits)
+- [Dashboard and Activity](/grabwp-tenancy-waas/waas-dashboard-activity)
+- [Troubleshooting](/grabwp-tenancy-waas/waas-troubleshooting)
+- [Shortcode Reference: Template Browser](/grabwp-tenancy-waas/waas-shortcode-templates)
+- [Block Walkthrough: Template Browser](/grabwp-tenancy-waas/waas-block-walkthrough)
 
 ---
 
-**Yêu cầu hệ thống:** WordPress 5.0+, PHP 7.4+, MySQL 5.7+
+**Yêu cầu:** WordPress 5.0+, PHP 7.4+

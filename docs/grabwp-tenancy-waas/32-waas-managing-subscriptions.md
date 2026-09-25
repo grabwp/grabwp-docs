@@ -1,153 +1,145 @@
 ---
 title: "Managing Subscriptions"
-description: "View, extend, change, suspend, and audit tenant subscriptions as an admin"
+description: "Search the subscription list, open a tenant, and extend, change, suspend, or assign services"
 order: 32
 section: waas
 ---
 
 # Managing Subscriptions
 
-Subscriptions track each tenant's billing status and plan. As an admin, you can view, modify, and manage the full subscription lifecycle.
+Each tenant has one subscription row: plan, status, billing provider, and renewal date. Admins change that row from **Subscriptions**. Customers cancel or keep a subscription from their own dashboard.
 
-Navigate to **WaaS → Subscriptions** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-subscriptions`).
+**Navigate to Waas → Subscriptions** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-subscriptions`).
 
 ![Subscriptions list](../images/waas-subscriptions.png)
 
-## Subscription Statuses
+## List
 
-| Status | Meaning | Tenant site |
-|--------|---------|-------------|
-| **Pending** | Signup started, awaiting payment or provisioning | Not yet accessible |
-| **Active** | Payment confirmed, site provisioned | Fully accessible |
-| **Suspended** | Subscription cancelled or expired (in grace period) | Limited or locked |
-| **Cancelled** | Permanently cancelled | May be deactivated |
+| Column | Notes |
+|--------|-------|
+| **Tenant** | Tenant ID. Opens the detail screen. |
+| **Owner** | WordPress user. Opens the user profile. |
+| **Plan** | Plan ID, capitalized |
+| **Status** | Badge from the stored status: **Active**, **Pending**, **Trial**, **Warning**, **Suspended**, **Cancelled**. **Warning** also shows **Expired N days ago**. |
+| **Provider** | Billing provider name |
+| **Created** | Date. Sortable. Default sort is newest first. |
+| **Renewal** | `current_period_end` date. Empty when the row has no period end. |
+| **Actions** | **Edit** (detail), **View Tenant** (tenant editor, new tab). **Reactivate** appears when status is **Suspended** or **Cancelled**. |
 
-### Lifecycle
+**Plan** and **Status** are sortable. The search box placeholder is **Search subscriptions…**. Click **Search**. The list is 10 rows per page.
 
-```
-Pending → Active → (renewal) → Active
-                 → (cancel)  → Suspended (grace period) → Cancelled
-                 → (expire)  → Suspended (grace period) → Cancelled
-```
+## Statuses
 
-## Viewing Subscriptions
+The list prints the stored status. The detail screen uses a badge that can differ when a date or a scheduled cancel applies.
 
-The subscription list shows all subscriptions with:
+| Stored status | Detail badge | Meaning |
+|---------------|--------------|---------|
+| `pending` | **Pending** | Signup started. Site may not be ready. |
+| `active` | **Active** | Paid or free access is current. |
+| `active`, renewal within 7 days | **Expiring Soon** | Still active. Detail badge only. Free plans stay **Active**. |
+| `active` and cancel at period end | **Cancelling** | Access continues until **Period End**. |
+| `trial` | **Trial** | Trial access. |
+| `warning` | **Grace Period** | Period end has passed. The site is still in the grace window. |
+| `suspended` | **Suspended** | Grace window is over, or an admin suspended the row. |
+| `cancelled` | **Cancelled** | Subscription is cancelled. |
 
-| Column | Description |
-|--------|-------------|
-| Tenant | Tenant site slug / domain |
-| Plan | Plan name (Free, Pro, etc.) |
-| Status | Current status badge |
-| Provider | Billing provider (Polar, WooCommerce, etc.) |
-| Billing Cycle | Monthly / Yearly |
-| Period End | When the current billing period ends |
-| Created | Subscription creation date |
+## Open a subscription
 
-Click a subscription to view its details.
+Click the tenant ID or the pencil icon (**Edit**).
 
-## Subscription Detail View
+The detail screen is `page=grabwp-tenancy-waas-subscription-detail&tenant_id=<id>`.
 
 ![Subscription detail](../images/waas-subscription-detail.png)
 
-The detail page shows:
+### Details
 
-- **Status badge** - current status with color indicator
-- **Plan** - which plan the tenant is on
-- **Provider** - billing provider handling payments
-- **Billing Cycle** - Monthly or Yearly
-- **Period End** - when the current period ends / renewal date
-- **Provider Subscription ID** - reference ID in the billing provider
-- **Cancellation status** - whether cancellation is scheduled at period end
+| Field | Notes |
+|-------|-------|
+| **Status** | Badge from the table above |
+| **Plan** | Plan name |
+| **Provider** | Provider display name |
+| **Billing Cycle** | **Monthly** or **Yearly** |
+| **Period End** | Date, then the number of days, **Today**, or **Expired** |
+| **Created** | Timestamp |
+| **Provider Subscription ID** | Shown when the provider stored an ID |
+| **Cancellation** | **Scheduled at period end** when cancel is queued |
+
+**Quick Links:** **Back to Subscriptions**, and **Edit Tenant** when Tenancy is active.
 
 ## Admin Actions
 
-Use the action dropdown on the subscription detail page to manage subscriptions:
+The sidebar form is **Admin Actions**. Choose an action, fill the fields that appear, and click **Apply**. **Apply** stays disabled until an action is selected. Every action except **Add Note** requires **Reason (required)**.
 
-### Extend Period
+| Action | Fields |
+|--------|--------|
+| **Extend Period** | **Days** (1-365, default 30) and **Reason (required)** |
+| **Change Plan** | **Plan** (active plans) and **Reason (required)** |
+| **Grant Complimentary** | **Days**, **Plan**, and **Reason (required)** |
+| **Suspend** | **Reason (required)** |
+| **Reactivate** | **Reason (required)** |
+| **Add Note** | **Note** only. No reason field. |
 
-Extend the current billing period by a number of days. Useful for giving extra time to a customer having issues.
+> **Note:** **Change Plan** updates the WaaS subscription immediately. Update the matching subscription in the billing provider separately when the provider still bills the old plan.
 
-- **Days:** 1–365 (default: 30)
-- **Reason:** Required - document why you're extending
+A successful save shows **Action completed successfully.**
 
-### Change Plan
+## Active Services
 
-Move a tenant to a different plan.
+**Active Services** lists add-on services on this tenant. Manage the catalog under [Services and Benefits](/grabwp-tenancy-waas/waas-services-benefits).
 
-- **Plan:** Select from active plans
-- **Reason:** Required
+| Column | Notes |
+|--------|-------|
+| **Service** | Service name |
+| **Charge Type** | Stored type: `one_time`, `recurring`, or `non_recurring` |
+| **Qty** | Quantity |
+| **Unit Price** | Price in the WaaS currency |
+| **Status** | Item status, capitalized |
+| **Purchased At** | Created timestamp |
+| **Actions** | **Remove** while the item is active. Confirm: **Remove this service?** |
 
-> **Note:** This changes the plan immediately. If switching from free to paid (or vice versa), ensure the billing provider subscription is updated separately.
+To attach a service: choose **Select a service to assign...**, set **Qty:** (minimum 1), and click **Assign Service**.
 
-### Grant Complimentary
+If the tenant has none, the box says **No active services.**
 
-Give a tenant free access to a plan for a set period. Useful for promotions, partnerships, or support gestures.
+## History
 
-- **Plan:** Select the plan to grant
-- **Days:** 1–365 (default: 30)
-- **Reason:** Required
+**History** records admin actions. Empty state: **No admin actions recorded yet.**
 
-### Suspend
+| Column | Notes |
+|--------|-------|
+| **Date** | `Y-m-d H:i` |
+| **Action** | Action name with underscores turned into words |
+| **Admin** | Display name, or the user ID |
+| **Details** | Value stored after the change |
+| **Reason** | Text you entered |
 
-Temporarily suspend a tenant's subscription. The tenant site becomes restricted.
+## Grace period
 
-- **Reason:** Required
+**Navigate to Waas → Settings**, **General** tab (`page=grabwp-tenancy-waas-settings&tab=general`). Open **Retention and grace period**.
 
-### Reactivate
+| Field | Notes |
+|-------|-------|
+| **Grace Period (days)** | 0-90. Help text: days before the tenant is suspended after cancellation. **0** means immediate. Default when unset is 7. |
 
-Reactivate a suspended subscription. The tenant site becomes fully accessible again.
+A daily job does three things:
 
-- **Reason:** Required
+1. Sends a renewal reminder when an **Active** period ends within 3 days.
+2. Moves **Active** rows past **Period End** to `warning` (**Grace Period** on the detail screen) and can email a grace warning.
+3. Moves `warning` rows that are still past period end after the grace days to **Suspended**, and can email a suspension notice.
 
-### Add Note
+The job does not cancel a suspended row on its own.
 
-Add an internal note to the subscription's audit trail. Not visible to the tenant.
+## Customer actions
 
-- **Note:** Free-text comment
+On the tenant dashboard, **Subscription Actions** can include:
 
-## Audit History
+- **Cancel Subscription**. The dialog title is **Cancel Subscription**. The customer picks a reason, clicks **Continue**, then **Confirm Cancellation**. Default copy says access lasts until the next renewal date. **Cancel immediately (lose access now)** ends access now. **Keep Subscription** closes the dialog.
+- **Keep Subscription Active** when a cancel is already scheduled. Confirm: **Keep subscription**.
+- Upgrade choices when a higher plan is available.
 
-Every action on a subscription is logged in the audit trail at the bottom of the detail page:
+Some providers tell the customer to use the provider portal instead of these buttons.
 
-| Column | Description |
-|--------|-------------|
-| **Date** | When the action occurred |
-| **Action** | What happened (e.g., "Extend Period", "Change Plan") |
-| **Admin** | Who performed the action |
-| **Details** | Specifics (new plan, days extended, etc.) |
-| **Reason** | Why the action was taken |
-
-## Grace Period
-
-When a subscription is cancelled or expires, there is a grace period before the tenant site is suspended.
-
-Configure the grace period in **WaaS → Settings → General → Grace Period (days)**.
-
-| Setting | Default | Description |
-|---------|---------|-------------|
-| **Grace Period** | 7 days | 0 = immediate suspension on cancellation |
-
-During the grace period:
-- The tenant site remains accessible
-- The tenant owner sees a notice about the upcoming suspension
-- Payment recovery is possible (e.g., updating payment method in Polar)
-
-## Automatic Expiry Handling
-
-A daily cron job checks for expired subscriptions:
-
-1. Subscriptions past their period end date → marked as expired
-2. Expired subscriptions past the grace period → suspended
-3. Suspended subscriptions past a further timeout → cancelled (if configured)
-
-## Customer Self-Service
-
-Tenants can manage their own subscription from the dashboard page:
-
-- **Cancel subscription** - schedules cancellation at period end
-- **Revert cancellation** - if they change their mind before period end
-- **Upgrade plan** - redirects to checkout for the higher plan
+**Verify:** After **Apply**, the detail badge and **History** row match the action, and the list **Status** or **Renewal** column matches.
 
 ---
 

@@ -1,108 +1,81 @@
 ---
 title: "Go-Live Checklist"
-description: "Verify DNS, SSL, billing, templates, and end-to-end signup before opening to customers"
+description: "Check DNS, pages, plans, billing, and a full signup before customers arrive"
 order: 30
 section: waas
 ---
 
 # Go-Live Checklist
 
-Before opening your WaaS platform to real customers, run through this checklist to verify everything works end-to-end.
+Walk through this list on the production site before you send customers to signup.
 
-## Settings Verification
+## Settings
 
-- [ ] **Platform Domain** is set and wildcard DNS (`*.yoursaas.com`) resolves to your server
-- [ ] **SSL certificate** covers wildcard subdomains (`*.yoursaas.com`)
-- [ ] **Signup, Dashboard, Templates pages** are created and linked in WaaS → Settings → General
-- [ ] **At least one plan** is active (WaaS → Settings → Plans)
-- [ ] **At least one template** is active (WaaS → Templates)
-- [ ] **Billing provider** is enabled and status shows "Active" (for paid plans)
-- [ ] **Auth mode** is set (WaaS Auth recommended for self-service)
+- [ ] **Platform Domain** is set under **Waas → Settings → General**, and `*.yoursaas.com` resolves to the server
+- [ ] HTTPS works on the platform domain and on a tenant subdomain
+- [ ] **Signup Page**, **Dashboard Page**, **Templates Page**, and **Pricing Page** are selected
+- [ ] **Auth Mode** is the mode you intend (**WAAS Auth (Email signup)** for self-service)
+- [ ] **Tenancy → Pro Settings**: **Database** and **Isolation** match what you want for new tenants
+- [ ] At least one plan is **Active** under **Waas → Settings → Plans**
+- [ ] At least one template is active under **Waas → Templates**
+- [ ] The billing provider you will charge with shows **Active** on **Billing Providers**
+- [ ] Paid plans have product or price IDs on **Payment Configuration**, or you have saved them so the provider can auto-create those IDs
+- [ ] **API Base URL** for Polar.sh is `https://api.polar.sh/v1`, not the sandbox URL
 
-## Test the Signup Flow
+## Free Plan Signup
 
-Walk through the complete customer experience:
+Use a private browser window.
 
-### Free Plan Signup
+1. Open the templates page and start signup from a template, or open `/signup/` directly
+2. On **Create your account**, enter **Your Name** and **Email Address**
+3. Choose the **Free** plan
+4. Finish the wizard. **Payment Method** stays hidden when nothing in the order needs payment
+5. Under **Tenancy → All Tenants**, confirm the new tenant exists
+6. Open the tenant on its platform subdomain (`something.yoursaas.com`)
 
-1. Open your signup page (e.g., `https://yoursaas.com/signup/`) in an incognito/private browser window
-2. Select the **Free** plan
-3. Choose a template
-4. Enter a site slug (e.g., `test-free`) and email address
-5. Complete the OTP verification (check your email or Mailpit in dev)
-6. Wait for provisioning to complete
-7. Verify the tenant site loads at `test-free.yoursaas.com`
+The subdomain is generated for the customer. You do not type it on the account step.
 
-### Paid Plan Signup
+If the site never appears, open **Waas → Settings → Provisioning** and check the intent.
 
-1. Open the signup page in a fresh incognito window
-2. Select the **Pro** plan
-3. Choose a template
-4. Enter a site slug and email
-5. Complete payment via Polar checkout
-6. Verify the webhook is received (check WaaS → Settings → Billing → "Last webhook received")
-7. Verify the tenant site is provisioned
+## Paid Plan Signup
 
-### Dashboard Access
+1. Open signup in a new private window
+2. Choose the paid plan and a billing cycle
+3. On **Payment Method**, complete checkout with the provider you enabled
+4. On **Billing Providers**, open that provider and check the **Webhook URL** tip for **Last webhook received**
+5. Confirm the tenant under **Tenancy → All Tenants** and the row under **Waas → Subscriptions**
 
-1. Go to your dashboard page (e.g., `https://yoursaas.com/dashboard/`)
-2. Log in with the email used during signup
-3. Verify you can see:
-   - Site overview with link to tenant admin
-   - Subscription details
-   - Domain management section
-   - Account settings
+## Dashboard
 
-## Email Delivery
+1. Open the dashboard page
+2. You should see **Sign in to your dashboard**
+3. Enter the signup email and click **Send verification code**
+4. Enter the code from email and confirm the dashboard loads
 
-- [ ] OTP emails are delivered (check spam folder)
-- [ ] Use a real SMTP plugin in production (not `wp_mail()` default)
-- [ ] Test with a non-dev email address
+> **Note:** Deliver OTP mail with an SMTP plugin. Test with an inbox you control, and check spam.
 
-> **Dev environment:** Use Mailpit (`http://yourserver:8025/`) to catch all emails without real delivery.
+## Template Gallery and Pricing
 
-## Template Gallery
-
-1. Visit the templates page
-2. Verify all active templates display with thumbnails
-3. Test tag filters work correctly
-4. Test search functionality
-5. Click "Preview" on a template - verify the preview loads
-
-## Performance
-
-- [ ] Signup page loads in under 3 seconds
-- [ ] Template gallery handles your template count smoothly
-- [ ] Provisioning completes in a reasonable time (typically 10-30 seconds)
-
-## Security
-
-- [ ] HTTPS works on the main site
-- [ ] HTTPS works on tenant subdomains
-- [ ] Admin pages are not accessible to non-admins
-- [ ] API keys are generated and stored securely (not exposed in frontend)
-- [ ] `wp-config.php` is not publicly accessible
+1. The templates page shows active templates, thumbnails, and tag filters
+2. Search and a tag filter both change the list
+3. The pricing page shows active plans and the prices you saved
 
 ## Cleanup
 
-After testing:
+1. Delete test tenants from **Tenancy → All Tenants**
+2. Remove test subscriptions you do not want to keep
+3. If you tested Polar.sh against the sandbox, set **API Base URL** back to `https://api.polar.sh/v1` and use production credentials
 
-1. Delete test tenant sites created during testing (Tenancy → All Tenants → Delete)
-2. Verify the test subscriptions are cleaned up
-3. If using Polar sandbox for testing, switch to production API URL and create real products
+## Before You Announce
 
-## Production Readiness
-
-| Item | Status |
-|------|--------|
-| Wildcard DNS configured | |
-| Wildcard SSL active | |
-| SMTP email configured | |
-| Polar production keys (not sandbox) | |
-| Backup strategy for main site | |
-| Monitoring/uptime checks | |
-| Terms of Service page created | |
-| Privacy Policy page created | |
+| Item | Done |
+|------|------|
+| Wildcard DNS | |
+| Wildcard HTTPS | |
+| SMTP delivery tested | |
+| Production billing credentials | |
+| Main site backups | |
+| Terms and privacy pages, if you require them | |
 
 ---
 

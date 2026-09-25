@@ -1,94 +1,96 @@
 ---
 title: "Configure Pro Settings"
-description: "Set up tenant isolation, database type, directory paths, and S3 storage defaults"
+description: "Set tenant isolation, database type, and directory defaults before creating sites"
 order: 24
 section: waas
 ---
 
 # Configure Pro Settings
 
-Pro Settings control how tenant sites are isolated and where their data is stored. These are **defaults** - individual tenants can override them later.
+Pro Settings are the defaults applied when a new tenant is created. Individual tenants can override them later.
 
 Navigate to **Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
 
-![Pro Settings page](../images/pro-settings.png)
+The page has these tabs: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **Routing**.
 
-## Content Isolation Defaults
+For this tutorial, set **Isolation** and **Database**, confirm **Directories**, and leave the other tabs at their defaults. Click **Save Pro Settings** after your changes.
 
-These settings determine what gets isolated for each new tenant.
+## Isolation
 
-| Setting | Recommended | What it does |
-|---------|-------------|-------------|
-| **Content + Themes Isolation** | On | Each tenant gets its own `wp-content` and themes directories |
-| **Plugins Isolation** | Off (for most setups) | Each tenant gets its own plugins directory. Increases disk usage. |
-| **Uploads Isolation** | On | Each tenant gets its own uploads directory (media files) |
+Open the **Isolation** tab.
 
-> **Tip:** Keep Plugins Isolation off unless tenants need different plugin sets. With it off, all tenants share the same plugins (controlled via Tenant Extensions), saving disk space.
+![Pro Settings Isolation](../images/pro-settings.png)
 
-## Database Defaults
+**Content Isolation Defaults** control what a new tenant gets its own copy of.
 
-Choose how tenant databases are structured.
+| Setting | Tutorial choice | What it does |
+|---------|-----------------|--------------|
+| **Content + Themes Isolation** | On | Each new tenant gets its own `wp-content` and themes directories |
+| **Plugins Isolation** | Off for most setups | Each new tenant gets its own plugins directory |
+| **Uploads Isolation** | On | Each new tenant gets its own uploads directory |
 
-| Option | Best for | Description |
-|--------|----------|-------------|
-| **Shared** | Getting started, small scale | All tenants share one MySQL database with table-prefix isolation. Simplest setup. |
-| **MySQL Isolated** | Production, compliance | Each tenant gets a dedicated MySQL database. Better isolation but requires more database resources. |
-| **SQLite Isolated** | Lightweight tenants | Each tenant gets a SQLite file. No extra MySQL setup needed. Requires the [SQLite Database Integration](https://wordpress.org/plugins/sqlite-database-integration/) plugin. |
+> **Tip:** Leave **Plugins Isolation** off unless tenants need different plugin sets. Shared plugins use less disk. Per-tenant plugin and theme install is done later from the tenant's extensions screen.
 
-**For this tutorial:** Start with **Shared**. You can migrate tenants to isolated databases later.
+## Database
 
-### MySQL Isolated Settings (if selected)
+Open the **Database** tab.
 
-If you choose MySQL Isolated, configure default credentials:
+![Pro Settings Database](../images/11-pro-settings-database.png)
 
-| Field | Description |
-|-------|-------------|
-| **MySQL Host** | Database server (e.g., `localhost` or `localhost:3306`) |
-| **MySQL Database** | Default database name for new tenants |
-| **MySQL Username** | Database user with CREATE TABLE permissions |
+**Database Type** is the type pre-selected when you create a tenant.
 
-> **Note:** These are defaults. You can set per-tenant credentials when creating individual tenants.
+| Option | When to use it |
+|--------|----------------|
+| **Shared Database (with table prefixes)** | Getting started. Tenants share one MySQL database, isolated by table prefix. |
+| **Isolated MySQL Database** | Each tenant uses its own MySQL database. |
+| **Isolated SQLite Database** | Each tenant uses a SQLite file. |
 
-## Directory Configuration
+**For this tutorial:** choose **Shared Database (with table prefixes)**.
 
-Where GrabWP stores tenant data on disk.
+If you choose **Isolated MySQL Database**, **Default MySQL Connection** appears:
 
-| Field | Default | Description |
-|-------|---------|-------------|
-| **Tenant Base Dir** | `wp-content/grabwp-tenancy` | Root directory for tenant uploads and data |
-| **Pro Config Dir** | `wp-content/grabwp-tenancy-pro` | Configuration files for each tenant |
-| **SQLite Database Dir** | `wp-content/grabwp-tenancy-sqlite` | SQLite database files (if using SQLite isolation) |
+| Field | Notes |
+|-------|-------|
+| **MySQL Host** | Hostname, for example `localhost` or `localhost:3306` |
+| **MySQL Database** | Default database name |
+| **MySQL Username** | Default database user |
 
-**Usually the defaults are fine.** Only change these if you need tenant data on a different partition or mount point.
+These values are pre-filled on the create-tenant form. Each tenant can override them.
 
-> You can also lock these paths via `wp-config.php` constants. If a constant is set, the field shows "set in wp-config.php" and cannot be changed from the UI.
+## Directories
 
-## Domain Symlink
+Open the **Directories** tab.
 
-Enable clean URLs for tenant content directories. Instead of serving tenant assets from a path like `/wp-content/grabwp-tenancy/tenant-123/uploads/`, symlinks let them appear under the tenant's own domain path.
+![Pro Settings Directories](../images/grabwp-tenancy-pro-settings-dir.png)
 
-| Field | Description |
-|-------|-------------|
-| **Enable Domain Symlink** | Turn on symlink-based clean URLs. Requires `symlink()` PHP function. |
-| **Domains Directory** | Absolute path where domain symlinks are created |
+**Directory Configuration** overrides where tenant data is stored. Leave the fields blank to keep the defaults.
 
-> **Requires Nginx configuration.** The settings page shows a copy-paste ready Nginx config block. Add it to your server configuration and reload Nginx.
+| Field | Role |
+|-------|------|
+| **Tenant Base Dir** | Root for tenant uploads and data |
+| **Pro Config Dir** | Per-tenant configuration. The global `config.php` lives at the root of this directory. |
+| **SQLite Database Dir** | SQLite files when **Isolated SQLite Database** is in use |
 
-**For this tutorial:** You can skip this initially and enable it later when setting up custom domains.
+Each row shows **Effective:** with the resolved path. If a path is locked, the field shows **set in wp-config.php** and cannot be edited here.
 
-## Object Storage (S3)
+## Tabs You Can Leave for Later
 
-Offload tenant media to S3-compatible storage. This section is covered in detail in [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage).
+| Tab | What it is |
+|-----|------------|
+| **Symlink** | **Domain Symlink (Clean URLs)**. Needs `symlink()` and the **Required server rules** snippet on that tab. Skip until you want clean content URLs. |
+| **Storage** | **Default Storage Driver**: **Local Filesystem (default)** or **S3-Compatible Object Storage**. Leave local for now. See [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage). |
+| **Backup** | Backup offload defaults. Leave until you configure backups. |
+| **Routing** | Path-prefix options. This guide uses subdomains on **Platform Domain**. Leave **Routing** at its defaults. |
 
-| Field | Description |
-|-------|-------------|
-| **Storage Driver** | `Local` (default) or `S3` |
+## Save
 
-**For this tutorial:** Leave as **Local**. Configure S3 later if needed.
+Click **Save Pro Settings**.
 
-## Save Settings
+## Verify
 
-Click **Save Settings** at the bottom of the page. A success message confirms the save.
+1. **Isolation** shows the checkboxes you chose
+2. **Database** shows **Shared Database (with table prefixes)**
+3. **Directories** shows an **Effective:** path for each row, with no validation error
 
 ---
 

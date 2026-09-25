@@ -1,59 +1,58 @@
 ---
-title: "Bắt đầu nhanh"
-description: "Thiết lập tenant site đầu tiên chỉ trong vài phút"
-order: 2
-section: base
+title: "Bắt đầu"
+description: "Tạo tenant site đầu tiên"
+order: 1
+section: tenancy
 ---
 
-# Bắt đầu nhanh
+# Bắt đầu
+
+Tạo một tenant site trên domain riêng, rồi mở site đó từ danh sách tenant.
 
 ## Yêu cầu
 
-- WordPress 5.0 trở lên
+- WordPress 5.0 trở lên (tested up to 7.1)
 - PHP 7.4 trở lên
-- Quyền truy cập quản trị WordPress
+- Quyền quản trị WordPress (`manage_options`)
 
-## Bước 1: Cài đặt plugin
+## Bước 1: Cài plugin
 
-1. Vào **Plugins → Add New** trong trang quản trị WordPress
+1. Vào **Plugins → Add New**
 2. Tìm **GrabWP Tenancy**
-3. Nhấn **Install Now**, sau đó **Activate**
+3. Nhấn **Install Now**, rồi **Activate**
 
-Plugin sẽ tự động thiết lập mọi thành phần cần thiết khi kích hoạt, không cần chỉnh sửa file thủ công.
+Khi kích hoạt, plugin cài các thành phần cần thiết. Bạn không sửa `wp-config.php` bằng tay cho lần cài thông thường.
 
-> **Mẹo:** Sau khi kích hoạt, vào **GrabWP Tenancy → Status** để xác nhận mọi thành phần đã được cài đúng. Nếu có cảnh báo, hãy nhấn **Auto Fix**.
+> **Tip:** Sau khi kích hoạt, mở **Tenancy → Status** (`page=grabwp-tenancy-status`) và kiểm tra các mục trên **Plugin General**. Nếu một dòng cảnh báo hoặc lỗi, nhấn **Auto Fix**.
 
-## Bước 2: Tạo tenant site đầu tiên
+## Bước 2: Tạo tenant đầu tiên
 
-1. Vào **GrabWP Tenancy → Tenants**
-2. Nhấn **Add New**
-3. Chọn nhập domain ngay hoặc cấu hình sau
-4. Nhấn **Create**
+**Vào Tenancy → Add New** (`page=grabwp-tenancy-create`).
 
-Plugin sẽ gán một ID gồm 6 ký tự duy nhất (ví dụ: `abc123`) và tự động tạo bảng cơ sở dữ liệu cùng thư mục upload cho site.
+![Add New Tenant, đang chọn I have a domain](../images/grabwp-tenancy-pro-tenant-add.png)
 
-## Bước 3: Truy cập site mới
+1. Giữ **I have a domain** (đây là lựa chọn mặc định).
+2. Nhập domain, không kèm `http://` hay `www` (ví dụ `client1.com`).
+3. Nhấn **Create Tenant**.
 
-Bạn có hai cách để truy cập tenant site:
+Plugin gán một tenant ID gồm 6 ký tự và tạo bảng cơ sở dữ liệu cùng thư mục upload của site đó.
 
-### Tùy chọn A - Định tuyến theo path (không cần DNS)
+> **Note:** **I'll set up a domain later** tạo tenant trước khi có domain. Cột Domains lúc đó hiện **Path access only**. URL xem trước tạm thời nằm trên màn Edit cho đến khi bạn thêm domain. Hãy gắn domain thật trước khi gửi site cho khách. Xem [Domain & DNS Setup](/grabwp-tenancy/hosting-dns-setup).
 
-Truy cập site ngay bằng URL theo đường dẫn:
+Nếu GrabWP Tenancy Pro đang bật, form này còn có **Content Isolation Options**, **Database Configuration**, và (khi đã cấu hình S3) **Storage Driver**. Các trường đó nằm trong [Database & Content Isolation](/grabwp-tenancy-pro/pro-database-isolation).
 
-```
-https://yoursite.com/site/{tenant-id}
-```
+## Bước 3: Trỏ domain về máy chủ này
 
-Ví dụ: `https://yoursite.com/site/abc123`
+Thêm domain trong bảng điều khiển hosting sao cho document root là thư mục WordPress này, rồi trỏ DNS về máy chủ.
 
-Không cần cấu hình domain, không cần thay đổi DNS. Hoạt động ngay trên Apache/LiteSpeed. Với Nginx, xem [Hướng dẫn Domain & DNS](/grabwp-tenancy/hosting-dns-setup).
+→ [Domain & DNS Setup](/grabwp-tenancy/hosting-dns-setup)
 
-### Tùy chọn B - Domain tùy chỉnh
+## Bước 4: Mở admin của tenant
 
-Trỏ một domain riêng (ví dụ: `client1.com`) đến tenant site. Cần cấu hình hosting và DNS.
+**Vào Tenancy → All Tenants** (`page=grabwp-tenancy`).
 
-→ [Hướng dẫn Domain & DNS](/grabwp-tenancy/hosting-dns-setup)
+![Danh sách tenant](../images/grabwp-tenancy-pro-tenant-list.png)
 
-## Bước 4: Truy cập trang quản trị tenant
+Tìm dòng mới và nhấn **Admin** (biểu tượng dashboard). Liên kết mở WordPress admin của tenant và kèm access token sống ngắn (mặc định 30 phút). Nếu hết hạn, nhấn **Admin** lần nữa.
 
-Trong danh sách tenant (**GrabWP Tenancy → Tenants**), mỗi dòng có các biểu tượng thao tác. Nhấn **biểu tượng Admin** (dashboard) để mở trang quản trị WordPress của tenant. Với tenant dùng domain riêng, token bảo mật sẽ được tự động chèn để bạn đăng nhập ngay lập tức.
+**Verify:** Mở domain của tenant trên trình duyệt. Bạn phải thấy site của tenant đó, không phải site chính. Domain xuất hiện ở cột **Domains** trên **All Tenants**.

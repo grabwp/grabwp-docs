@@ -1,99 +1,60 @@
 ---
 title: "Domain & DNS Setup"
-description: "Connect custom domains or use path routing for tenant sites"
-order: 5
-section: base
+description: "Point a custom domain at a tenant site"
+order: 4
+section: tenancy
 ---
 
 # Domain & DNS Setup
 
-You have two ways to route visitors to a tenant site. Path routing requires no setup at all - custom domains require hosting and DNS configuration.
+Each tenant site should be reached on its own domain, such as `client.com` or `client.yoursite.com`. The domain must resolve to this server, and the host must serve this WordPress directory for that domain.
 
-## Option A - Path Routing (Recommended for Quick Setup)
+Add the domain on the tenant first: **Tenancy → All Tenants**, then **Settings** on the row (`page=grabwp-tenancy-edit`). See [Managing Tenant Sites](/grabwp-tenancy/creating-tenants).
 
-Access any tenant site via a URL path on your existing domain - no DNS changes, no hosting configuration:
+> **Note:** Until DNS is in place, the Edit screen shows a **Path URL** you can open as a temporary preview. Connect the domain before you share the site.
 
-```
-https://yoursite.com/site/{tenant-id}
-```
+## Step 1: Add the domain in hosting
 
-Example: `https://yoursite.com/site/abc123`
+Point the domain at the same document root as the main WordPress install. Do not create a separate directory or a second WordPress install.
 
-This works automatically on **Apache** and **LiteSpeed** servers (the plugin configures `.htaccess` rewrite rules on activation).
+**Subdomain** (for example `client.yoursite.com`):
 
-> **Tip:** The `site` path segment is configurable. Define `GRABWP_TENANCY_PATH_PREFIX` in `wp-config.php` or the tenancy config (default: `site`) to change it everywhere rewrite rules, `.htaccess`, admin URLs, and the status page use the prefix. For example, set it to `app` so tenant URLs become `/app/{tenant-id}`.
+- Add it as a parked domain, alias, or subdomain whose document root is the main WordPress directory.
 
-### Nginx Setup
+**External domain** (for example `clientsite.com`):
 
-Nginx doesn't use `.htaccess`, so you need to add a server block rule manually:
+- Add it as an addon domain or a new domain.
+- Set the document root to the main WordPress directory.
 
-```nginx
-location ~ ^/site/([a-z][a-z0-9]{5})(/|$) {
-    rewrite ^/site/([a-z][a-z0-9]{5})/?(.*)$ /$2 break;
-    try_files $uri $uri/ /index.php?site=$1&$args;
-}
-```
-
-Add this block inside your existing WordPress `server {}` block, then reload Nginx.
-
----
-
-## Option B - Query-String Routing
-
-Access a tenant site by appending its ID as a query parameter - useful for testing or when you can't modify server config:
-
-```
-https://yoursite.com/?site={tenant-id}
-```
-
-Example: `https://yoursite.com/?site=abc123`
-
-No server configuration needed. Works on any host. Not recommended for production as the URL is not user-friendly.
-
----
-
-## Option C - Custom Domain
-
-Give each tenant site its own domain (e.g., `client.com` or `client.yoursite.com`). Requires two steps: hosting setup and DNS configuration.
-
-### Step 1: Add the Domain in Hosting
-
-Log into your hosting control panel and add the domain:
-
-**For subdomains** (e.g., `client.yoursite.com`):
-- Find **Parked Domains** or **Domain Aliases**
-- Add the subdomain pointing to your main WordPress directory
-
-**For external domains** (e.g., `clientsite.com`):
-- Find **Addon Domains**
-- Set the document root to your main WordPress directory
-- Do not create a new subdirectory
-
-| Control Panel | Where to add |
-|--------------|-------------|
+| Control panel | Where to add it |
+|---------------|-----------------|
 | cPanel | Parked Domains (subdomains) or Addon Domains (external) |
 | Plesk | Websites & Domains → Add Domain |
 | DirectAdmin | Domain Management → Add New Domain |
 
-### Step 2: Update DNS
+## Step 2: Update DNS
 
-**For subdomains** - add an A record at your DNS provider:
-- **Name:** subdomain (e.g., `client`)
-- **Type:** A
-- **Value:** your server's IP address
+**Subdomain:** add an A record at your DNS provider.
 
-**For external domains** - update nameservers at the registrar to point to your host, or add an A record if you manage DNS separately.
+| Field | Value |
+|-------|--------|
+| Name | The subdomain label (for example `client`) |
+| Type | A |
+| Value | This server's IP address |
 
-### Step 3: Wait for Propagation
+**External domain:** at the registrar, point the domain at this host (nameservers or an A record), using the same IP.
 
-DNS changes take 5–30 minutes, sometimes up to 24 hours. Use [dnschecker.org](https://dnschecker.org) to verify the domain resolves to your server.
+## Step 3: Wait for propagation
 
-### Testing
+DNS changes often apply in 5 to 30 minutes and can take up to 24 hours. Check the domain on [dnschecker.org](https://dnschecker.org).
 
-Visit the domain - you should see the tenant site's WordPress screen. If you see your hosting's default page, the document root isn't pointing to your WordPress directory.
+## Domain format
 
-## Domain Format Rules
+The tenant form accepts `example.com` and `subdomain.example.com`.
 
-- Valid formats: `example.com`, `sub.example.com`
-- No IP addresses or `localhost`
+- No `http://` and no `www` prefix (add `www.example.com` as its own domain if you need it)
+- No IP addresses and no `localhost`
 - Letters, numbers, and hyphens only
+- Each domain can belong to only one tenant
+
+**Verify:** Open the domain in a browser. You should see that tenant's WordPress site. A hosting default page means the document root is not this WordPress directory.

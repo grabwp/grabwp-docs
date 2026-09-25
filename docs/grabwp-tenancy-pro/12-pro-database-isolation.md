@@ -1,69 +1,85 @@
 ---
 title: "Database & Content Isolation"
-description: "Configure per-site database and content isolation"
+description: "Choose a database type and isolation options per tenant"
 order: 12
 section: pro
 ---
 
 # Database & Content Isolation
 
-Pro lets you configure how each tenant site's data is isolated from others.
+Set defaults for new tenants under **Pro Settings**, then adjust a single tenant on **Add New** or **Edit**.
 
-## Database Options
+## Set defaults
 
-Go to **GrabWP Tenancy → Tenants → Edit** the site. The Pro fields appear in the edit form below the domain settings.
+**Navigate to Tenancy → Pro Settings** (`page=grabwp-tenancy-pro-settings`).
 
-![Edit tenant - database type and isolation options](../images/grabwp-tenancy-pro-tenant-edit.png)
+### Isolation
 
-### Shared Database (Default)
-All sites share one MySQL database with unique table prefixes - same as the free plugin. Simplest setup, lowest overhead.
+![Pro Settings, Isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
 
-### Isolated MySQL Database
-Each site connects to its own MySQL database. Complete database-level isolation.
+**Content Isolation Defaults** apply when you create a tenant.
 
-To configure:
-1. Open **Edit** for the site
-2. Under **Database Type**, select **Isolated MySQL Database**
-3. Enter the database credentials (host, name, user, password)
-4. Save
+| Field | Notes |
+|-------|--------|
+| Content + Themes Isolation | **Enable content and themes isolation by default for new tenants**. Own `wp-content` and themes directories. |
+| Plugins Isolation | **Enable plugins isolation by default for new tenants**. Own plugins directory. |
+| Uploads Isolation | **Enable uploads isolation by default for new tenants**. Own uploads directory. |
 
-### Isolated SQLite Database
-Each site uses a SQLite file instead of MySQL.
+### Database
 
-To configure:
-1. Open **Edit** for the site
-2. Under **Database Type**, select **Isolated SQLite Database**
-3. Save - a SQLite file is created automatically
+![Pro Settings, Database](../images/11-pro-settings-database.png)
 
-## Content Isolation
+**Database Defaults** sets **Database Type** for the next tenant:
 
-Control what is isolated within each tenant site. In the **Edit** form for the site:
+| Option | Notes |
+|--------|--------|
+| Shared Database (with table prefixes) | Same MySQL database as the main site, unique table prefix. |
+| Isolated MySQL Database | Separate MySQL database. Shows **Default MySQL Connection**. |
+| Isolated SQLite Database | SQLite file for that tenant. The library is bundled with Pro. |
 
-| Setting | What it controls |
-|---------|-----------------|
-| Content + Themes Isolation | Tenant gets its own wp-content and themes directories |
-| Plugins Isolation | Tenant gets its own plugins directory |
-| Uploads Isolation | Tenant gets its own uploads directory |
+**Default MySQL Connection** (only for **Isolated MySQL Database**): **MySQL Host**, **MySQL Database**, **MySQL Username**. These values are pre-filled on **Add New Tenant**. The password is entered per tenant, not stored as a global default on this screen.
 
-Toggle each setting per site as needed.
+Click **Save Pro Settings**.
 
-## Setting Defaults for New Sites
+Directory paths for tenant files, including **SQLite Database Dir**, are on the **Directories** tab. See [Pro Settings](/grabwp-tenancy-pro/pro-settings).
 
-Go to **GrabWP Tenancy → Pro Settings** to set default isolation options. All newly created sites inherit these defaults - you can override them per site at any time.
+## Set options for one tenant
 
-Default directory and upload paths are configured on the same Pro Settings screen (see [Installing Pro](/grabwp-tenancy-pro/pro-installation)). Use the toggles below for default **content**, **plugins**, and **uploads** isolation for new sites:
+**Navigate to Tenancy → Add New** (`page=grabwp-tenancy-create`) or open **Edit** for an existing tenant (`page=grabwp-tenancy-edit`).
 
-![Pro Settings - default content and plugins isolation](../images/grabwp-tenancy-pro-settings-isolation.png)
+![Edit Tenant, isolation and database](../images/grabwp-tenancy-pro-tenant-edit.png)
 
-## Per-Tenant Setting Overrides
+### Content Isolation Options
 
-Pro also lets you override individual GrabWP Tenancy settings for one tenant without changing the global defaults.
+| Checkbox | When enabled |
+|----------|----------------|
+| Content + Themes Isolation | Own content directory and themes directory. Themes must be installed afterward (Extensions). |
+| Plugins Isolation | Own plugins directory. Plugins must be installed afterward. |
+| Uploads Isolation | Own uploads directory. |
 
-1. Go to **GrabWP Tenancy → Tenants**
-2. Open the tenant's action pages and select the **Overrides** tab (**Tenant Overrides**)
-3. For each setting, check **Override**, then set On/Off (or the setting's own control)
-4. Click **Save Overrides**
+Unchecked options use the main WordPress paths.
 
-Unchecked rows inherit the global value. Each row shows a **Global:** hint with the current global value so you can compare before overriding. Clear every override checkbox to make the tenant inherit all global settings again.
+### Database Configuration
 
-![Tenant Overrides](../images/grabwp-tenancy-pro-tenant-overrides.png)
+| Option | Notes |
+|--------|--------|
+| Shared Database (with table prefixes) | Shared MySQL, prefix isolation. |
+| Isolated MySQL Database | Shows **MySQL Host**, **Database Name**, **Username**, **Password**, and **Test Connection**. On edit, leave **Password** blank to keep the current password. |
+| Isolated SQLite Database | SQLite file. Help text: **Uses SQLite database file for lightweight, portable storage.** |
+
+Click **Test Connection** before **Create Tenant** or **Update Tenant** when using isolated MySQL.
+
+### Storage Driver
+
+**Storage Driver** appears only after S3 is configured under **Pro Settings → Storage**.
+
+| Option | Notes |
+|--------|--------|
+| Local Filesystem | Uploads stay on this server. |
+| S3-Compatible Object Storage | New uploads go to the configured bucket. |
+
+On an existing tenant, **Saving a different driver does NOT move existing files.** Click **Migrate uploads now** to copy files before you switch. Switching S3 to local without migrating breaks existing media.
+
+**Verify:** On **All Tenants**, the **Database** badge matches the type you saved (**Shared MySQL**, **Isolated MySQL**, or **Isolated SQLite**), and **Isolation** shows the short labels you enabled (**WPC**, **Th**, **Plg**, **Up**).
+
+Per-tenant copies of the global **Settings** checkboxes are on [Tenant Settings & Overrides](/grabwp-tenancy-pro/pro-tenant-settings).

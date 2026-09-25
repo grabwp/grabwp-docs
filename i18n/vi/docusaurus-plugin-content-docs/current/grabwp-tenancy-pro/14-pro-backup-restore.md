@@ -1,51 +1,104 @@
 ---
-title: "Sao lưu & khôi phục"
-description: "Sao lưu và khôi phục từng tenant site riêng lẻ"
+title: "Backup và restore"
+description: "Sao lưu, lên lịch, và khôi phục một tenant"
 order: 14
 section: pro
 ---
 
-# Sao lưu & khôi phục
+# Backup và restore
 
-Pro cho phép bạn sao lưu và khôi phục từng tenant site riêng lẻ, bao gồm cơ sở dữ liệu, uploads, cấu hình Pro và nội dung cô lập.
+Sao lưu từng tenant: database, isolated content, Pro config, và upload. Mặc định offload và lịch nằm ở **Tenancy → Pro Settings**, tab **Backup**. Xem [Pro Settings](/grabwp-tenancy-pro/pro-settings).
 
-## Tạo bản sao lưu
+## Tạo backup
 
-1. Vào **GrabWP Tenancy → Tenants**
-2. Tìm site rồi nhấn liên kết thao tác **Backup**
-3. Nhấn **Start Backup**
+**Vào Tenancy → All Tenants**, rồi **Backup Tenant** trên dòng (`page=grabwp-tenancy-pro-backup`).
 
-![Màn hình Backup tenant với nút Start Backup](../images/grabwp-tenancy-pro-tenant-backup.png)
+Tiêu đề là **Backup Tenant:** cộng tenant ID. Tab: **Backup**, **Auto Backup Settings**, **Previous Backups**.
 
-Quá trình sao lưu chạy từng bước ngay trong trình duyệt:
+![Tab Backup](../images/grabwp-tenancy-pro-tenant-backup.png)
 
-1. Xác thực tenant
-2. Xuất cơ sở dữ liệu
-3. Xuất uploads
-4. Xuất nội dung cô lập
-5. Xuất cấu hình Pro
-6. Đóng gói archive
-7. Dọn dẹp
+1. Ở tab **Backup**.
+2. Nhấn **Start Backup**.
 
-Khi hoàn tất, một file ZIP sẽ được tạo. **Hãy tải và lưu file này**. File được lưu trên máy chủ của bạn và sẽ cần dùng khi khôi phục.
+Tiến trình chạy trong trình duyệt:
 
-Bạn cũng có thể lên lịch sao lưu tự động cho từng tenant trong tab **Auto Backup**:
+1. Validating tenant
+2. Exporting database
+3. Exporting isolated content
+4. Exporting Pro config
+5. Exporting uploads
+6. Packaging archive
+7. Cleaning up
 
-![Màn hình Backup tenant, tab lịch Auto Backup](../images/grabwp-tenancy-pro-tenant-backup-auto.png)
+Khi xong: **Backup complete!** và **Your backup archive is ready.** Nhấn **Download Backup**.
 
-## Khôi phục từ bản sao lưu
+Giữ tab trình duyệt mở cho đến khi các bước kết thúc.
 
-1. Vào **GrabWP Tenancy → Tenants**
-2. Tìm site rồi nhấn liên kết thao tác **Restore**
-3. Tải lên file ZIP sao lưu
-4. Nhấn **Upload & Start Restore**
+## Lên lịch backup cho tenant này
 
-> ⚠ **Cảnh báo:** Khôi phục sẽ ghi đè hoàn toàn cơ sở dữ liệu, uploads và cấu hình hiện tại của site. Không thể hoàn tác. Hãy sao lưu trạng thái hiện tại trước nếu bạn cần giữ lại.
+Mở **Auto Backup Settings**.
 
-Quá trình khôi phục chạy qua 8 bước và hiển thị tiến trình trực tiếp trong trình duyệt.
+![Auto Backup Settings](../images/grabwp-tenancy-pro-tenant-backup-auto.png)
 
-![Màn hình Restore tenant với phần tải lên file sao lưu và nút khôi phục](../images/grabwp-tenancy-pro-tenant-restore.png)
+Mỗi trường có thể kế thừa mặc định toàn cục từ **Pro Settings → Backup** (**Auto Backup**). Màn hình hiện **Effective:** dưới mỗi control.
 
-## Quản lý file sao lưu
+| Trường | Ghi chú |
+|-------|--------|
+| Scheduled Backups | **Inherit global default**, **Enabled**, hoặc **Disabled**. |
+| Schedule | **Inherit global default**, hoặc **Manual only (no schedule)**, **Daily**, **Weekly**, **Every two weeks**, **Monthly**. |
+| Backups to Keep | Số archive giữ lại (1 đến 30). Bản cũ bị xóa sau một lần chạy thành công. |
 
-Các file sao lưu được lưu trên máy chủ của bạn. Để quản lý dung lượng, hãy tải các bản sao lưu cũ về qua FTP/SFTP rồi xóa chúng khỏi máy chủ. Nên giữ thêm bản sao ở một nơi an toàn ngoài máy chủ.
+Nhấn **Save Auto Backup Settings**.
+
+Lần chạy theo lịch dùng WP-Cron. Nếu **DISABLE_WP_CRON** đang bật, hãy cấu hình system cron. **Pro Settings → Backup** có **Schedule Assurance** cho lần chạy tiếp theo.
+
+## Các backup trước đó
+
+Mở **Previous Backups**.
+
+![Previous Backups](../images/12-tenant-backup-previous.png)
+
+Cột: **Date**, **Filename**, **Size**, **Local**, **Remote**.
+
+| Khi nào | Thao tác |
+|------|---------|
+| File nằm trên máy chủ | **Download**, **Delete Local** |
+| Offload đã cấu hình và file vẫn ở local | **Offload** |
+| File chỉ ở remote | **Download to Local** |
+| File ở remote | **Delete Remote** |
+
+**Delete Local** hỏi **Delete local backup `{file}`? This cannot be undone.** **Delete Remote** hỏi tương tự cho bản remote.
+
+## Restore
+
+**Vào Tenancy → All Tenants**, rồi **Restore Tenant** (`page=grabwp-tenancy-pro-restore`).
+
+![Restore Tenant](../images/grabwp-tenancy-pro-tenant-restore.png)
+
+> **Warning:** **This will completely overwrite all data for this tenant (database, uploads, config). This action cannot be undone.**
+
+Tab:
+
+| Tab | Việc cần làm |
+|-----|------------|
+| From Existing Backup | Chọn một dòng và nhấn **Restore**. Xác nhận **Restore from `{file}`? This will OVERWRITE all tenant data and cannot be undone.** |
+| Upload Archive | Chọn **Backup Archive (.zip)** và nhấn **Upload & Start Restore**. Màn hình hiện dung lượng upload tối đa. |
+
+Các bước restore:
+
+1. Validating archive
+2. Extracting archive
+3. Verifying contents
+4. Restoring database
+5. Restoring isolated content
+6. Restoring Pro config
+7. Restoring uploads
+8. Cleaning up
+
+Thành công: **Restore complete!**
+
+Một lần restore có thể vào kiểu database khác với bản backup (shared MySQL, isolated MySQL, hoặc SQLite).
+
+Nếu URL trong database vừa khôi phục không khớp domain của tenant, dùng [Fix URLs](/grabwp-tenancy-pro/pro-fix-urls).
+
+**Verify:** Mở **Homepage** hoặc domain của tenant và xác nhận nội dung đã khôi phục. **Previous Backups** liệt kê archive bạn vừa tạo.

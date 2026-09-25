@@ -1,63 +1,89 @@
 ---
 title: "Tổng quan Pro"
-description: "Các tính năng cô lập nâng cao trong GrabWP Tenancy Pro"
+description: "Những gì GrabWP Tenancy Pro thêm vào plugin miễn phí"
 order: 10
 section: pro
 ---
 
 # GrabWP Tenancy Pro
 
-Pro mở rộng plugin miễn phí với khả năng cô lập toàn diện, mang lại cho mỗi tenant site cơ sở dữ liệu, plugin, theme và nội dung riêng. Phù hợp cho agency và đội ngũ xây dựng SaaS cần mức tách biệt mạnh hơn giữa các site.
+Pro mở rộng plugin miễn phí để mỗi tenant có thể có database, plugin, theme, upload, backup, và domain symlink riêng. Plugin miễn phí phải được cài và kích hoạt trước.
 
-## Bao gồm những gì
+## Pro thêm gì
 
-### Cơ sở dữ liệu riêng cho từng site
-Mỗi site có thể chạy trên cơ sở dữ liệu MySQL hoặc SQLite riêng, hoàn toàn tách biệt khỏi các site khác. Không chia sẻ bảng, không chia sẻ dữ liệu.
+### Database riêng cho mỗi site
 
-### Plugin & theme riêng theo site
-Mỗi tenant site có bộ plugin và theme riêng. Bạn kiểm soát những gì được cung cấp, tenant sẽ không nhìn thấy hoặc cài được bất kỳ thứ gì từ site chính của bạn.
+Tenant mới có thể dùng **Shared Database (with table prefixes)**, **Isolated MySQL Database**, hoặc **Isolated SQLite Database**. SQLite đi kèm trong Pro. Bạn không cài plugin SQLite riêng.
 
-### Cô lập nội dung
-Kiểm soát phạm vi nội dung mà mỗi site có thể truy cập. Bài viết, trang và media được cô lập hoàn toàn theo từng site.
+→ [Database & Content Isolation](/grabwp-tenancy-pro/pro-database-isolation)
 
-### Sao lưu & khôi phục
-Sao lưu riêng từng tenant site và khôi phục bất kỳ lúc nào, bao gồm cơ sở dữ liệu, upload và cấu hình.
+### Cô lập content, plugin và upload
 
-### Nhân bản tenant
-Sao chép bất kỳ tenant site nào sang site mới qua 7 bước tự động: xác thực, xuất dữ liệu, nhập dữ liệu, sao chép uploads, tạo symlink extensions, sửa URL và dọn dẹp. Phù hợp cho môi trường staging/testing hoặc triển khai nhanh các site đã cấu hình sẵn.
+**Content + Themes Isolation**, **Plugins Isolation**, và **Uploads Isolation** cấp thư mục riêng cho tenant. Mặc định cho tenant mới đặt trong **Pro Settings**.
 
-→ [Hướng dẫn Tenant Cloning](/grabwp-tenancy-pro/pro-tenant-cloning)
+### Plugin và theme theo site
 
-### Quản lý domain symlink
-Thêm hoặc xóa các domain thay thế cho bất kỳ tenant site nào mà không cần nhân bản file. Plugin sẽ tạo symlink ở cấp máy chủ để nhiều domain cùng phục vụ một tenant.
+Màn **Extensions** cài, gỡ, kích hoạt, và tắt plugin cùng theme cho một tenant, dưới dạng symlink hoặc bản sao riêng.
 
-### Bảng điều khiển quản trị nâng cao
-Giao diện quản trị mở rộng với các khu vực cấu hình riêng theo site cho thiết lập cô lập, extensions, sao lưu, nhân bản và quản lý domain.
+→ [Plugin và theme theo site](/grabwp-tenancy-pro/pro-extensions)
+
+### Backup và restore
+
+Sao lưu một tenant (database, isolated content, Pro config, và upload) rồi khôi phục sau. Bạn có thể lên lịch backup và offload archive sang lưu trữ tương thích S3.
+
+→ [Backup & Restore](/grabwp-tenancy-pro/pro-backup-restore)
+
+### Clone tenant
+
+Sao chép một tenant, hoặc **Main Site**, vào một tenant có sẵn hoặc một tenant mới.
+
+→ [Clone tenant](/grabwp-tenancy-pro/pro-tenant-cloning)
+
+### Fix URLs
+
+Thay URL cũ trong database của một tenant sau khi đổi domain hoặc clone.
+
+→ [Fix URLs](/grabwp-tenancy-pro/pro-fix-urls)
+
+### Domain symlink và storage
+
+**Pro Settings** gồm domain symlink cho URL `/wp-content/` gọn, lưu trữ upload tương thích S3, và offload backup.
+
+→ [Pro Settings](/grabwp-tenancy-pro/pro-settings)
+
+### License
+
+Kích hoạt, xem, hoặc thu hồi license tại **Tenancy → License**.
+
+→ [License](/grabwp-tenancy-pro/pro-license)
 
 ## Yêu cầu
 
-- **GrabWP Tenancy** bản miễn phí phải được cài và kích hoạt trước
-- WordPress 5.0 trở lên
+- **GrabWP Tenancy** (miễn phí) đã cài và đang bật
+- WordPress 5.0 trở lên (tested up to 7.1)
 - PHP 7.4 trở lên
 
-## Bản Miễn Phí vs Pro
+## Bản miễn phí và Pro
 
 | Tính năng | Miễn phí | Pro |
 |---------|:----:|:---:|
-| Nhiều website từ một cài đặt | ✓ | ✓ |
-| Định tuyến theo domain / path / query string | ✓ | ✓ |
-| Upload tách biệt cho từng site | ✓ | ✓ |
+| Nhiều site từ một cài đặt | ✓ | ✓ |
+| Domain riêng cho mỗi site | ✓ | ✓ |
+| Upload tách biệt cho mỗi site | ✓ | ✓ |
 | Cơ sở dữ liệu MySQL dùng chung | ✓ | ✓ |
-| Token truy cập admin | ✓ | ✓ |
-| Cơ sở dữ liệu riêng cho từng site (MySQL hoặc SQLite) | - | ✓ |
-| Plugin & theme riêng theo site | - | ✓ |
-| Kiểm soát cô lập nội dung | - | ✓ |
-| Sao lưu & khôi phục theo site | - | ✓ |
-| Nhân bản tenant | - | ✓ |
-| Quản lý domain symlink | - | ✓ |
+| Mở admin từ danh sách tenant | ✓ | ✓ |
+| Database riêng cho mỗi site (MySQL hoặc SQLite) | - | ✓ |
+| Plugin và theme riêng theo site | - | ✓ |
+| Cô lập content, plugin và upload | - | ✓ |
+| Backup và restore theo site | - | ✓ |
+| Backup theo lịch | - | ✓ |
+| Clone tenant | - | ✓ |
+| Fix URLs | - | ✓ |
+| Lưu trữ tương thích S3 và offload backup | - | ✓ |
+| Domain symlink | - | ✓ |
 
-## Mua Pro
+## Lấy Pro
 
-→ [Mua GrabWP Tenancy Pro](https://grabwp.com/pro/)
+Sau khi mua, Polar gửi email xác nhận có liên kết **Customer Portal**. Tải ZIP Pro từ portal đó, rồi [cài Pro](/grabwp-tenancy-pro/pro-installation).
 
-Sau khi thanh toán, Polar (đơn vị xử lý thanh toán của chúng tôi) sẽ gửi cho bạn email xác nhận kèm liên kết **Customer Portal**. Dùng liên kết đó để tải file ZIP của plugin Pro.
+Màn license cũng liên kết tới [Customer Portal](https://polar.sh/grabwp/portal) và [grabwp.com](https://grabwp.com/).

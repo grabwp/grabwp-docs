@@ -1,140 +1,132 @@
 ---
 title: "Managing Custom Domains"
-description: "Let customers use their own domains via Cloudflare SaaS or direct IP mode"
+description: "Verify custom domains, filter the Domains list, and connect Cloudflare SaaS or Direct IP"
 order: 31
 section: waas
 ---
 
 # Managing Custom Domains
 
-Custom domains let your customers use their own domain (e.g., `mybusiness.com`) instead of a subdomain (`mybusiness.yoursaas.com`). GrabWP WaaS supports two methods.
+Custom domains let a tenant use its own hostname (for example `mybusiness.com`) in addition to the platform hostname (`customer.yoursaas.com`). Customers add aliases from the dashboard. You verify them on **Domains**.
 
-Navigate to **WaaS → Domains** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-domains`).
+**Navigate to Waas → Domains** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-domains`).
 
-![Domains admin](../images/waas-domains.png)
+![Domains list](../images/waas-domains.png)
 
-## Domain Modes
+If **Domain Mode** is not set, the page shows: **Domain settings not configured. Go to WaaS Settings → General to set domain mode.** Hostnames under the configured **Platform Domain** are left off this list. Custom domains and aliases stay.
 
-Configure the mode in **WaaS → Settings → General → Custom Domains**.
+## Filters and columns
 
-| Mode | How it works | Best for |
-|------|-------------|----------|
-| **Cloudflare SaaS** | Customer adds a CNAME record to your fallback origin. Cloudflare handles SSL and routing. | Production platforms, automatic SSL, scalable |
-| **Direct IP** | Customer adds an A record to your server IP. You configure the domain on your server. | Simple setups, non-Cloudflare hosting |
+View links at the top:
 
-## Cloudflare SaaS Custom Hostnames
+| View | URL |
+|------|-----|
+| **All** | `page=grabwp-tenancy-waas-domains` |
+| **Verified** | `dns_filter=verified` |
+| **Pending** | `dns_filter=pending` |
 
-This is the recommended approach for production. Cloudflare handles SSL certificates automatically for every custom domain.
+![Pending domains](../images/03-waas-domains-pending.png)
 
-### One-Time Setup (Your Side)
+![Verified domains](../images/03-waas-domains-verified.png)
 
-1. **Add your domain to Cloudflare** (if not already)
-2. **Enable Cloudflare for SaaS** on your zone:
-   - Contact Cloudflare support or use the dashboard → SSL/TLS → Custom Hostnames
-   - This feature may require a paid Cloudflare plan
-3. **Set a fallback origin:**
-   - In Cloudflare dashboard → SSL/TLS → Custom Hostnames → Add Fallback Origin
-   - Set it to your platform subdomain (e.g., `cdn.saas.yoursaas.com`)
-   - Create a DNS A record for this subdomain pointing to your server
-4. **Configure in WaaS:**
-   - Go to WaaS → Settings → General → Custom Domains
-   - Set Domain Mode to **Cloudflare SaaS**
-   - Enter your CNAME Target (e.g., `cdn.saas.yoursaas.com`)
+**Verified** lists domains whose last check succeeded. **Pending** lists domains that were checked and did not pass. Domains that have never been checked stay on **All** with status **Unknown**. They do not appear under **Pending**.
 
-> **Cloudflare docs:** [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/) - covers setup, SSL, and API automation.
+| Column | Notes |
+|--------|-------|
+| **Domain** | Hostname |
+| **Tenant** | Tenant ID |
+| **Type** | **Primary** (first hostname) or **Alias** |
+| **Status** | **Unknown**, **Verified**, or **Pending** |
+| **Last Checked** | Relative time. Older than 24 hours is marked **(stale)**. Empty until the first check. |
+| **Actions** | Checkmark. Tooltip: **Verify domain** |
 
-### Per-Customer Flow
+Use **Search Domains** to match the hostname. The list is 10 rows per page. **Domain**, **Tenant**, and **Type** are sortable.
 
-When a customer wants to use their own domain:
+## Verify a domain
 
-1. **Customer side:** Add a CNAME record in their DNS:
-   ```
-   mybusiness.com  →  CNAME  →  cdn.saas.yoursaas.com
-   ```
+Verification requests `https://the-domain/?grabwp-verify-domain=1` (then HTTP if HTTPS fails) and checks that the response belongs to the mapped tenant. It is not a DNS lookup by itself. The domain must already resolve and reach this WordPress site.
 
-2. **Your side (admin):** Add the domain in WaaS → Domains or the customer can add it via the tenant dashboard:
-   - Click **Add Domain**
-   - Enter the custom domain
-   - Click **Verify** - checks DNS propagation
+1. Open **Waas → Domains**.
+2. For one row, click the checkmark in **Actions**.
+3. Or select rows, choose **Verify** under **Bulk actions**, and click **Apply**.
+4. Reload the list.
 
-3. **Cloudflare** automatically provisions an SSL certificate for the custom domain
+**Verify:** **Status** is **Verified**, or **Pending** with a fresh **Last Checked** time. A check older than a day shows **(stale)**. Run **Verify** again after DNS changes.
 
-4. The tenant site is now accessible at `mybusiness.com`
+Typical failures:
 
-### Customer Instructions Template
+| Result | Meaning |
+|--------|---------|
+| **Pending**, domain did not respond | DNS is not pointing here yet, or the web server is not accepting the hostname. |
+| **Pending**, reachable but not serving this site | The hostname answers, but it is not this tenant. |
+| Domain is not mapped to a tenant | The hostname is not on a tenant record. |
 
-Share this with your customers when they request a custom domain:
+> **Note:** DNS can take up to 48 hours. On the customer dashboard, **Verify** asks you to add the records first, then **Check now**, and to wait at least 15 minutes before trying again.
 
-> **To connect your domain:**
-> 1. Log in to your domain registrar (GoDaddy, Namecheap, etc.)
-> 2. Go to DNS settings
-> 3. Add a CNAME record:
->    - **Name/Host:** `@` or `www` (or your subdomain)
->    - **Value/Target:** `cdn.saas.yoursaas.com`
->    - **TTL:** Automatic or 300
-> 4. Wait 5-10 minutes for DNS propagation
-> 5. Go to your Dashboard → Domains → Add Domain
-> 6. Enter your domain and click Verify
+## Choose a domain mode
 
-## Direct IP Mode
+**Navigate to Waas → Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=general`) and open the **General** tab. The **Custom Domains** section sets the instructions customers see.
 
-Simpler but requires manual server configuration for each domain.
+![Custom Domains on General](../images/05-waas-settings-general-d02.png)
 
-### Setup
+| Field | Notes |
+|-------|-------|
+| **Domain Mode** | **Cloudflare SaaS (CNAME)** or **Direct IP (A record)** |
+| **CNAME Target** | Shown for Cloudflare SaaS. Customers point CNAME here. Placeholder: `cdn.saas.example.com` |
+| **DCV Delegation** | Shown for Cloudflare SaaS. CNAME value from Cloudflare so custom hostnames can validate SSL. Placeholder: `acme123.dcv.cloudflare.com` |
+| **Server Public IP** | Shown for Direct IP. Customers point an A record here. |
 
-1. In WaaS → Settings → General → Custom Domains:
-   - Set Domain Mode to **Direct IP**
-   - Enter your **Server Public IP**
+Click **Save Changes**. The Domains page then shows **Mode:** and the record value (for example `CNAME: cdn.saas.example.com`).
 
-2. For each custom domain, you need to:
-   - Add a server block (Nginx) or virtual host (Apache) for the domain
-   - Point it to your WordPress installation
-   - Set up SSL (e.g., via Let's Encrypt / Certbot)
+## Cloudflare SaaS (CNAME)
 
-### Per-Customer Flow
+1. Add your platform zone to Cloudflare and turn on Cloudflare for SaaS (SSL/TLS → Custom Hostnames). This may require a paid Cloudflare plan.
+2. Set a fallback origin to the hostname you will use as **CNAME Target**, and point that hostname at this server.
+3. In **Custom Domains**, select **Cloudflare SaaS (CNAME)**, fill **CNAME Target**, and paste **DCV Delegation** if Cloudflare gives you one.
+4. Click **Save Changes**.
 
-1. **Customer:** Add an A record in their DNS:
-   ```
-   mybusiness.com  →  A  →  203.0.113.50
-   ```
+Customer DNS (also shown on the tenant dashboard):
 
-2. **You:** Add the domain to your web server config:
+| Name | Type | Value |
+|------|------|-------|
+| `@` | `CNAME` | Your **CNAME Target** |
+| `www` | `CNAME` | Your **CNAME Target** |
+| `_acme-challenge.<your-domain>` | `CNAME` | `<your-domain>.` plus the **DCV Delegation** value |
 
-   **Nginx example:**
-   ```nginx
-   server {
-       listen 80;
-       server_name mybusiness.com;
-       # ... same config as your main site
-   }
-   ```
+The DCV row appears only when **DCV Delegation** is filled in.
 
-   Then run Certbot for SSL:
-   ```bash
-   sudo certbot --nginx -d mybusiness.com
-   ```
+> **Cloudflare docs:** [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/)
 
-3. **Admin panel:** Add and verify the domain in WaaS → Domains
+## Direct IP (A record)
 
-> **Note:** Direct IP requires manual server work per domain. Cloudflare SaaS is recommended if you expect many custom domains.
+1. In **Custom Domains**, select **Direct IP (A record)** and enter **Server Public IP**.
+2. Click **Save Changes**.
+3. For each custom hostname, accept that name on the web server (Nginx `server_name` or an Apache virtual host) and issue a certificate (for example Certbot). Reload the web server.
+4. Verify the domain on **Waas → Domains**.
 
-## Domain Management from Tenant Dashboard
+Customer DNS:
 
-Customers can also manage domains from their tenant dashboard (your `/dashboard/` page):
+| Name | Type | Value |
+|------|------|-------|
+| `@` | `A` | Your **Server Public IP** |
+| `www` | `A` | Your **Server Public IP** |
 
-- **Add Domain** - enter a custom domain
-- **Verify** - check DNS propagation
-- **Set Primary** - make a domain the primary URL for their site
-- **Remove** - disconnect a custom domain
+> **Note:** Each Direct IP hostname needs its own server name and certificate. Cloudflare SaaS issues certificates for custom hostnames after **CNAME Target** and **DCV Delegation** are set.
 
-## Domain Verification
+## Customer dashboard
 
-After adding a domain, verification checks:
-- DNS record exists and points correctly (CNAME or A record)
-- Domain resolves to your server
-- SSL is working (for Cloudflare SaaS, this is automatic)
+The domain tools show when the tenant's plan includes the custom-domain benefit. See [Services and Benefits](/grabwp-tenancy-waas/waas-services-benefits).
 
-Verification can take a few minutes depending on DNS propagation.
+On the dashboard Domains table the customer can:
+
+1. Enter a hostname and click **Add Alias**. A tenant can have up to 2 aliases. The confirm button is **Add alias**.
+2. Click **Verify**, then **Check now**, after the DNS records above are in place.
+3. After the alias is **Verified** and it is not already primary, click **Set Primary**. Confirm with **Set primary**. The site URL changes to that hostname.
+4. Click **Remove** on an alias that is not the primary hostname.
+
+The platform hostname stays in place until a verified custom domain is set as primary. Its status on the dashboard is **Active**. It is not listed on **Waas → Domains** once **Platform Domain** is set.
+
+**Verify:** The Domains admin row is **Verified**, **Last Checked** is recent, and the tenant site opens on the custom hostname.
 
 ---
 

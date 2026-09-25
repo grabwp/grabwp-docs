@@ -1,158 +1,127 @@
 ---
 title: "Set Up Frontend Pages"
-description: "Create signup, dashboard, and template browser pages using shortcodes or Gutenberg blocks"
+description: "Create Signup, Dashboard, Templates, and Pricing pages with shortcodes or blocks"
 order: 29
 section: waas
 ---
 
 # Set Up Frontend Pages
 
-Your WaaS platform needs three customer-facing pages: **Signup**, **Dashboard**, and **Templates**. Each page can use either a shortcode or a Gutenberg block.
+WaaS expects four pages: **Signup**, **Dashboard**, **Templates**, and **Pricing**. Each one can use a shortcode or a block. A separate **WaaS Login** block is optional.
 
-## Quick Setup (Auto-Create)
+## Quick Setup
 
-The fastest way: go to **WaaS → Settings → General** and click the **Create/Repair Signup and Dashboard Pages** button. This creates all three pages with the correct shortcodes.
+1. Go to **Waas → Settings → General** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=general`)
+2. Open **Repair tools**
+3. Click **Create/Repair Signup and Dashboard Pages**
 
-Then select each page in the corresponding dropdown and save settings.
+That action creates or reuses all four pages and saves their IDs. The notice is **Signup and Dashboard pages checked.**
 
-## Manual Setup
+Confirm the dropdowns, then click **Save Changes**.
 
-### Option A: Using Shortcodes
+![Pages on General settings](../images/waas-pages-config.png)
 
-Create three WordPress pages with these shortcodes:
+| Setting | Default slug | Content |
+|---------|--------------|---------|
+| **Signup Page** | `/signup/` | `[grabwp_waas_signup]` or block **WaaS Signup** |
+| **Dashboard Page** | `/dashboard/` | `[grabwp_waas_dashboard]` or block **WaaS Dashboard** |
+| **Templates Page** | `/templates/` | `[grabwp_waas_templates]` or block **WaaS Template Browser** |
+| **Pricing Page** | `/pricing/` | `[grabwp_waas_pricing]` or block **WaaS Pricing** |
 
-#### 1. Signup Page
+## Shortcodes
 
-Create a new page (e.g., title: "Signup", slug: `/signup/`).
-
-Add this shortcode as the page content:
+### Signup
 
 ```
 [grabwp_waas_signup]
 ```
 
-This renders the complete signup flow:
-- Plan selection
-- Template picker (if templates exist)
-- Site details form (subdomain, email)
-- Payment redirect (for paid plans)
-- Provisioning status
+Renders the signup preset from **Waas → Settings → Signup Flow**. The built-in **Default** preset includes account, plan, billing cycle, optional services, and payment. Change the steps in [Signup Flow](/grabwp-tenancy-waas/waas-signup-flow).
 
-#### 2. Dashboard Page
-
-Create a new page (e.g., title: "Dashboard", slug: `/dashboard/`).
+### Dashboard
 
 ```
 [grabwp_waas_dashboard]
 ```
 
-This renders the tenant owner dashboard:
-- Site overview and quick links
-- Subscription status and billing
-- Custom domain management
-- Backup and restore
-- Account settings (email, password)
+Signed-out visitors on **WAAS Auth (Email signup)** see **Sign in to your dashboard**, an **Email address** field, and **Send verification code**.
 
-#### 3. Templates Page
-
-Create a new page (e.g., title: "Templates", slug: `/templates/`).
+### Templates
 
 ```
 [grabwp_waas_templates]
 ```
 
-This renders the template browser gallery with:
-- Template cards with thumbnails and descriptions
-- Tag-based filtering (pills and dropdowns)
-- Search
-- Pagination
-- Preview and "Use this template" buttons
+Gallery with thumbnails, tag filters, search, and pagination. Attributes:
 
-> **Customize the template browser** with shortcode attributes. See [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates) for all options.
-
-Common configurations:
+| Attribute | Notes |
+|-----------|-------|
+| `tags` | Comma-separated tag slugs. Only templates with at least one of these tags are loaded. |
+| `filter-tags` | Comma-separated tag group slugs shown as pill buttons. Other groups use dropdowns. |
+| `tags-browser` | `no` hides the filter toolbar. |
+| `per-page` | Cards per page. Default `12`. `0` shows all, with no pagination. |
+| `columns` | Cards per row, from 1 to 6. Default `4`. |
 
 ```
-// Show all templates, default filters
-[grabwp_waas_templates]
-
-// Show 9 templates per page, industry tags as pills
 [grabwp_waas_templates per-page="9" filter-tags="industry"]
 
-// Curated gallery, no filters, no pagination
 [grabwp_waas_templates tags="featured" tags-browser="no" per-page="0"]
 ```
 
-### Option B: Using Gutenberg Blocks
+Full attribute reference: [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates).
 
-If you prefer the block editor, use the Gutenberg blocks instead of shortcodes.
+### Pricing
 
-#### 1. Signup Block
+```
+[grabwp_waas_pricing]
+```
 
-1. Edit your Signup page
-2. Click **+** (block inserter) and search for **"WaaS Signup"**
-3. Insert the block
-4. Save the page
+Plan cards from active plans, with monthly and yearly prices.
 
-#### 2. Dashboard Block
+### Login (optional)
 
-1. Edit your Dashboard page
-2. Search for **"WaaS Dashboard"**
-3. Insert the block - supports wide and full-width alignment
-4. Save
+```
+[grabwp_waas_login]
+```
 
-#### 3. Template Browser Block
+Standalone login card. The dashboard page already includes sign-in, so you only need this on a separate page.
 
-1. Edit your Templates page
-2. Search for **"GrabWP Template Browser"**
-3. Insert the block
-4. Configure via the **Settings sidebar** (click the gear icon):
+## Blocks
+
+In the block inserter, search the titles below. Blocks show a placeholder in the editor. The live output is on the frontend.
+
+| Block | Replaces |
+|-------|----------|
+| **WaaS Signup** | `[grabwp_waas_signup]` |
+| **WaaS Dashboard** | `[grabwp_waas_dashboard]` |
+| **WaaS Template Browser** | `[grabwp_waas_templates]` |
+| **WaaS Pricing** | `[grabwp_waas_pricing]` |
+| **WaaS Login** | `[grabwp_waas_login]` |
+
+**WaaS Template Browser** sidebar controls:
 
 | Control | What it does |
-|---------|-------------|
-| **Limit by tags** | Server-side filter - only load templates with these tags |
-| **Show tag browser toolbar** | Toggle the filter toolbar on/off |
-| **Pill filter groups** | Which tag groups show as pill buttons vs. dropdowns |
-| **Cards per page** | Number of template cards per page (0 = show all) |
+|---------|----------------|
+| **Limit by tags (pool filter)** | Same as `tags` |
+| **Show tag browser toolbar** | Same as `tags-browser` |
+| **Pill filter groups (filter-tags)** | Same as `filter-tags` |
+| **Columns** | Cards per row |
+| **Cards per page** | Same as `per-page` |
 
-5. Save the page
+Block details: [Block Walkthrough](/grabwp-tenancy-waas/waas-block-walkthrough).
 
-> **Note:** Blocks show a placeholder in the editor. The full gallery renders only on the frontend.
+## Link the Pages
 
-See [Block Walkthrough](/grabwp-tenancy-waas/waas-block-walkthrough) for detailed block usage.
+1. Go to **Waas → Settings → General**
+2. Set **Signup Page**, **Dashboard Page**, **Templates Page**, and **Pricing Page**
+3. Click **Save Changes**
 
-## Link Pages in WaaS Settings
+## Verify
 
-After creating the pages, connect them:
-
-1. Go to **WaaS → Settings → General**
-2. Set each dropdown:
-   - **Signup Page** → your Signup page
-   - **Dashboard Page** → your Dashboard page
-   - **Templates Page** → your Templates page
-3. Click **Save Settings**
-
-![Pages configuration](../images/waas-pages-config.png)
-
-## Shortcode vs Block Comparison
-
-| Feature | Shortcode | Block |
-|---------|-----------|-------|
-| **Ease of use** | Paste shortcode text | Visual editor insert |
-| **Configuration** | Attributes in shortcode string | Inspector sidebar controls |
-| **Preview in editor** | Shows shortcode text | Shows placeholder |
-| **Frontend output** | Identical | Identical |
-| **Theme compatibility** | Works everywhere | Requires block-compatible theme |
-
-Both produce the same frontend output. Choose whichever you're more comfortable with.
-
-## Test the Pages
-
-After setup, visit each page on the frontend:
-
-1. **Signup page** - should show plan selection and signup form
-2. **Templates page** - should show the template gallery with your templates
-3. **Dashboard page** - should show login/OTP form (when not logged in) or the dashboard (when logged in)
+1. **Signup** shows the account step (name and email) when you are signed out and **Auth Mode** is **WAAS Auth (Email signup)**
+2. **Templates** lists active templates
+3. **Pricing** lists active plans
+4. **Dashboard** shows **Sign in to your dashboard** when you are signed out
 
 ---
 

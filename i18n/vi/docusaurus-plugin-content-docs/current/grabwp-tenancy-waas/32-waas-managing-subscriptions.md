@@ -1,154 +1,146 @@
 ---
 title: "Quản lý subscription"
-description: "Xem, gia hạn, thay đổi, tạm ngưng và kiểm tra các subscription của tenant với vai trò admin"
+description: "Tìm trong danh sách subscription, mở một tenant, rồi gia hạn, đổi gói, tạm ngưng, hoặc gán service"
 order: 32
 section: waas
 ---
 
 # Quản lý subscription
 
-Các subscription theo dõi tình trạng thanh toán và plan của từng tenant. Với vai trò admin, bạn có thể xem, chỉnh sửa và quản lý toàn bộ vòng đời của một subscription.
+Mỗi tenant có một dòng subscription: gói, trạng thái, nhà cung cấp thanh toán, và ngày gia hạn. Admin sửa dòng đó từ **Subscriptions**. Khách hủy hoặc giữ subscription trên dashboard của họ.
 
-Truy cập vào **WaaS → Subscriptions** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-subscriptions`).
+**Truy cập Waas → Subscriptions** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-subscriptions`).
 
 ![Danh sách subscription](../images/waas-subscriptions.png)
 
-## Trạng thái subscription
+## Danh sách
 
-| Trạng thái | Ý nghĩa | Tenant site |
-|--------|---------|-------------|
-| **Pending** | Bắt đầu đăng ký, đang chờ thanh toán hoặc provisioning | Chưa thể truy cập |
-| **Active** | Đã xác nhận thanh toán, site đã được provision | Truy cập bình thường |
-| **Suspended** | Subscription đã hủy hoặc hết hạn (đang trong thời gian ân hạn) | Bị giới hạn hoặc khóa |
-| **Cancelled** | Đã hủy vĩnh viễn | Có thể bị vô hiệu hóa |
+| Cột | Ghi chú |
+|-----|---------|
+| **Tenant** | Tenant ID. Mở màn hình chi tiết. |
+| **Owner** | User WordPress. Mở hồ sơ user. |
+| **Plan** | Plan ID, viết hoa chữ đầu |
+| **Status** | Badge theo trạng thái lưu: **Active**, **Pending**, **Trial**, **Warning**, **Suspended**, **Cancelled**. **Warning** còn hiện **Expired N days ago**. |
+| **Provider** | Tên nhà cung cấp thanh toán |
+| **Created** | Ngày. Sắp xếp được. Mặc định mới nhất trước. |
+| **Renewal** | Ngày `current_period_end`. Trống khi dòng không có ngày kết thúc kỳ. |
+| **Actions** | **Edit** (chi tiết), **View Tenant** (trình sửa tenant, tab mới). **Reactivate** hiện khi trạng thái là **Suspended** hoặc **Cancelled**. |
 
-### Vòng đời
+**Plan** và **Status** sắp xếp được. Placeholder ô tìm là **Search subscriptions…**. Bấm **Search**. Mỗi trang 10 dòng.
 
-```
-Pending → Active → (renewal) → Active
-                 → (cancel)  → Suspended (grace period) → Cancelled
-                 → (expire)  → Suspended (grace period) → Cancelled
-```
+## Trạng thái
 
-## Xem các subscription
+Danh sách in trạng thái đã lưu. Màn hình chi tiết dùng badge có thể khác khi có ngày hoặc lịch hủy.
 
-Danh sách hiển thị toàn bộ subscription cùng với:
+| Trạng thái lưu | Badge chi tiết | Ý nghĩa |
+|----------------|----------------|---------|
+| `pending` | **Pending** | Đăng ký đã bắt đầu. Site có thể chưa sẵn sàng. |
+| `active` | **Active** | Quyền trả phí hoặc miễn phí còn hiệu lực. |
+| `active`, còn tối đa 7 ngày | **Expiring Soon** | Vẫn active. Chỉ badge chi tiết. Gói miễn phí giữ **Active**. |
+| `active` và hủy cuối kỳ | **Cancelling** | Vẫn truy cập đến **Period End**. |
+| `trial` | **Trial** | Đang dùng thử. |
+| `warning` | **Grace Period** | Đã qua ngày kết thúc kỳ. Site còn trong cửa sổ gia hạn. |
+| `suspended` | **Suspended** | Hết cửa sổ gia hạn, hoặc admin đã tạm ngưng. |
+| `cancelled` | **Cancelled** | Subscription đã hủy. |
 
-| Cột | Mô tả |
-|--------|-------------|
-| Tenant | Slug hoặc domain của tenant site |
-| Plan | Tên plan (Free, Pro...) |
-| Status | Trạng thái hiện tại |
-| Provider | Nền tảng thanh toán (Polar, WooCommerce...) |
-| Billing Cycle | Chu kỳ thanh toán (hàng tháng / hàng năm) |
-| Period End | Thời điểm kết thúc chu kỳ thanh toán hiện tại |
-| Created | Ngày tạo subscription |
+## Mở một subscription
 
-Bạn có thể bấm vào một subscription bất kỳ để xem chi tiết.
+Bấm tenant ID hoặc biểu tượng bút chì (**Edit**).
 
-## Chi tiết subscription
+Màn hình chi tiết là `page=grabwp-tenancy-waas-subscription-detail&tenant_id=<id>`.
 
 ![Chi tiết subscription](../images/waas-subscription-detail.png)
 
-Trang chi tiết sẽ hiển thị các thông tin:
+### Details
 
-- **Status badge**: trạng thái hiện tại kèm màu sắc để dễ nhận diện
-- **Plan**: plan mà tenant đang sử dụng
-- **Provider**: nền tảng xử lý thanh toán
-- **Billing Cycle**: thanh toán theo tháng hay theo năm
-- **Period End**: ngày kết thúc chu kỳ hiện tại hoặc ngày gia hạn
-- **Provider Subscription ID**: mã ID tham chiếu trên nền tảng thanh toán
-- **Cancellation status**: trạng thái cho biết subscription có được đặt lịch hủy vào cuối chu kỳ hay không
+| Trường | Ghi chú |
+|--------|---------|
+| **Status** | Badge theo bảng trên |
+| **Plan** | Tên gói |
+| **Provider** | Tên hiển thị của nhà cung cấp |
+| **Billing Cycle** | **Monthly** hoặc **Yearly** |
+| **Period End** | Ngày, rồi số ngày, **Today**, hoặc **Expired** |
+| **Created** | Mốc thời gian |
+| **Provider Subscription ID** | Hiện khi nhà cung cấp đã lưu ID |
+| **Cancellation** | **Scheduled at period end** khi đã xếp lịch hủy |
 
-## Các thao tác của admin
+**Quick Links:** **Back to Subscriptions**, và **Edit Tenant** khi Tenancy đang bật.
 
-Sử dụng menu dropdown trên trang chi tiết để thao tác với subscription:
+## Admin Actions
 
-### Gia hạn thời gian
+Form cột bên là **Admin Actions**. Chọn một action, điền trường hiện ra, rồi bấm **Apply**. **Apply** tắt cho đến khi chọn action. Mọi action trừ **Add Note** đều cần **Reason (required)**.
 
-Kéo dài chu kỳ thanh toán hiện tại thêm một số ngày nhất định. Thao tác này rất hữu ích khi bạn muốn hỗ trợ thêm thời gian cho khách hàng đang gặp sự cố.
+| Action | Trường |
+|--------|--------|
+| **Extend Period** | **Days** (1-365, mặc định 30) và **Reason (required)** |
+| **Change Plan** | **Plan** (các gói active) và **Reason (required)** |
+| **Grant Complimentary** | **Days**, **Plan**, và **Reason (required)** |
+| **Suspend** | **Reason (required)** |
+| **Reactivate** | **Reason (required)** |
+| **Add Note** | Chỉ **Note**. Không có trường lý do. |
 
-- **Days:** 1-365 (mặc định: 30)
-- **Reason:** Bắt buộc (ghi chú lại lý do bạn gia hạn)
+> **Note:** **Change Plan** cập nhật subscription WaaS ngay. Hãy sửa subscription tương ứng bên nhà cung cấp khi họ vẫn tính phí gói cũ.
 
-### Đổi plan
+Lưu thành công hiện **Action completed successfully.**
 
-Chuyển tenant sang một plan khác.
+## Active Services
 
-- **Plan:** Chọn một trong các plan đang active
-- **Reason:** Bắt buộc
+**Active Services** liệt kê service add-on của tenant này. Quản lý danh mục ở [Services and Benefits](/grabwp-tenancy-waas/waas-services-benefits).
 
-> **Lưu ý:** Thao tác này sẽ thay đổi plan ngay lập tức. Nếu bạn chuyển từ plan miễn phí sang trả phí (hoặc ngược lại), hãy chắc chắn rằng subscription trên nền tảng thanh toán cũng được cập nhật tương ứng.
+| Cột | Ghi chú |
+|-----|---------|
+| **Service** | Tên service |
+| **Charge Type** | Kiểu đã lưu: `one_time`, `recurring`, hoặc `non_recurring` |
+| **Qty** | Số lượng |
+| **Unit Price** | Giá theo đơn vị tiền WaaS |
+| **Status** | Trạng thái mục, viết hoa chữ đầu |
+| **Purchased At** | Mốc tạo |
+| **Actions** | **Remove** khi mục đang active. Xác nhận: **Remove this service?** |
 
-### Cấp plan miễn phí
+Để gắn service: chọn **Select a service to assign...**, đặt **Qty:** (tối thiểu 1), rồi bấm **Assign Service**.
 
-Cấp cho tenant quyền sử dụng một plan miễn phí trong một khoảng thời gian nhất định. Tính năng này phù hợp cho các chương trình khuyến mãi, hợp tác hoặc hỗ trợ khách hàng.
+Nếu tenant chưa có service, hộp hiện **No active services.**
 
-- **Plan:** Chọn plan muốn tặng
-- **Days:** 1-365 (mặc định: 30)
-- **Reason:** Bắt buộc
+## History
 
-### Tạm ngưng
+**History** ghi các action của admin. Khi trống: **No admin actions recorded yet.**
 
-Tạm ngưng subscription của tenant. Khi đó, tenant site sẽ bị giới hạn quyền truy cập.
+| Cột | Ghi chú |
+|-----|---------|
+| **Date** | `Y-m-d H:i` |
+| **Action** | Tên action, gạch dưới đổi thành từ |
+| **Admin** | Tên hiển thị, hoặc user ID |
+| **Details** | Giá trị lưu sau thay đổi |
+| **Reason** | Nội dung bạn nhập |
 
-- **Reason:** Bắt buộc
+## Thời gian gia hạn
 
-### Kích hoạt lại
+**Truy cập Waas → Settings**, tab **General** (`page=grabwp-tenancy-waas-settings&tab=general`). Mở **Retention and grace period**.
 
-Mở lại một subscription đang bị tạm ngưng. Tenant site sẽ hoạt động bình thường trở lại.
+| Trường | Ghi chú |
+|--------|---------|
+| **Grace Period (days)** | 0-90. Chú thích: số ngày trước khi tenant bị suspended sau khi hủy. **0** nghĩa là ngay lập tức. Mặc định khi chưa đặt là 7. |
 
-- **Reason:** Bắt buộc
+Job hằng ngày làm ba việc:
 
-### Thêm ghi chú
+1. Gửi nhắc gia hạn khi kỳ **Active** kết thúc trong 3 ngày.
+2. Chuyển dòng **Active** đã qua **Period End** sang `warning` (**Grace Period** trên màn hình chi tiết) và có thể gửi email cảnh báo.
+3. Chuyển dòng `warning` vẫn quá ngày kết thúc kỳ sau số ngày gia hạn sang **Suspended**, và có thể gửi email thông báo tạm ngưng.
 
-Thêm ghi chú nội bộ vào lịch sử thay đổi (audit trail) của subscription. Khách hàng sẽ không nhìn thấy ghi chú này.
+Job không tự hủy một dòng đã suspended.
 
-- **Note:** Nội dung ghi chú tự do
+## Thao tác của khách
 
-## Lịch sử thay đổi
+Trên dashboard của tenant, **Subscription Actions** có thể gồm:
 
-Mọi thao tác liên quan đến subscription đều được ghi lại trong phần lịch sử ở cuối trang chi tiết:
+- **Cancel Subscription**. Tiêu đề hộp thoại là **Cancel Subscription**. Khách chọn lý do, bấm **Continue**, rồi **Confirm Cancellation**. Nội dung mặc định nói quyền truy cập còn đến ngày gia hạn kế tiếp. **Cancel immediately (lose access now)** cắt quyền ngay. **Keep Subscription** đóng hộp thoại.
+- **Keep Subscription Active** khi đã xếp lịch hủy. Xác nhận: **Keep subscription**.
+- Lựa chọn nâng cấp khi có gói cao hơn.
 
-| Cột | Mô tả |
-|--------|-------------|
-| **Date** | Thời gian thực hiện thao tác |
-| **Action** | Thao tác đã thực hiện (ví dụ: "Extend Period", "Change Plan") |
-| **Admin** | Người thực hiện |
-| **Details** | Chi tiết cụ thể (plan mới, số ngày gia hạn...) |
-| **Reason** | Lý do thực hiện thao tác |
+Một số nhà cung cấp bảo khách dùng cổng của họ thay vì các nút này.
 
-## Thời gian ân hạn
-
-Khi một subscription bị hủy hoặc hết hạn, tenant sẽ có một khoảng thời gian ân hạn (grace period) trước khi site bị tạm ngưng.
-
-Bạn có thể cấu hình thời gian ân hạn tại **WaaS → Settings → General → Grace Period (days)**.
-
-| Cài đặt | Mặc định | Mô tả |
-|---------|---------|-------------|
-| **Grace Period** | 7 ngày | 0 = tạm ngưng ngay lập tức khi hủy |
-
-Trong thời gian ân hạn:
-- Tenant site vẫn có thể truy cập được
-- Chủ sở hữu tenant sẽ thấy thông báo về việc site sắp bị tạm ngưng
-- Vẫn có thể khôi phục thanh toán (ví dụ: cập nhật phương thức thanh toán trên Polar)
-
-## Tự động xử lý hết hạn
-
-Hệ thống có một cron job chạy hàng ngày để kiểm tra các subscription hết hạn:
-
-1. Các subscription đã qua ngày kết thúc chu kỳ → được đánh dấu là hết hạn
-2. Các subscription hết hạn và vượt quá thời gian ân hạn → bị tạm ngưng
-3. Các subscription bị tạm ngưng và vượt quá thời gian chờ tiếp theo → bị hủy (nếu có cấu hình)
-
-## Khách hàng tự quản lý
-
-Tenant có thể tự quản lý subscription của mình từ trang dashboard:
-
-- **Cancel subscription**: đặt lịch hủy vào cuối chu kỳ
-- **Revert cancellation**: hủy bỏ lệnh cancel nếu khách hàng đổi ý trước khi kết thúc chu kỳ
-- **Upgrade plan**: chuyển hướng đến trang thanh toán để nâng cấp lên plan cao hơn
+**Verify:** Sau **Apply**, badge chi tiết và dòng **History** khớp action, và cột **Status** hoặc **Renewal** trên danh sách khớp theo.
 
 ---
 
-**Tiếp theo:** [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage)
+**Tiếp theo:** [Lưu trữ đối tượng S3](/grabwp-tenancy-waas/waas-optional-s3-storage)

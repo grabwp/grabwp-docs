@@ -1,200 +1,151 @@
 ---
 title: "Troubleshooting"
-description: "Fix common WaaS issues - provisioning failures, webhook problems, template errors, domain verification, and email delivery"
+description: "Fix stuck provisioning, billing webhooks, template galleries, domain checks, and signup email"
 order: 35
 section: waas
 ---
 
 # Troubleshooting
 
-Common issues and how to fix them.
+Use the **Activity Log** and **Provisioning** tabs before changing server config. Both live under **Waas → Settings**.
 
 ## Provisioning
 
-### Site provisioning fails or hangs
+**Navigate to Waas → Settings**, tab **Provisioning** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=provisioning`).
 
-**Symptoms:** Signup completes payment but site is never created, or spinner runs indefinitely.
+![Provisioning intents](../images/05-waas-settings-provisioning.png)
 
-**Check:**
-1. Go to **WaaS → Settings → Provisioning** - look for stuck intents
-2. Check the **Activity Log** (WaaS → Settings → Activity tab) for error details
-3. Verify file system permissions:
-   ```bash
-   # The WaaS data directory must be writable by the web server
-   ls -la wp-content/uploads/grabwp-tenancy-waas/
-   ```
-4. Check PHP error log for fatal errors during provisioning
+The filter default is **All active states**. Other values: `checkout_pending`, `payment_confirmed`, `finalizing`, `tenant_created`, `clone_running`, `failed_retriable`. Click **Filter**.
 
-**Common causes:**
-- Insufficient disk space
-- File permission issues (web server can't create directories)
-- PHP memory limit too low - increase `memory_limit` in `php.ini`
-- PHP max execution time - increase `max_execution_time` for long provisioning tasks
+| Column | Notes |
+|--------|-------|
+| **Intent ID** | Provisioning id |
+| **Flow** | For example Signup or Upgrade |
+| **State** | One of the states above, or `failed_terminal` / `completed` when shown |
+| **Clone Progress** | Step and total while a clone is running |
+| **Last Error** | Truncated error text |
+| **Retries** | Retry count |
+| **Updated** | Last update time |
+| **Actions** | **Retry** (states `failed_retriable` and `clone_running` only) and **Dismiss** |
 
-### Provisioning intent stuck in "pending"
+**Dismiss** asks: **Mark this intent as dismissed (failed_terminal)?**
 
-1. Go to WaaS → Settings → Provisioning
-2. Find the stuck intent
-3. Click **Retry** to re-queue it, or **Dismiss** to discard it
+If payment finished and the site never appears:
 
-## Payment & Billing
+1. Find the intent and read **Last Error** and **State**.
+2. Click **Retry** when the icon is there.
+3. Open **Activity Log** for the same time.
+4. Confirm the web server can write the directory shown as **Waas Directory** on the **General** tab.
 
-### Polar webhook not received
+> **Tip:** A tenant dashboard can show **Your site is being set up.** while media and extensions are still copying. That banner clears when the clone finishes.
 
-**Symptoms:** Customer pays but subscription stays pending. "Last webhook received" timestamp doesn't update.
+## Activity Log
 
-**Check:**
-1. Verify the webhook URL in Polar dashboard matches exactly:
-   ```
-   https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar
-   ```
-2. Check that your site is accessible from the internet (not localhost)
-3. Verify the webhook secret matches between Polar and WaaS settings
-4. Check Polar dashboard → Webhooks → Delivery log for failed attempts
+**Navigate to Waas → Settings**, tab **Activity Log** (`page=grabwp-tenancy-waas-settings&tab=activity`). More detail: [Dashboard and Activity](/grabwp-tenancy-waas/waas-dashboard-activity).
 
-**Common causes:**
-- Wrong webhook URL (typo, HTTP instead of HTTPS)
-- Firewall blocking incoming webhooks
-- Webhook secret mismatch - copy-paste carefully, the `whsec_` prefix is required
-- Site behind basic auth or maintenance mode
+![Activity Log](../images/05-waas-settings-activity.png)
 
-### Payment succeeds but site not provisioned
+Choose an event in the dropdown (default **All events**) and click **Filter**. Columns: **Date**, **Event**, **Actor**, **Tenant**, **Details**, **IP**.
 
-1. Check if the webhook was received (WaaS → Settings → Billing → last webhook timestamp)
-2. If webhook received: check provisioning queue (WaaS → Settings → Provisioning)
-3. If webhook not received: see "Polar webhook not received" above
-4. Check Activity Log for errors
+Subscription expiry shows events such as `subscription_expired` and `subscription_suspended_after_grace`. Actor `cron` means the daily job, not a person.
 
-### WooCommerce checkout redirects to empty cart
+## Payment and billing
 
-- Verify the **Anchor Product** exists and is published (even if hidden)
-- Click **Create/Repair WooCommerce Anchor Product** in WaaS → Settings → General
-- Clear any WooCommerce cache plugins
+**Navigate to Waas → Settings**, tab **Billing Providers** (`page=grabwp-tenancy-waas-settings&tab=billing`). See [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce) for the WooCommerce card.
+
+Providers that declare webhooks show **Webhook URL** and a **Copy** button. The help tip shows **Last webhook received:** and a time, or **No webhook events received yet.**
+
+The path is:
+
+```text
+https://your-site.example/wp-json/grabwp-waas/v1/webhooks/billing/<provider>
+```
+
+`<provider>` is the slug on the card (`polar`, `sepay`, `stripe`, `xendit`, and so on). Paste that exact URL into the provider dashboard, including `https`.
+
+If the customer paid and the subscription stays **Pending**:
+
+1. Hover **Webhook URL** and check whether a webhook has been received.
+2. Compare the secret on the card with the provider dashboard.
+3. Confirm the site is reachable from the internet (not blocked by maintenance mode or HTTP basic auth).
+4. If the webhook arrived, check **Provisioning** for `payment_confirmed` or `failed_retriable`.
+
+WooCommerce does not use that webhook URL. If checkout opens an empty cart:
+
+- Run **Create/Repair WooCommerce Anchor Product** under **Repair tools** on **General**.
+- Confirm the anchor product is still purchasable. The error **The WaaS anchor product is not available for purchase.** means it is not.
+- Clear a cart or cache plugin that restores an old WooCommerce cart.
 
 ## Templates
 
-### Templates not appearing in gallery
+**Navigate to Waas → Templates** (`page=grabwp-tenancy-waas-templates`).
 
-**Check:**
-1. Is the template marked as **Active**? (WaaS → Templates → Edit)
-2. Is the source tenant still active? (Tenancy → All Tenants)
-3. Is the template restricted to specific plans? Check **Allowed Plans** on the template
-4. Does the template have a **thumbnail**? Templates without thumbnails may appear broken
-5. Clear any page caching on the templates page
+If a template is missing from the gallery:
 
-### Template preview not loading
+1. Edit the template and check **Active** / **Show in signup form**.
+2. Confirm **Source Tenant** still exists under **Tenancy → All Tenants**.
+3. Check **Allowed Plans**. Leave them unchecked to allow every plan.
+4. Set **Thumbnail** if the card looks empty. A missing image uses a placeholder, not a hidden card.
+5. Bypass any full-page cache on the templates page.
 
-- The preview URL uses `?grabwp_waas_preview=<slug>` - make sure your server/caching layer doesn't block this parameter
-- Check that the source tenant site is accessible
-- Verify there are no PHP errors in the tenant site
+Preview links use `?grabwp_waas_preview=<slug>` on the site home URL. If the preview is blank, load that URL directly, confirm the source tenant responds, and make sure a cache does not strip the query argument.
 
-## Custom Domains
+## Custom domains
 
-### Domain verification fails
+**Navigate to Waas → Domains**. Full steps: [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains).
 
-**Check:**
-1. DNS propagation may take up to 48 hours (usually 5-30 minutes)
-2. Use a DNS checker to verify the record is visible:
-   ```bash
-   dig mybusiness.com CNAME    # For Cloudflare SaaS mode
-   dig mybusiness.com A        # For Direct IP mode
-   ```
-3. Ensure the record value is correct:
-   - CNAME mode: must point to your CNAME Target exactly
-   - Direct IP mode: must point to your server IP exactly
+| What you see | What to do |
+|--------------|------------|
+| Warning: domain settings not configured | Set **Domain Mode** on **General**. |
+| **Unknown** | Never checked. Click the **Actions** checkmark. |
+| **Pending**, did not respond | DNS or the web server is not accepting the hostname yet. Wait, then **Verify** again. |
+| **Pending**, not serving this site | The hostname reaches a different site. Fix the server name or Cloudflare hostname, then **Verify**. |
+| **(stale)** | Last check is older than 24 hours. Run **Verify** again. |
+| **Verified** filter is empty | No domain has passed a check yet. |
 
-### Custom domain shows wrong site or SSL error
+Direct IP hostnames also need a certificate on this server. Cloudflare SaaS needs **CNAME Target** and, for automatic certificate checks, **DCV Delegation**.
 
-**Cloudflare SaaS:**
-- Check that the fallback origin is correctly configured in Cloudflare
-- Verify the custom hostname is added in Cloudflare dashboard
-- SSL provisioning can take a few minutes
+## Tenant site
 
-**Direct IP:**
-- Ensure your web server (Nginx/Apache) has a server block for the custom domain
-- Run Certbot or equivalent for SSL on the new domain
-- Reload/restart your web server after config changes
+1. Confirm the hostname resolves to this server.
+2. Confirm the tenant exists under **Tenancy → All Tenants**.
+3. Read the PHP error log.
+4. For **WAAS Auth (Email signup)**, owners sign in with the dashboard login (email code), not only `wp-login.php`. **WordPress Auth (Login required)** uses a normal WordPress account.
 
-## Tenant Sites
+The tenant keeps its platform hostname until a verified custom domain is set as primary.
 
-### Tenant site not loading (404 or blank page)
+## Email and signup
 
-1. Check domain/subdomain DNS resolves correctly
-2. Verify the tenant exists in **Tenancy → All Tenants**
-3. Check the tenant's database tables exist
-4. Look for PHP errors in the error log
-5. Verify wildcard DNS is configured: `*.yoursaas.com → your server IP`
+OTP and other mail use WordPress `wp_mail()`. If codes never arrive:
 
-### Tenant admin is inaccessible
+1. Check spam.
+2. Send a test from your SMTP plugin.
+3. Confirm the sender domain has SPF and DKIM, and that the host allows the SMTP port.
 
-- Try accessing via `tenant-slug.yoursaas.com/wp-admin/`
-- If login fails, the tenant user may not have been created - check provisioning logs
-- For WaaS Auth mode: tenants log in via OTP on the dashboard, not wp-login.php
+The signup page sends no-cache headers because it embeds a REST nonce. A cache that still stores that page can later fail with a cookie or nonce error. Exclude the signup URL from full-page cache.
 
-## Email
+## S3
 
-### OTP codes not arriving
+On **Tenancy → Pro Settings → Storage**, **Test Connection** should say **Connection successful!** If it says **Connection failed.** or **Request failed.**:
 
-1. Check your spam/junk folder
-2. Verify SMTP plugin is configured and working
-3. Send a test email from **WP Mail SMTP → Email Test** (or your SMTP plugin's test feature)
-4. In development: check Mailpit at `http://yourserver:8025/`
+1. Recheck **S3 Endpoint URL**, **Bucket Name**, **Region**, and **Access Key ID**.
+2. Re-enter **Secret Access Key** (a blank field keeps the old secret).
+3. For MinIO, enable **Path-Style Endpoint**.
+4. Confirm this server can open the endpoint.
 
-**Common causes:**
-- No SMTP plugin installed (default `wp_mail()` often rejected by mail servers)
-- SMTP credentials incorrect
-- Port blocked by hosting provider (port 25/465/587)
-- Sender email domain has no SPF/DKIM records
+See [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage).
 
-## File Permissions
+## WordPress debug log
 
-### "Permission denied" errors
+In `wp-config.php`:
 
-The web server user (usually `www-data` or `nginx`) needs write access to:
-
-```bash
-chown -R www-data:www-data wp-content/grabwp-tenancy/
-chown -R www-data:www-data wp-content/grabwp-tenancy-pro/
-chown -R www-data:www-data wp-content/uploads/grabwp-tenancy-waas/
-chown -R www-data:www-data wp-content/uploads/
+```php
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
 ```
 
-### S3 connection test fails
-
-1. Double-check endpoint URL, bucket name, region
-2. Verify access key and secret key are correct
-3. For MinIO: enable **Path-Style Endpoint** checkbox
-4. Check that the bucket exists and the credentials have read/write permission
-5. Verify network connectivity - your server must be able to reach the S3 endpoint
-
-## Performance
-
-### Slow provisioning
-
-- Increase PHP `memory_limit` to at least 256M
-- Increase `max_execution_time` to at least 120 seconds
-- For SQLite tenants: ensure SSD storage
-- For S3 storage: provisioning uploads are slower than local - expected behavior
-
-### Admin dashboard slow
-
-- The subscriptions and domains list tables query the database - ensure indexes are intact
-- If you have hundreds of tenants, consider MySQL performance tuning
-- Clear object cache if using a caching plugin
-
-## Getting Help
-
-If you've tried the above and still have issues:
-
-1. **Check the Activity Log** - WaaS → Settings → Activity for detailed error records
-2. **Check PHP error log** - usually at `/var/log/php-fpm/error.log` or in your hosting control panel
-3. **Check WordPress debug log** - enable `WP_DEBUG_LOG` in `wp-config.php`:
-   ```php
-   define('WP_DEBUG', true);
-   define('WP_DEBUG_LOG', true);
-   define('WP_DEBUG_DISPLAY', false);
-   ```
-   Logs are written to `wp-content/debug.log`
+Messages go to `wp-content/debug.log`. Turn display off on a public site so errors are not printed in the browser.
 
 ---
 
