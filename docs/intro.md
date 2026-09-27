@@ -2,48 +2,52 @@
 title: "Overview"
 description: "Run multiple WordPress sites from one installation"
 order: 1
-section: base
+section: tenancy
 slug: /
 ---
 
 # GrabWP Tenancy - Overview
 
-GrabWP Tenancy lets you run multiple separate WordPress websites from a single WordPress installation. Each site gets its own domain, content, users, and settings - fully isolated from the others.
+GrabWP Tenancy lets you run multiple separate WordPress websites from a single WordPress installation. Each site gets its own domain, content, users, and settings, isolated from the others.
 
-## What You Get (Free)
+Visitors reach a tenant site on its own domain (for example `client1.com`). The plugin matches that domain and loads that site's data from the same WordPress files on your server.
 
-- **Multiple sites, one install** - no separate WordPress installations needed
-- **Flexible routing** - domain-based, path-based (`/site/{id}`), or query-string (`?site={id}`)
-- **Isolated content** - posts, pages, media, and users are separate per site
-- **Shared database** - all sites share one MySQL database with unique table prefixes
-- **Admin dashboard** - manage all tenant sites from one place
-- **One-click access** - generate secure tokens to log into any tenant site instantly
+## What you get (free)
 
-## How It Works
+- **Multiple sites, one install**: no separate WordPress installation per site
+- **Custom domain per site**: map one or more domains to each tenant
+- **Isolated content**: posts, pages, media, and users stay separate per site
+- **Shared database**: all sites share one MySQL database, each with its own table prefix
+- **Shared themes and plugins**: every tenant uses the themes and plugins installed on the main site
+- **One admin menu**: manage every tenant from **Tenancy** in wp-admin
+- **Admin access**: open a tenant's WordPress admin from the tenant list
 
-When a visitor goes to `client1.com`, the plugin detects the domain and loads the correct site's data from the database - all from the same WordPress files on your server.
+## Who it is for
 
-## Who Is It For?
-
-- **Agencies** managing multiple client websites from one server
-- **SaaS builders** who need per-user isolated sites
-- **Developers** running dev / staging / production from one install
-- **Multi-brand businesses** with separate sites per brand
+- **Agencies** managing client websites from one server
+- **SaaS builders** who need a separate site per customer
+- **Developers** running more than one site from one install
+- **Multi-brand businesses** with a site per brand
 
 ## Free vs Pro
 
 | Feature | Free | Pro |
 |---------|:----:|:---:|
 | Multiple sites from one install | ✓ | ✓ |
-| Domain / path / query-string routing | ✓ | ✓ |
+| Custom domain per site | ✓ | ✓ |
 | Isolated uploads per site | ✓ | ✓ |
 | Shared MySQL database | ✓ | ✓ |
-| Admin access tokens | ✓ | ✓ |
-| Per-site dedicated database (MySQL or SQLite) | - | ✓ |
-| Per-site plugins & themes | - | ✓ |
-| Content isolation controls | - | ✓ |
-| Backup & restore per site | - | ✓ |
+| Admin access from the tenant list | ✓ | ✓ |
+| Dedicated database per site (MySQL or SQLite) | - | ✓ |
+| Per-site plugins and themes | - | ✓ |
+| Content, plugins, and uploads isolation | - | ✓ |
+| Backup and restore per site | - | ✓ |
+| Scheduled backups | - | ✓ |
 | Tenant cloning | - | ✓ |
-| Domain symlink management | - | ✓ |
+| Fix URLs | - | ✓ |
+| S3-compatible storage and backup offload | - | ✓ |
+| Domain symlink | - | ✓ |
 
-→ [Learn about Pro features](/grabwp-tenancy-pro/pro-overview)
+→ [Learn about Pro](/grabwp-tenancy-pro/pro-overview)
+
+→ [Getting started](/grabwp-tenancy/quick-start)

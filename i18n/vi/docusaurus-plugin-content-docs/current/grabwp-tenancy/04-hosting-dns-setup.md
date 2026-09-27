@@ -1,99 +1,60 @@
 ---
-title: "Thiết lập Domain & DNS"
-description: "Kết nối domain tùy chỉnh hoặc dùng định tuyến theo path cho tenant site"
-order: 5
-section: base
+title: "Domain và DNS"
+description: "Trỏ domain riêng về tenant site"
+order: 4
+section: tenancy
 ---
 
-# Thiết lập Domain & DNS
+# Domain và DNS
 
-Bạn có hai cách để định tuyến khách truy cập đến tenant site. Định tuyến theo path không cần cấu hình gì. Domain tùy chỉnh thì cần cấu hình hosting và DNS.
+Mỗi tenant site nên được mở bằng domain riêng, chẳng hạn `client.com` hoặc `client.yoursite.com`. Domain phải trỏ về máy chủ này, và host phải phục vụ đúng thư mục WordPress này cho domain đó.
 
-## Tùy chọn A - Định tuyến theo path (Khuyến nghị để thiết lập nhanh)
+Thêm domain cho tenant trước: **Tenancy → All Tenants**, rồi **Settings** trên dòng (`page=grabwp-tenancy-edit`). Xem [Quản lý tenant site](/grabwp-tenancy/creating-tenants).
 
-Truy cập bất kỳ tenant site nào qua URL path trên domain hiện có của bạn, không cần đổi DNS, không cần cấu hình hosting:
+> **Note:** Trước khi DNS xong, màn Edit hiện **Path URL** để bạn mở xem trước tạm thời. Hãy gắn domain trước khi chia sẻ site.
 
-```
-https://yoursite.com/site/{tenant-id}
-```
+## Bước 1: Thêm domain trong hosting
 
-Ví dụ: `https://yoursite.com/site/abc123`
+Trỏ domain về cùng document root với bản WordPress chính. Đừng tạo thư mục riêng hay một bản WordPress thứ hai.
 
-Tính năng này hoạt động tự động trên máy chủ **Apache** và **LiteSpeed** vì plugin sẽ cấu hình rewrite rules trong `.htaccess` khi kích hoạt.
+**Subdomain** (ví dụ `client.yoursite.com`):
 
-> **Tip:** Đoạn path `site` có thể cấu hình. Định nghĩa `GRABWP_TENANCY_PATH_PREFIX` trong `wp-config.php` hoặc file cấu hình tenancy (mặc định: `site`) để đổi prefix ở mọi chỗ dùng tới: rewrite rules, `.htaccess`, URL admin và trang status. Ví dụ, đặt thành `app` thì URL tenant trở thành `/app/{tenant-id}`.
+- Thêm dưới dạng parked domain, alias, hoặc subdomain có document root là thư mục WordPress chính.
 
-### Cấu hình Nginx
+**Domain bên ngoài** (ví dụ `clientsite.com`):
 
-Nginx không dùng `.htaccess`, vì vậy bạn cần thêm rule server block thủ công:
+- Thêm dưới dạng addon domain hoặc domain mới.
+- Đặt document root là thư mục WordPress chính.
 
-```nginx
-location ~ ^/site/([a-z][a-z0-9]{5})(/|$) {
-    rewrite ^/site/([a-z][a-z0-9]{5})/?(.*)$ /$2 break;
-    try_files $uri $uri/ /index.php?site=$1&$args;
-}
-```
-
-Thêm block này vào bên trong block WordPress `server {}` hiện tại của bạn, sau đó reload Nginx.
-
----
-
-## Tùy chọn B - Định tuyến theo query string
-
-Truy cập tenant site bằng cách thêm ID vào query parameter, phù hợp để kiểm thử hoặc khi bạn không thể chỉnh cấu hình máy chủ:
-
-```
-https://yoursite.com/?site={tenant-id}
-```
-
-Ví dụ: `https://yoursite.com/?site=abc123`
-
-Không cần cấu hình máy chủ. Hoạt động trên mọi hosting. Không khuyến nghị dùng cho production vì URL không thân thiện.
-
----
-
-## Tùy chọn C - Domain tùy chỉnh
-
-Gán cho mỗi tenant site một domain riêng (ví dụ: `client.com` hoặc `client.yoursite.com`). Cần hai bước: cấu hình hosting và cấu hình DNS.
-
-### Bước 1: Thêm domain trong hosting
-
-Đăng nhập vào control panel hosting và thêm domain:
-
-**Với subdomain** (ví dụ: `client.yoursite.com`):
-- Tìm **Parked Domains** hoặc **Domain Aliases**
-- Thêm subdomain trỏ đến thư mục WordPress chính của bạn
-
-**Với domain ngoài** (ví dụ: `clientsite.com`):
-- Tìm **Addon Domains**
-- Đặt document root là thư mục WordPress chính của bạn
-- Không tạo thư mục con mới
-
-| Control Panel | Vị trí thêm |
-|--------------|-------------|
+| Control panel | Nơi thêm |
+|---------------|-----------------|
 | cPanel | Parked Domains (subdomain) hoặc Addon Domains (domain ngoài) |
 | Plesk | Websites & Domains → Add Domain |
 | DirectAdmin | Domain Management → Add New Domain |
 
-### Bước 2: Cập nhật DNS
+## Bước 2: Cập nhật DNS
 
-**Với subdomain**: thêm bản ghi A tại nhà cung cấp DNS:
-- **Name:** subdomain (ví dụ: `client`)
-- **Type:** A
-- **Value:** địa chỉ IP của máy chủ
+**Subdomain:** thêm bản ghi A tại nhà cung cấp DNS.
 
-**Với domain ngoài**: cập nhật nameserver tại nhà đăng ký domain để trỏ về hosting của bạn, hoặc thêm bản ghi A nếu bạn quản lý DNS riêng.
+| Trường | Giá trị |
+|-------|--------|
+| Name | Nhãn subdomain (ví dụ `client`) |
+| Type | A |
+| Value | Địa chỉ IP của máy chủ này |
 
-### Bước 3: Chờ DNS cập nhật
+**Domain bên ngoài:** tại nhà đăng ký, trỏ domain về host này (nameserver hoặc bản ghi A), cùng địa chỉ IP.
 
-Thay đổi DNS thường mất 5 đến 30 phút, đôi khi tới 24 giờ. Dùng [dnschecker.org](https://dnschecker.org) để xác nhận domain đã phân giải đúng tới máy chủ của bạn.
+## Bước 3: Chờ phân giải
 
-### Kiểm tra
+Thay đổi DNS thường có hiệu lực trong 5 đến 30 phút và có thể mất tới 24 giờ. Kiểm tra domain trên [dnschecker.org](https://dnschecker.org).
 
-Truy cập domain, bạn sẽ thấy màn hình WordPress của tenant site. Nếu bạn thấy trang mặc định của hosting, nghĩa là document root chưa trỏ về đúng thư mục WordPress.
+## Định dạng domain
 
-## Quy tắc định dạng domain
+Form tenant nhận `example.com` và `subdomain.example.com`.
 
-- Định dạng hợp lệ: `example.com`, `sub.example.com`
-- Không dùng địa chỉ IP hoặc `localhost`
-- Chỉ dùng chữ cái, số và dấu gạch nối
+- Không `http://` và không tiền tố `www` (thêm `www.example.com` thành một domain riêng nếu bạn cần)
+- Không địa chỉ IP và không `localhost`
+- Chỉ chữ, số, và dấu gạch ngang
+- Mỗi domain chỉ thuộc một tenant
+
+**Verify:** Mở domain trên trình duyệt. Bạn phải thấy site WordPress của tenant đó. Trang mặc định của hosting nghĩa là document root không phải thư mục WordPress này.

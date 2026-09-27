@@ -1,107 +1,74 @@
 ---
 title: "S3 Object Storage"
-description: "Offload tenant media uploads to Cloudflare R2, AWS S3, DigitalOcean Spaces, or any S3-compatible provider"
+description: "Store tenant uploads on Cloudflare R2, AWS S3, MinIO, Backblaze B2, or another S3-compatible endpoint"
 order: 33
 section: waas
 ---
 
 # S3 Object Storage (Optional)
 
-Offload tenant media uploads to S3-compatible cloud storage instead of storing them on your server's local disk.
+Tenant media can stay on the server disk, or move to an S3-compatible bucket. This is a Pro setting. Leave it on **Local Filesystem (default)** until a bucket is ready.
 
-## When to Use S3
+**Navigate to Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`) and open the **Storage** tab.
 
-- **Disk space:** Your server has limited storage and tenants upload lots of media
-- **CDN delivery:** Serve images/files from a global CDN for faster load times
-- **Scalability:** Decouple storage from compute - scale independently
-- **Backups:** Cloud storage providers handle redundancy and durability
+![Object Storage on Pro Settings](../images/11-pro-settings-storage.png)
 
-## Supported Providers
+The section title is **Object Storage (S3-Compatible)**. The help tip lists Cloudflare R2, AWS S3, MinIO, and Backblaze B2. Any endpoint that speaks the S3 API can be entered in **S3 Endpoint URL**.
 
-Any S3-compatible API works:
+## Turn on S3
 
-| Provider | Endpoint Example | Notes |
-|----------|-----------------|-------|
-| **Cloudflare R2** | `https://ACCOUNT_ID.r2.cloudflarestorage.com` | No egress fees. Region: `auto` |
-| **AWS S3** | `https://s3.us-east-1.amazonaws.com` | Most mature. Many regions. |
-| **DigitalOcean Spaces** | `https://nyc3.digitaloceanspaces.com` | Simple pricing. Built-in CDN. |
-| **MinIO** | `https://minio.yourdomain.com` | Self-hosted. Enable path-style. |
-| **Backblaze B2** | `https://s3.us-west-002.backblazeb2.com` | Low cost. S3-compatible API. |
+1. Under **Default Storage Driver**, select **S3-Compatible Object Storage**. **Local Filesystem (default)** keeps files on disk.
+2. Open **S3 storage credentials** and fill the fields.
+3. Click **Test Connection**.
+4. Click **Save Pro Settings**.
 
-## Configuration
+| Field | Notes |
+|-------|-------|
+| **S3 Endpoint URL** | Full URL. Placeholder: `https://ACCOUNT_ID.r2.cloudflarestorage.com` |
+| **Bucket Name** | Bucket you already created. Placeholder: `grabwp-uploads` |
+| **Region** | `auto` for Cloudflare R2. Examples in the help tip: `us-east-1`, `eu-west-1` |
+| **Path-Style Endpoint** | **Enable path-style endpoint (required for MinIO)** |
+| **Access Key ID** | API key |
+| **Secret Access Key** | Leave blank on later saves to keep the stored secret |
+| **CDN URL (optional)** | Public prefix for file URLs. If empty, files use pre-signed URLs |
+| **Connection Test** | **Test Connection**. Success text: **Connection successful!** |
 
-Navigate to **Tenancy → Pro Settings → Object Storage** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
+**Verify:** **Test Connection** reports **Connection successful!**, **Save Pro Settings** keeps **S3-Compatible Object Storage** selected, and a new upload on a tenant site loads from the bucket or **CDN URL**.
 
-1. Set **Storage Driver** to **S3**
-2. Fill in:
+## Provider values
 
-| Field | Description | Example |
-|-------|-------------|---------|
-| **S3 Endpoint URL** | Full endpoint URL for your provider | `https://ACCOUNT.r2.cloudflarestorage.com` |
-| **Bucket Name** | Name of the bucket you created | `grabwp-uploads` |
-| **Region** | AWS region or `auto` for R2 | `auto` |
-| **Access Key ID** | API key ID | |
-| **Secret Access Key** | API secret (stored encrypted) | |
-| **CDN URL** (optional) | Public URL prefix for serving files | `https://cdn.yoursaas.com` |
-| **Path-Style Endpoint** | Enable for MinIO and some providers | Check if needed |
+| Provider | Endpoint | Region |
+|----------|----------|--------|
+| **Cloudflare R2** | `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` | `auto` |
+| **AWS S3** | Regional S3 endpoint, for example `https://s3.us-east-1.amazonaws.com` | Bucket region |
+| **MinIO** | Your MinIO URL | Your region. Check **Path-Style Endpoint**. |
+| **Backblaze B2** | `https://s3.<region>.backblazeb2.com` | B2 region, for example `us-west-002` |
 
-3. Click **Test Connection** to verify credentials and bucket access
-4. Click **Save Settings**
+> **Cloudflare R2:** [R2 documentation](https://developers.cloudflare.com/r2/)
+>
+> **AWS S3:** [Getting started with S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
 
-## Provider Setup Guides
-
-### Cloudflare R2
-
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/)
-2. Go to **R2 Object Storage → Create Bucket**
-3. Name it (e.g., `grabwp-uploads`)
-4. Go to **R2 → Manage R2 API Tokens → Create API token**
-5. Set permissions: **Object Read & Write**
-6. Copy the Access Key ID and Secret Access Key
-7. Endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`
-8. Region: `auto`
-
-> **Cloudflare R2 docs:** [R2 documentation](https://developers.cloudflare.com/r2/)
-
-### AWS S3
-
-1. Create a bucket in the [AWS S3 Console](https://s3.console.aws.amazon.com/)
-2. Create an IAM user with `AmazonS3FullAccess` policy (or scoped to your bucket)
-3. Generate Access Key under the IAM user's security credentials
-4. Use the regional endpoint for your bucket
-
-> **AWS S3 docs:** [Getting started with S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
-
-### DigitalOcean Spaces
-
-1. Create a Space in [DigitalOcean](https://cloud.digitalocean.com/spaces)
-2. Go to **API → Spaces Keys → Generate New Key**
-3. Endpoint: `https://<REGION>.digitaloceanspaces.com`
-
-> **DO Spaces docs:** [Spaces documentation](https://docs.digitalocean.com/products/spaces/)
+For R2 public delivery, enable public access or a custom domain on the bucket, then paste that URL into **CDN URL (optional)**.
 
 ## Bulk Migration
 
-After configuring S3, migrate existing tenant uploads:
+**Bulk Migration** appears after S3 credentials are saved and the connection is configured. The help tip says to prefer WP-CLI for large sites.
 
-1. In Pro Settings → Object Storage, click **Migrate All Tenants to S3**
-2. Wait for the migration to complete - this uploads all local tenant files to S3
-3. Verify a few tenant sites to ensure images load correctly
+1. Open **Bulk Migration**.
+2. Click **Migrate All Tenants to S3** or **Migrate All Tenants to Local**.
+3. Confirm **This will migrate uploads for ALL tenants. Continue?**
+4. Wait for the result next to the buttons.
 
-To migrate back to local storage: click **Migrate All Tenants to Local**.
+The nested **WP-CLI reference** shows:
 
-> **Note:** Migration can take a while depending on the amount of data. The page shows progress and results.
+```bash
+wp grabwp-pro storage migrate --all --to=s3
+wp grabwp-pro storage migrate acme-corp --to=s3 --copy-only
+```
 
-## CDN Configuration
+`--dry-run` lists files and does not change them. `--copy-only` copies files and keeps the originals. The tenant still switches to the target driver.
 
-If you set a **CDN URL**, files are served from that URL instead of using pre-signed S3 URLs.
-
-For Cloudflare R2:
-1. Go to R2 → your bucket → Settings → Public Access
-2. Enable public access or add a custom domain
-3. Enter the public URL as CDN URL in Pro Settings
-
-Without a CDN URL, files are served using time-limited pre-signed URLs (secure but slightly slower).
+**Verify:** Open a tenant media library and confirm existing images load. To move back, click **Migrate All Tenants to Local**, or run `wp grabwp-pro storage migrate --all --to=local`.
 
 ---
 

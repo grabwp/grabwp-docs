@@ -1,118 +1,111 @@
 ---
 title: "Thiết lập billing"
-description: "Kết nối Polar làm nhà cung cấp thanh toán cho subscription"
+description: "Bật Polar.sh, đặt currency và nối product ID của plan"
 order: 27
 section: waas
 ---
 
 # Thiết lập billing
 
-Billing giúp kết nối các plan của bạn với một nhà cung cấp thanh toán để khách hàng có thể trả phí cho subscription của họ. GrabWP WaaS hỗ trợ **Polar** (ưu tiên) và **WooCommerce** (thay thế).
+Billing nối plan trả phí với payment provider. WaaS tự đăng ký **Polar.sh**. **WooCommerce** chỉ được đăng ký khi WooCommerce đang active. **Stripe**, **Sepay** và **Xendit** xuất hiện sau khi bạn cài các plugin add-on đó. Xem [Install Plugins](/grabwp-tenancy-waas/waas-install-plugins).
 
-Hướng dẫn này sẽ đi sâu vào Polar. Nếu bạn dùng WooCommerce, hãy xem [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce).
+Trang này đi qua **Polar.sh**, rồi liệt kê những gì các thẻ khác cần. Chi tiết checkout WooCommerce ở [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce).
 
-Bạn hãy truy cập vào **WaaS → Settings → Billing** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
+Vào **Waas → Settings → Billing Providers** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
 
-![Cài đặt billing](../images/waas-billing-settings.png)
+![Billing Providers](../images/waas-billing-settings.png)
 
-## Cài đặt tiền tệ
+Dòng mở đầu là **Browse Add-ons** và **Enable providers below. The first enabled provider is the default fallback.**
 
-Phía trên danh sách các nhà cung cấp, phần **Currency Settings** giúp bạn quản lý cách lưu trữ, hiển thị giá của các plan và quy đổi ngoại tệ khi nhà cung cấp thanh toán yêu cầu.
+Mỗi provider là một thẻ. Thẻ ở **Disabled** cho đến khi bạn chọn **Enable this provider**. **Polar.sh** hiện **Needs Config** đến khi **API Token** và **Webhook Secret** được lưu, rồi chuyển **Active**. Provider khác khi đã bật hiện **Active**. Provider dự phòng được gắn badge **Default**. Bấm **Save Billing Providers** khi đã điền trường. Thông báo thành công: **Billing provider settings saved.**
 
-![Cài đặt tiền tệ](../images/waas-currency-settings.png)
+## Currency Settings
 
-| Field | Description |
-|-------|-------------|
-| **Primary Currency** | Loại tiền tệ hiển thị cho khách hàng trên trang bảng giá và hóa đơn. Giá của plan sẽ được lưu bằng loại tiền tệ này. Mặc định là USD. |
-| **Secondary Currency** | Tuỳ chọn. Cấu hình phần này khi nhà cung cấp thanh toán bắt buộc dùng loại tiền tệ khác với primary (ví dụ: SePay yêu cầu VND). Chọn **None (single currency)** nếu trang của bạn chỉ dùng một loại tiền tệ duy nhất. |
-| **Exchange Rate** | Tỷ giá quy đổi (số lượng secondary tương ứng với 1 primary). WaaS sẽ áp dụng tỷ giá này trước khi gửi yêu cầu charge tiền tới các nhà cung cấp yêu cầu ngoại tệ phụ (chẳng hạn như SePay). Polar và Stripe charge theo loại tiền tệ riêng của họ và không sử dụng tỷ giá này. |
-| **Currency Position** | Vị trí hiển thị ký hiệu tiền tệ: Trái (`$99.99`), Trái có dấu cách, Phải, hoặc Phải có dấu cách. |
-| **Decimal Separator** | Ký tự dùng để phân cách phần thập phân. |
-| **Thousand Separator** | Ký tự dùng để phân cách phần nghìn. |
+**Currency Settings** là thẻ dưới danh sách provider. Mở nó trước khi bật provider đòi một currency cụ thể.
 
-> **Mẹo:** Hãy để **Secondary Currency** là **None (single currency)** để sử dụng chế độ một tiền tệ (không cần quy đổi). Khi bạn thiết lập một secondary currency, giá plan và template được lưu theo primary currency sẽ được chuyển đổi sang loại tiền tệ thanh toán của nhà cung cấp trước khi Polar tạo các sản phẩm combo/one-time, và loại tiền tệ đã quy đổi sẽ được ghi nhận lại để các lần gia hạn tính phí đúng số tiền. Nếu loại tiền tệ đích không nằm trong cặp tiền tệ đã cấu hình, quá trình quy đổi sẽ trả về lỗi thay vì âm thầm trừ khoản tiền chưa quy đổi. Một nhà cung cấp yêu cầu loại tiền cụ thể (ví dụ SePay yêu cầu VND) sẽ bị chặn lại lúc lưu cài đặt trừ khi loại tiền tệ đó đã được đặt làm primary hoặc secondary.
+| Trường | Ghi chú |
+|--------|---------|
+| **Primary Currency** | Hiện trên trang pricing. Giá plan được lưu bằng currency này. Nếu WooCommerce đang active, select này bị khóa theo store currency của WooCommerce. |
+| **Secondary Currency** | Tùy chọn. **None (single currency)** giữ một currency. Đặt khi provider cần currency khác primary (Sepay đòi VND). |
+| **Exchange Rate** | Bao nhiêu đơn vị secondary bằng 1 đơn vị primary. Áp dụng trước khi thu provider đòi secondary currency. Polar.sh và Stripe thu theo catalog currency của họ và không dùng tỷ giá này cho số tiền bị charge. |
+| **Display formatting** | Accordion lồng: **Currency Position**, **Thousand Separator**, **Decimal Separator** |
 
-## Bước 1: Tạo tài khoản Polar
+Các lựa chọn **Currency Position**: **Left ($99.99)**, **Left with space ($ 99.99)**, **Right (99.99$)**, **Right with space (99.99 $)**.
 
-1. Vào trang [polar.sh](https://polar.sh) và tạo một tài khoản.
-2. Tạo một **Organization** nếu bạn chưa có.
-3. Hãy lưu lại URL dashboard của organization vì bạn sẽ cần dùng đến nó.
+> **Tip:** Provider đòi một currency (Sepay đòi VND) không bật được trừ khi currency đó là primary hoặc secondary. Lỗi bắt đầu bằng **Currency change blocked:**
 
-## Bước 2: Tạo các sản phẩm trên Polar
+## Bước 1: Tài khoản Polar.sh
 
-Với mỗi plan trả phí, hãy tạo một sản phẩm tương ứng trên Polar.
+1. Tạo tài khoản tại [polar.sh](https://polar.sh)
+2. Tạo organization
+3. Tạo API token trong phần cài đặt organization của Polar
+4. Copy organization ID
 
-1. Trong dashboard của Polar, hãy truy cập vào **Products**.
-2. Bấm vào **Create Product**.
-3. Cấu hình sản phẩm của bạn:
+Bạn không bắt buộc tạo sản phẩm Polar bằng tay. Lưu plan khi Polar đã cấu hình có thể tạo chúng. Bạn vẫn có thể dán UUID sản phẩm có sẵn.
 
-| Field | Value |
-|-------|-------|
-| **Name** | Đặt tên giống hệt với tên plan của bạn (ví dụ: "Pro Monthly"). |
-| **Type** | Subscription. |
-| **Price** | Phải khớp chính xác với giá plan của bạn (ví dụ: $9.99/tháng). |
-| **Billing Interval** | Monthly (hoặc Yearly đối với các sản phẩm theo năm). |
+## Bước 2: Bật Polar.sh
 
-4. Sau khi tạo sản phẩm xong, hãy copy **Product ID** (UUID) của nó từ trang cài đặt sản phẩm.
+Trên thẻ **Polar.sh** (`polar`):
 
-> **Tạo các sản phẩm riêng biệt cho kỳ thanh toán hàng tháng và hàng năm.** Ví dụ: "Pro Monthly" ($9.99/tháng) và "Pro Yearly" ($99.99/năm).
+1. Chọn **Enable this provider**
+2. Điền:
 
-## Bước 3: Cấu hình Polar trong WaaS
+| Trường | Giá trị |
+|--------|---------|
+| **API Base URL** | `https://api.polar.sh/v1` cho production. Sandbox: `https://sandbox-api.polar.sh/v1` |
+| **API Token** | API token của Polar. Dùng **Show** để hiện. |
+| **Webhook Secret** | Secret Polar dùng để ký webhook |
+| **Organization ID** | ID organization của Polar |
 
-Trên tab Billing Providers:
+3. Copy **Webhook URL** bằng **Copy**. Dạng `https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar`
+4. Trong Polar, thêm URL đó làm webhook endpoint và dán cùng secret vào **Webhook Secret**
+5. Bấm **Save Billing Providers**
 
-1. Tìm thẻ nhà cung cấp **Polar**.
-2. Tích vào **Enable this provider**.
-3. Điền các thông tin sau:
+Help tip trên **Webhook URL** hiện **Last webhook received:** sau sự kiện đầu, hoặc **No webhook events received yet.**
 
-| Field | Description |
-|-------|-------------|
-| **API URL** | `https://api.polar.sh` (môi trường production) hoặc `https://sandbox-api.polar.sh` (môi trường thử nghiệm). |
-| **Access Token** | API token của bạn từ Polar, bạn có thể tạo mã này trong Polar → Settings → API. |
-| **Webhook Secret** | Chuỗi bảo mật dùng để xác thực tính hợp lệ của webhook. |
+Thẻ ở **Needs Config** đến khi **API Token** và **Webhook Secret** được lưu. Sau đó nó hiện **Active**.
 
-4. Bấm vào **Save Settings**.
+## Bước 3: Nối plan
 
-## Bước 4: Thiết lập webhook
+Vào **Waas → Settings → Plans**, sửa plan trả phí, mở **Payment Configuration**.
 
-WaaS cần nhận các sự kiện thanh toán từ Polar để có thể kích hoạt các subscription.
+1. Để trống **Polar Monthly Product ID** và **Polar Yearly Product ID** để tự tạo, hoặc dán UUID
+2. Hoặc bấm **Find existing** để chọn sản phẩm đã có trong Polar
+3. Bấm **Save Plan**
 
-1. Trong dashboard của Polar, hãy vào mục **Webhooks**.
-2. Bấm vào **Add Endpoint**.
-3. Nhập URL với định dạng như sau:
-   ```
-   https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar
-   ```
-4. Chọn các sự kiện cần gửi:
-   - `subscription.created`
-   - `subscription.updated`
-   - `subscription.canceled`
-   - `order.created`
-5. Copy **Webhook Secret** và dán vào mục WaaS → Settings → Billing → Polar → Webhook Secret.
-6. Lưu cả cài đặt trên Polar và trong WaaS.
+**Resync** trên **Polar.sh Configuration** làm mới object catalog đã nối. Giá trị WaaS tạo được gắn badge **Auto-created**.
 
-> **Kiểm tra webhook:** Hãy vào Polar dashboard → Webhooks → Delivery log để xác nhận xem các sự kiện đã được gửi đi chưa. Bạn cũng có thể kiểm tra thời gian nhận webhook gần nhất tại dòng "Last webhook received" trong WaaS → Settings → Billing.
+## Provider khác
 
-## Bước 5: Liên kết sản phẩm với plan
+Cài Stripe, Sepay hoặc Xendit từ **Add-ons** trước khi thẻ của chúng xuất hiện. Rồi bật thẻ bạn muốn. Provider được bật đầu tiên là fallback khi signup không chọn provider khác.
 
-Quay lại phần **WaaS → Settings → Plans** và chỉnh sửa plan trả phí của bạn:
+| Provider | Plugin | Trường trên thẻ |
+|----------|--------|-----------------|
+| **Polar.sh** | Gắn sẵn | **API Base URL**, **API Token**, **Webhook Secret**, **Organization ID**, **Webhook URL** |
+| **Stripe** | GrabWP Tenancy Stripe | **Secret Key**, **Publishable Key**, **Webhook Signing Secret**, **Thin Signing Secret (v2 Events)** (tùy chọn), **Webhook URL** |
+| **Sepay** | GrabWP Tenancy Sepay | **API URL**, **QR URL**, **API Key**, **Bank**, **Account Number**, **Account Holder**, **Payment Code Prefix**, **Webhook URL**. Đòi VND là primary hoặc secondary. |
+| **Xendit** | GrabWP Tenancy Xendit | **Secret API Key**, **Webhook Verification Token**, **Charge Currency**, **Country**, **Webhook URL**. Không có product ID theo plan. |
+| **WooCommerce** | Plugin WooCommerce, không phải add-on | **Anchor Product**. Để `0` để tự tạo ở lần checkout đầu, hoặc chạy **Create/Repair WooCommerce Anchor Product** trên **General**. |
 
-1. Dán **Polar Monthly Product ID** vào trường tương ứng.
-2. Dán **Polar Yearly Product ID** nếu bạn đã tạo một sản phẩm tính phí theo năm.
-3. Bấm lưu plan.
+Trường plan của Stripe (**Stripe Monthly Price ID**, **Stripe Yearly Price ID**) nằm ở tab **Payment Configuration** của plan, cùng cách để trống để tự tạo như Polar.
 
-## Bước 6: Thử nghiệm thanh toán
+Webhook URL theo dạng `https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/{provider}` với `{provider}` là `polar`, `stripe`, `sepay` hoặc `xendit`. Dùng nút **Copy** trên thẻ, đừng gõ URL.
 
-Trước khi ra mắt chính thức, bạn nên kiểm tra lại toàn bộ luồng thanh toán:
+## Bước 4: Thử một lần thanh toán
 
-1. Đặt API URL của Polar thành endpoint **sandbox**: `https://sandbox-api.polar.sh`.
-2. Tạo các sản phẩm sandbox trong bảng điều khiển sandbox của Polar.
-3. Thử đăng ký tài khoản trên trang của bạn và chọn một plan trả phí.
-4. Hoàn tất thanh toán bằng các thẻ thử nghiệm (test cards) của Polar.
-5. Kiểm tra xem tenant site đã được tạo (provisioning) thành công và subscription có chuyển sang trạng thái hoạt động trong WaaS → Subscriptions chưa.
+1. Trỏ **API Base URL** tới `https://sandbox-api.polar.sh/v1` và dùng credential sandbox
+2. Mở trang signup, chọn plan trả phí, và hoàn tất checkout Polar
+3. Xác nhận tip **Webhook URL** có thời điểm nhận gần nhất
+4. Xác nhận tenant có trong **Tenancy → All Tenants** và subscription có trong **Waas → Subscriptions**
 
-Sau khi mọi thứ hoạt động trơn tru, hãy chuyển API URL và các sản phẩm về lại môi trường production.
+Đổi **API Base URL** về `https://api.polar.sh/v1` và credential production trước khi ra mắt.
+
+## Kiểm tra
+
+1. Provider bạn sẽ dùng để thu phí hiện **Active**
+2. **Currency Settings** gồm mọi currency provider đó đòi
+3. **Payment Configuration** của plan trả phí có product ID hoặc price ID cho mỗi chu kỳ bạn bán, hoặc bạn đã lưu plan một lần để WaaS tự tạo chúng
 
 ---
 
-**Tiếp theo:** [Thiết lập templates](/grabwp-tenancy-waas/waas-setup-templates)
+**Tiếp theo:** [Set Up Templates](/grabwp-tenancy-waas/waas-setup-templates)

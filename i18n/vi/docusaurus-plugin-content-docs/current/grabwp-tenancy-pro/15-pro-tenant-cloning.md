@@ -1,49 +1,59 @@
 ---
-title: "Nhân bản tenant"
-description: "Sao chép một tenant site hiện có sang tenant site mới"
+title: "Clone tenant"
+description: "Sao chép một tenant hoặc site chính sang tenant khác"
 order: 15
 section: pro
 ---
 
-# Nhân bản tenant
+# Clone tenant
 
-Pro cho phép bạn sao chép bất kỳ tenant site hiện có nào sang một site mới. Quá trình nhân bản sẽ sao chép cơ sở dữ liệu, uploads, nội dung cô lập và cấu hình Pro, sau đó ghi lại URL để khớp với site mới. Phù hợp cho môi trường staging, mẫu site dựng sẵn hoặc triển khai nhanh.
+Clone sao chép database, extension, và upload của tenant nguồn vào tenant đích, rồi cập nhật URL của site. Bạn có thể clone vào tenant đã có, hoặc tạo tenant đích trong cùng quy trình.
 
-## Trước khi bắt đầu
+Dữ liệu hiện tại của đích bị thay thế.
 
-- Cả site nguồn và site đích đều phải là tenant site được quản lý bởi GrabWP Tenancy Pro
-- Hãy tạo tenant đích trước dưới dạng site rỗng, sau đó mới nhân bản vào đó
-- Dữ liệu hiện có của site đích sẽ bị ghi đè bởi bản nhân bản
+## Mở Clone
 
-## Cách nhân bản
+**Vào Tenancy → All Tenants**, rồi **Clone Tenant** trên dòng nguồn (`page=grabwp-tenancy-pro-clone`).
 
-1. Vào **GrabWP Tenancy → Tenants**
-2. Tìm **site nguồn** là site bạn muốn sao chép và nhấn liên kết thao tác **Clone**
-3. Chọn **site đích** từ danh sách thả xuống
-4. Nhấn **Start Clone**
+Trên dòng **Main Site** có ngôi sao, thao tác là **Clone to Tenant**. Tiêu đề trang lúc đó là **Clone Main Site**. Với nguồn khác, tiêu đề là **Clone Tenant:** cộng tenant ID.
 
-![Màn hình Clone tenant với site nguồn và danh sách chọn site đích](../images/grabwp-tenancy-pro-tenant-clone.png)
+![Clone Tenant](../images/grabwp-tenancy-pro-tenant-clone.png)
 
-Quá trình nhân bản chạy qua 7 bước và hiển thị tiến trình trực tiếp trong trình duyệt:
+Trang hiện **Source database type:** **Shared MySQL**, **Isolated MySQL**, hoặc **Isolated SQLite**.
 
-| Bước | Diễn ra điều gì |
-|------|-------------|
-| 1. Validate | Kiểm tra site nguồn và site đích hợp lệ, có thể truy cập |
-| 2. Export | Xuất cơ sở dữ liệu của site nguồn kèm thay thế prefix |
-| 3. Import | Nhập cơ sở dữ liệu đã xuất vào site đích |
-| 4. Copy uploads | Sao chép thư mục uploads từ site nguồn sang site đích |
-| 5. Symlink extensions | Liên kết plugin/theme theo site từ nguồn sang đích |
-| 6. Fix URLs | Ghi lại toàn bộ URL đã lưu để khớp với domain của site đích |
-| 7. Cleanup | Xóa các file xuất tạm |
+Trong **Choose clone target:**
 
-## Sau khi nhân bản
+| Lựa chọn | Điều xảy ra |
+|--------|----------------|
+| Clone to existing site | Chọn **Target Tenant**. Danh sách tải các tenant hợp lệ. Khi trống: **No eligible tenants found**. |
+| Clone to new site | Chuyển sang **Add New Tenant**. Thông báo nói bạn sẽ được chuyển để clone nguồn vào tenant mới. Nút là **Create Tenant & Clone**. |
 
-- Truy cập site đích và kiểm tra nội dung, theme và plugin đã tải đúng chưa
-- Nếu site đích dùng domain khác, hãy kiểm tra toàn bộ URL media có hoạt động đúng không
-- Site đích có cơ sở dữ liệu độc lập riêng, thay đổi ở một site sẽ không ảnh hưởng site còn lại
+Với đích đã có, phần tóm tắt hiện **Tenant ID**, **Domains**, **Database Type**, và **Uploads**.
 
-## Lưu ý
+> **Warning:** **This will overwrite all data in the target tenant (database, uploads, extensions). This action cannot be undone.**
 
-- Tính năng clone không chuyển các phiên đăng nhập đang hoạt động hoặc transient
-- Nếu source bật cô lập plugin/theme nhưng destination không bật, bước symlink extensions sẽ bị bỏ qua
-- Với site lớn, tab trình duyệt phải được mở trong suốt quá trình clone
+Nhấn **Clone Tenant**. Xác nhận **Are you sure? All data in the target tenant will be overwritten.**
+
+Giữ tab trình duyệt mở. Các bước:
+
+| Bước | Việc xảy ra |
+|------|----------------|
+| 1. Validating source & target tenants | Kiểm tra cả hai phía |
+| 2. Exporting source database | Xuất database nguồn |
+| 3. Importing database into target tenant | Nhập vào đích, kể cả khi khác kiểu database |
+| 4. Symlinking extensions | Liên kết plugin và theme khi isolation cho phép |
+| 5. Updating site URLs | Viết lại URL đã lưu cho đích |
+| 6. Copying uploads | Sao chép upload (đổi nếu storage driver khác) |
+| 7. Cleaning up | Xóa file tạm |
+
+Thành công: **Clone complete!** và **The source tenant data has been cloned into the target tenant.** Liên kết: **Edit tenant**, **Homepage**, **Dashboard**.
+
+**Cancel** hoặc **Back to Tenants** thoát mà không clone.
+
+## Sau khi clone
+
+- Mở **Homepage** và kiểm tra theme, plugin, và nội dung.
+- Nếu URL media vẫn trỏ domain nguồn, mở **Fix URLs** trên đích. Xem [Fix URLs](/grabwp-tenancy-pro/pro-fix-urls).
+- Đích giữ database riêng. Sửa sau này trên một site không đổi site kia.
+
+**Verify:** Dòng đích trên **All Tenants** vẫn có tenant ID và domain riêng, và **Homepage** hiện nội dung đã clone.

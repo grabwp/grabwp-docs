@@ -1,54 +1,85 @@
 ---
-title: "Cài đặt Pro"
-description: "Cách cài và kích hoạt GrabWP Tenancy Pro"
+title: "Cài Pro"
+description: "Cài GrabWP Tenancy Pro và kích hoạt license"
 order: 11
 section: pro
 ---
 
-# Cài đặt Pro
+# Cài Pro
 
 ## Trước khi bắt đầu
 
-> **Bắt buộc:** Hãy cài và kích hoạt plugin nền tảng **GrabWP Tenancy** bản miễn phí trước. Pro là tiện ích mở rộng cho plugin nền tảng, sẽ không hoạt động nếu thiếu plugin này.
+> **Required:** Cài và kích hoạt plugin miễn phí **GrabWP Tenancy** trước. Pro không chạy nếu thiếu plugin đó.
 
-→ [Cài plugin miễn phí trước](/grabwp-tenancy/installation-guide)
+→ [Cài plugin miễn phí](/grabwp-tenancy/installation-guide)
 
-## Lấy file ZIP của plugin Pro
+## Tải ZIP
 
-Sau khi thanh toán, **Polar** (đơn vị xử lý thanh toán của chúng tôi) sẽ gửi email xác nhận tới địa chỉ của bạn. Email đó chứa liên kết **Customer Portal**. Mở liên kết đó để tải file ZIP của plugin Pro.
+Sau khi mua, Polar gửi email có liên kết **Customer Portal**. Mở liên kết và tải ZIP plugin Pro.
 
-Nếu bạn không thấy email, hãy kiểm tra thư mục spam hoặc tìm với từ khóa "Polar" hoặc "GrabWP".
+Nếu không thấy email, tìm "Polar" hoặc "GrabWP", kể cả thư spam.
 
-## Cài plugin Pro
+## Cài
 
-1. Tải file ZIP từ Polar Customer Portal
-2. Vào **Plugins → Add New → Upload Plugin**
-3. Tải file ZIP lên → **Install Now** → **Activate Plugin**
+1. Vào **Plugins → Add New → Upload Plugin**
+2. Tải ZIP, nhấn **Install Now**, rồi **Activate Plugin**
 
-Pro sẽ được kích hoạt cùng với plugin nền tảng mà không cần cấu hình thêm.
+## Kích hoạt license
 
-## Kiểm tra cài đặt
+**Vào Tenancy → License** (`page=grabwp-tenancy-license`).
 
-Vào **GrabWP Tenancy → Status** và xác nhận plugin Pro đang hiển thị ở trạng thái active.
+![GrabWP Tenancy Pro License](../images/10-license.png)
 
-## Những gì thay đổi sau khi kích hoạt
+Bản cài mới hiện **Activate your license to unlock Pro features.**
 
-Khi Pro được kích hoạt, mỗi tenant site trong danh sách sẽ có thêm các liên kết thao tác:
+1. Sao chép key từ [Customer Portal](https://polar.sh/grabwp/portal). Key bắt đầu bằng `GRABWPPRO-`.
+2. Dán vào **License key**.
+3. Nhấn **Activate License**.
 
-![Danh sách tenant với các thao tác Pro - Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.png)
+Nút này gửi domain của site và license key tới GrabWP / Polar để kích hoạt.
 
-- **Extensions** - quản lý plugin và theme khả dụng cho site
-- **Backup** - tạo bản sao lưu cho site
-- **Restore** - khôi phục site từ file ZIP sao lưu
+Site đã có license hiện **Customer**, **Email**, **License key** (đã che), **Status**, và **Expires** (**No Expiry** khi key không hết hạn). **Revoke license** gỡ kích hoạt khỏi site này.
 
-Form **Edit** của tenant cũng sẽ có thêm các trường cho thiết lập cô lập theo site như loại cơ sở dữ liệu và cô lập nội dung.
+→ [License](/grabwp-tenancy-pro/pro-license)
 
-Một trang submenu mới **GrabWP Tenancy → Pro Settings** cũng được thêm vào để cấu hình các thiết lập cô lập mặc định cho site mới.
+## Xác nhận Pro đang bật
 
-![Pro Settings - thư mục mặc định và uploads](../images/grabwp-tenancy-pro-settings-dir.png)
+**Vào Tenancy → Status** (`page=grabwp-tenancy-status&tab=pro`).
+
+![Status, tab Pro Plugin](../images/09-status-pro.png)
+
+**Pro Plugin Information** phải hiện **Status** là **Active** và **Pro Version**.
+
+Menu **Tenancy** lúc đó có **License** và **Pro Settings**.
+
+## Danh sách tenant thay đổi thế nào
+
+**Vào Tenancy → All Tenants** (`page=grabwp-tenancy`).
+
+![Danh sách tenant với cột và thao tác Pro](../images/grabwp-tenancy-pro-tenant-list.png)
+
+Cột thêm: **Database**, **Storage**, **Isolation**.
+
+Thao tác thêm trên dòng (nhãn khi di chuột), trước icon thùng rác:
+
+| Nhãn | Màn hình |
+|-------|--------|
+| Plugins & Themes | Extensions |
+| Fix URLs | Fix URLs |
+| Clone Tenant | Clone |
+| Backup Tenant | Backup |
+| Restore Tenant | Restore |
+
+Dòng **Main Site** có thêm **Clone to Tenant**.
+
+Mở một tenant (icon **Settings**, tiêu đề **Edit Tenant**) thêm các tab: **Edit**, **Extensions**, **Clone**, **Fix URLs**, **Backup**, **Restore**, **Settings**, **Overrides**, **Homepage**, **WP Admin**.
+
+**Create Tenant** và **Edit Tenant** có thêm **Content Isolation Options**, **Database Configuration**, và **Storage Driver** khi đã cấu hình lưu trữ S3.
+
+**Vào Tenancy → Pro Settings** (`page=grabwp-tenancy-pro-settings`) để đặt mặc định. Xem [Pro Settings](/grabwp-tenancy-pro/pro-settings).
 
 ## Tắt Pro
 
-Khi tắt Pro, giao diện Pro sẽ biến mất và các tính năng riêng của Pro sẽ dừng hoạt động. Tenant site sẽ quay về hành vi của plugin nền tảng.
+Deactivate Pro gỡ các màn Pro và hành vi Pro. Dữ liệu tenant không bị xóa. Site quay về plugin miễn phí (bảng dùng chung và upload tách biệt).
 
-**Dữ liệu tenant không bị xóa** khi tắt Pro.
+**Verify:** **Tenancy → Status → Pro Plugin** hiện **Active**, và một dòng tenant có **Plugins & Themes**.

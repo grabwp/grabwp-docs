@@ -1,109 +1,110 @@
 ---
-title: "Thiết lập templates"
-description: "Tạo các site templates với tags, giới hạn theo plan và hình thu nhỏ cho thư viện template của khách hàng"
+title: "Thiết lập template"
+description: "Đăng ký tenant thành template, rồi sắp tag, tag group và nhập CSV"
 order: 28
 section: waas
 ---
 
-# Thiết lập templates
+# Thiết lập template
 
-Templates là các thiết kế trang web dựng sẵn mà khách hàng có thể chọn khi đăng ký. Mỗi template là một bản sao lưu (snapshot) của một tenant site hiện có, bao gồm theme, nội dung, cài đặt và tất cả mọi thứ.
+Template là một tenant có sẵn được đánh dấu làm bản mẫu. Khi khách signup với template đó, site mới được clone từ nó. Tenant nguồn phải còn đó.
 
-Điều hướng đến **WaaS → Templates** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-templates`).
+Vào **Waas → Templates** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-templates`).
 
-![Danh sách templates](../images/waas-templates-list.png)
+![Danh sách template](../images/waas-templates-list.png)
 
-## Cách templates hoạt động
+Thanh phụ trên màn hình này: **Templates** | **Tags** | **Tag Groups** | **Bulk**.
 
-```
-1. Bạn tạo một tenant site và thiết kế nó
-2. Bạn đăng ký tenant đó làm một template
-3. Khách hàng duyệt các templates trong quá trình đăng ký
-4. Khi khách hàng đăng ký, trang web mới của họ được nhân bản từ template
-```
+Cột danh sách: **Template Name**, **Slug**, **Source Tenant**, **Tags**, **Price**, **Active**, **Order**, **Actions**.
 
-Templates được lưu trữ dưới dạng các tham chiếu đến các tenant sites hiện có, chứ không phải là các bản sao riêng biệt. Tenant của template phải luôn ở trạng thái hoạt động.
+## Bước 1: Tạo tenant nguồn
 
-## Bước 1: Tạo một tenant cho template của bạn
+1. Vào **Tenancy → Add New** (`/wp-admin/admin.php?page=grabwp-tenancy-create`)
+2. Tạo tenant trên platform domain, ví dụ `template-starter.yoursaas.com`
+3. Mở wp-admin của tenant đó và đặt theme, trang, menu cùng nội dung demo mà mọi bản sao sẽ bắt đầu từ đó
 
-Trước khi tạo template, bạn cần một tenant site để dùng làm nguồn.
+## Bước 2: Đăng ký template
 
-1. Đi đến **Tenancy → Add New**
-2. Tạo một tenant mới (ví dụ slug: `template-starter`, domain: `template-starter.yoursaas.com`)
-3. Truy cập vào giao diện wp-admin của tenant và thiết kế trang web:
-   - Cài đặt và cấu hình một theme
-   - Thêm nội dung demo (pages, posts, media)
-   - Thiết lập menus, widgets và nhận dạng trang web
-   - Cấu hình bất kỳ plugins nào bạn muốn bao gồm
+1. Vào **Waas → Templates**
+2. Bấm **Add New**
 
-> **Tip:** Hãy dành thời gian để chăm chút cho trang web này thật đẹp mắt. Mỗi khách hàng chọn template này sẽ bắt đầu với một bản sao chính xác như vậy.
+Khi sửa, tiêu đề là **Edit Template** và nút lưu là **Update Template**. Khi thêm, nút lưu là **Save as Template**. **Back to Templates** về danh sách.
 
-## Bước 2: Tạo một template
+![Sửa template](../images/waas-template-edit.png)
 
-1. Đi đến **WaaS → Templates**
-2. Nhấp vào **Add New Template**
+| Trường | Ghi chú |
+|--------|---------|
+| **Source Tenant** | Chỉ lúc thêm. Bắt buộc. Không hiện khi sửa. |
+| **Template Name** | Bắt buộc. Tiêu đề gallery. |
+| **Slug** | Bắt buộc. Chữ thường, số và dấu gạch ngang. |
+| **Tags** | Chọn tag, hoặc theo **manage tags**. |
+| **Allowed Plans** | Bỏ chọn để dành cho mọi plan. Chọn plan để giới hạn template. Plan free được ghi **Free tier**. |
+| **Price** | Phí thêm cho template này. `0` là không có phí template. |
+| **Discount Price** | Giá thấp hơn, tùy chọn. `0` là không có giá giảm. |
+| **Description** | Đoạn chữ cho gallery. |
+| **Thumbnail** | **Select** từ media library, hoặc dán URL ảnh. **Remove** xóa. Placeholder: **Image URL or select from media**. |
+| **Active** | **Show in signup form** |
+| **Sort Order** | Số nhỏ hơn hiện trước |
 
-![Biểu mẫu chỉnh sửa template](../images/waas-template-edit.png)
+Bấm **Save as Template** hoặc **Update Template**. Thông báo thành công: **Template saved.**
 
-Điền vào:
+**Rebuild Index** trên danh sách viết lại file index template. Dùng khi gallery và danh sách không khớp. Thông báo thành công: **Templates index rebuilt.**
 
-| Trường | Giá trị | Ghi chú |
-|-------|-------|-------|
-| **Source Tenant** | Chọn tenant mà bạn đã thiết kế | Chỉ hiển thị khi tạo, không thể chỉnh sửa sau đó |
-| **Template Name** | `Starter Blog` | Tên hiển thị trong thư viện template |
-| **Slug** | `starter-blog` | Mã định danh an toàn cho URL. Chỉ dùng chữ cái viết thường, số, dấu gạch ngang. |
-| **Tags** | Chọn hoặc nhập tags | Dùng để lọc trong thư viện. Xem phần thiết lập tags bên dưới. |
-| **Allowed Plans** | Bỏ chọn để áp dụng cho tất cả plans | Đánh dấu các plans cụ thể để giới hạn template này chỉ dành cho người dùng trả phí |
-| **Price** | `0` | Tùy chọn. Bạn có thể tính thêm phí cho các templates cao cấp. |
-| **Active** | Đánh dấu chọn | Template sẽ xuất hiện trong thư viện |
+## Bước 3: Tags
 
-3. Tải lên một **Thumbnail**. Đây là ảnh chụp màn hình hoặc mockup của template. Kích thước đề xuất: 1280×960px.
-4. Tùy chọn thêm một **Preview URL**. Đây là một liên kết trực tiếp để khách hàng có thể nhấp vào và xem template hoạt động thực tế.
-5. Nhấp vào **Save Template**
+Tag lọc gallery. Mở **Tags** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-tags`).
 
-## Thiết lập tags
+![Tags](../images/04-waas-tags.png)
 
-Tags cho phép khách hàng lọc thư viện template theo danh mục, ngành nghề hoặc tính năng.
+Bấm **Add New**. Các trường:
 
-### Tạo nhóm tags
+| Trường | Ghi chú |
+|--------|---------|
+| **Slug** | Chỉ chữ thường, số, dấu gạch ngang |
+| **Label** | Tên hiện trong gallery và trong bộ chọn tag của template |
+| **Group** | Tag group mà tag này thuộc về |
+| **Icon** | Ảnh nhỏ. **Select** hoặc **Remove**. Dùng làm chỉ báo feature. |
+| **Image** | Ảnh lớn hơn, tùy chọn |
+| **Sort Order** | Thứ tự trong group |
+| **Active** | **Show in tag selectors** |
 
-1. Đi đến **WaaS → Settings → Tags**
-2. Nhấp vào **Add Tag Group**
-3. Tạo các nhóm như:
-   - `industry`: Nhà hàng, Portfolio, Blog, Thương mại điện tử
-   - `builder`: Elementor, Gutenberg, Beaver Builder
-   - `feature`: WooCommerce, Đa ngôn ngữ, Membership
+Danh sách lọc theo group và tìm bằng **Search Tags**.
 
-### Tạo tags
+## Bước 4: Tag Groups
 
-Bên trong mỗi nhóm, hãy tạo các tags riêng lẻ:
+Mở **Tag Groups** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-tags-group`).
 
-1. Nhấp vào **Add Tag** bên trong một nhóm
-2. Thiết lập **Name** (tên hiển thị) và **Slug** (mã định danh an toàn cho URL)
-3. Lưu lại
+![Tag Groups](../images/04-waas-tags-group.png)
 
-### Gán tags cho templates
+Khi chưa lưu group tùy chỉnh, WaaS dùng các group: **Style**, **Industry**, **Features**, **Page Builder**, **Base Theme**, **Status** và **Other**.
 
-Khi chỉnh sửa một template, hãy chọn các tags từ menu thả xuống. Templates có thể có tags từ nhiều nhóm khác nhau.
+Bấm **Add New** để thêm group. Trường: **Slug**, **Label**, **Sort Order**.
 
-## Kiểm soát bộ lọc thư viện
+Group nào hiện dạng pill hay dropdown do thuộc tính shortcode `filter-tags` của template browser, hoặc control block **Pill filter groups (filter-tags)**. Xem [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates).
 
-Shortcode của trình duyệt template sẽ kiểm soát những nhóm tags nào xuất hiện dưới dạng nút lọc (filter pills) hay dạng menu thả xuống (dropdowns). Xem [Tài liệu tham khảo shortcode](/grabwp-tenancy-waas/waas-shortcode-templates) để biết tất cả các tùy chọn.
+## Bước 5: Bulk CSV
 
-## Quá trình nhân bản template
+Mở **Bulk** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-bulk`).
 
-Khi khách hàng chọn một template và hoàn tất đăng ký, WaaS sẽ nhân bản tenant của template:
+![Bulk Templates](../images/04-waas-bulk.png)
 
-1. **Xác thực**: Kiểm tra xem tenant nguồn có hoạt động bình thường không
-2. **Xuất dữ liệu**: Xuất database của tenant nguồn
-3. **Nhập dữ liệu**: Nhập vào database của tenant mới
-4. **Sao chép uploads**: Sao chép các tệp media
-5. **Tạo symlink**: Liên kết các plugins và themes
-6. **Sửa URLs**: Cập nhật tất cả URL sang domain của tenant mới
-7. **Dọn dẹp**: Hoàn tất và kích hoạt
+1. Bấm **Download templates CSV** để xuất template hiện có
+2. Sửa file. Bắt buộc có hàng header. Thứ tự cột không quan trọng. Mỗi hàng cần `tenant_id`, `name` và `slug`.
+3. Chọn **Source**: **Upload file** hoặc **Paste CSV text**
+4. Bật **Overwrite** nếu muốn **Overwrite existing templates with the same tenant_id**
+5. Đặt **Missing tags**: **Skip missing (drop unknown tag slugs)** hoặc **Create missing (add to the "other" tag group)**
+6. Bấm **Import CSV**
 
-Quá trình này thường mất khoảng 10 đến 30 giây tùy thuộc vào kích thước của template.
+Các cột hiện trên trang: `tenant_id`, `name`, `slug`, `category`, `tags`, `allowed_plans`, `price`, `discount_price`, `is_active`, `sort_order`, `description`, `thumbnail_url`.
+
+`tags` và `allowed_plans` phân tách bằng dấu `|` (`business|portfolio`). `is_active` là `1` hoặc `0`.
+
+## Kiểm tra
+
+1. Dòng template đang **Active**
+2. Trang templates ở frontend liệt kê nó
+3. Tag bạn gán hiện trên dòng
 
 ---
 
-**Tiếp theo:** [Thiết lập frontend pages](/grabwp-tenancy-waas/waas-setup-frontend-pages)
+**Tiếp theo:** [Set Up Frontend Pages](/grabwp-tenancy-waas/waas-setup-frontend-pages)

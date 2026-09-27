@@ -1,108 +1,75 @@
 ---
-title: "S3 Object Storage"
-description: "Chuyển file upload của tenant sang Cloudflare R2, AWS S3, DigitalOcean Spaces, hoặc bất kỳ nhà cung cấp nào tương thích với S3"
+title: "Lưu trữ đối tượng S3"
+description: "Đưa upload của tenant lên Cloudflare R2, AWS S3, MinIO, Backblaze B2, hoặc endpoint tương thích S3 khác"
 order: 33
 section: waas
 ---
 
-# S3 Object Storage (Tùy chọn)
+# Lưu trữ đối tượng S3 (tùy chọn)
 
-Đẩy các file media upload của tenant lên các dịch vụ lưu trữ đám mây tương thích với S3 thay vì lưu chúng trên ổ cứng local của server.
+Media của tenant có thể ở trên đĩa server, hoặc chuyển sang bucket tương thích S3. Đây là thiết lập Pro. Giữ **Local Filesystem (default)** cho đến khi bucket sẵn sàng.
 
-## Khi nào nên dùng S3
+**Truy cập Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`) và mở tab **Storage**.
 
-- **Dung lượng ổ cứng:** Server của bạn có không gian lưu trữ hạn chế và các tenant upload rất nhiều media
-- **Phân phối CDN:** Phục vụ hình ảnh/file từ một mạng lưới CDN toàn cầu giúp tăng tốc độ tải trang
-- **Khả năng mở rộng:** Tách biệt lưu trữ khỏi máy chủ xử lý, giúp bạn dễ dàng mở rộng từng phần độc lập
-- **Backups:** Các nhà cung cấp lưu trữ đám mây tự động lo liệu việc đảm bảo tính dự phòng và độ bền vững cho dữ liệu của bạn
+![Object Storage trên Pro Settings](../images/11-pro-settings-storage.png)
 
-## Các nhà cung cấp được hỗ trợ
+Tiêu đề mục là **Object Storage (S3-Compatible)**. Chú thích liệt kê Cloudflare R2, AWS S3, MinIO, và Backblaze B2. Mọi endpoint nói API S3 đều nhập được vào **S3 Endpoint URL**.
 
-Bất kỳ API nào tương thích với S3 đều có thể hoạt động tốt:
+## Bật S3
 
-| Nhà cung cấp | Ví dụ Endpoint | Ghi chú |
-|----------|-----------------|-------|
-| **Cloudflare R2** | `https://ACCOUNT_ID.r2.cloudflarestorage.com` | Không có phí băng thông ra (egress). Region: `auto` |
-| **AWS S3** | `https://s3.us-east-1.amazonaws.com` | Nền tảng lâu đời nhất. Hỗ trợ rất nhiều region. |
-| **DigitalOcean Spaces** | `https://nyc3.digitaloceanspaces.com` | Cấu trúc giá đơn giản. Tích hợp sẵn CDN. |
-| **MinIO** | `https://minio.yourdomain.com` | Dùng để tự host (Self-hosted). Cần bật tuỳ chọn path-style. |
-| **Backblaze B2** | `https://s3.us-west-002.backblazeb2.com` | Chi phí thấp. Có API tương thích S3. |
+1. Dưới **Default Storage Driver**, chọn **S3-Compatible Object Storage**. **Local Filesystem (default)** giữ file trên đĩa.
+2. Mở **S3 storage credentials** và điền các trường.
+3. Bấm **Test Connection**.
+4. Bấm **Save Pro Settings**.
 
-## Cấu hình
+| Trường | Ghi chú |
+|--------|---------|
+| **S3 Endpoint URL** | URL đầy đủ. Placeholder: `https://ACCOUNT_ID.r2.cloudflarestorage.com` |
+| **Bucket Name** | Bucket đã tạo. Placeholder: `grabwp-uploads` |
+| **Region** | `auto` cho Cloudflare R2. Ví dụ trong chú thích: `us-east-1`, `eu-west-1` |
+| **Path-Style Endpoint** | **Enable path-style endpoint (required for MinIO)** |
+| **Access Key ID** | API key |
+| **Secret Access Key** | Để trống ở lần lưu sau để giữ secret đã lưu |
+| **CDN URL (optional)** | Tiền tố công khai cho URL file. Để trống thì file dùng pre-signed URL |
+| **Connection Test** | **Test Connection**. Chữ thành công: **Connection successful!** |
 
-Truy cập vào **Tenancy → Pro Settings → Object Storage** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
+**Verify:** **Test Connection** báo **Connection successful!**, **Save Pro Settings** giữ **S3-Compatible Object Storage**, và upload mới trên site tenant tải từ bucket hoặc **CDN URL**.
 
-1. Đặt **Storage Driver** thành **S3**
-2. Điền các thông tin sau:
+## Giá trị theo nhà cung cấp
 
-| Trường | Mô tả | Ví dụ |
-|-------|-------------|---------|
-| **S3 Endpoint URL** | URL endpoint đầy đủ của nhà cung cấp | `https://ACCOUNT.r2.cloudflarestorage.com` |
-| **Bucket Name** | Tên của bucket mà bạn đã tạo | `grabwp-uploads` |
-| **Region** | Region của AWS hoặc nhập `auto` cho R2 | `auto` |
-| **Access Key ID** | ID của API key | |
-| **Secret Access Key** | Mật khẩu API (được lưu trữ mã hóa) | |
-| **CDN URL** (tùy chọn) | URL prefix công khai dùng để phân phối file | `https://cdn.yoursaas.com` |
-| **Path-Style Endpoint** | Bật tuỳ chọn này cho MinIO hoặc một số nhà cung cấp khác | Tích chọn nếu cần |
+| Nhà cung cấp | Endpoint | Region |
+|--------------|----------|--------|
+| **Cloudflare R2** | `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` | `auto` |
+| **AWS S3** | Endpoint S3 theo region, ví dụ `https://s3.us-east-1.amazonaws.com` | Region của bucket |
+| **MinIO** | URL MinIO của bạn | Region của bạn. Bật **Path-Style Endpoint**. |
+| **Backblaze B2** | `https://s3.<region>.backblazeb2.com` | Region B2, ví dụ `us-west-002` |
 
-3. Nhấp vào **Test Connection** để kiểm tra chứng chỉ API và quyền truy cập vào bucket
-4. Nhấp vào **Save Settings**
+> **Cloudflare R2:** [Tài liệu R2](https://developers.cloudflare.com/r2/)
+>
+> **AWS S3:** [Bắt đầu với S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
 
-## Hướng dẫn thiết lập cho từng nhà cung cấp
+Với R2 phát công khai, bật public access hoặc custom domain trên bucket, rồi dán URL đó vào **CDN URL (optional)**.
 
-### Cloudflare R2
+## Bulk Migration
 
-1. Đăng nhập vào [Cloudflare dashboard](https://dash.cloudflare.com/)
-2. Chuyển đến **R2 Object Storage → Create Bucket**
-3. Đặt tên cho bucket (ví dụ: `grabwp-uploads`)
-4. Truy cập **R2 → Manage R2 API Tokens → Create API token**
-5. Thiết lập quyền truy cập: **Object Read & Write**
-6. Copy Access Key ID và Secret Access Key
-7. Endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`
-8. Region: `auto`
+**Bulk Migration** hiện sau khi credential S3 đã lưu và kết nối đã cấu hình. Chú thích khuyên dùng WP-CLI cho site lớn.
 
-> **Tài liệu Cloudflare R2:** [R2 documentation](https://developers.cloudflare.com/r2/)
+1. Mở **Bulk Migration**.
+2. Bấm **Migrate All Tenants to S3** hoặc **Migrate All Tenants to Local**.
+3. Xác nhận **This will migrate uploads for ALL tenants. Continue?**
+4. Đợi kết quả cạnh các nút.
 
-### AWS S3
+Mục lồng **WP-CLI reference** hiện:
 
-1. Tạo một bucket trong [AWS S3 Console](https://s3.console.aws.amazon.com/)
-2. Tạo một user IAM với policy `AmazonS3FullAccess` (hoặc giới hạn quyền chỉ trong bucket của bạn)
-3. Tạo Access Key trong phần chứng chỉ bảo mật của user IAM
-4. Sử dụng endpoint theo region cho bucket của bạn
+```bash
+wp grabwp-pro storage migrate --all --to=s3
+wp grabwp-pro storage migrate acme-corp --to=s3 --copy-only
+```
 
-> **Tài liệu AWS S3:** [Getting started with S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
+`--dry-run` liệt kê file và không đổi chúng. `--copy-only` sao chép file và giữ bản gốc. Tenant vẫn chuyển sang driver đích.
 
-### DigitalOcean Spaces
-
-1. Tạo một Space trong [DigitalOcean](https://cloud.digitalocean.com/spaces)
-2. Truy cập **API → Spaces Keys → Generate New Key**
-3. Endpoint: `https://<REGION>.digitaloceanspaces.com`
-
-> **Tài liệu DO Spaces:** [Spaces documentation](https://docs.digitalocean.com/products/spaces/)
-
-## Chuyển đổi dữ liệu hàng loạt
-
-Sau khi cấu hình S3, bạn có thể tiến hành migration (chuyển đổi) các file upload hiện tại của tenant:
-
-1. Trong Pro Settings → Object Storage, nhấp vào **Migrate All Tenants to S3**
-2. Chờ quá trình migration hoàn tất, bước này sẽ tải tất cả các file local của tenant lên S3
-3. Kiểm tra lại một vài site tenant để đảm bảo hình ảnh vẫn load bình thường
-
-Để chuyển dữ liệu ngược lại về lưu trữ local: nhấp vào **Migrate All Tenants to Local**.
-
-> **Lưu ý:** Quá trình migration có thể mất một lúc tùy thuộc vào lượng dữ liệu bạn có. Màn hình sẽ hiển thị tiến độ và kết quả.
-
-## Cấu hình CDN
-
-Nếu bạn thiết lập **CDN URL**, các file sẽ được phân phối từ URL đó thay vì dùng URL pre-signed của S3.
-
-Dành cho Cloudflare R2:
-1. Chuyển đến mục R2 → chọn bucket của bạn → Settings → Public Access
-2. Bật tính năng public access hoặc thêm một custom domain
-3. Nhập URL public đó vào mục CDN URL trong Pro Settings
-
-Nếu không có CDN URL, các file sẽ được phân phối bằng các URL pre-signed có giới hạn thời gian (cách này bảo mật hơn nhưng có thể chậm hơn đôi chút).
+**Verify:** Mở media library của một tenant và xác nhận ảnh cũ vẫn tải. Để chuyển về, bấm **Migrate All Tenants to Local**, hoặc chạy `wp grabwp-pro storage migrate --all --to=local`.
 
 ---
 
-**Tiếp theo:** [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce)
+**Tiếp theo:** [Thanh toán WooCommerce](/grabwp-tenancy-waas/waas-optional-woocommerce)

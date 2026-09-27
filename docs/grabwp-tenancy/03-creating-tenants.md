@@ -1,73 +1,93 @@
 ---
 title: "Managing Tenant Sites"
 description: "Create, edit, and delete tenant sites"
-order: 4
-section: base
+order: 3
+section: tenancy
 ---
 
 # Managing Tenant Sites
 
-## Creating a New Site
+Each tenant is a separate WordPress site on this installation. Give every tenant its own domain.
 
-1. Go to **GrabWP Tenancy → Tenants**
-2. Click **Add New**
-3. Choose **"I have a domain"** to enter a domain now, or **"I'll set up a domain later"** to use path routing immediately
-4. Click **Create**
+## Open the tenant list
 
-![Add New Tenant - domain now or later](../images/grabwp-tenancy-pro-tenant-add.png)
+**Navigate to Tenancy → All Tenants** (`page=grabwp-tenancy`).
 
-The system assigns a unique 6-character ID (e.g., `abc123`) and automatically creates its database tables and upload folder.
+![All Tenants](../images/grabwp-tenancy-pro-tenant-list.png)
 
-## Accessing a Tenant Site
+The page title is **GrabWP Tenancy**. The intro line is **Manage your multi-tenant WordPress sites.**
 
-After creation, find the site in the tenant list. Each row shows action icons:
+| Column | Notes |
+|--------|--------|
+| Tenant ID | 6-character ID. The main install is the starred **Main Site** row. |
+| Domains | Domains mapped to that tenant. **Path access only** means no domain is assigned yet. **No domains assigned** means the mapping is empty. |
+| Actions | Icon links. Hover for the label. |
 
-![Tenant list with row actions (visit, admin, edit, delete)](../images/grabwp-tenancy-pro-tenant-list.png)
+Pro adds **Database**, **Storage**, and **Isolation** columns. Isolation abbreviations: **WPC** (WP Content), **Th** (Themes), **Plg** (Plugins), **Up** (Uploads).
 
-| Icon | Action |
-|------|--------|
-| Home | Visit the site (front end) |
-| Dashboard | Open tenant's WordPress admin |
-| Edit | Edit domain settings |
-| Trash | Delete the site |
+Search with **Search by ID or domain...** and **Search**.
 
-For domain-based tenants, clicking the **Dashboard icon** opens the tenant's admin with a secure token automatically embedded - no password needed. For path-only tenants, it opens the path-based admin URL directly.
+### Row actions
 
-## Accessing via Path URL
+| Label | What it does |
+|-------|----------------|
+| Visit Site | Opens the site front end. |
+| Admin | Opens the tenant WordPress admin. The link includes a short-lived access token (30 minutes by default). |
+| Settings | Opens **Edit Tenant**. |
+| Delete | Trash icon. Asks you to type the tenant ID. |
 
-Every tenant site is accessible at its path URL - no domain required:
+The **Main Site** row only has **Visit Site**. Pro adds **Clone to Tenant** on that row.
 
-```
-https://yoursite.com/site/{tenant-id}
-```
+With Pro active, tenant rows also include **Plugins & Themes**, **Fix URLs**, **Clone Tenant**, **Backup Tenant**, and **Restore Tenant**, inserted before the trash icon. Those screens are documented in the Pro section.
 
-The tenant ID is shown on the Edit page under **Path URL**.
+An empty list shows **No Tenants Found** and **Create Your First Tenant**.
 
-## Editing a Tenant Site
+## Create a tenant
 
-Click the **Edit icon** to:
-- View the path URL (with a copy button)
-- Add or remove custom domains
+**Navigate to Tenancy → Add New** (`page=grabwp-tenancy-create`), or click **Add New** on the list.
 
-![Edit tenant - path URL and domains](../images/grabwp-tenancy-pro-tenant-edit.png)
+![Add New Tenant](../images/grabwp-tenancy-pro-tenant-add.png)
 
-## Adding More Domains
+1. Under **Domain Setup**, keep **I have a domain** selected.
+2. Enter the domain. Placeholder: **Enter domain (e.g. mysite.com)**. Use **Clear** or **Remove** on a row. Do not include `http://` or `www`.
+3. Click **Create Tenant**.
 
-A single site can respond to multiple domains (e.g., `www.site.com` and `site.com`):
+**Cancel** returns to **All Tenants**.
 
-1. Click **Edit** on the site
-2. Add additional domains
-3. Save - then configure the new domains in your hosting control panel too
+> **Note:** **I'll set up a domain later** creates the tenant with no public domain. The list shows **Path access only**. The Edit screen has a **Path URL** and a **Copy** button you can use as a temporary preview until the domain is connected. Add the domain and complete [Domain & DNS Setup](/grabwp-tenancy/hosting-dns-setup) before visitors use the site.
 
-## Deleting a Site
+Pro adds **Content Isolation Options**, **Database Configuration**, and **Storage Driver** (only after S3 is configured) to this form. See [Database & Content Isolation](/grabwp-tenancy-pro/pro-database-isolation).
 
-> ⚠ **Warning:** Deleting a site permanently removes all its data - database tables and uploads cannot be recovered.
+**Verify:** The new ID appears on **All Tenants** with the domain you entered.
 
-1. Click the **Trash icon** on the site
-2. A prompt will ask you to type the site's ID to confirm
-3. Enter the ID exactly - deletion proceeds only if it matches
+## Edit domains
 
-## Tenant Admin Notes
+Click **Settings** on the row, or open `page=grabwp-tenancy-edit` with that tenant.
 
-- To reset a tenant admin's password: use the "Forgot Password" link on the tenant site's login page
-- If the tenant needs to manage their own plugin settings: they can activate the GrabWP Tenancy plugin from their own Plugins page
+![Edit Tenant](../images/grabwp-tenancy-pro-tenant-edit.png)
+
+The title is **Edit Tenant:** plus the tenant ID. With Pro, tabs across the top are **Edit**, **Extensions**, **Clone**, **Fix URLs**, **Backup**, **Restore**, **Settings**, **Overrides** (when supported), **Homepage**, and **WP Admin**.
+
+| Field | Notes |
+|-------|--------|
+| Tenant ID | Read-only. |
+| Path URL | Temporary preview address, with **Copy**. Shown until a path alias replaces it. |
+| Domains | One field per domain. **Remove** deletes a row. **Add New Domain** adds one. |
+
+Domain help text: **Valid format: example.com, subdomain.example.com (no http:// or www)**.
+
+Click **Update Tenant**. Success notice: **Tenant updated successfully.**
+
+A site can answer on more than one domain (for example `www` and the apex). Add each one here, then point each domain at this WordPress directory in hosting and DNS.
+
+> **Note:** Use the domain you added here for visitors. **Path URL** is only a preview before that domain is connected.
+
+## Delete a tenant
+
+> **Warning:** Deletion removes that tenant's database tables and uploads. This cannot be undone.
+
+1. Click the trash icon on the row.
+2. When prompted **To confirm deletion, type the tenant ID:**, enter the ID exactly.
+3. A mismatch shows **Incorrect tenant ID. Deletion cancelled.**
+
+**Verify:** After an edit, the **Domains** column matches what you saved. After a delete, the ID is gone from the list.

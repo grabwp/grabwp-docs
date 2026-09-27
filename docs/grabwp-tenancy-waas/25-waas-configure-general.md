@@ -1,118 +1,113 @@
 ---
 title: "Configure WaaS General Settings"
-description: "Set up platform domain, authentication mode, frontend pages, custom domains, and API keys"
+description: "Set the platform domain, auth mode, frontend pages, and custom-domain mode"
 order: 25
 section: waas
 ---
 
 # Configure WaaS General Settings
 
-The WaaS General Settings define your platform identity - domain, authentication, and the pages customers interact with.
+**General** is where you set the platform domain, which pages customers use, how they sign in, and how custom domains should point at your server.
 
-Navigate to **WaaS → Settings → General** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings`).
+Navigate to **Waas → Settings → General** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=general`).
 
 ![WaaS General Settings](../images/waas-general-settings.png)
 
-## Platform Settings
+The settings screen is **WaaS Settings**. Tabs, in order:
 
-### Platform Domain
+| Tab | This guide |
+|-----|------------|
+| **General** | This page |
+| **Appearance** | Optional colors. [Appearance](/grabwp-tenancy-waas/waas-appearance) |
+| **Signup Flow** | Optional step changes. [Signup Flow](/grabwp-tenancy-waas/waas-signup-flow) |
+| **Plans** | Next, in [Create Plans](/grabwp-tenancy-waas/waas-create-plans) |
+| **Benefits** and **Services** | [Services and Benefits](/grabwp-tenancy-waas/waas-services-benefits) |
+| **Billing Providers** | [Set Up Billing](/grabwp-tenancy-waas/waas-setup-billing) |
+| **Activity Log** | Event list. [Dashboard and Activity](/grabwp-tenancy-waas/waas-dashboard-activity) |
+| **Provisioning** | Signup intents. Open it if a test signup does not finish. |
+| **Add-ons** | Covered in [Install Plugins](/grabwp-tenancy-waas/waas-install-plugins) |
 
-The domain used for tenant subdomains.
+## Platform
 
 | Field | Example | Notes |
 |-------|---------|-------|
-| **Platform Domain** | `yoursaas.com` | Tenants get subdomains like `customer.yoursaas.com` |
+| **Platform Domain** | `yoursaas.com` | No `http://` and no trailing slash. Tenants are created as `slug.yoursaas.com`. |
+| **WaaS Directory** | `grabwp-tenancy-waas` | Relative to the uploads directory, or an absolute path. The resolved path is shown under the field. |
+| **Signup Page** | Signup | Page that contains `[grabwp_waas_signup]`. Default slug `/signup/`. |
+| **Dashboard Page** | Dashboard | Page that contains `[grabwp_waas_dashboard]`. Default slug `/dashboard/`. |
+| **Templates Page** | Templates | Page that contains `[grabwp_waas_templates]`. Default slug `/templates/`. |
+| **Pricing Page** | Pricing | Page that contains `[grabwp_waas_pricing]`. Default slug `/pricing/`. |
 
-Enter your root domain without `http://` or trailing slash. Wildcard DNS must point `*.yoursaas.com` to your server.
+Each page dropdown has a **View** link. The empty option is **Select a page**.
 
-> **DNS Setup:** Add a wildcard A record in your DNS:
+> **DNS:** Add a wildcard record so every subdomain reaches this server:
+>
 > ```
 > *.yoursaas.com  →  A  →  YOUR_SERVER_IP
 > ```
-> This ensures all subdomains resolve to your server.
 
-### WaaS Data Directory
+Page creation is in [Set Up Frontend Pages](/grabwp-tenancy-waas/waas-setup-frontend-pages). You can select the pages now if they already exist, or come back after the repair button creates them.
 
-Where WaaS stores its operational data (templates, provisioning intents, etc.).
+## Authentication
 
-| Field | Default |
+| Field | Options |
 |-------|---------|
-| **WaaS Data Directory** | `grabwp-tenancy-waas` |
+| **Auth Mode** | **WAAS Auth (Email signup)** or **WordPress Auth (Login required)** |
 
-Relative to your WordPress uploads directory. The default is usually fine.
+**WAAS Auth (Email signup)** creates the user during signup. The dashboard then signs the customer in with an email verification code.
 
-### Authentication Mode
+**WordPress Auth (Login required)** requires an existing WordPress login before a site is created.
 
-How customers authenticate on your platform.
+**For this tutorial:** choose **WAAS Auth (Email signup)**.
 
-| Mode | Description |
-|------|-------------|
-| **WaaS Auth** (recommended) | Creates a new user during signup. Customers log in via OTP (one-time password sent to email). No WordPress login form needed. |
-| **WP Auth** | Requires an existing WordPress account before creating a site. Customers use standard WordPress login. |
+## Custom Domains
 
-**Recommended:** Use **WaaS Auth** for a self-service SaaS experience.
+| Field | Options | Notes |
+|-------|---------|-------|
+| **Domain Mode** | **Cloudflare SaaS (CNAME)** or **Direct IP (A record)** | Controls the DNS instructions shown to customers |
+| **CNAME Target** | for example `cdn.saas.example.com` | Shown for Cloudflare mode |
+| **DCV Delegation** | Cloudflare DCV CNAME value | Shown for Cloudflare mode. Used for certificate validation on custom hostnames. |
+| **Server Public IP** | for example `203.0.113.50` | Shown for Direct IP mode |
 
-## Pages Configuration
+Pick the mode you will actually use. Details are in [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains). You can leave the targets empty until that step if you are not accepting custom domains yet.
 
-WaaS needs three WordPress pages for the customer-facing frontend. You can either create them manually or use the auto-create button.
+## Retention and grace period
 
-### Auto-Create Pages
+Open the **Retention and grace period** accordion on this tab. These fields are not on the **Activity Log** tab. That tab is the event list.
 
-Click the **Create/Repair Signup and Dashboard Pages** button at the bottom of the settings page. This creates the three pages with the correct shortcodes automatically.
+| Field | Limits | Notes |
+|-------|--------|-------|
+| **Retention (days)** | 7 to 365 | How long activity log entries are kept |
+| **Grace Period (days)** | 0 to 90 | Days after subscription cancellation before the tenant is suspended. `0` suspends immediately. |
 
-### Manual Setup
+## Save
 
-If you prefer to create pages yourself:
+Click **Save Changes**. The notice **Settings saved.** confirms the save.
 
-1. Create a page named **Signup** with content: `[grabwp_waas_signup]`
-2. Create a page named **Dashboard** with content: `[grabwp_waas_dashboard]`
-3. Create a page named **Templates** with content: `[grabwp_waas_templates]`
+## Repair tools
 
-Then select each page in the dropdowns:
+Open the **Repair tools** accordion. These actions are separate forms. They are not part of **Save Changes**.
 
-| Setting | Page | Content |
-|---------|------|---------|
-| **Signup Page** | Signup | `[grabwp_waas_signup]` or Signup block |
-| **Dashboard Page** | Dashboard | `[grabwp_waas_dashboard]` or Dashboard block |
-| **Templates Page** | Templates | `[grabwp_waas_templates]` or Template Browser block |
-
-> **Tip:** You can also use Gutenberg blocks instead of shortcodes. See [Set Up Frontend Pages](/grabwp-tenancy-waas/waas-setup-frontend-pages) for details.
-
-## Custom Domains Settings
-
-Configure how tenant custom domains work. This determines the DNS instructions shown to your customers.
-
-| Setting | Options | Description |
-|---------|---------|-------------|
-| **Domain Mode** | Cloudflare SaaS / Direct IP | How customers connect their domains |
-| **CNAME Target** | e.g., `cdn.saas.yoursaas.com` | (Cloudflare mode) Value customers set in their CNAME record |
-| **Server Public IP** | e.g., `203.0.113.50` | (Direct IP mode) Value customers set in their A record |
-
-**For this tutorial:** Choose either mode. Details in [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains).
-
-## Activity Log
-
-| Setting | Default | Description |
-|---------|---------|-------------|
-| **Retention (days)** | 90 | How long to keep activity log entries (7–365 days) |
-| **Grace Period (days)** | 7 | Days before tenant is suspended after subscription cancellation. 0 = immediate suspension. |
+| Button | What it does |
+|--------|----------------|
+| **Create/Repair Signup and Dashboard Pages** | Creates or reuses Signup, Dashboard, Templates, and Pricing pages and stores their IDs. Success notice: **Signup and Dashboard pages checked.** |
+| **Create/Repair WooCommerce Anchor Product** | Creates the shared WooCommerce product used for WaaS checkout. Use this when WooCommerce billing is enabled. Success notice: **WooCommerce anchor product is ready.** |
 
 ## API Keys
 
-API keys allow external systems to interact with your WaaS platform via REST API.
+Open the **API Keys** accordion only if an external system will call the REST API with the `X-GrabWP-WaaS-API-Key` header.
 
-To generate a key:
-1. Enter an optional **Key Label** (e.g., "CI/CD pipeline")
+1. Enter an optional label. The placeholder is **Key label (optional)**.
 2. Click **Generate New API Key**
-3. **Copy the key immediately** - it is shown only once
+3. Copy the key from the warning notice. It is not shown again.
 
-Existing keys are listed with their label, prefix, and creation date. Click **Revoke** to deactivate a key.
+Existing keys list **Label**, **Prefix**, and **Created**. **Revoke** asks **Revoke this key?**
 
-> **Note:** API keys are for programmatic access only. Most setups don't need them unless you're integrating with external tools.
+## Verify
 
-## Save Settings
-
-Click **Save Settings**. Verify the success message appears at the top of the page.
+1. **Platform Domain** matches the domain in your wildcard DNS
+2. **Auth Mode** is **WAAS Auth (Email signup)**
+3. After the repair button, all four page dropdowns point at a page, and each **View** link opens it
 
 ---
 

@@ -1,61 +1,108 @@
 ---
 title: "Cài đặt"
-description: "Cài GrabWP Tenancy trên website WordPress của bạn"
-order: 3
-section: base
+description: "Cài GrabWP Tenancy và kiểm tra Status cùng Settings"
+order: 2
+section: tenancy
 ---
 
 # Cài đặt
 
 ## Yêu cầu
 
-- WordPress 5.0 trở lên
+- WordPress 5.0 trở lên (tested up to 7.1)
 - PHP 7.4 trở lên
-- MySQL 5.7 trở lên
-- Quyền truy cập quản trị WordPress
+- Quyền quản trị WordPress (`manage_options`)
 
-## Cài qua trang quản trị WordPress (Khuyến nghị)
+## Cài từ wp-admin
 
 1. Vào **Plugins → Add New**
 2. Tìm **GrabWP Tenancy**
-3. Nhấn **Install Now** → **Activate**
+3. Nhấn **Install Now**, rồi **Activate**
 
-Plugin sẽ tự động cài mọi thành phần cần thiết khi kích hoạt, bao gồm MU-plugin, rewrite rules và cấu trúc thư mục. Không cần chỉnh sửa file thủ công.
+Khi kích hoạt, plugin cài must-use plugin, loader trong `wp-config.php`, và rewrite rules. Bạn không sửa các file đó bằng tay cho lần cài thông thường.
 
-## Cài thủ công (Tải lên file ZIP)
+## Cài từ ZIP
 
-1. Tải file ZIP plugin từ [wordpress.org/plugins/grabwp-tenancy](https://wordpress.org/plugins/grabwp-tenancy/)
+1. Tải ZIP từ [wordpress.org/plugins/grabwp-tenancy](https://wordpress.org/plugins/grabwp-tenancy/)
 2. Vào **Plugins → Add New → Upload Plugin**
-3. Tải file ZIP lên → **Install Now** → **Activate Plugin**
+3. Tải ZIP, nhấn **Install Now**, rồi **Activate Plugin**
 
-## Kiểm tra cài đặt
+## Kiểm tra trên Status
 
-Sau khi kích hoạt, vào **Dashboard → GrabWP Tenancy → Status**.
+**Vào Tenancy → Status** (`page=grabwp-tenancy-status`).
 
-![Trang Status của GrabWP Tenancy hiển thị kiểm tra các thành phần](../images/grabwp-status.png)
+Tiêu đề trang là **GrabWP Tenancy Status**. Có ba tab: **Plugin General**, **Base Plugin**, và **Pro Plugin**.
 
-Trang Status sẽ tự động kiểm tra tất cả thành phần:
+![GrabWP Tenancy Status](../images/grabwp-status.png)
 
-| Chỉ báo | Ý nghĩa |
-|-----------|---------|
-| ✓ Xanh lá | Mọi thứ hoạt động bình thường |
-| ⚠ Cảnh báo | Lỗi nhỏ, nhấn **Auto Fix** |
-| ✗ Lỗi | Cần xử lý, nhấn **Auto Fix** hoặc làm theo hướng dẫn trên màn hình |
+### Plugin General
 
-Khi tất cả mục đều hiển thị màu xanh, bạn đã sẵn sàng tạo tenant site.
+`page=grabwp-tenancy-status&tab=general`
 
-Các tùy chọn và công cụ của plugin nằm trong menu **GrabWP Tenancy** trong trang quản trị WordPress (**Status**, **Tenants** và **Settings** nếu có). Mở **GrabWP Tenancy → Settings** để xem các mặc định áp dụng cho mọi tenant site.
+**Environment Checks** liệt kê những phần được cài lúc kích hoạt. Mỗi dòng có thể mở ra **Fix steps and install code**, **Copy Code**, và **Auto Fix** khi file ghi được.
 
-Tab **Tenant Capabilities** kiểm soát những gì quản trị viên tenant được phép làm bên trong site của họ:
+| Kiểm tra | Trạng thái ổn |
+|-------|----------------|
+| wp-config.php Loader | Active |
+| MU-Plugin | Installed |
+| Root .htaccess Rewrite Rules | Installed |
+| Data Directory .htaccess | Protected |
 
-![Settings của GrabWP Tenancy, tab Tenant Capabilities](../images/tenancy-settings-capabilities.png)
+**Auto Fix** ghi phần còn thiếu khi WordPress ghi được file. Nếu file không ghi được, dòng đó báo phải cài tay. Dùng **Copy Code** và làm theo các bước trên dòng đó.
 
-Tab **Performance & Security** đặt các mặc định về tài nguyên và bảo mật mà mỗi tenant kế thừa:
+### Base Plugin
 
-![Settings của GrabWP Tenancy, tab Performance and Security](../images/tenancy-settings-perf.png)
+`page=grabwp-tenancy-status&tab=base`
+
+![Status, tab Base Plugin](../images/09-status-base.png)
+
+**File Structure** báo base directory, file tenant mappings, file settings, và mẫu đường dẫn upload của tenant. **Tenant Capabilities** trên tab này phản ánh các checkbox trong Settings và có liên kết tới **Settings**.
+
+### Pro Plugin
+
+`page=grabwp-tenancy-status&tab=pro`
+
+![Status, tab Pro Plugin](../images/09-status-pro.png)
+
+Khi Pro đang bật, tab này hiện **Pro Version**, **Status** (**Active**), các cờ content isolation mặc định, và kiểu database mặc định. Khi chưa có Pro, tab này có **Upgrade to Pro**.
+
+**Verify:** Trên **Plugin General**, dòng loader và MU-plugin ở trạng thái xanh (active hoặc installed) trước khi bạn tạo tenant.
+
+## Settings
+
+**Vào Tenancy → Settings** (`page=grabwp-tenancy-settings`).
+
+Tiêu đề trang là **GrabWP Tenancy Settings**. Các giá trị này áp dụng cho mọi tenant. Pro có thể ghi đè cho một tenant. Xem [Tenant Settings & Overrides](/grabwp-tenancy-pro/pro-tenant-settings).
+
+### Tenant Capabilities
+
+![Settings, Tenant Capabilities](../images/tenancy-settings-capabilities.png)
+
+| Trường | Ghi chú |
+|-------|--------|
+| Install Plugins & Themes | **Disallow file mods**. Chặn tenant admin cài, cập nhật, hoặc xóa plugin và theme. |
+| Edit Plugins & Themes | **Disallow file edit**. Ẩn trình sửa file plugin và theme. |
+| Hide Plugin Management | **Hide Plugins menu** trên admin của tenant. |
+| Hide Theme Management | **Hide Appearance menu** trên admin của tenant. |
+| Hide GrabWP Plugins | **Hide from plugin list** trên site tenant. |
+
+### Performance & Security
+
+![Settings, Performance & Security](../images/tenancy-settings-perf.png)
+
+| Trường | Ghi chú |
+|-------|--------|
+| Disable WP-Cron | **Disable WP-Cron** trên site tenant. Bật mục này thì dùng system cron. |
+| Disable XML-RPC | **Disable XML-RPC** trên site tenant. |
+| Post Revisions | Số revision tối đa được giữ. |
+| Empty Trash Days | Số ngày trước khi bài trong thùng rác bị xóa. `0` tắt trash. |
+| Block External HTTP | **Block external HTTP** từ site tenant. |
+| Accessible Hosts | Danh sách host vẫn được phép khi external HTTP bị chặn, cách nhau bởi dấu phẩy. Hỗ trợ wildcard. |
+
+Nhấn **Save Settings**.
 
 ## Gỡ cài đặt
 
-Khi tắt plugin, tất cả thành phần đã chèn sẽ được gỡ bỏ, gồm MU-plugin, rewrite rules và loader trong `wp-config.php`.
+Deactivate plugin sẽ gỡ must-use plugin, loader trong `wp-config.php`, và rewrite rules ở thư mục gốc.
 
-**Dữ liệu tenant site của bạn KHÔNG bị xóa khi tắt plugin**. Các bảng cơ sở dữ liệu và file upload vẫn được giữ nguyên. Bạn có thể kích hoạt lại plugin bất kỳ lúc nào và toàn bộ site sẽ được khôi phục.
+Bảng cơ sở dữ liệu và upload của tenant không bị xóa. Activate lại thì các tenant hiện có vẫn dùng được.

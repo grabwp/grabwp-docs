@@ -1,49 +1,59 @@
 ---
 title: "Tenant Cloning"
-description: "Duplicate an existing tenant site into a new one"
+description: "Copy a tenant or the main site into another tenant"
 order: 15
 section: pro
 ---
 
 # Tenant Cloning
 
-Pro lets you duplicate any existing tenant site into a new one. Cloning copies the database, uploads, isolated content, and Pro config - then rewrites URLs to match the new site. Useful for staging environments, pre-configured site templates, or rapid provisioning.
+Clone copies a source tenant's database, extensions, and uploads into a target tenant, then updates site URLs. You can clone into a tenant that already exists, or create the target as part of the clone.
 
-## Before You Start
+The target's current data is replaced.
 
-- Both the source and destination must be tenant sites managed by GrabWP Tenancy Pro
-- Create the destination tenant first (empty), then clone into it
-- The destination site's existing data will be overwritten by the clone
+## Open Clone
 
-## How to Clone
+**Navigate to Tenancy → All Tenants**, then **Clone Tenant** on the source row (`page=grabwp-tenancy-pro-clone`).
 
-1. Go to **GrabWP Tenancy → Tenants**
-2. Find the **source** site (the one to copy from) and click the **Clone** row action link
-3. Select the **destination** site from the dropdown
-4. Click **Start Clone**
+On the starred **Main Site** row the action is **Clone to Tenant**. The page title is then **Clone Main Site**. For any other source the title is **Clone Tenant:** plus the tenant ID.
 
-![Clone tenant screen with source site and destination dropdown](../images/grabwp-tenancy-pro-tenant-clone.png)
+![Clone Tenant](../images/grabwp-tenancy-pro-tenant-clone.png)
 
-The clone runs 7 steps and shows live progress in your browser:
+The page shows **Source database type:** **Shared MySQL**, **Isolated MySQL**, or **Isolated SQLite**.
 
-| Step | What Happens |
-|------|-------------|
-| 1. Validate | Checks source and destination are valid and accessible |
-| 2. Export | Exports source database with prefix replacement |
-| 3. Import | Imports the exported database into the destination |
-| 4. Copy uploads | Copies the source uploads folder to the destination |
-| 5. Symlink extensions | Links per-site plugins/themes from source to destination |
-| 6. Fix URLs | Rewrites all stored URLs to match the destination domain |
-| 7. Cleanup | Removes temporary export files |
+Under **Choose clone target:**
 
-## After Cloning
+| Choice | What happens |
+|--------|----------------|
+| Clone to existing site | Pick **Target Tenant**. The list loads eligible tenants. Empty state: **No eligible tenants found**. |
+| Clone to new site | Continues to **Add New Tenant**. The notice says you will be redirected to clone the source into the new tenant. The button is **Create Tenant & Clone**. |
 
-- Visit the destination site and verify content, theme, and plugins loaded correctly
-- If the destination uses a different domain, check that all media URLs resolve correctly
-- The destination site has its own independent database - changes to one won't affect the other
+For an existing target, the summary shows **Tenant ID**, **Domains**, **Database Type**, and **Uploads**.
 
-## Notes
+> **Warning:** **This will overwrite all data in the target tenant (database, uploads, extensions). This action cannot be undone.**
 
-- Clone does not transfer active user sessions or transients
-- If plugins/themes isolation is enabled on the source but not the destination, extension symlinking is skipped
-- For large sites, the browser tab must stay open while the clone runs
+Click **Clone Tenant**. Confirm **Are you sure? All data in the target tenant will be overwritten.**
+
+Keep the browser tab open. Steps:
+
+| Step | What happens |
+|------|----------------|
+| 1. Validating source & target tenants | Checks both sides |
+| 2. Exporting source database | Exports the source database |
+| 3. Importing database into target tenant | Imports into the target, including across database types |
+| 4. Symlinking extensions | Links plugins and themes when isolation allows it |
+| 5. Updating site URLs | Rewrites stored URLs to the target |
+| 6. Copying uploads | Copies uploads (converted if the storage driver differs) |
+| 7. Cleaning up | Removes temporary files |
+
+Success: **Clone complete!** and **The source tenant data has been cloned into the target tenant.** Links: **Edit tenant**, **Homepage**, **Dashboard**.
+
+**Cancel** or **Back to Tenants** leaves without cloning.
+
+## After cloning
+
+- Open **Homepage** and confirm the theme, plugins, and content.
+- If media URLs still point at the source domain, open **Fix URLs** on the target. See [Fix URLs](/grabwp-tenancy-pro/pro-fix-urls).
+- The target keeps its own database. Later edits on one site do not change the other.
+
+**Verify:** The target row on **All Tenants** still has its own tenant ID and domain, and **Homepage** shows the cloned content.

@@ -1,91 +1,74 @@
 ---
 title: "WooCommerce Billing"
-description: "Use WooCommerce as an alternative billing provider for local payment gateways"
+description: "Enable the WooCommerce billing provider, set the anchor product, and check out on your own site"
 order: 34
 section: waas
 ---
 
 # WooCommerce Billing (Optional)
 
-Use WooCommerce as a billing provider instead of (or alongside) Polar. This is useful if you already run a WooCommerce store, need local payment gateways (e.g., Stripe, PayPal, local bank transfers), or prefer to manage billing within WordPress.
+WooCommerce is a billing provider inside WaaS. The **WooCommerce** card is registered only while the WooCommerce plugin is active. Other cards (Polar, Sepay, Stripe, Xendit, and any other enabled add-on) stay on the same screen. The first enabled provider is the default fallback.
 
-## When to Use WooCommerce
+Checkout runs on your WooCommerce checkout page. WaaS puts the plan price on one shared hidden product (the anchor product). Plans do not store their own WooCommerce product IDs.
 
-| Use case | Recommended provider |
-|----------|---------------------|
-| Simple subscription billing, international | **Polar** |
-| Existing WooCommerce store, need local gateways | **WooCommerce** |
-| Vietnamese bank transfers (VietQR) | **SePay** (separate plugin) |
-| Multiple payment options for customers | **Both** - enable multiple providers |
+## Install WooCommerce
 
-## Setup Overview
-
-### Step 1: Install WooCommerce
-
-1. Go to **Plugins → Add New**
-2. Search for **WooCommerce**
-3. Install and activate
-4. Complete the WooCommerce setup wizard (configure currency, payment methods, etc.)
+1. Go to **Plugins → Add New**.
+2. Install and activate **WooCommerce**.
+3. Finish the WooCommerce setup wizard, including store currency.
 
 > **WooCommerce docs:** [Getting started](https://woocommerce.com/document/woocommerce-getting-started/)
 
-### Step 2: Configure Payment Gateways
+In **WooCommerce → Settings → Payments**, enable the gateways you want (Stripe, PayPal, bank transfer, or another WooCommerce gateway).
 
-In **WooCommerce → Settings → Payments**, enable the payment gateways you want to offer:
+## Enable the provider
 
-- Stripe
-- PayPal
-- Bank transfer
-- Any other WooCommerce-compatible gateway
+**Navigate to Waas → Settings**, tab **Billing Providers** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
 
-> Each gateway has its own setup. See [WooCommerce payment gateway docs](https://woocommerce.com/product-category/woocommerce-extensions/payment-gateways/).
+![Billing Providers](../images/waas-billing-settings.png)
 
-### Step 3: Create Anchor Product
+The intro line is **Browse Add-ons** and **Enable providers below. The first enabled provider is the default fallback.**
 
-WaaS uses a shared **anchor product** - a hidden WooCommerce product used for dynamic pricing at checkout. You don't need separate products per plan.
+1. Open the **WooCommerce** card. It is absent until WooCommerce is active. Description: **WordPress-native checkout powered by WooCommerce.**
+2. Check **Enable this provider**.
+3. Set **Anchor Product** if you already have the hidden product ID. Help text: shared hidden WooCommerce product used for dynamic pricing checkout. Leave `0` to auto-create on first checkout.
+4. Click **Save Billing Providers**.
 
-1. Go to **WaaS → Settings → General**
-2. Click the **Create/Repair WooCommerce Anchor Product** button
-3. A hidden product is created automatically
+The card has no **Webhook URL**. WooCommerce updates WaaS through WordPress order hooks, not the billing webhook route.
 
-Or set the anchor product ID manually in the **WooCommerce Anchor Product** field.
+> **Note:** A provider can show **Active**, **Disabled**, or **Needs Config** (Polar, when the API token or webhook secret is empty). WooCommerce shows **Active** once it is enabled.
 
-### Step 4: Enable WooCommerce as Billing Provider
+## Create or repair the anchor product
 
-1. Go to **WaaS → Settings → Billing**
-2. Find the **WooCommerce** provider card
-3. Check **Enable this provider**
-4. Save settings
+**Navigate to Waas → Settings**, **General** tab (`page=grabwp-tenancy-waas-settings&tab=general`). Open **Repair tools**.
 
-### Step 5: Configure Currency
+1. Click **Create/Repair WooCommerce Anchor Product**.
+2. On success the notice is **WooCommerce anchor product is ready.** followed by the product ID.
 
-If WooCommerce is enabled, the **Primary Currency** is locked to your WooCommerce store currency. To change it, go to **WooCommerce → Settings → General → Currency**.
+You can paste that ID into **Anchor Product** on the WooCommerce card, or leave `0` so the next checkout creates it.
 
-## How It Works
+The anchor product must stay purchasable. If it is not, checkout fails with **The WaaS anchor product is not available for purchase.**
 
-Unlike Polar (which uses external checkout), WooCommerce checkout happens on your own site:
+## Currency
 
-1. Customer selects a paid plan during signup
-2. WaaS creates a WooCommerce cart with the plan price
-3. Customer is redirected to WooCommerce checkout
-4. Customer completes payment using your configured gateway
-5. On order completion, WaaS automatically provisions the site
+On **Billing Providers**, open **Currency Settings**. When the WooCommerce provider is enabled, **Primary Currency** is locked. The help tip says **Locked to WooCommerce store currency** and tells you to change it in WooCommerce settings (**WooCommerce → Settings → General**).
 
-No webhooks needed - WooCommerce uses WordPress action hooks internally.
+## What the customer does
 
-## WooCommerce Subscriptions (Optional)
+1. The customer picks a paid plan on signup.
+2. WaaS adds the anchor product to the WooCommerce cart with the plan price and signup data.
+3. The customer is sent to the WooCommerce checkout URL.
+4. After the order is paid, WaaS continues provisioning from the order.
 
-For recurring billing (automatic renewals), install the [WooCommerce Subscriptions](https://woocommerce.com/products/woocommerce-subscriptions/) plugin. Without it, WooCommerce handles one-time payments only and subscription renewals must be managed manually.
+No Polar-style webhook is required for this provider.
 
-## Limitations vs Polar
+## WooCommerce Subscriptions
 
-| Feature | Polar | WooCommerce |
-|---------|-------|-------------|
-| External hosted checkout | Yes | No (on-site) |
-| Automatic subscription management | Yes | Requires WC Subscriptions plugin |
-| Webhook-based status sync | Yes | Uses WP hooks (internal only) |
-| Setup complexity | Low | Medium (more configuration) |
-| Payment gateway flexibility | Limited (Polar's gateways) | High (any WC-compatible gateway) |
+Reading a WooCommerce subscription ID needs the WooCommerce Subscriptions plugin. Without it, `get_subscription` returns **WooCommerce Subscriptions is not active.** Checkout orders still work. Recurring status sync from WooCommerce Subscriptions does not.
+
+Install [WooCommerce Subscriptions](https://woocommerce.com/products/woocommerce-subscriptions/) when you want WooCommerce to own the renewal schedule. Otherwise treat WooCommerce checkout as the payment step and manage renewals with [subscription admin actions](/grabwp-tenancy-waas/waas-managing-subscriptions) or another billing provider.
+
+**Verify:** **WooCommerce** shows **Active**, a test signup for a paid plan lands on WooCommerce checkout with the plan total, and a completed order creates or updates the tenant subscription.
 
 ---
 

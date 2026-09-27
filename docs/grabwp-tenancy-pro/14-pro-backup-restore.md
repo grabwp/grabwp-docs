@@ -1,51 +1,104 @@
 ---
 title: "Backup & Restore"
-description: "Back up and restore individual tenant sites"
+description: "Back up, schedule, and restore one tenant"
 order: 14
 section: pro
 ---
 
 # Backup & Restore
 
-Pro lets you back up and restore any individual tenant site - including its database, uploads, Pro config, and isolated content.
+Back up one tenant at a time: database, isolated content, Pro config, and uploads. Global offload and schedule defaults live on **Tenancy → Pro Settings**, **Backup** tab. See [Pro Settings](/grabwp-tenancy-pro/pro-settings).
 
-## Creating a Backup
+## Create a backup
 
-1. Go to **GrabWP Tenancy → Tenants**
-2. Find the site and click the **Backup** row action link
-3. Click **Start Backup**
+**Navigate to Tenancy → All Tenants**, then **Backup Tenant** on the row (`page=grabwp-tenancy-pro-backup`).
 
-![Backup tenant screen with the Start Backup action](../images/grabwp-tenancy-pro-tenant-backup.png)
+The title is **Backup Tenant:** plus the tenant ID. Tabs: **Backup**, **Auto Backup Settings**, **Previous Backups**.
 
-The backup runs step-by-step in your browser:
+![Backup tab](../images/grabwp-tenancy-pro-tenant-backup.png)
+
+1. Stay on **Backup**.
+2. Click **Start Backup**.
+
+The run stays in the browser:
 
 1. Validating tenant
 2. Exporting database
-3. Exporting uploads
-4. Exporting isolated content
-5. Exporting Pro config
+3. Exporting isolated content
+4. Exporting Pro config
+5. Exporting uploads
 6. Packaging archive
 7. Cleaning up
 
-When complete, a ZIP archive is created. **Download and save this file** - it is stored on your server and you'll need it to restore.
+On success: **Backup complete!** and **Your backup archive is ready.** Click **Download Backup**.
 
-You can also schedule automatic backups per tenant from the **Auto Backup** tab:
+Keep the browser tab open until the steps finish.
 
-![Backup tenant screen, Auto Backup schedule tab](../images/grabwp-tenancy-pro-tenant-backup-auto.png)
+## Schedule backups for this tenant
 
-## Restoring from a Backup
+Open **Auto Backup Settings**.
 
-1. Go to **GrabWP Tenancy → Tenants**
-2. Find the site and click the **Restore** row action link
-3. Upload the backup ZIP file
-4. Click **Upload & Start Restore**
+![Auto Backup Settings](../images/grabwp-tenancy-pro-tenant-backup-auto.png)
 
-> ⚠ **Warning:** Restoring completely overwrites the site's current database, uploads, and config. This cannot be undone. Back up the current state first if you need to keep it.
+Each field can inherit the global default from **Pro Settings → Backup** (**Auto Backup**). The screen shows **Effective:** under each control.
 
-The restore runs 8 steps and shows progress in your browser.
+| Field | Notes |
+|-------|--------|
+| Scheduled Backups | **Inherit global default**, **Enabled**, or **Disabled**. |
+| Schedule | **Inherit global default**, or **Manual only (no schedule)**, **Daily**, **Weekly**, **Every two weeks**, **Monthly**. |
+| Backups to Keep | How many archives to retain (1 to 30). Older ones are pruned after a successful run. |
 
-![Restore tenant screen with the backup upload and restore action](../images/grabwp-tenancy-pro-tenant-restore.png)
+Click **Save Auto Backup Settings**.
 
-## Managing Backup Files
+Scheduled runs use WP-Cron. If **DISABLE_WP_CRON** is on, set up a system cron. **Pro Settings → Backup** includes **Schedule Assurance** for the next run.
 
-Backup archives are stored on your server. To manage disk space, download old backups via FTP/SFTP and delete them from the server. Keep copies in a safe offsite location.
+## Previous backups
+
+Open **Previous Backups**.
+
+![Previous Backups](../images/12-tenant-backup-previous.png)
+
+Columns: **Date**, **Filename**, **Size**, **Local**, **Remote**.
+
+| When | Actions |
+|------|---------|
+| File is on the server | **Download**, **Delete Local** |
+| Offload is configured and the file is still local | **Offload** |
+| File is remote only | **Download to Local** |
+| File is remote | **Delete Remote** |
+
+**Delete Local** asks **Delete local backup `{file}`? This cannot be undone.** **Delete Remote** asks the same for the remote copy.
+
+## Restore
+
+**Navigate to Tenancy → All Tenants**, then **Restore Tenant** (`page=grabwp-tenancy-pro-restore`).
+
+![Restore Tenant](../images/grabwp-tenancy-pro-tenant-restore.png)
+
+> **Warning:** **This will completely overwrite all data for this tenant (database, uploads, config). This action cannot be undone.**
+
+Tabs:
+
+| Tab | What to do |
+|-----|------------|
+| From Existing Backup | Pick a row and click **Restore**. Confirm **Restore from `{file}`? This will OVERWRITE all tenant data and cannot be undone.** |
+| Upload Archive | Choose **Backup Archive (.zip)** and click **Upload & Start Restore**. The screen shows the max upload size. |
+
+Restore steps:
+
+1. Validating archive
+2. Extracting archive
+3. Verifying contents
+4. Restoring database
+5. Restoring isolated content
+6. Restoring Pro config
+7. Restoring uploads
+8. Cleaning up
+
+Success: **Restore complete!**
+
+A restore can land on a different database type than the backup (shared MySQL, isolated MySQL, or SQLite).
+
+If URLs in the restored database do not match the tenant domain, use [Fix URLs](/grabwp-tenancy-pro/pro-fix-urls).
+
+**Verify:** Open **Homepage** or the tenant domain and confirm the restored content. **Previous Backups** lists the archive you created.

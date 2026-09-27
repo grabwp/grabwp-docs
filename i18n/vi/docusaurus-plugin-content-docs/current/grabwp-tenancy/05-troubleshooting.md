@@ -1,74 +1,84 @@
 ---
-title: "Khắc phục sự cố"
-description: "Các vấn đề thường gặp và cách xử lý"
-order: 6
-section: base
+title: "Xử lý sự cố"
+description: "Các lỗi thường gặp và cách xử lý"
+order: 5
+section: tenancy
 ---
 
-# Khắc phục sự cố
+# Xử lý sự cố
 
-## Trước tiên: kiểm tra trang Status
+## Xem Status trước
 
-Vào **GrabWP Tenancy → Status**. Trang này sẽ tự động kiểm tra tất cả thành phần của plugin và cung cấp nút **Auto Fix** cho hầu hết các lỗi phổ biến.
+**Vào Tenancy → Status** (`page=grabwp-tenancy-status`).
 
----
+![GrabWP Tenancy Status](../images/grabwp-status.png)
 
-## Sự cố plugin
+Mở **Plugin General** (`tab=general`). Dùng **Auto Fix** trên dòng chưa ổn, khi nút có sẵn. Nếu file không ghi được, mở **Fix steps and install code** và dùng **Copy Code**.
 
-### Menu "Tenancy" không xuất hiện trong trang quản trị WordPress
-Vào **GrabWP Tenancy → Status** và kiểm tra các dòng **wp-config.php Loader** và **MU-Plugin**. Dùng **Auto Fix** nếu một trong hai hiển thị cảnh báo hoặc lỗi.
+| Tab | Dùng khi |
+|-----|------------|
+| Plugin General | Loader, MU-plugin, rewrite rules, bảo vệ thư mục dữ liệu |
+| Base Plugin | Thư mục, file mappings, file settings, cờ capability |
+| Pro Plugin | Pro có **Active** hay không, cùng isolation và kiểu database mặc định |
 
-### Gặp lỗi sau khi kích hoạt
-Dùng trang Status để kiểm tra tất cả thành phần. Nếu lỗi vẫn còn, hãy tắt plugin. Website sẽ quay lại trạng thái trước đó và không có dữ liệu tenant nào bị xóa.
+Chi tiết: [Cài đặt](/grabwp-tenancy/installation-guide).
 
----
+## Lỗi plugin
 
-## Sự cố domain
+### Không thấy menu Tenancy
 
-### Site không tải hoặc hiển thị sai trang
-- Xác nhận domain đã được thêm trong control panel hosting
-- Xác nhận DNS đang trỏ về máy chủ của bạn bằng [dnschecker.org](https://dnschecker.org)
-- Chờ DNS cập nhật, có thể mất đến 24 giờ
-- Xóa cache trình duyệt và thử lại ở chế độ ẩn danh
+Trên **Plugin General**, kiểm tra **wp-config.php Loader** và **MU-Plugin**. Nhấn **Auto Fix** nếu một trong hai chưa active hoặc installed. Bạn cần capability `manage_options` để thấy **Tenancy**.
 
-### Lỗi "Domain already in use"
-Mỗi domain chỉ có thể được gán cho một tenant site. Hãy kiểm tra danh sách tenant, gỡ domain khỏi site đang dùng nó rồi gán lại.
+### Lỗi sau khi kích hoạt
 
-### Lỗi "Invalid domain format"
-Hãy dùng định dạng chuẩn: `example.com` hoặc `sub.example.com`. Không dùng địa chỉ IP, `localhost` hoặc ký tự đặc biệt.
+Đọc **Plugin General**. Deactivate plugin sẽ gỡ loader, must-use plugin, và rewrite rules ở thư mục gốc. Bảng và upload của tenant không bị xóa. Activate lại thì tenant trở lại.
 
----
+## Lỗi domain
 
-## Sự cố nội dung
+### Domain hiện sai site hoặc trang mặc định của host
 
-### Tenant site hiển thị nội dung của site chính
-1. Tắt plugin rồi kích hoạt lại
-2. Kiểm tra trang Status xem có lỗi nào không
-3. Xóa toàn bộ cache: trình duyệt, plugin cache của WordPress và cache hosting/CDN
+- Domain đã gắn trên tenant: **Tenancy → All Tenants**, cột **Domains**, hoặc **Settings** trên dòng.
+- Hosting dùng thư mục WordPress này làm document root. Xem [Domain và DNS](/grabwp-tenancy/hosting-dns-setup).
+- DNS trỏ về máy chủ này ([dnschecker.org](https://dnschecker.org)).
+- Chờ phân giải, rồi thử lại trong cửa sổ riêng tư.
+
+### Domain(s) already in use
+
+Lỗi là **Domain(s) already in use** (hoặc **Domain(s) already in use by other tenants** khi sửa). Mỗi domain chỉ thuộc một tenant. Gỡ domain khỏi tenant kia, rồi gán lại.
+
+### Invalid domain format
+
+Lỗi là **Invalid domain format(s)**. Dùng `example.com` hoặc `subdomain.example.com`. Đừng dùng địa chỉ IP, `localhost`, `http://`, hoặc tiền tố `www` trong ô.
+
+### Cột Domains hiện Path access only
+
+Tenant được tạo với **I'll set up a domain later**. Mở **Settings** trên dòng, thêm domain, nhấn **Update Tenant**, rồi hoàn tất DNS. **Path URL** trên Edit chỉ là bản xem trước tạm thời.
+
+## Lỗi nội dung
+
+### Tenant hiện nội dung của site chính
+
+1. Deactivate rồi activate GrabWP Tenancy.
+2. Kiểm tra lại **Plugin General**.
+3. Xóa cache trình duyệt, cache plugin WordPress, và cache của host hoặc CDN.
 
 ### Upload media thất bại
-Kiểm tra **GrabWP Tenancy → Status → Base Plugin Status**. Thư mục upload phải được liệt kê tại đó. Đồng thời xác nhận WordPress có quyền ghi vào thư mục `wp-content/uploads/`.
 
----
+Mở **Tenancy → Status → Base Plugin** và xác nhận base directory tồn tại và ghi được. WordPress phải ghi được đường dẫn upload của tenant hiện ở đó.
 
-## Sự cố truy cập
+## Lỗi truy cập
 
-### Không đăng nhập được vào tenant site
-Tạo token truy cập mới tại **GrabWP Tenancy → Tenants → Get Token**. Token hết hạn sau 24 giờ.
+### Liên kết admin của tenant lỗi
+
+Trên **All Tenants**, nhấn **Admin** lần nữa. Liên kết mang access token có hiệu lực 30 phút theo mặc định. Liên kết hết hạn hoặc bị sửa hiện **Invalid or expired admin access token.**
 
 ### Quên mật khẩu admin của tenant
-Dùng liên kết "Forgot Password" trên trang đăng nhập của tenant site (`yourdomain.com/wp-login.php`).
 
----
+Dùng **Lost your password?** trên màn đăng nhập của tenant đó (`https://the-tenant-domain/wp-login.php`).
 
-## Nhận hỗ trợ
+## Nhờ hỗ trợ
 
-Khi liên hệ hỗ trợ, hãy gửi kèm:
-- Phiên bản WordPress
-- Phiên bản PHP
-- Thông báo lỗi trong trang Status
-- Các bước bạn đã thử
+Kèm phiên bản WordPress, phiên bản PHP, tab Status đang hiện lỗi, và những gì bạn đã thử.
 
-**Kênh hỗ trợ:**
-- [Diễn đàn hỗ trợ WordPress](https://wordpress.org/support/plugin/grabwp-tenancy/)
+- [Diễn đàn hỗ trợ WordPress.org](https://wordpress.org/support/plugin/grabwp-tenancy/)
 - Email: hello@grabwp.com

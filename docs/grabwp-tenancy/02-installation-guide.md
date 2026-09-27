@@ -1,61 +1,108 @@
 ---
 title: "Installation"
-description: "Install GrabWP Tenancy on your WordPress site"
-order: 3
-section: base
+description: "Install GrabWP Tenancy and confirm Status and Settings"
+order: 2
+section: tenancy
 ---
 
 # Installation
 
 ## Requirements
 
-- WordPress 5.0 or later
+- WordPress 5.0 or later (tested up to 7.1)
 - PHP 7.4 or later
-- MySQL 5.7 or later
-- WordPress admin access
+- WordPress admin access (`manage_options`)
 
-## Install via WordPress Admin (Recommended)
+## Install from wp-admin
 
 1. Go to **Plugins → Add New**
 2. Search for **GrabWP Tenancy**
-3. Click **Install Now** → **Activate**
+3. Click **Install Now**, then **Activate**
 
-The plugin automatically installs all required components on activation - MU-plugin, rewrite rules, and directory structure. No manual file editing needed.
+Activation installs the must-use plugin, the `wp-config.php` loader, and the rewrite rules. You do not edit those files by hand for a normal install.
 
-## Install Manually (ZIP Upload)
+## Install from a ZIP
 
 1. Download the plugin ZIP from [wordpress.org/plugins/grabwp-tenancy](https://wordpress.org/plugins/grabwp-tenancy/)
 2. Go to **Plugins → Add New → Upload Plugin**
-3. Upload the ZIP → **Install Now** → **Activate Plugin**
+3. Upload the ZIP, click **Install Now**, then **Activate Plugin**
 
-## Verify the Installation
+## Verify on Status
 
-After activation, go to **Dashboard → GrabWP Tenancy → Status**.
+**Navigate to Tenancy → Status** (`page=grabwp-tenancy-status`).
 
-![GrabWP Tenancy Status page showing component checks](../images/grabwp-status.png)
+The page title is **GrabWP Tenancy Status**. It has three tabs: **Plugin General**, **Base Plugin**, and **Pro Plugin**.
 
-The Status page checks all components automatically:
+![GrabWP Tenancy Status](../images/grabwp-status.png)
 
-| Indicator | Meaning |
-|-----------|---------|
-| ✓ Green | Everything working |
-| ⚠ Warning | Minor issue - click **Auto Fix** |
-| ✗ Error | Needs attention - click **Auto Fix** or follow on-screen instructions |
+### Plugin General
 
-Once all items are green, you're ready to create tenant sites.
+`page=grabwp-tenancy-status&tab=general`
 
-Plugin options and tools live under **GrabWP Tenancy** in the WordPress admin menu (**Status**, **Tenants**, and **Settings** where applicable). Open **GrabWP Tenancy → Settings** to review the defaults applied to every tenant site.
+**Environment Checks** lists the pieces activation installs. Each row can be expanded for **Fix steps and install code**, **Copy Code**, and **Auto Fix** when the file is writable.
 
-The **Tenant Capabilities** tab controls what tenant administrators can do inside their own site:
+| Check | Healthy state |
+|-------|----------------|
+| wp-config.php Loader | Active |
+| MU-Plugin | Installed |
+| Root .htaccess Rewrite Rules | Installed |
+| Data Directory .htaccess | Protected |
 
-![GrabWP Tenancy Settings, Tenant Capabilities tab](../images/tenancy-settings-capabilities.png)
+**Auto Fix** writes the missing piece when WordPress can write the file. If the file is not writable, the row says a manual install is required. Use **Copy Code** and follow the fix steps on that row.
 
-The **Performance & Security** tab sets the resource and hardening defaults inherited by each tenant:
+### Base Plugin
 
-![GrabWP Tenancy Settings, Performance and Security tab](../images/tenancy-settings-perf.png)
+`page=grabwp-tenancy-status&tab=base`
+
+![Status, Base Plugin tab](../images/09-status-base.png)
+
+**File Structure** reports the base directory, the tenant mappings file, the settings file, and the tenant uploads pattern. **Tenant Capabilities** on this tab mirrors the Settings checkboxes and links to **Settings**.
+
+### Pro Plugin
+
+`page=grabwp-tenancy-status&tab=pro`
+
+![Status, Pro Plugin tab](../images/09-status-pro.png)
+
+With Pro active, this tab shows **Pro Version**, **Status** (**Active**), the default content isolation flags, and the default database type. Without Pro, the tab offers **Upgrade to Pro**.
+
+**Verify:** On **Plugin General**, the loader and MU-plugin rows show a green active or installed state before you create tenants.
+
+## Settings
+
+**Navigate to Tenancy → Settings** (`page=grabwp-tenancy-settings`).
+
+The page title is **GrabWP Tenancy Settings**. These values apply to every tenant. Pro can override them for one tenant. See [Tenant Settings & Overrides](/grabwp-tenancy-pro/pro-tenant-settings).
+
+### Tenant Capabilities
+
+![Settings, Tenant Capabilities](../images/tenancy-settings-capabilities.png)
+
+| Field | Notes |
+|-------|--------|
+| Install Plugins & Themes | **Disallow file mods**. Stops tenant admins from installing, updating, or deleting plugins and themes. |
+| Edit Plugins & Themes | **Disallow file edit**. Hides the plugin and theme file editor. |
+| Hide Plugin Management | **Hide Plugins menu** on tenant admin screens. |
+| Hide Theme Management | **Hide Appearance menu** on tenant admin screens. |
+| Hide GrabWP Plugins | **Hide from plugin list** on tenant sites. |
+
+### Performance & Security
+
+![Settings, Performance & Security](../images/tenancy-settings-perf.png)
+
+| Field | Notes |
+|-------|--------|
+| Disable WP-Cron | **Disable WP-Cron** on tenant sites. Use a system cron if you turn this on. |
+| Disable XML-RPC | **Disable XML-RPC** on tenant sites. |
+| Post Revisions | Maximum revisions to keep. |
+| Empty Trash Days | Days before trashed posts are deleted. `0` disables trash. |
+| Block External HTTP | **Block external HTTP** from tenant sites. |
+| Accessible Hosts | Comma-separated hosts still allowed when external HTTP is blocked. Wildcards are supported. |
+
+Click **Save Settings**.
 
 ## Uninstalling
 
-Deactivating the plugin removes all injected components (MU-plugin, rewrite rules, wp-config.php loader).
+Deactivating the plugin removes the must-use plugin, the `wp-config.php` loader, and the root rewrite rules.
 
-**Your tenant sites' data is NOT deleted on deactivation** - database tables and uploads are preserved. You can safely reactivate the plugin at any time and all sites will be restored.
+Tenant database tables and uploads are not deleted. Activate the plugin again and the existing tenants are available.

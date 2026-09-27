@@ -16,65 +16,61 @@ What you need before setting up GrabWP WaaS.
 You need a WordPress installation where you can:
 
 - Install and activate plugins
-- Access the file system (via FTP, SSH, or hosting file manager)
-- Edit `wp-config.php` if needed
+- Access the file system (FTP, SSH, or the hosting file manager)
+- Edit `wp-config.php` if you lock directory paths there
 
-**Recommended:** A VPS or dedicated server (e.g., DigitalOcean, Vultr, Hetzner) gives you full control. Shared hosting works but may limit advanced features like custom domains and S3 storage.
+**Recommended:** A VPS or dedicated server gives you control of DNS, SSL, and PHP functions such as `symlink()`. Shared hosting can run the base setup.
 
 ### Domain Name
 
-A domain pointed to your server (e.g., `yoursaas.com`). Tenant sites will be created as subdomains: `customer1.yoursaas.com`, `customer2.yoursaas.com`, etc.
+A domain pointed at your server (for example `yoursaas.com`). Tenant sites are created as subdomains of the **Platform Domain**, such as `customer1.yoursaas.com`.
 
-### PHP 7.4+ and MySQL 5.7+
+Wildcard DNS must resolve `*.yoursaas.com` to the server. You set the domain later in [Configure WaaS General Settings](/grabwp-tenancy-waas/waas-configure-general).
 
-Check your versions:
-- **PHP:** Go to **Tools → Site Health → Info → Server** in WordPress admin
-- **MySQL:** Same location, under **Database**
+### PHP 7.4+ and WordPress 5.0+
+
+GrabWP Tenancy, Pro, and WaaS each require WordPress 5.0+ and PHP 7.4+.
+
+Check versions in **Tools → Site Health → Info → Server**.
 
 ### SSL Certificate
 
-HTTPS is required for payment processing and tenant security. Most hosts offer free SSL via Let's Encrypt.
+HTTPS is required for payment providers and for tenant sites. Cover the platform domain and `*.yoursaas.com`. Most hosts offer Let's Encrypt.
 
 ## Recommended
 
 ### SMTP Plugin
 
-WordPress default email uses `wp_mail()` which often lands in spam. Install an SMTP plugin to ensure reliable email delivery for OTP codes and notifications.
+WordPress `wp_mail()` often lands in spam. Install an SMTP plugin so signup and dashboard login emails are delivered.
 
 Popular options:
+
 - [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/)
 - [FluentSMTP](https://wordpress.org/plugins/fluent-smtp/)
 
-### Polar Account (for paid plans)
+### Polar.sh Account (for paid plans)
 
-If you want to charge for plans, create a free account at [polar.sh](https://polar.sh). Polar handles payments, subscriptions, and invoicing. Setup details in [Set Up Billing](/grabwp-tenancy-waas/waas-setup-billing).
+**Polar.sh** is the billing provider built into WaaS. Create an organization at [polar.sh](https://polar.sh) if you will charge for plans. Setup is in [Set Up Billing](/grabwp-tenancy-waas/waas-setup-billing).
+
+You can also charge with WooCommerce, or with the Stripe, Sepay, and Xendit add-on plugins.
+
+### Pro License
+
+**Tenancy → License** is where you activate GrabWP Tenancy Pro. Add-on ZIP downloads from **Waas → Settings → Add-ons** use that license.
 
 ## Optional
 
 ### Cloudflare (for custom domains)
 
-If you want customers to use their own domains (e.g., `mybusiness.com` instead of `mybusiness.yoursaas.com`), Cloudflare's **SaaS Custom Hostnames** feature is the easiest way.
-
-- Free Cloudflare plan works for basic setup
-- SaaS Custom Hostnames requires contacting Cloudflare to enable on your zone
-- See [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains) for setup
+Customers can attach their own domains (for example `mybusiness.com`) in addition to the platform subdomain. **Cloudflare SaaS (CNAME)** is one of the two **Domain Mode** choices. See [Managing Custom Domains](/grabwp-tenancy-waas/waas-managing-domains).
 
 ### S3-Compatible Object Storage
 
-Offload tenant media uploads to cloud storage instead of local disk. Useful for:
-- Reducing server disk usage
-- Serving media via CDN
-- Easier backups and migration
-
-Supported providers: AWS S3, Cloudflare R2, DigitalOcean Spaces, MinIO, any S3-compatible API.
-
-See [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage) for setup.
+Offload tenant media from local disk. Supported from **Tenancy → Pro Settings → Storage**: any S3-compatible API (AWS S3, Cloudflare R2, DigitalOcean Spaces, MinIO). See [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage).
 
 ### WooCommerce
 
-Alternative billing provider if you prefer WooCommerce over Polar. Useful if you already run a WooCommerce store or need local payment gateways.
-
-See [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce) for setup.
+WooCommerce appears as a billing provider when the WooCommerce plugin is active. See [WooCommerce Billing](/grabwp-tenancy-waas/waas-optional-woocommerce).
 
 ---
 

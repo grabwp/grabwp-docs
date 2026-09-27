@@ -1,92 +1,75 @@
 ---
 title: "Thanh toán WooCommerce"
-description: "Sử dụng WooCommerce làm nhà cung cấp thanh toán thay thế cho các cổng thanh toán địa phương"
+description: "Bật nhà cung cấp WooCommerce, đặt anchor product, và thanh toán trên site của bạn"
 order: 34
 section: waas
 ---
 
-# Thanh toán WooCommerce (Tùy chọn)
+# Thanh toán WooCommerce (tùy chọn)
 
-Sử dụng WooCommerce làm nhà cung cấp thanh toán thay thế (hoặc song song với) Polar. Điều này rất hữu ích nếu bạn đang có sẵn một cửa hàng WooCommerce, cần các cổng thanh toán địa phương (như Stripe, PayPal, chuyển khoản ngân hàng trong nước), hoặc muốn quản lý phần thanh toán ngay trong WordPress.
+WooCommerce là một nhà cung cấp thanh toán trong WaaS. Thẻ **WooCommerce** chỉ được đăng ký khi plugin WooCommerce đang bật. Các thẻ khác (Polar, Sepay, Stripe, Xendit, và add-on đã bật) ở cùng màn hình. Nhà cung cấp được bật đầu tiên là fallback mặc định.
 
-## Khi nào nên dùng WooCommerce
+Checkout chạy trên trang checkout WooCommerce của bạn. WaaS gắn giá gói vào một sản phẩm ẩn dùng chung (anchor product). Plan không lưu WooCommerce product ID riêng.
 
-| Trường hợp sử dụng | Nhà cung cấp đề xuất |
-|----------|---------------------|
-| Thanh toán subscription đơn giản, quốc tế | **Polar** |
-| Đã có cửa hàng WooCommerce, cần cổng thanh toán địa phương | **WooCommerce** |
-| Chuyển khoản ngân hàng Việt Nam (VietQR) | **SePay** (plugin riêng lẻ) |
-| Nhiều tùy chọn thanh toán cho khách hàng | **Cả hai** (bật nhiều nhà cung cấp) |
+## Cài WooCommerce
 
-## Tổng quan cài đặt
-
-### Bước 1: Cài đặt WooCommerce
-
-1. Vào **Plugins → Add New**
-2. Tìm kiếm **WooCommerce**
-3. Cài đặt và kích hoạt plugin
-4. Hoàn thành trình hướng dẫn thiết lập WooCommerce (cấu hình tiền tệ, phương thức thanh toán, v.v.)
+1. Vào **Plugins → Add New**.
+2. Cài và kích hoạt **WooCommerce**.
+3. Hoàn tất trình hướng dẫn WooCommerce, gồm đơn vị tiền của cửa hàng.
 
 > **Tài liệu WooCommerce:** [Bắt đầu](https://woocommerce.com/document/woocommerce-getting-started/)
 
-### Bước 2: Cấu hình cổng thanh toán
+Trong **WooCommerce → Settings → Payments**, bật cổng bạn muốn (Stripe, PayPal, chuyển khoản, hoặc cổng WooCommerce khác).
 
-Trong **WooCommerce → Settings → Payments**, hãy bật các cổng thanh toán mà bạn muốn cung cấp:
+## Bật nhà cung cấp
 
-- Stripe
-- PayPal
-- Chuyển khoản ngân hàng
-- Bất kỳ cổng thanh toán nào tương thích với WooCommerce
+**Truy cập Waas → Settings**, tab **Billing Providers** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-settings&tab=billing`).
 
-> Mỗi cổng thanh toán có cách cài đặt riêng. Xem thêm [tài liệu cổng thanh toán của WooCommerce](https://woocommerce.com/product-category/woocommerce-extensions/payment-gateways/).
+![Billing Providers](../images/waas-billing-settings.png)
 
-### Bước 3: Tạo sản phẩm anchor
+Dòng giới thiệu là **Browse Add-ons** và **Enable providers below. The first enabled provider is the default fallback.**
 
-WaaS sử dụng một **sản phẩm anchor** dùng chung (một sản phẩm WooCommerce ẩn) để định giá động tại trang checkout. Bạn không cần tạo các sản phẩm riêng biệt cho từng plan.
+1. Mở thẻ **WooCommerce**. Thẻ không có cho đến khi WooCommerce đang bật. Mô tả: **WordPress-native checkout powered by WooCommerce.**
+2. Chọn **Enable this provider**.
+3. Đặt **Anchor Product** nếu bạn đã có ID sản phẩm ẩn. Chú thích: sản phẩm WooCommerce ẩn dùng chung cho checkout giá động. Để `0` để tự tạo ở lần checkout đầu.
+4. Bấm **Save Billing Providers**.
 
-1. Vào **WaaS → Settings → General**
-2. Bấm nút **Create/Repair WooCommerce Anchor Product**
-3. Một sản phẩm ẩn sẽ được tạo tự động
+Thẻ không có **Webhook URL**. WooCommerce cập nhật WaaS qua hook đơn hàng WordPress, không qua route webhook thanh toán.
 
-Hoặc bạn có thể nhập thủ công ID của sản phẩm vào trường **WooCommerce Anchor Product**.
+> **Note:** Một nhà cung cấp có thể hiện **Active**, **Disabled**, hoặc **Needs Config** (Polar, khi thiếu API token hoặc webhook secret). WooCommerce hiện **Active** sau khi được bật.
 
-### Bước 4: Bật WooCommerce làm nhà cung cấp thanh toán
+## Tạo hoặc sửa anchor product
 
-1. Vào **WaaS → Settings → Billing**
-2. Tìm thẻ nhà cung cấp **WooCommerce**
-3. Đánh dấu vào hộp kiểm **Enable this provider**
-4. Lưu cài đặt
+**Truy cập Waas → Settings**, tab **General** (`page=grabwp-tenancy-waas-settings&tab=general`). Mở **Repair tools**.
 
-### Bước 5: Cấu hình tiền tệ
+1. Bấm **Create/Repair WooCommerce Anchor Product**.
+2. Khi thành công, thông báo là **WooCommerce anchor product is ready.** kèm product ID.
 
-Nếu bạn bật WooCommerce, mục **Primary Currency** sẽ bị khóa theo loại tiền tệ trong cửa hàng WooCommerce của bạn. Để thay đổi loại tiền tệ này, hãy vào **WooCommerce → Settings → General → Currency**.
+Bạn có thể dán ID đó vào **Anchor Product** trên thẻ WooCommerce, hoặc để `0` để lần checkout sau tự tạo.
 
-## Cách hoạt động
+Anchor product phải còn mua được. Nếu không, checkout lỗi với **The WaaS anchor product is not available for purchase.**
 
-Khác với Polar (sử dụng trang checkout bên ngoài), quá trình thanh toán của WooCommerce diễn ra ngay trên trang web của bạn:
+## Tiền tệ
 
-1. Khách hàng chọn một plan trả phí khi đăng ký
-2. WaaS tạo một giỏ hàng WooCommerce với mức giá của plan đó
-3. Khách hàng được chuyển hướng đến trang checkout của WooCommerce
-4. Khách hàng hoàn tất thanh toán bằng cổng thanh toán bạn đã cấu hình
-5. Khi đơn hàng hoàn tất, WaaS sẽ tự động cấp phát (provisioning) trang web
+Trên **Billing Providers**, mở **Currency Settings**. Khi nhà cung cấp WooCommerce đang bật, **Primary Currency** bị khóa. Chú thích nói **Locked to WooCommerce store currency** và bảo đổi trong thiết lập WooCommerce (**WooCommerce → Settings → General**).
 
-Không cần dùng webhook, vì WooCommerce sử dụng các action hook nội bộ của WordPress.
+## Khách làm gì
 
-## WooCommerce Subscriptions (Tùy chọn)
+1. Khách chọn gói trả phí lúc đăng ký.
+2. WaaS thêm anchor product vào giỏ WooCommerce với giá gói và dữ liệu đăng ký.
+3. Khách được chuyển tới URL checkout WooCommerce.
+4. Sau khi đơn được thanh toán, WaaS tiếp tục cấp site từ đơn đó.
 
-Để thanh toán định kỳ (tự động gia hạn), hãy cài đặt plugin [WooCommerce Subscriptions](https://woocommerce.com/products/woocommerce-subscriptions/). Nếu không có plugin này, WooCommerce chỉ xử lý các khoản thanh toán một lần và bạn sẽ phải quản lý việc gia hạn subscription theo cách thủ công.
+Nhà cung cấp này không cần webhook kiểu Polar.
 
-## Giới hạn so với Polar
+## WooCommerce Subscriptions
 
-| Tính năng | Polar | WooCommerce |
-|---------|-------|-------------|
-| Trang checkout bên ngoài | Có | Không (trên trang web của bạn) |
-| Quản lý subscription tự động | Có | Yêu cầu plugin WC Subscriptions |
-| Đồng bộ trạng thái qua webhook | Có | Dùng WP hook (chỉ nội bộ) |
-| Độ phức tạp khi cài đặt | Thấp | Trung bình (cần cấu hình nhiều hơn) |
-| Sự linh hoạt của cổng thanh toán | Giới hạn (các cổng của Polar) | Cao (mọi cổng tương thích với WC) |
+Đọc một WooCommerce subscription ID cần plugin WooCommerce Subscriptions. Không có plugin đó, `get_subscription` trả **WooCommerce Subscriptions is not active.** Đơn checkout vẫn chạy. Đồng bộ trạng thái gia hạn từ WooCommerce Subscriptions thì không.
+
+Cài [WooCommerce Subscriptions](https://woocommerce.com/products/woocommerce-subscriptions/) khi bạn muốn WooCommerce giữ lịch gia hạn. Nếu không, coi checkout WooCommerce là bước thanh toán và quản lý gia hạn bằng [thao tác admin subscription](/grabwp-tenancy-waas/waas-managing-subscriptions) hoặc nhà cung cấp khác.
+
+**Verify:** **WooCommerce** hiện **Active**, một lượt đăng ký thử với gói trả phí vào checkout WooCommerce đúng tổng tiền gói, và đơn hoàn tất tạo hoặc cập nhật subscription của tenant.
 
 ---
 
-**Tiếp theo:** [Khắc phục sự cố](/grabwp-tenancy-waas/waas-troubleshooting)
+**Tiếp theo:** [Xử lý sự cố](/grabwp-tenancy-waas/waas-troubleshooting)

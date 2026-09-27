@@ -1,108 +1,109 @@
 ---
 title: "Set Up Templates"
-description: "Create site templates with tags, plan restrictions, and thumbnails for the customer gallery"
+description: "Register a tenant as a template, then organize tags, tag groups, and CSV import"
 order: 28
 section: waas
 ---
 
 # Set Up Templates
 
-Templates are pre-built site designs that customers choose during signup. Each template is a snapshot of an existing tenant site - theme, content, settings, and all.
+A template is an existing tenant marked as a blueprint. When a customer signs up with that template, the new site is cloned from it. The source tenant must stay in place.
 
-Navigate to **WaaS → Templates** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-templates`).
+Navigate to **Waas → Templates** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-templates`).
 
 ![Templates list](../images/waas-templates-list.png)
 
-## How Templates Work
+Sub-navigation on this screen: **Templates** | **Tags** | **Tag Groups** | **Bulk**.
 
-```
-1. You create a tenant site and design it
-2. You register that tenant as a template
-3. Customers browse templates during signup
-4. When a customer signs up, their new site is cloned from the template
-```
+List columns: **Template Name**, **Slug**, **Source Tenant**, **Tags**, **Price**, **Active**, **Order**, **Actions**.
 
-Templates are stored as references to existing tenant sites, not as separate copies. The template's tenant must remain active.
+## Step 1: Create a Source Tenant
 
-## Step 1: Create a Tenant for Your Template
+1. Go to **Tenancy → Add New** (`/wp-admin/admin.php?page=grabwp-tenancy-create`)
+2. Create a tenant on your platform domain, for example `template-starter.yoursaas.com`
+3. Open that tenant's WordPress admin and set the theme, pages, menus, and demo content you want every copy to start with
 
-Before creating a template, you need a tenant site to use as the source.
+## Step 2: Register the Template
 
-1. Go to **Tenancy → Add New**
-2. Create a new tenant (e.g., slug: `template-starter`, domain: `template-starter.yoursaas.com`)
-3. Access the tenant's WordPress admin and design the site:
-   - Install and configure a theme
-   - Add demo content (pages, posts, media)
-   - Set up menus, widgets, and site identity
-   - Configure any plugins you want included
+1. Go to **Waas → Templates**
+2. Click **Add New**
 
-> **Tip:** Spend time making this site look polished - every customer who picks this template starts with an exact copy.
+On edit, the screen title is **Edit Template** and the save button is **Update Template**. On add, the save button is **Save as Template**. **Back to Templates** returns to the list.
 
-## Step 2: Create a Template
+![Edit Template](../images/waas-template-edit.png)
 
-1. Go to **WaaS → Templates**
-2. Click **Add New Template**
+| Field | Notes |
+|-------|-------|
+| **Source Tenant** | Add only. Required. Not shown when editing. |
+| **Template Name** | Required. Gallery title. |
+| **Slug** | Required. Lowercase letters, numbers, and hyphens. |
+| **Tags** | Select tags, or follow **manage tags**. |
+| **Allowed Plans** | Leave unchecked for every plan. Check plans to restrict the template. The free plan is labeled **Free tier**. |
+| **Price** | Extra charge for this template. `0` means no template fee. |
+| **Discount Price** | Optional lower price. `0` means no discount price. |
+| **Description** | Text for the gallery. |
+| **Thumbnail** | **Select** from the media library, or paste an image URL. **Remove** clears it. Placeholder: **Image URL or select from media**. |
+| **Active** | **Show in signup form** |
+| **Sort Order** | Lower numbers appear first |
 
-![Template edit form](../images/waas-template-edit.png)
+Click **Save as Template** or **Update Template**. Success notice: **Template saved.**
 
-Fill in:
+**Rebuild Index** on the list rewrites the templates index file. Use it if the gallery and the list disagree. Success notice: **Templates index rebuilt.**
 
-| Field | Value | Notes |
-|-------|-------|-------|
-| **Source Tenant** | Select the tenant you designed | Only shown when creating, not editable after |
-| **Template Name** | `Starter Blog` | Display name in the template gallery |
-| **Slug** | `starter-blog` | URL-safe identifier. Lowercase letters, numbers, hyphens only. |
-| **Tags** | Select or type tags | For filtering in the gallery. See tags setup below. |
-| **Allowed Plans** | Leave unchecked for all plans | Check specific plans to restrict this template to paid users only |
-| **Price** | `0` | Optional - charge extra for premium templates |
-| **Active** | Checked | Template appears in the gallery |
+## Step 3: Tags
 
-3. Upload a **Thumbnail** - a screenshot or mockup of the template. Recommended size: 1280×960px.
-4. Optionally add a **Preview URL** - a live link customers can click to see the template in action.
-5. Click **Save Template**
+Tags filter the gallery. Open **Tags** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-tags`).
 
-## Setting Up Tags
+![Tags](../images/04-waas-tags.png)
 
-Tags let customers filter the template gallery by category, industry, or feature.
+Click **Add New**. Fields:
 
-### Create Tag Groups
+| Field | Notes |
+|-------|-------|
+| **Slug** | Lowercase letters, numbers, hyphens only |
+| **Label** | Name shown in the gallery and in the template selector |
+| **Group** | Which tag group this tag belongs to |
+| **Icon** | Small image. **Select** or **Remove**. Used as a feature indicator. |
+| **Image** | Optional larger image |
+| **Sort Order** | Order inside the group |
+| **Active** | **Show in tag selectors** |
 
-1. Go to **WaaS → Settings → Tags**
-2. Click **Add Tag Group**
-3. Create groups such as:
-   - `industry` - Restaurant, Portfolio, Blog, E-commerce
-   - `builder` - Elementor, Gutenberg, Beaver Builder
-   - `feature` - WooCommerce, Multilingual, Membership
+The list can be filtered by group and searched with **Search Tags**.
 
-### Create Tags
+## Step 4: Tag Groups
 
-Within each group, create individual tags:
+Open **Tag Groups** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-tags-group`).
 
-1. Click **Add Tag** inside a group
-2. Set the **Name** (display) and **Slug** (URL-safe identifier)
-3. Save
+![Tag Groups](../images/04-waas-tags-group.png)
 
-### Assign Tags to Templates
+When no custom groups are stored, WaaS uses these groups: **Style**, **Industry**, **Features**, **Page Builder**, **Base Theme**, **Status**, and **Other**.
 
-When editing a template, select tags from the dropdown. Templates can have tags from multiple groups.
+Click **Add New** to add a group. Fields: **Slug**, **Label**, **Sort Order**.
 
-## Controlling Gallery Filters
+Which groups render as pills versus dropdowns is controlled by the template browser shortcode `filter-tags` attribute, or by the block control **Pill filter groups (filter-tags)**. See [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates).
 
-The template browser shortcode controls which tag groups appear as filter pills vs. dropdowns. See [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates) for all options.
+## Step 5: Bulk CSV
 
-## Template Cloning Process
+Open **Bulk** (`/wp-admin/admin.php?page=grabwp-tenancy-waas-bulk`).
 
-When a customer selects a template and completes signup, WaaS clones the template tenant:
+![Bulk Templates](../images/04-waas-bulk.png)
 
-1. **Validate** - check source tenant is healthy
-2. **Export** - export source tenant database
-3. **Import** - import into new tenant database
-4. **Copy uploads** - copy media files
-5. **Symlink extensions** - link plugins and themes
-6. **Fix URLs** - update all URLs to the new tenant domain
-7. **Cleanup** - finalize and activate
+1. Click **Download templates CSV** to export the current templates
+2. Edit the file. A header row is required. Column order does not matter. Each row needs `tenant_id`, `name`, and `slug`.
+3. Choose **Source**: **Upload file** or **Paste CSV text**
+4. Set **Overwrite** if you want **Overwrite existing templates with the same tenant_id**
+5. Set **Missing tags**: **Skip missing (drop unknown tag slugs)** or **Create missing (add to the "other" tag group)**
+6. Click **Import CSV**
 
-This process typically takes 10–30 seconds depending on template size.
+Columns shown on the page: `tenant_id`, `name`, `slug`, `category`, `tags`, `allowed_plans`, `price`, `discount_price`, `is_active`, `sort_order`, `description`, `thumbnail_url`.
+
+`tags` and `allowed_plans` are pipe-delimited (`business|portfolio`). `is_active` is `1` or `0`.
+
+## Verify
+
+1. The template row is **Active**
+2. The templates page on the frontend lists it
+3. Tags you assigned appear on the row
 
 ---
 

@@ -1,54 +1,85 @@
 ---
 title: "Installing Pro"
-description: "How to install and activate GrabWP Tenancy Pro"
+description: "Install GrabWP Tenancy Pro and activate the license"
 order: 11
 section: pro
 ---
 
 # Installing Pro
 
-## Before You Start
+## Before you start
 
-> **Required:** Install and activate the free **GrabWP Tenancy** base plugin first. Pro is an add-on that extends the base plugin - it will not work without it.
+> **Required:** Install and activate the free **GrabWP Tenancy** plugin first. Pro does not run without it.
 
-→ [Install the free plugin first](/grabwp-tenancy/installation-guide)
+→ [Install the free plugin](/grabwp-tenancy/installation-guide)
 
-## Get Your Pro Plugin ZIP
+## Download the ZIP
 
-After purchase, **Polar** (our payment processor) sends a confirmation email to your address. That email contains a **Customer Portal** link - open it to download your Pro plugin ZIP file.
+After purchase, Polar emails a **Customer Portal** link. Open it and download the Pro plugin ZIP.
 
-If you can't find the email, check your spam folder or search for "Polar" or "GrabWP".
+If the email is missing, search for "Polar" or "GrabWP", including spam.
 
-## Install the Pro Plugin
+## Install
 
-1. Download the ZIP from your Polar Customer Portal
-2. Go to **Plugins → Add New → Upload Plugin**
-3. Upload the ZIP → **Install Now** → **Activate Plugin**
+1. Go to **Plugins → Add New → Upload Plugin**
+2. Upload the ZIP, click **Install Now**, then **Activate Plugin**
 
-Pro activates alongside the base plugin with no additional configuration needed.
+## Activate the license
 
-## Verify the Installation
+**Navigate to Tenancy → License** (`page=grabwp-tenancy-license`).
 
-Go to **GrabWP Tenancy → Status** and check that the Pro plugin is shown as active.
+![GrabWP Tenancy Pro License](../images/10-license.png)
 
-## What Changes After Activation
+On a new install the screen says **Activate your license to unlock Pro features.**
 
-Once Pro is active, each tenant site in the list gets additional row action links:
+1. Copy the key from the [Customer Portal](https://polar.sh/grabwp/portal). Keys begin with `GRABWPPRO-`.
+2. Paste it into **License key**.
+3. Click **Activate License**.
 
-![Tenant list with Pro actions - Extensions, Backup, Restore, Clone](../images/grabwp-tenancy-pro-tenant-list.png)
+The button sends this site's domain and the license key to GrabWP / Polar for activation.
 
-- **Extensions** - manage which plugins and themes are available to the site
-- **Backup** - create a backup of the site
-- **Restore** - restore the site from a backup ZIP
+A licensed site shows **Customer**, **Email**, **License key** (masked), **Status**, and **Expires** (**No Expiry** when the key does not expire). **Revoke license** removes the activation from this site.
 
-The tenant **Edit** form also gains additional fields for per-site isolation settings (database type, content isolation).
+→ [License](/grabwp-tenancy-pro/pro-license)
 
-A new **GrabWP Tenancy → Pro Settings** submenu page is added for configuring default isolation settings for new sites.
+## Confirm Pro is active
 
-![Pro Settings - default directories and uploads](../images/grabwp-tenancy-pro-settings-dir.png)
+**Navigate to Tenancy → Status** (`page=grabwp-tenancy-status&tab=pro`).
+
+![Status, Pro Plugin tab](../images/09-status-pro.png)
+
+**Pro Plugin Information** should show **Status** as **Active** and the **Pro Version**.
+
+The **Tenancy** menu then includes **License** and **Pro Settings**.
+
+## What changes on the tenant list
+
+**Navigate to Tenancy → All Tenants** (`page=grabwp-tenancy`).
+
+![Tenant list with Pro columns and actions](../images/grabwp-tenancy-pro-tenant-list.png)
+
+Extra columns: **Database**, **Storage**, **Isolation**.
+
+Extra row actions (hover labels), before the trash icon:
+
+| Label | Screen |
+|-------|--------|
+| Plugins & Themes | Extensions |
+| Fix URLs | Fix URLs |
+| Clone Tenant | Clone |
+| Backup Tenant | Backup |
+| Restore Tenant | Restore |
+
+The **Main Site** row gains **Clone to Tenant**.
+
+Opening a tenant (the **Settings** icon, title **Edit Tenant**) adds tabs: **Edit**, **Extensions**, **Clone**, **Fix URLs**, **Backup**, **Restore**, **Settings**, **Overrides**, **Homepage**, **WP Admin**.
+
+**Create Tenant** and **Edit Tenant** gain **Content Isolation Options**, **Database Configuration**, and **Storage Driver** when S3 storage is configured.
+
+**Navigate to Tenancy → Pro Settings** (`page=grabwp-tenancy-pro-settings`) for defaults. See [Pro Settings](/grabwp-tenancy-pro/pro-settings).
 
 ## Deactivating Pro
 
-Deactivating Pro removes the Pro UI and stops Pro-specific features. Tenant sites revert to base plugin behavior.
+Deactivating Pro removes the Pro screens and Pro behavior. Tenant data is not deleted. Sites fall back to the free plugin (shared tables and isolated uploads).
 
-**Tenant data is not deleted** on deactivation.
+**Verify:** **Tenancy → Status → Pro Plugin** shows **Active**, and a tenant row shows **Plugins & Themes**.

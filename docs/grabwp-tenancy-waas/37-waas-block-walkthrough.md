@@ -1,74 +1,107 @@
 ---
-title: "Block Walkthrough: Template Browser"
-description: "Configure the GrabWP Template Browser Gutenberg block using the visual Inspector sidebar"
+title: "Block Walkthrough"
+description: "Insert the WaaS Pricing, Signup, Template Browser, Login, and Dashboard blocks and set their inspector controls"
 order: 37
 section: waas
 ---
 
-# Template Browser - Gutenberg Block Walkthrough
+# Block Walkthrough
 
-The `grabwp-waas/template-browser` block gives site editors a visual Inspector UI to configure the template gallery without touching shortcode strings. The original `[grabwp_waas_templates]` shortcode is fully preserved and works exactly as before.
+Five blocks in the **grabwp-waas** category match the shortcodes. Search the block inserter for the title. The editor shows a placeholder. The live markup renders on the front end. Attribute names and defaults are the same as the [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates).
 
-## How to Use the Block
+| Inserter title | Block name | Shortcode |
+|----------------|------------|-----------|
+| **WaaS Template Browser** | `grabwp-waas/template-browser` | `[grabwp_waas_templates]` |
+| **WaaS Pricing** | `grabwp-waas/pricing` | `[grabwp_waas_pricing]` |
+| **WaaS Signup** | `grabwp-waas/signup` | `[grabwp_waas_signup]` |
+| **WaaS Login** | `grabwp-waas/login` | `[grabwp_waas_login]` |
+| **WaaS Dashboard** | `grabwp-waas/dashboard` | `[grabwp_waas_dashboard]` |
 
-1. Open any page in the block editor
-2. Click **+** (block inserter) and search for **"GrabWP Template Browser"**
-3. Insert the block - it shows a descriptive placeholder in the editor canvas
-4. Configure via the **Settings sidebar → Block settings** (gear icon)
-5. Save/publish - the frontend renders the full template gallery
+Wide and full alignment, plus margin and padding, are supported on all five. HTML editing is off. Login and Dashboard have no extra settings.
 
-> **Note:** The block shows a placeholder in the editor. The live gallery renders only on the frontend.
+## Insert a block
 
-## Inspector Controls
+1. Edit the page in the block editor.
+2. Click **+** and search for the title, for example **WaaS Pricing**.
+3. Insert the block.
+4. Open **Settings → Block** (gear icon) and set the controls below.
+5. Update the page and view it on the front end.
 
-Open the block sidebar (gear icon) to configure:
+**Verify:** The front end matches a page that uses the equivalent shortcode with the same values.
 
-| Control | Inspector label | Shortcode equivalent |
-|---|---|---|
-| Text | **Limit by tags (pool filter)** | `tags="ecommerce,blog"` |
-| Toggle | **Show tag browser toolbar** | `tags-browser="no"` |
-| Text | **Pill filter groups** | `filter-tags="industry"` |
-| Range (0–60, step 4) | **Cards per page** | `per-page="12"` |
+## WaaS Template Browser
 
-## Shortcode Attribute Mapping
+Placeholder title: **WaaS Template Browser**. It lists the pool filter, pill groups, toolbar, cards per page, and columns.
 
-| Shortcode attr | Block attribute | Type |
-|---|---|---|
-| `tags` | `tags` | string |
-| `filter-tags` | `filterTags` | string |
-| `tags-browser` (`yes`/`no`) | `tagsBrowser` | boolean |
-| `per-page` | `perPage` | integer |
+| Inspector label | Panel | Shortcode |
+|-----------------|-------|-----------|
+| **Limit by tags (pool filter)** | **Template Pool** | `tags` |
+| **Show tag browser toolbar** | **Filter Toolbar** | `tags-browser` (`yes` when on) |
+| **Pill filter groups (filter-tags)** | **Filter Toolbar** (only while the toolbar is on) | `filter-tags` |
+| **Columns** | **Layout** | `columns` (1-6, reset 4) |
+| **Cards per page** | **Pagination** | `per-page` (0-60, reset 12). `0` shows every template. |
 
-## How It Works
+Leave **Pill filter groups** blank for dropdowns only (no pill row). Groups you list become pills. The inspector help text mentions dropdowns for groups with more than two tags. The gallery itself shows a dropdown when a group has more than one tag in the pool.
 
-```
-block.json
-  └─ render: "file:./render.php"     → PHP server render
-  └─ editorScript: "file:./index.js" → Gutenberg editor UI
+## WaaS Pricing
 
-render.php
-  └─ maps block attributes → shortcode atts array
-  └─ calls GrabWP_Tenancy_WaaS_Templates_Shortcode::render($atts)
-  └─ wraps in get_block_wrapper_attributes() div
+Placeholder title: **WaaS Pricing**. Copy: **Plan cards, benefits, billing toggle, and comparison.** It notes whether comparison is included.
 
-GrabWP_Tenancy_WaaS_Blocks
-  └─ register_block_type_from_metadata( blocks/template-browser/ )
-  └─ enqueue_block_assets → loads CSS/JS only when block is present
-```
+| Inspector label | Panel | Shortcode |
+|-----------------|-------|-----------|
+| **Highlighted plan ID** | **Pricing table** | `highlighted` |
+| **Plan IDs** | **Pricing table** | `plans` |
+| **Default billing cycle** | **Pricing table** | `default-cycle`: **Monthly** or **Yearly** |
+| **CTA label** | **Pricing table** | `cta-label`. Blank uses **Start for free** / **Get started**. |
+| **Show plan cards** | **Layout** | `show-cards` |
+| **Show comparison table** | **Layout** | `show-comparison` |
 
-> No build step (Node/npm) is required. `index.js` is plain ES5/ES2015 using globally available `wp.*` packages that WordPress loads automatically in the block editor.
+**Highlighted plan ID** help: leave blank to auto-pick the middle paid plan as **Most popular**.
 
-## Block vs Shortcode
+**Plan IDs** help: comma-separated plan IDs. Leave blank to show all active plans.
 
-Both produce identical frontend output. Choose based on your workflow:
+Cards come from the pricing table template. The comparison block is the pricing comparison template (**Compare plans**). Turn either toggle off to hide that part.
 
-| | Shortcode | Block |
-|---|---|---|
-| **Configure** | Edit attribute strings | Visual sidebar controls |
-| **Preview** | Shows shortcode text | Shows placeholder |
-| **Theme support** | Works everywhere | Requires block-compatible theme |
-| **Best for** | Developers, copy-paste setup | Site editors, visual workflow |
+## WaaS Signup
+
+Placeholder title: **WaaS Signup**. It shows **Flow:** and the preset label, then **Preview on the frontend.**
+
+Presets are the named flows from **Waas → Settings → Signup Flow**. See [Signup Flow](/grabwp-tenancy-waas/waas-signup-flow). If the list cannot load, the control falls back to **Default**.
+
+| Inspector label | Panel | Shortcode |
+|-----------------|-------|-----------|
+| **Flow preset** | **Signup flow** | `flow`. **Default** is stored as an empty slug. |
+| **Hide step descriptions** | **Display** | `hide-labels` |
+| **Hide step titles** | **Display** | `hide-titles` |
+| **Hide template thumbnail** | **Display** | `hide-thumbnail` |
+| **Account** | **Step labels** | `label-account` |
+| **Plan** | **Step labels** | `label-plan` |
+| **Add-ons** | **Step labels** | `label-addons` |
+| **Billing cycle** | **Step labels** | `label-cycle` |
+| **Payment** | **Step labels** | `label-payment` |
+| **Email verification** | **Step labels** | `label-otp` |
+
+Each step label help line says to leave it blank for the preset or default label. **Flow preset** help: unknown slugs fall back to **Default**.
+
+Built-in step labels, before a preset overrides them:
+
+| Step | Label |
+|------|-------|
+| Account | **Create your account** |
+| Plan | **Choose a plan** |
+| Add-ons | **Optional Services** |
+| Billing cycle | **Billing Cycle** |
+| Payment | **Payment Method** |
+| Email verification | **Verify your email** |
+
+## WaaS Login and WaaS Dashboard
+
+**WaaS Login** placeholder: **Displays the tenant owner login form. Preview on the frontend.**
+
+**WaaS Dashboard** placeholder: **Displays the tenant dashboard. Preview on the frontend.**
+
+No inspector fields. Behavior matches `[grabwp_waas_login]` and `[grabwp_waas_dashboard]`.
 
 ---
 
-**See also:** [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates) - all shortcode attributes and URL parameters
+**See also:** [Shortcode Reference](/grabwp-tenancy-waas/waas-shortcode-templates)
