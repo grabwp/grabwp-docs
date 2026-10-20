@@ -1,6 +1,6 @@
 ---
 title: "Pro Settings"
-description: "Mặc định cho isolation, database, thư mục, symlink, storage, backup, và routing"
+description: "Mặc định cho isolation, database, thư mục, symlink, storage, backup, và CDN"
 order: 16
 section: pro
 ---
@@ -9,9 +9,11 @@ section: pro
 
 **Vào Tenancy → Pro Settings** (`page=grabwp-tenancy-pro-settings`).
 
-Tiêu đề trang là **Pro Settings**. Tab: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **Routing**. Tab đang mở được nhớ lại. Nhấn **Save Pro Settings** trên tab nào cũng lưu form.
+Tiêu đề trang là **Pro Settings**. Tab: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **CDN**. Tab đang mở được nhớ lại. Nhấn **Save Pro Settings** trên tab nào cũng lưu form.
 
 Đây là mặc định cho tenant mới, cùng storage, symlink, và offload backup cho cả site. Tenant đã có giữ config riêng cho đến khi bạn sửa tenant đó.
+
+Routing không còn nằm ở trang này. **Path Prefix** và **Path Alias Routing** đã chuyển sang **Tenancy → Settings → Routing**. Xem [Cài đặt](/grabwp-tenancy/installation-guide).
 
 ## Isolation
 
@@ -129,19 +131,17 @@ wp grabwp backup show <tenant_id>
 wp grabwp backup reschedule-all
 ```
 
-## Routing
+## CDN
 
-![Pro Settings, Routing](../images/11-pro-settings-routing.png)
+![Pro Settings, CDN](../images/11-pro-settings-cdn.png)
 
-Khách nên dùng domain riêng của tenant. Xem [Domain và DNS](/grabwp-tenancy/hosting-dns-setup).
-
-Tab này chỉ đổi địa chỉ xem trước tạm thời hiện là **Path URL** trên Edit (hoặc trường **Path Alias** khi alias routing đang bật).
+**CDN for core, plugin and theme files**. Khi bật, trang frontend của tenant tải file tĩnh (CSS, JS, ảnh, font) của WordPress core, plugin và theme qua `https://` cộng với hostname CDN. Trỏ pull zone của CDN về host của site chính. Màn hình admin không bị ảnh hưởng.
 
 | Trường | Ghi chú |
 |-------|--------|
-| Path Prefix | Slug dùng trong địa chỉ xem trước đó. Chữ thường, số, và dấu gạch ngang, 1 đến 20 ký tự. Mặc định `site`. Lưu sẽ flush rewrite rules và cập nhật `.htaccess`. Bookmark xem trước cũ sẽ hết tác dụng. |
-| Path Alias Routing | **Enable Path Alias Routing**. Khi bật, Edit hiện **Path Alias** (3 đến 30 ký tự) và **Copy URL** thay cho dòng **Path URL** thường. |
+| CDN | **Enable** hoặc **Disable**. Mặc định là **Disable**. |
+| CDN hostname | Chỉ nhập hostname, ví dụ `cdn.example.com`. Nếu bật CDN với hostname không hợp lệ, cài đặt sẽ được lưu ở trạng thái tắt. |
 
-> **Note:** Để nguyên tab này trừ khi bạn cần đổi địa chỉ xem trước dùng trước lúc domain được gắn.
+Cứ để tắt trừ khi bạn đã có sẵn pull zone.
 
 **Verify:** **Save Pro Settings** đưa bạn về màn này mà không có thông báo lỗi. Tạo một tenant và xác nhận **Database** cùng **Isolation** trên **All Tenants** khớp mặc định bạn đã lưu.

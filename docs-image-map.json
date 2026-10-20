@@ -191,9 +191,6 @@
     "11-pro-settings-database.png": {
       "src": "11-pro-settings-database"
     },
-    "11-pro-settings-routing.png": {
-      "src": "11-pro-settings-routing"
-    },
     "11-pro-settings-storage.png": {
       "src": "11-pro-settings-storage"
     },
@@ -208,6 +205,15 @@
     },
     "12-tenant-settings.png": {
       "src": "12-tenant-settings"
+    },
+    "11-pro-settings-cdn.png": {
+      "src": "11-pro-settings-cdn"
+    },
+    "05-waas-settings-email.png": {
+      "src": "05-waas-settings-email"
+    },
+    "08-tenancy-settings-routing.png": {
+      "src": "08-tenancy-settings-routing"
     }
   },
   "manual": {}

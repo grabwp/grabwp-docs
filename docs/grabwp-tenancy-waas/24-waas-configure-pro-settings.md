@@ -11,7 +11,7 @@ Pro Settings are the defaults applied when a new tenant is created. Individual t
 
 Navigate to **Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
 
-The page has these tabs: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **Routing**.
+The page has these tabs: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **CDN**.
 
 For this tutorial, set **Isolation** and **Database**, confirm **Directories**, and leave the other tabs at their defaults. Click **Save Pro Settings** after your changes.
 
@@ -80,7 +80,9 @@ Each row shows **Effective:** with the resolved path. If a path is locked, the f
 | **Symlink** | **Domain Symlink (Clean URLs)**. Needs `symlink()` and the **Required server rules** snippet on that tab. Skip until you want clean content URLs. |
 | **Storage** | **Default Storage Driver**: **Local Filesystem (default)** or **S3-Compatible Object Storage**. Leave local for now. See [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage). |
 | **Backup** | Backup offload defaults. Leave until you configure backups. |
-| **Routing** | Path-prefix options. This guide uses subdomains on **Platform Domain**. Leave **Routing** at its defaults. |
+| **CDN** | **CDN for core, plugin and theme files**. Leave **Disable** selected. See [Pro Settings](/grabwp-tenancy-pro/pro-settings). |
+
+Routing is not a Pro Settings tab. It is under **Tenancy → Settings → Routing**. This guide uses subdomains on **Platform Domain**, so leave **Routing mode** at its default. See [Installation](/grabwp-tenancy/installation-guide).
 
 ## Save
 
