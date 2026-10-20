@@ -1,6 +1,6 @@
 ---
 title: "Pro Settings"
-description: "Defaults for isolation, database, directories, symlink, storage, backup, and routing"
+description: "Defaults for isolation, database, directories, symlink, storage, backup, and CDN"
 order: 16
 section: pro
 ---
@@ -9,9 +9,11 @@ section: pro
 
 **Navigate to Tenancy → Pro Settings** (`page=grabwp-tenancy-pro-settings`).
 
-The page title is **Pro Settings**. Tabs: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **Routing**. The active tab is remembered. Click **Save Pro Settings** on any tab to store the form.
+The page title is **Pro Settings**. Tabs: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **CDN**. The active tab is remembered. Click **Save Pro Settings** on any tab to store the form.
 
 These values are defaults for new tenants, plus site-wide storage, symlink, and backup offload. An existing tenant keeps its own config until you edit that tenant.
+
+Routing is no longer on this page. **Path Prefix** and **Path Alias Routing** are under **Tenancy → Settings → Routing**. See [Installation](/grabwp-tenancy/installation-guide).
 
 ## Isolation
 
@@ -129,19 +131,17 @@ wp grabwp backup show <tenant_id>
 wp grabwp backup reschedule-all
 ```
 
-## Routing
+## CDN
 
-![Pro Settings, Routing](../images/11-pro-settings-routing.png)
+![Pro Settings, CDN](../images/11-pro-settings-cdn.png)
 
-Visitors should use the tenant's own domain. See [Domain & DNS Setup](/grabwp-tenancy/hosting-dns-setup).
-
-This tab only changes the temporary preview address shown as **Path URL** on Edit (or the **Path Alias** field when alias routing is on).
+**CDN for core, plugin and theme files**. When enabled, tenant front-end pages load static files (CSS, JS, images, fonts) from WordPress core, plugins, and themes through `https://` plus the CDN hostname. Point the CDN pull zone at the main site host. Admin screens are not changed.
 
 | Field | Notes |
 |-------|--------|
-| Path Prefix | Slug used in that preview address. Lowercase letters, numbers, and hyphens, 1 to 20 characters. Default `site`. Saving flushes rewrite rules and updates `.htaccess`. Old preview bookmarks stop working. |
-| Path Alias Routing | **Enable Path Alias Routing**. When on, Edit shows **Path Alias** (3 to 30 characters) and **Copy URL** instead of the plain **Path URL** row. |
+| CDN | **Enable** or **Disable**. Default **Disable**. |
+| CDN hostname | Hostname only, for example `cdn.example.com`. If you enable CDN with an invalid hostname, it is saved as disabled. |
 
-> **Note:** Leave this tab alone unless you need to change the preview address used before a domain is connected.
+Leave it disabled unless you have a pull zone ready.
 
 **Verify:** **Save Pro Settings** returns you to this screen without an error notice. Create a tenant and confirm **Database** and **Isolation** on **All Tenants** match the defaults you saved.

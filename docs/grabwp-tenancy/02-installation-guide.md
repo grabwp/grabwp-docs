@@ -99,7 +99,30 @@ The page title is **GrabWP Tenancy Settings**. These values apply to every tenan
 | Block External HTTP | **Block external HTTP** from tenant sites. |
 | Accessible Hosts | Comma-separated hosts still allowed when external HTTP is blocked. Wildcards are supported. |
 
+### Routing
+
+![Settings, Routing](../images/08-tenancy-settings-routing.png)
+
+**Routing mode** decides which address each site opens on:
+
+| Mode | Behavior |
+|------|----------|
+| Path | Every site opens at a path URL such as `/site/my-shop/`. Works right away, no DNS needed. Domains you add are kept but not used for links. |
+| Domain | Every site opens on its own domain. Visitors who open a path URL are redirected (301) to the domain. Every site needs a domain. |
+| Path and domain | Sites with a domain open on it. Sites without one open on the path URL. Both addresses keep working. Used until you save a mode. |
+
+Changing the mode opens a **Change routing mode** screen that lists **Sites whose address changes** and **What else happens**. Confirm with **Switch to** the new mode, or **Cancel**. Switching to **Domain** is blocked until every site has a domain. The screen lists the sites that still need one, each with **Add a domain**. If `GRABWP_TENANCY_ROUTING_MODE` is set in `wp-config.php`, the radios are disabled.
+
+The path rows are hidden in **Domain** mode. Without Pro, the tab only shows the current **Path prefix**. With Pro:
+
+| Field | Notes |
+|-------|--------|
+| Path Prefix | Slug in the path URL. Lowercase letters, numbers, and hyphens, 1 to 20 characters. Default `site`. Saving a new prefix flushes rewrite rules and updates `.htaccess`. Bookmarks with the old prefix stop working. |
+| Path Alias Routing | **Enable Path Alias Routing**. Lets a site use a readable slug instead of its 6-character tenant ID. The tenant Edit screen then shows **Path Alias** (3 to 30 characters) and **Copy URL** instead of the plain **Path URL** row. |
+
 Click **Save Settings**.
+
+**Verify:** the selected **Routing mode** is still checked after the page reloads, and a tenant opens on the address that mode describes.
 
 ## Uninstalling
 

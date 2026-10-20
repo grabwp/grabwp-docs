@@ -73,9 +73,9 @@ Các tab **Pro Settings**:
 
 - **Isolation**, **Database**, **Directories**
 - **Symlink**, **Storage**, **Backup**
-- **Routing**
+- **CDN**
 
-Hướng dẫn này dùng địa chỉ tenant theo domain. Để tab **Routing** ở mặc định.
+Để **CDN** ở trạng thái tắt. Hướng dẫn này dùng địa chỉ tenant theo domain. Routing nằm ở **Tenancy → Settings → Routing**. Để **Routing mode** ở mặc định.
 
 Công cụ theo từng tenant (extensions, clone, backup, restore) mở từ dòng tenant. Chúng không phải mục sidebar cấp cao.
 
@@ -92,6 +92,7 @@ Các tab **WaaS Settings**:
 | **General** | Platform domain, trang, auth, chế độ custom domain |
 | **Appearance** | Màu frontend. Xem [Appearance](/grabwp-tenancy-waas/waas-appearance) |
 | **Signup Flow** | Thứ tự và nhãn bước. Xem [Signup Flow](/grabwp-tenancy-waas/waas-signup-flow) |
+| **Email** | Người nhận thông báo admin, footer và template email. Xem [Email](/grabwp-tenancy-waas/waas-email) |
 | **Plans** | Plan miễn phí và trả phí |
 | **Benefits** | Quota và flag gắn vào plan. Xem [Services and Benefits](/grabwp-tenancy-waas/waas-services-benefits) |
 | **Services** | Mua thêm tùy chọn. Cùng trang tham chiếu trên |

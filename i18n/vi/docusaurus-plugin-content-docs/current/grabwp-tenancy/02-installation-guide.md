@@ -99,7 +99,30 @@ Tiêu đề trang là **GrabWP Tenancy Settings**. Các giá trị này áp dụ
 | Block External HTTP | **Block external HTTP** từ site tenant. |
 | Accessible Hosts | Danh sách host vẫn được phép khi external HTTP bị chặn, cách nhau bởi dấu phẩy. Hỗ trợ wildcard. |
 
+### Routing
+
+![Settings, Routing](../images/08-tenancy-settings-routing.png)
+
+**Routing mode** quyết định mỗi site mở ở địa chỉ nào:
+
+| Chế độ | Cách hoạt động |
+|------|----------|
+| Path | Mọi site mở ở một path URL, ví dụ `/site/my-shop/`. Dùng được ngay, không cần DNS. Domain bạn thêm vẫn được giữ nhưng không dùng cho link. |
+| Domain | Mọi site mở trên domain riêng. Khách mở path URL sẽ được chuyển hướng (301) sang domain. Site nào cũng cần có domain. |
+| Path and domain | Site có domain mở trên domain đó. Site chưa có domain mở ở path URL. Cả hai địa chỉ đều dùng được. Đây là chế độ đang chạy cho đến khi bạn lưu một chế độ. |
+
+Khi đổi chế độ, màn hình **Change routing mode** hiện ra, liệt kê **Sites whose address changes** và **What else happens**. Xác nhận bằng nút **Switch to** chế độ mới, hoặc bấm **Cancel**. Không chuyển sang **Domain** được cho đến khi mọi site đều có domain. Màn hình liệt kê các site còn thiếu domain, mỗi site có link **Add a domain**. Nếu `GRABWP_TENANCY_ROUTING_MODE` được đặt trong `wp-config.php`, các radio sẽ bị khóa.
+
+Các dòng về path bị ẩn ở chế độ **Domain**. Không có Pro, tab chỉ hiện **Path prefix** hiện tại. Có Pro thì có thêm:
+
+| Trường | Ghi chú |
+|-------|--------|
+| Path Prefix | Slug trong path URL. Chữ thường, số, và dấu gạch ngang, 1 đến 20 ký tự. Mặc định `site`. Lưu prefix mới sẽ flush rewrite rules và cập nhật `.htaccess`. Bookmark dùng prefix cũ sẽ hết tác dụng. |
+| Path Alias Routing | **Enable Path Alias Routing**. Cho site dùng slug dễ đọc thay cho tenant ID 6 ký tự. Màn hình Edit của tenant khi đó hiện **Path Alias** (3 đến 30 ký tự) và **Copy URL** thay cho dòng **Path URL** thường. |
+
 Nhấn **Save Settings**.
+
+**Verify:** **Routing mode** đã chọn vẫn được tick sau khi trang tải lại, và tenant mở đúng địa chỉ mà chế độ đó mô tả.
 
 ## Gỡ cài đặt
 

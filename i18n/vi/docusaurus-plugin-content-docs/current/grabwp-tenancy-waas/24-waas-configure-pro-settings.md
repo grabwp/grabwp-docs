@@ -11,7 +11,7 @@ Pro Settings là mặc định khi tạo tenant mới. Từng tenant có thể g
 
 Vào **Tenancy → Pro Settings** (`/wp-admin/admin.php?page=grabwp-tenancy-pro-settings`).
 
-Trang có các tab: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **Routing**.
+Trang có các tab: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **CDN**.
 
 Trong hướng dẫn này, đặt **Isolation** và **Database**, xác nhận **Directories**, và để các tab còn lại ở mặc định. Bấm **Save Pro Settings** sau khi sửa.
 
@@ -80,7 +80,9 @@ Mỗi dòng có **Effective:** với đường dẫn đã phân giải. Nếu đ
 | **Symlink** | **Domain Symlink (Clean URLs)**. Cần `symlink()` và đoạn **Required server rules** trên tab đó. Bỏ qua cho đến khi bạn cần URL nội dung gọn. |
 | **Storage** | **Default Storage Driver**: **Local Filesystem (default)** hoặc **S3-Compatible Object Storage**. Để local lúc này. Xem [S3 Object Storage](/grabwp-tenancy-waas/waas-optional-s3-storage). |
 | **Backup** | Mặc định đưa backup ra ngoài. Để đến khi bạn cấu hình backup. |
-| **Routing** | Tùy chọn path prefix. Hướng dẫn này dùng subdomain trên **Platform Domain**. Để **Routing** ở mặc định. |
+| **CDN** | **CDN for core, plugin and theme files**. Giữ lựa chọn **Disable**. Xem [Pro Settings](/grabwp-tenancy-pro/pro-settings). |
+
+Routing không phải tab của Pro Settings. Nó nằm ở **Tenancy → Settings → Routing**. Hướng dẫn này dùng subdomain trên **Platform Domain**, nên để **Routing mode** ở mặc định. Xem [Cài đặt](/grabwp-tenancy/installation-guide).
 
 ## Lưu
 

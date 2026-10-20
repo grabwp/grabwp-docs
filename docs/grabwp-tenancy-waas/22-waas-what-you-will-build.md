@@ -73,9 +73,9 @@ Adds **Pro Settings** and **License** under **Tenancy**.
 
 - **Isolation**, **Database**, **Directories**
 - **Symlink**, **Storage**, **Backup**
-- **Routing**
+- **CDN**
 
-This guide uses domain-based tenant addresses. Leave **Routing** at its defaults.
+Leave **CDN** disabled. This guide uses domain-based tenant addresses. Routing is under **Tenancy → Settings → Routing**. Leave **Routing mode** at its default.
 
 Per-tenant tools (extensions, clone, backup, restore) open from a tenant row. They are not top-level sidebar items.
 
@@ -92,6 +92,7 @@ The self-service layer. The admin menu is **Waas**:
 | **General** | Platform domain, pages, auth, custom-domain mode |
 | **Appearance** | Frontend colors. See [Appearance](/grabwp-tenancy-waas/waas-appearance) |
 | **Signup Flow** | Step order and labels. See [Signup Flow](/grabwp-tenancy-waas/waas-signup-flow) |
+| **Email** | Admin recipients, footer, and email templates. See [Email](/grabwp-tenancy-waas/waas-email) |
 | **Plans** | Free and paid plans |
 | **Benefits** | Quotas and flags attached to plans. See [Services and Benefits](/grabwp-tenancy-waas/waas-services-benefits) |
 | **Services** | Optional purchases. Same reference page |
