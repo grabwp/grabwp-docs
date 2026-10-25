@@ -12,18 +12,33 @@ draft: true
 
 GrabWP Tenancy Discounts bổ sung tính năng mã giảm giá và link chiến dịch khuyến mại vào luồng đăng ký của GrabWP WaaS. Đây là plugin add-on tùy chọn (`grabwp-tenancy-discounts`) yêu cầu GrabWP Tenancy WaaS từ phiên bản 1.1.24 trở lên.
 
-Add-on được thiết kế tách biệt: không chỉnh sửa các bảng cơ sở dữ liệu hay file cốt lõi của WaaS. Việc hủy kích hoạt hoặc gỡ cài đặt add-on sẽ khôi phục hành vi thanh toán mặc định của WaaS một cách an toàn.
+### Kiến trúc và cô lập cơ sở dữ liệu
+
+Add-on duy trì khả năng cô lập dữ liệu chặt chẽ:
+
+- **Bảng cơ sở dữ liệu riêng:** Add-on tạo và sở hữu bảng dữ liệu riêng `{$wpdb->prefix}grabwp_discount_redemptions`, dùng để lưu trữ các bản ghi áp dụng mã giảm giá, số tiền ban đầu và sau giảm, khóa email khách hàng cùng số kỳ gia hạn ưu đãi còn lại.
+- **Không thay đổi dữ liệu cốt lõi:** Add-on không sửa đổi bất kỳ bảng cơ sở dữ liệu cốt lõi nào của WordPress hay WaaS (như subscriptions, plans hoặc tenants) và không chỉnh sửa các file mã nguồn cốt lõi.
+- **Tùy chọn cấu hình riêng:** Các quy tắc khuyến mại và cài đặt add-on được lưu trong các option riêng biệt (`grabwp_waas_discount_codes` và `grabwp_discounts_settings`), trong khi giới hạn tần suất sử dụng transient cache (`_transient_gwd_rl_*`).
+- **Vòng đời rõ ràng:** Khi hủy kích hoạt (deactivate), bảng dữ liệu và cài đặt vẫn được giữ nguyên nhưng hệ thống sẽ bỏ qua mã giảm giá và khôi phục hành vi thanh toán mặc định của WaaS. Khi gỡ cài đặt hoàn toàn (Delete trong trang Plugins), hệ thống sẽ tự động xóa bảng `{$wpdb->prefix}grabwp_discount_redemptions` và dọn sạch các option cùng transient liên quan.
+
+> **Chính sách ảnh chụp màn hình (Screenshot Policy):** Toàn bộ ảnh chụp màn hình cho add-on Discounts được hoãn lại để chụp sau Round 6 nhằm đảm bảo phản ánh chính xác các nâng cấp UX quản trị của Round 6 (giao diện tab dưới 700px, cột Actions cố định, toggletip WP 7.1, và bản địa hóa hoàn chỉnh). Tuyệt đối không sử dụng ảnh chụp cũ trước Round 6. Các thẻ giữ chỗ (`TODO (Screenshot)`) mô tả chi tiết phạm vi cần chụp.
 
 ## Bật tính năng giảm giá
 
 1. Cài đặt và kích hoạt plugin **GrabWP Tenancy Discounts**.
 2. Trong wp-admin, truy cập vào **Waas → Discounts** (`/wp-admin/admin.php?page=grabwp-tenancy-discounts`).
-3. Mở rộng phần accordion **Settings** ở cuối trang.
+3. Mở rộng phần accordion **Settings** ở đầu trang (mở sẵn theo mặc định khi tính năng giảm giá đang tắt).
 4. Tích chọn **Enable discounts** và bấm **Save settings**.
+
+Accordion **Settings** đồng thời cung cấp các tùy chọn giới hạn tần suất và chống lạm dụng:
+
+- **Wrong codes per visitor** (mặc định `10`): Số lần thử mã không hợp lệ tối đa từ một địa chỉ IP trong khung thời gian quy định trước khi tạm khóa thử mã.
+- **Refused emails** (mặc định `5`): Số lần đăng ký thất bại tối đa đối với một địa chỉ email (do không hợp lệ hoặc đã dùng hết lượt) trước khi chặn email đó.
+- **Limit window (minutes)** (mặc định `15`): Khung thời gian (tính bằng phút) áp dụng cho các giới hạn theo IP và email.
 
 Khi tùy chọn **Enable discounts** bị tắt, các mã đã tạo vẫn được lưu trữ, nhưng mọi tính toán thanh toán ở trang đăng ký và các hóa đơn gia hạn sẽ giữ nguyên giá gốc tiêu chuẩn.
 
-> **TODO (Screenshot):** Bổ sung ảnh chụp giao diện danh sách mã giảm giá và accordion cài đặt theo chuẩn Round 6 (`admin.php?page=grabwp-tenancy-discounts#gwd-settings`). Đang chờ chụp lại UI sau Round 6.
+> **TODO (Screenshot):** Bổ sung ảnh chụp giao diện danh sách mã giảm giá và accordion cài đặt mở rộng theo chuẩn Round 6 (`admin.php?page=grabwp-tenancy-discounts`). Đang chờ chụp lại UI sau Round 6.
 
 ## Danh sách mã giảm giá và cột Actions cố định
 
@@ -54,6 +69,17 @@ Khác với các bảng quản trị WordPress truyền thống thường ẩn l
 - **Delete** (biểu tượng thùng rác): Xóa quy tắc mã giảm giá. Việc xóa mã không làm gián đoạn các đăng ký định kỳ đang trong thời gian hưởng ưu đãi trước đó.
 
 > **TODO (Screenshot):** Bổ sung ảnh chụp bảng danh sách hiển thị cột Actions cố định, trạng thái hover và phản hồi khi sao chép liên kết.
+
+### Các khoản giảm giá định kỳ đang áp dụng (Recurring discounts in progress)
+
+Phía dưới bảng danh sách mã giảm giá, trang hiển thị bảng **Recurring discounts in progress** theo dõi các gói thuê bao đang trong thời hạn giảm giá trên các cổng thanh toán dùng hóa đơn nội bộ (SePay và WooCommerce):
+
+- **Tenant**: Mã định danh tenant (nhấp vào để chuyển đến màn hình chi tiết thuê bao).
+- **Code**: Mã giảm giá được áp dụng cho thuê bao này.
+- **Plan**: Tên gói dịch vụ đang hoạt động.
+- **Payment**: Cổng thanh toán xử lý (như SePay hoặc WooCommerce).
+- **Discounted renewals left**: Số kỳ gia hạn còn lại tiếp tục được giảm giá trên hóa đơn trước khi quay về giá gốc.
+- **Redeemed**: Ngày và giờ hoàn tất đăng ký đơn hàng ban đầu.
 
 ## Tạo hoặc chỉnh sửa mã giảm giá
 
@@ -164,6 +190,7 @@ Bạn có thể chia sẻ liên kết khuyến mại trực tiếp cho khách h�
 
 - `[grabwp_waas_signup coupon="CODE"]`: Hiển thị biểu mẫu đăng ký được điền sẵn mã ưu đãi.
 - `[grabwp_waas_pricing coupon="CODE"]`: Hiển thị bảng giá với giá gốc bị gạch ngang và giá ưu đãi mới.
+- `[grabwp_waas_templates coupon="CODE"]`: Hiển thị danh sách mẫu giao diện với giá gói ưu đãi và chuyển tiếp mã sang trang đăng ký.
 - `[grabwp_waas_promo code="CODE" cta="Bắt đầu ngay"]`: Hiển thị hộp banner quảng bá độc lập kèm đồng hồ đếm ngược và nút kêu gọi hành động.
 
 ---

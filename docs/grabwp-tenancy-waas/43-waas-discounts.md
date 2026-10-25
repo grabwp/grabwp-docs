@@ -12,18 +12,33 @@ draft: true
 
 GrabWP Tenancy Discounts adds promotional discount codes and campaign links to GrabWP WaaS signup flows. It is an optional add-on plugin (`grabwp-tenancy-discounts`) that requires GrabWP Tenancy WaaS 1.1.24 or later.
 
-The add-on operates cleanly: it does not alter core WaaS database tables or core plugin files. Deactivating or removing the add-on safely restores default WaaS billing behavior.
+### Architecture and database isolation
+
+The add-on maintains strict database isolation:
+
+- **Dedicated database table:** The add-on creates and owns its own custom table, `{$wpdb->prefix}grabwp_discount_redemptions`, which tracks checkout redemptions, original and discounted amounts, customer email keys, and remaining renewal cycles.
+- **Zero core modifications:** The add-on never modifies any core WordPress or core WaaS database tables (such as subscriptions, plans, or tenants) and never touches core plugin files.
+- **Dedicated options and transients:** Promotion rules and settings are stored in dedicated options (`grabwp_waas_discount_codes` and `grabwp_discounts_settings`), while rate limits use transient cache entries (`_transient_gwd_rl_*`).
+- **Clean lifecycle:** Deactivating the add-on leaves tables intact but safely ignores discounts and restores default WaaS billing behavior. Completely uninstalling the add-on (via **Plugins → Delete**) drops `{$wpdb->prefix}grabwp_discount_redemptions` and removes all add-on options and transients.
+
+> **Screenshot Policy:** All screenshots for the Discounts add-on are explicitly deferred to post-Round-6 captures to ensure visual fidelity with the Round 6 admin UX rework (tabbed form under 700px, visible Actions column, WP 7.1 toggletips, and full localization). Stale pre-Round-6 screenshots must not be used. Placeholder tags (`TODO (Screenshot)`) define exact capture scopes.
 
 ## Turn on discounts
 
 1. Install and activate the **GrabWP Tenancy Discounts** plugin.
 2. In wp-admin, navigate to **Waas → Discounts** (`/wp-admin/admin.php?page=grabwp-tenancy-discounts`).
-3. Expand the **Settings** accordion at the bottom of the page.
+3. Expand the **Settings** accordion at the top of the page (open by default when discounts are disabled).
 4. Check **Enable discounts** and click **Save settings**.
+
+The **Settings** accordion also provides built-in rate limiting and abuse protection:
+
+- **Wrong codes per visitor** (default `10`): Number of invalid code attempts permitted from a single IP address within the rate window before code lookups are blocked.
+- **Refused emails** (default `5`): Maximum checkout failures for a single email address (such as ineligible email or limit exceeded) before that email is restricted.
+- **Limit window (minutes)** (default `15`): Time window in minutes for the IP and email rate limits.
 
 While **Enable discounts** is turned off, existing codes are preserved, but all front-end checkout calculations, pricing displays, and renewal invoices remain at standard pricing.
 
-> **TODO (Screenshot):** Add current Round 6 capture of the Discounts list view and settings accordion (`admin.php?page=grabwp-tenancy-discounts#gwd-settings`). Placeholder awaiting post-Round-6 admin UI re-shoot.
+> **TODO (Screenshot):** Add current Round 6 capture of the Discounts list view and expanded Settings accordion (`admin.php?page=grabwp-tenancy-discounts`). Placeholder awaiting post-Round-6 admin UI re-shoot.
 
 ## Discounts list and visible Actions column
 
@@ -54,6 +69,17 @@ Unlike standard WordPress tables that hide management links behind hover states,
 - **Delete** (trash icon): Deletes the code rule. Deleting a rule does not interrupt existing subscribers currently receiving recurring discounts.
 
 > **TODO (Screenshot):** Add current Round 6 capture of the list table showing the permanently visible Actions column with button hover states and copy link feedback.
+
+### Recurring discounts in progress
+
+Below the main discount codes table, the page displays a **Recurring discounts in progress** table tracking active subscriptions on internal-invoice providers (SePay and WooCommerce) that currently receive recurring discounts:
+
+- **Tenant**: Tenant ID link leading directly to the subscription detail screen.
+- **Code**: The discount code applied to this subscription.
+- **Plan**: Name of the active subscribed plan.
+- **Payment**: Provider handling payments (such as SePay or WooCommerce).
+- **Discounted renewals left**: Remaining renewal cycles that will receive invoice deductions before reverting to standard plan pricing.
+- **Redeemed**: Date and time when the initial checkout was completed.
 
 ## Create or edit a discount code
 
@@ -164,6 +190,7 @@ You can share direct promotional links with customers:
 
 - `[grabwp_waas_signup coupon="CODE"]`: Embeds the signup flow pre-loaded with the specified discount code.
 - `[grabwp_waas_pricing coupon="CODE"]`: Displays plan pricing with struck-through original prices and discounted rates.
+- `[grabwp_waas_templates coupon="CODE"]`: Displays template gallery cards with discounted plan prices and carries the code to signup.
 - `[grabwp_waas_promo code="CODE" cta="Get Started"]`: Displays a standalone promotional banner box with live countdown timer and call-to-action button.
 
 ---
