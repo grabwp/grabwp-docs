@@ -1,0 +1,58 @@
+{
+  "link.title.Help center": {
+    "message": "Trung tâm trợ giúp",
+    "description": "The title of the footer links column with title=Help center in the footer"
+  },
+  "link.title.Product": {
+    "message": "Sản phẩm",
+    "description": "The title of the footer links column with title=Product in the footer"
+  },
+  "link.title.Support": {
+    "message": "Hỗ trợ",
+    "description": "The title of the footer links column with title=Support in the footer"
+  },
+  "link.item.label.Before you buy": {
+    "message": "Trước khi mua",
+    "description": "The label of footer link with label=Before you buy linking to /before-you-buy"
+  },
+  "link.item.label.Manage sites (Pro)": {
+    "message": "Quản lý site (Pro)",
+    "description": "The label of footer link with label=Manage sites (Pro)"
+  },
+  "link.item.label.Sell sites (WaaS)": {
+    "message": "Bán site (WaaS)",
+    "description": "The label of footer link with label=Sell sites (WaaS)"
+  },
+  "link.item.label.Help": {
+    "message": "Trợ giúp",
+    "description": "The label of footer link with label=Help"
+  },
+  "link.item.label.grabwp.com": {
+    "message": "grabwp.com",
+    "description": "The label of footer link with label=grabwp.com linking to https://grabwp.com"
+  },
+  "link.item.label.Pricing": {
+    "message": "Bảng giá",
+    "description": "The label of footer link with label=Pricing linking to https://grabwp.com/pricing"
+  },
+  "link.item.label.Roadmap": {
+    "message": "Lộ trình phát triển",
+    "description": "The label of footer link with label=Roadmap linking to https://grabwp.com/roadmap"
+  },
+  "link.item.label.Free Plugin (WordPress.org)": {
+    "message": "Plugin miễn phí (WordPress.org)",
+    "description": "The label of footer link with label=Free Plugin (WordPress.org) linking to https://wordpress.org/plugins/grabwp-tenancy/"
+  },
+  "link.item.label.Getting help": {
+    "message": "Cách nhận hỗ trợ",
+    "description": "The label of footer link with label=Getting help"
+  },
+  "link.item.label.WordPress.org Support": {
+    "message": "Diễn đàn hỗ trợ WordPress.org",
+    "description": "The label of footer link with label=WordPress.org Support linking to https://wordpress.org/support/plugin/grabwp-tenancy/"
+  },
+  "link.item.label.Email Us": {
+    "message": "Gửi email cho chúng tôi",
+    "description": "The label of footer link with label=Email Us linking to mailto:hello@grabwp.com"
+  }
+}

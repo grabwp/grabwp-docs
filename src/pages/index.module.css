@@ -1,0 +1,138 @@
+.hero {
+  padding: 3.5rem 0 2.5rem;
+  text-align: center;
+  background: var(--ifm-color-emphasis-100);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.heroText {
+  margin: 0 auto;
+  max-width: 36rem;
+  font-size: 1.1rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.section {
+  padding: 2.5rem 0 0;
+}
+
+.section:last-child {
+  padding-bottom: 3.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.doors,
+.cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.doors {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cards {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.door,
+.card {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius);
+  background: var(--ifm-background-surface-color);
+  padding: 1.25rem;
+}
+
+.door {
+  display: flex;
+  flex-direction: column;
+}
+
+.doorTitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.doorText {
+  flex-grow: 1;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.doorLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.question {
+  display: block;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: var(--ifm-font-color-base);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 2px 10px var(--ifm-color-emphasis-200);
+}
+
+.cardTitle {
+  font-weight: var(--ifm-font-weight-bold);
+  color: var(--ifm-color-primary);
+}
+
+.cardText {
+  font-size: 0.95rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+@media (max-width: 996px) {
+  .doors {
+    grid-template-columns: 1fr;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .questions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
