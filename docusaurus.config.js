@@ -54,6 +54,22 @@ const config = {
     ],
   ],
 
+  themes: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        language: ['en', 'vi'],
+        docsRouteBasePath: ['/', 'kb'],
+        docsPluginIdForPreferredVersion: undefined,
+        indexBlog: false,
+        highlightSearchTermsOnTargetPage: true,
+        searchContextByPaths: ['kb'],
+        explicitSearchResultPath: true,
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
