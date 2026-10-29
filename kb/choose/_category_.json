@@ -1,0 +1,8 @@
+{
+  "label": "Choose your setup",
+  "position": 4,
+  "link": {
+    "type": "doc",
+    "id": "choose/index"
+  }
+}
