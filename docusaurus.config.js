@@ -38,6 +38,38 @@ const config = {
     locales: ['en', 'vi'],
   },
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'kb',
+        path: 'kb',
+        routeBasePath: 'kb',
+        sidebarPath: './sidebars-kb.js',
+        editUrl: 'https://github.com/taicv/grabwp-docs/tree/main/',
+        tags: 'tags.yml',
+        onInlineTags: 'throw',
+        exclude: ['**/_facts/**'],
+      },
+    ],
+  ],
+
+  themes: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        language: ['en', 'vi'],
+        docsRouteBasePath: ['/', 'kb'],
+        docsPluginIdForPreferredVersion: undefined,
+        indexBlog: false,
+        highlightSearchTermsOnTargetPage: true,
+        searchContextByPaths: ['kb'],
+        explicitSearchResultPath: true,
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
@@ -80,6 +112,13 @@ const config = {
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'Docs',
+          },
+          {
+            type: 'docSidebar',
+            docsPluginId: 'kb',
+            sidebarId: 'kbSidebar',
+            position: 'left',
+            label: 'Knowledge Base',
           },
           {
             href: 'https://grabwp.com',

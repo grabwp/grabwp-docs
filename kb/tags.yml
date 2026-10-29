@@ -1,0 +1,63 @@
+routing:
+  label: Routing
+  description: How visitors reach a tenant by path or domain.
+database:
+  label: Database
+  description: Shared, MySQL and SQLite database options for tenants.
+isolation:
+  label: Isolation
+  description: How much of a tenant is kept apart from the main site.
+server:
+  label: Server
+  description: Web server, PHP, cron and files on the server.
+billing:
+  label: Billing
+  description: Payment providers, invoices and currencies.
+subscriptions:
+  label: Subscriptions
+  description: Trials, grace period, suspension and subscription statuses.
+domains:
+  label: Domains
+  description: Platform domains, custom domains and verification.
+backup:
+  label: Backup
+  description: Backup, restore, clone and storage.
+license:
+  label: License
+  description: Pro license key and activation.
+settings:
+  label: Settings
+  description: Settings screens, labels and defaults.
+glossary:
+  label: Glossary
+  description: Plain meaning of terms used in GrabWP.
+troubleshooting:
+  label: Troubleshooting
+  description: Fixes organised by what you see.
+faq:
+  label: FAQ
+  description: Short answers to common questions.
+reference:
+  label: Reference
+  description: Lookup tables for notices, settings, statuses and emails.
+plan-base:
+  label: Base plugin
+  description: Applies to the free GrabWP Tenancy plugin.
+plan-pro:
+  label: Pro plugin
+  description: Needs GrabWP Tenancy Pro.
+plan-waas:
+  label: WaaS plugin
+  description: Needs GrabWP Tenancy WaaS.
+addon:
+  label: Add-on
+  description: Applies to an add-on plugin such as a payment provider.
+for-customer:
+  label: For site owners
+  description: Written for site owners and end customers.
+for-operator:
+  label: For operators
+  description: Written for people who run a GrabWP platform.
+for-cs:
+  label: For support
+  description: Written for support agents.
