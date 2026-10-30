@@ -1,11 +1,27 @@
 {
   "title": {
-    "message": "Tài liệu GrabWP Tenancy",
+    "message": "Trợ giúp GrabWP",
     "description": "The title in the navbar"
   },
-  "item.label.Docs": {
-    "message": "Tài liệu",
-    "description": "Navbar item with label Docs"
+  "logo.alt": {
+    "message": "Logo GrabWP",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Before you buy": {
+    "message": "Trước khi mua",
+    "description": "Navbar item with label Before you buy"
+  },
+  "item.label.Manage sites (Pro)": {
+    "message": "Quản lý site (Pro)",
+    "description": "Navbar item with label Manage sites (Pro)"
+  },
+  "item.label.Sell sites (WaaS)": {
+    "message": "Bán site (WaaS)",
+    "description": "Navbar item with label Sell sites (WaaS)"
+  },
+  "item.label.Help": {
+    "message": "Trợ giúp",
+    "description": "Navbar item with label Help"
   },
   "item.label.grabwp.com": {
     "message": "grabwp.com",

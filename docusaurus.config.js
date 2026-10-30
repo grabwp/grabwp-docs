@@ -10,8 +10,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'GrabWP Tenancy Docs',
-  tagline: 'Multi-Tenant WordPress Made Simple',
+  title: 'GrabWP Help',
+  tagline: 'Help for GrabWP Tenancy, Pro and WaaS',
   favicon: 'img/favicon.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -38,33 +38,16 @@ const config = {
     locales: ['en', 'vi'],
   },
 
-  plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'kb',
-        path: 'kb',
-        routeBasePath: 'kb',
-        sidebarPath: './sidebars-kb.js',
-        editUrl: 'https://github.com/taicv/grabwp-docs/tree/main/',
-        tags: 'tags.yml',
-        onInlineTags: 'throw',
-        exclude: ['**/_facts/**'],
-      },
-    ],
-  ],
-
   themes: [
     [
       '@easyops-cn/docusaurus-search-local',
       {
         hashed: true,
         language: ['en', 'vi'],
-        docsRouteBasePath: ['/', 'kb'],
+        docsRouteBasePath: ['/'],
         docsPluginIdForPreferredVersion: undefined,
         indexBlog: false,
         highlightSearchTermsOnTargetPage: true,
-        searchContextByPaths: ['kb'],
         explicitSearchResultPath: true,
       },
     ],
@@ -79,6 +62,8 @@ const config = {
           sidebarPath: './sidebars.js',
           routeBasePath: '/',
           editUrl: 'https://github.com/taicv/grabwp-docs/tree/main/',
+          tags: 'tags.yml',
+          onInlineTags: 'throw',
         },
         blog: false,
         theme: {
@@ -97,32 +82,43 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'GrabWP Tenancy Docs',
+        title: 'GrabWP Help',
         logo: {
-          alt: 'GrabWP Tenancy Logo',
+          alt: 'GrabWP Logo',
           src: 'img/logo.png',
         },
         items: [
           {
-            type: 'localeDropdown',
-            position: 'right',
+            type: 'doc',
+            docId: 'before-you-buy',
+            position: 'left',
+            label: 'Before you buy',
           },
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'manageSites',
             position: 'left',
-            label: 'Docs',
+            label: 'Manage sites (Pro)',
           },
           {
             type: 'docSidebar',
-            docsPluginId: 'kb',
-            sidebarId: 'kbSidebar',
+            sidebarId: 'sellSites',
             position: 'left',
-            label: 'Knowledge Base',
+            label: 'Sell sites (WaaS)',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'help',
+            position: 'left',
+            label: 'Help',
           },
           {
             href: 'https://grabwp.com',
             label: 'grabwp.com',
+            position: 'right',
+          },
+          {
+            type: 'localeDropdown',
             position: 'right',
           },
         ],
@@ -131,19 +127,23 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Help center',
             items: [
               {
-                label: 'Overview',
-                to: '/',
+                label: 'Before you buy',
+                to: '/before-you-buy',
               },
               {
-                label: 'GrabWP Tenancy Pro',
-                to: '/category/grabwp-tenancy-pro',
+                label: 'Manage sites (Pro)',
+                to: '/manage-sites/install',
               },
               {
-                label: 'GrabWP Tenancy WaaS',
-                to: '/category/grabwp-tenancy-waas',
+                label: 'Sell sites (WaaS)',
+                to: '/sell-sites/how-waas-works',
+              },
+              {
+                label: 'Help',
+                to: '/help/getting-help',
               },
             ],
           },
@@ -156,7 +156,11 @@ const config = {
               },
               {
                 label: 'Pricing',
-                href: 'https://grabwp.com/pro/',
+                href: 'https://grabwp.com/pricing',
+              },
+              {
+                label: 'Roadmap',
+                href: 'https://grabwp.com/roadmap',
               },
               {
                 label: 'Free Plugin (WordPress.org)',
@@ -167,6 +171,10 @@ const config = {
           {
             title: 'Support',
             items: [
+              {
+                label: 'Getting help',
+                to: '/help/getting-help',
+              },
               {
                 label: 'WordPress.org Support',
                 href: 'https://wordpress.org/support/plugin/grabwp-tenancy/',
