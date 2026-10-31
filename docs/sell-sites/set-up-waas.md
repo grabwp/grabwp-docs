@@ -63,7 +63,7 @@ If activation fails with a dependency error, activate the plugin before it first
 The wizard opens by itself the first time you activate GrabWP on a site with no customer sites. Later you can open it from:
 
 - the **Continue setup** button on the notice "GrabWP: finish setup to get your first site running",
-- **Run setup wizard** (or **Resume setup wizard**) at the top of **Tenancy > Status** or **Waas > Dashboard**.
+- **Run setup wizard** (or **Resume setup wizard**) at the top of **Tenancy > Status**.
 
 {/* TODO screenshot: setup wizard with WaaS active, showing the step list (Welcome, Routing, License, Site defaults, Starter site, Storefront, Done) */}
 
@@ -72,12 +72,12 @@ The wizard saves each screen as you go. **Exit setup** pauses it; the steps you 
 | Step | What you do |
 |---|---|
 | **Welcome** | The wizard checks your server and explains "How your website service works" (the five parts on [How WaaS works](/sell-sites/how-waas-works)). Click **Continue**. |
-| **Routing** | **Choose the web address of your sites**: **Path** (no DNS needed), **Domain**, or **Path and domain**. Start simple: you can change it later in **Tenancy > Settings > Routing**. |
+| **Routing** | **Choose the web address of your sites**: **Path** (no DNS needed) or **Domain** (a subdomain or your own domain, marked **Recommended**). You can change it later in **Tenancy > Settings > Routing**, which also lets sites use both a path and a domain. |
 | **License** | **Activate your Pro license**. You can skip this and activate later under **Tenancy > License**, but add-on downloads need it. |
-| **Site defaults** | **Defaults for new sites**: pick **Use the simple setup** (each site gets its own uploads folder, plugins and themes are shared from the main site) or **Choose each setting** for the database, plugins, themes and uploads. |
+| **Site defaults** | **Defaults for new sites**: **Choose each setting** is selected and marked **Recommended**: you pick the database, plugins, themes and uploads. **Use the simple setup** (each site gets its own uploads folder, plugins and themes are shared from the main site) keeps it to one screen. |
 | **Starter site** | **Create your starter site**. Customers get a copy of this site when they sign up. Create a new one or pick an existing site. |
 | **Storefront** | Three short screens: **Your template** (turn the starter site into a template: **Template site**, **Template name**, **Template slug**), **Your Free plan** (**Free plan name**, **Description**, **Features**, one per line), and **Your signup page** (**Platform domain** and **Accent color**, the color of buttons and links customers see). |
-| **Done** | Links to **Open template gallery**, **Test a signup (use a private window)** and **WaaS dashboard**, plus next steps: **Connect payments**, **Paid plans and trials**, **More templates**. |
+| **Done** | **Manage sites** (**Open site admin (1-click)**, **Visit site**, **All sites**), **Manage WaaS** (**Open template gallery**, **Test a signup (use a private window)**, **WaaS dashboard**), plus next steps: **Connect payments**, **Paid plans and trials**, **More templates**. |
 
 The **Platform domain** is required unless customer sites use path URLs. With path URLs you can leave it empty.
 
