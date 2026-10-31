@@ -48,11 +48,11 @@ When you activate a GrabWP plugin on its own from wp-admin, the **GrabWP setup**
 | Step | What it does |
 |---|---|
 | **Welcome** | Explains what GrabWP does and runs a **Server check**. Click **Fix automatically** if something is missing, then **Check again**. |
-| **Routing** | Choose how visitors reach your sites: by path, by domain, or both. See [Domains and DNS](/manage-sites/domains-and-dns). |
+| **Routing** | Choose how visitors reach your sites: by **Path** (no DNS needed) or by **Domain** (a subdomain or the site's own domain, marked **Recommended**). Using both is set later in **Tenancy > Settings > Routing**. See [Domains and DNS](/manage-sites/domains-and-dns). |
 | **License** (Pro) | Paste your Pro key. No key yet? Skip it and activate later on **Tenancy > License**. |
-| **Site defaults** (Pro) | Pick **Use the simple setup** or **Choose each setting** for the database, plugins and themes, and uploads of new sites. |
+| **Site defaults** (Pro) | **Choose each setting** (selected and marked **Recommended**) lets you pick the database, plugins and themes, and uploads of new sites. **Use the simple setup** is still there if you want one short screen. |
 | **First site** | Creates your first site, with WordPress already installed. |
-| **Done** | Shows the new site, its login details and an **Open site admin (1-click)** button. |
+| **Done** | Shows the new site and its login details, then **Manage sites**: **Open site admin (1-click)**, **Visit site** and **All sites**. |
 
 The server check also tests **Site can reach itself (loopback)**. If it shows **Failed**, GrabWP cannot install WordPress into new sites for you, and you finish each install in the browser instead.
 

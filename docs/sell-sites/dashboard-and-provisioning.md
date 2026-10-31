@@ -35,7 +35,7 @@ Four more cards track built-in trials: **Trials started**, **Trials converted**,
 - **Subscription Status**: **Status** and **Count**. Click a status badge to open **Waas > Subscriptions** filtered to it. See [Free trials and subscriptions](/sell-sites/trials-and-subscriptions).
 - **Recent Activity**: **Date**, **Event** and **Tenant** for the latest events. The full list is on **Activity Log**.
 
-**View Subscriptions** opens the subscriptions list and **Manage Templates** opens the templates. **Run setup wizard** (or **Resume setup wizard**) reopens the setup wizard.
+**View Subscriptions** opens the subscriptions list and **Manage Templates** opens the templates. To reopen the setup wizard, use **Run setup wizard** on **Tenancy > Status**.
 
 ## Activity log
 
