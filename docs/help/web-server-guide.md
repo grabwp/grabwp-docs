@@ -42,6 +42,7 @@ Your web server passes incoming visitor requests to WordPress so GrabWP can iden
 
 - Verified against Base 1.1.14 and Pro 1.1.17.
 - Beginning in Base 1.1.9, GrabWP locks shared root files (`wp-config.php`, `.htaccess`, `.user.ini`, `web.config`) to read-only (`0444`) by default so site plugins cannot overwrite them; use **Tenancy > Status** to unlock shared files temporarily if a main-site plugin needs to edit `.htaccess`.
+- The lock is a separate setting from the integrity guard. On write requests from client sites, the guard restores only GrabWP's own pieces (the `wp-config.php` loader and HTTPS proxy blocks, the GrabWP `.htaccess` block, the MU-plugin and the data folder protection files) and keeps all other `wp-config.php` and `.htaccess` edits. If a file is invalid or truncated and cannot be repaired safely, GrabWP does not replace the whole file; it keeps its protected recovery snapshot and reports the issue on **Tenancy > Status** and in the debug log. Turn protection off from **Tenancy > Status** before you remove a GrabWP block on purpose. See [Install GrabWP](/manage-sites/install#plugin-general).
 
 ## Related
 
