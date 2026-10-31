@@ -54,7 +54,9 @@ When you activate a GrabWP plugin on its own from wp-admin, the **GrabWP setup**
 | **First site** | Creates your first site, with WordPress already installed. |
 | **Done** | Shows the new site and its login details, then **Manage sites**: **Open site admin (1-click)**, **Visit site** and **All sites**. |
 
-The server check also tests **Site can reach itself (loopback)**. If it shows **Failed**, GrabWP cannot install WordPress into new sites for you, and you finish each install in the browser instead.
+The **Server check** on the Welcome step shows the same checks as **Tenancy > Status > Plugin General**: the environment cards, **Hosting setup**, **Site can reach itself (loopback)**, **Tenant file safety**, **System Information** and **Support diagnostics**. The last two start closed, so the step stays short. See [What the server check shows](#what-the-server-check-shows).
+
+If **Site can reach itself (loopback)** shows **Failed**, GrabWP cannot install WordPress into new sites for you, and you finish each install in the browser instead.
 
 To open the wizard again later, use **Run setup wizard** on **Tenancy > Status**.
 
@@ -82,6 +84,27 @@ These cards show the pieces GrabWP adds to your server. Expand a card for **Fix 
 If a cache plugin on the main site needs to write one of the locked files, click **Unlock shared files**, let it save, then click **Lock shared files** again.
 
 On Nginx the page says `.htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` See [Apache, LiteSpeed and Nginx](/help/web-server-guide).
+
+### What the server check shows
+
+**Plugin General** and the wizard's **Server check** show the same content, in this order:
+
+| Section | What it tells you |
+|---|---|
+| **Environment Checks** | The cards in the table above. |
+| **Hosting setup** | Whether the site runs as regular WordPress (not Multisite) and uses https correctly. |
+| **Site can reach itself (loopback)** | **OK** means GrabWP can install WordPress into new sites for you. **Failed** means you finish each install in the browser. |
+| **Tenant file safety** | Whether site admins can install or edit plugin and theme code. |
+| **System Information** (closed) | Click to open. Shows GrabWP details plus WordPress, server, PHP, database, WordPress constants and writable folder values, such as **PHP Version**, **Web Server**, **Data Dir Writable** and **MU-Plugins Dir Writable**. |
+| **Support diagnostics** (closed) | A summary to paste into a support request. See below. |
+
+#### Send diagnostics to support
+
+1. Open **Support diagnostics**.
+2. Click **Copy diagnostics**.
+3. Paste it into your support request.
+
+The copy includes the checks above, the **System Information** values, and up to the last 50 lines each of the GrabWP debug log and the WordPress `debug.log`. GrabWP tries to remove passwords, keys, emails, file paths and database query text before you copy it. Nothing is sent anywhere until you paste it, so read it over before you share it.
 
 ### Base Plugin
 

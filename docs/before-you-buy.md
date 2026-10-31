@@ -84,7 +84,7 @@ Most hosting where you control your own files and settings works. Run through th
 6. **Pro with SQLite:** the PHP `pdo_sqlite` extension must be loaded. Without it, new sites use the shared database instead.
 7. **WaaS:** the main site must send email reliably (for example through an SMTP plugin). Customers get a **Verification code** by email when they sign up.
 
-After you install the free plugin, open **Tenancy > Status**. The **Plugin General** tab runs the environment checks for you, and **System Information** shows your PHP version, web server and whether the data folder is writable.
+After you install the free plugin, open **Tenancy > Status**. The **Plugin General** tab runs the environment checks for you, and **System Information** (click to open it) shows your PHP version, web server and whether the data folder is writable.
 
 ![The Plugin General tab on Tenancy > Status, with environment checks and system information](./images/grabwp-status.png)
 
