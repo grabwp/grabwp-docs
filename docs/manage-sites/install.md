@@ -3,8 +3,8 @@ title: "Install GrabWP (Free and Pro)"
 description: "Install the free GrabWP Tenancy plugin and GrabWP Tenancy Pro, run the setup wizard and check the Status page."
 sidebar_label: "Install GrabWP"
 tags: [server, license, plan-base, plan-pro, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** install the free **GrabWP Tenancy** plugin from **Plugins > Add New**, then upload **GrabWP Tenancy Pro** if you bought it. A setup wizard opens and checks your server. When **Tenancy > Status** shows no warnings, you are ready to create sites.
@@ -48,13 +48,17 @@ When you activate a GrabWP plugin on its own from wp-admin, the **GrabWP setup**
 | Step | What it does |
 |---|---|
 | **Welcome** | Explains what GrabWP does and runs a **Server check**. Click **Fix automatically** if something is missing, then **Check again**. |
-| **Routing** | Choose how visitors reach your sites: by **Path** (no DNS needed) or by **Domain** (a subdomain or the site's own domain, marked **Recommended**). Using both is set later in **Tenancy > Settings > Routing**. See [Domains and DNS](/manage-sites/domains-and-dns). |
+| **Routing** | Choose how visitors reach your sites: by **Path** (no DNS needed) or by **Domain** (a subdomain or the site's own domain, marked **Recommended**). Using both is set later in **Tenancy > Settings > Routing**. If `tenants.php` is missing, saving this step creates it. If the file cannot be written, the step names the real cause. See [Domains and DNS](/manage-sites/domains-and-dns). |
 | **License** (Pro) | Paste your Pro key. No key yet? Skip it and activate later on **Tenancy > License**. |
-| **Site defaults** (Pro) | **Choose each setting** (selected and marked **Recommended**) lets you pick the database, plugins and themes, and uploads of new sites. **Use the simple setup** is still there if you want one short screen. |
-| **First site** | Creates your first site, with WordPress already installed. |
+| **Site defaults** (Pro) | **Choose each setting** (selected and marked **Recommended**) lets you pick the database, plugins and themes, and uploads of new sites. For plugins and themes you choose **Shared from the main site**, **Own themes**, **Own plugins** or **Own plugins and themes**. **Own plugins and themes** and **Own uploads folder** are preselected on a fresh install and marked **Recommended**. **Use the simple setup** is still there if you want one short screen. |
+| **First site** | Creates your first site, with WordPress already installed. When the main site has a domain name, the **Custom domain** field suggests a subdomain made from the site title (for example `my-first-site.example.com`). It follows the title until you type your own domain. |
 | **Done** | Shows the new site and its login details, then **Manage sites**: **Open site admin (1-click)**, **Visit site** and **All sites**. |
 
-The server check also tests **Site can reach itself (loopback)**. If it shows **Failed**, GrabWP cannot install WordPress into new sites for you, and you finish each install in the browser instead.
+{/* TODO screenshot: setup wizard Welcome step with "Show the server checks" open (Hosting setup, Tenant file safety, System Information, Support diagnostics). No such shot exists in the admin screenshot library yet (library shots predate Base 1.1.15). */}
+
+The **Server check** on the Welcome step shows the same checks as **Tenancy > Status > Plugin General**: the environment cards, **Hosting setup**, **Site can reach itself (loopback)**, **Tenant file safety**, **System Information** and **Support diagnostics**. They sit under **Show the server checks**, which opens by itself when something needs attention. When everything passes, the step says `Everything is ready. Nothing to do here.` **System Information** starts closed, so the step stays short. See [What the server check shows](#what-the-server-check-shows).
+
+If **Site can reach itself (loopback)** shows **Failed**, GrabWP cannot install WordPress into new sites for you, and you finish each install in the browser instead.
 
 To open the wizard again later, use **Run setup wizard** on **Tenancy > Status**.
 
@@ -63,6 +67,8 @@ To open the wizard again later, use **Run setup wizard** on **Tenancy > Status**
 Open **Tenancy > Status**. The page title is **GrabWP Tenancy Status** and it has three tabs: **Plugin General**, **Base Plugin** and **Pro Plugin**.
 
 ![GrabWP Tenancy Status](../images/grabwp-status.png)
+
+{/* TODO screenshot: Tenancy > Status > Plugin General on Base 1.1.15 or later, showing the Hosting setup card, Tenant file safety, the closed System Information row and Support diagnostics. The library shot used above (09-status-general) was taken on Base 1.1.12 and does not show these sections. */}
 
 ### Plugin General
 
@@ -79,9 +85,36 @@ These cards show the pieces GrabWP adds to your server. Expand a card for **Fix 
 
 **Auto Fix** writes the missing piece when WordPress can write the file. If not, the card says a manual install is required: click **Copy Code** and follow the steps on the card.
 
+Since Base 1.1.15, path addresses are routed in one rewrite pass, so pretty permalinks, REST and feed URLs of path sites also work on OpenLiteSpeed (for example on xCloud). A `.htaccess` block written by an older version shows **⚠ Invalid content** on **3. Root .htaccess Rewrite Rules**. Click **Auto Fix** once to upgrade it.
+
 If a cache plugin on the main site needs to write one of the locked files, click **Unlock shared files**, let it save, then click **Lock shared files** again.
 
-On Nginx the page says `.htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` See [Apache, LiteSpeed and Nginx](/help/web-server-guide).
+The lock is a separate `0444` setting. On write requests from client sites, an integrity guard watches only the pieces GrabWP owns: the loader and HTTPS proxy blocks in `wp-config.php`, the GrabWP block in `.htaccess`, the MU-plugin and the data folder protection files. If one of those pieces is removed or changed, GrabWP puts back only its own piece and keeps every other edit an admin or plugin made to `wp-config.php` or `.htaccess`. If the file itself is invalid or truncated and cannot be repaired safely, GrabWP does not replace the whole file. It keeps its protected recovery snapshot and reports the problem on **Tenancy > Status** and in the debug log. To remove a GrabWP block on purpose, first turn protection off from **Tenancy > Status**.
+
+On Nginx the **Web Server** row in **System Information** notes `.htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` See [Apache, LiteSpeed and Nginx](/help/web-server-guide).
+
+### What the server check shows
+
+**Plugin General** and the wizard's **Server check** show the same content, in this order:
+
+| Section | What it tells you |
+|---|---|
+| **Environment Checks** | The cards in the table above. |
+| **Hosting setup** | Four rows: **Multisite and wp-config.php** (the site runs as regular WordPress, with no leftover settings that stop GrabWP), **Secure address** (WordPress uses https), **HTTPS behind a proxy** (WordPress sees https from your proxy or CDN) and **Subdomains (wildcard)** (new sites at `*.your-domain` work). The header says **✓ Ready** or how many rows need attention. Some rows offer a fix button with **Undo**. See [Hosting setup checks](/help/hosting-requirements#hosting-setup-checks). |
+| **Site can reach itself (loopback)** | **OK** means GrabWP can install WordPress into new sites for you. **Failed** means you finish each install in the browser. |
+| **Tenant file safety** | **OK** when site admins cannot install or edit plugin and theme code. **Unsafe** when they can, with the setting, `wp-config.php` line or per-site override that allows it. See [Tenant file safety warning](/help/client-cannot-install-plugins#tenant-file-safety-warning). |
+| **System Information** (closed) | Click to open. Shows GrabWP details plus WordPress, server, PHP, database, WordPress constants and writable folder values, such as **PHP Version**, **Web Server**, **WordPress Multisite**, **Data Dir Writable** and **MU-Plugins Dir Writable**. A row that needs attention is shown in red with a short note. |
+| **Support diagnostics** | A summary to paste into a support request, with a **Copy diagnostics** button. See below. |
+
+The **Hosting setup** card and **Support diagnostics** appear only on the main site.
+
+#### Send diagnostics to support
+
+1. Go to **Support diagnostics**, below **System Information**.
+2. Click **Copy diagnostics**.
+3. Paste it into your support request.
+
+The copy includes the checks above, the **System Information** values, and up to the last 50 lines each of the GrabWP debug log and the WordPress `debug.log`. GrabWP leaves out passwords, keys, salts, emails and file paths, and removes database query text from log lines. Nothing is sent anywhere until you paste it, so read it over before you share it.
 
 ### Base Plugin
 
@@ -113,6 +146,9 @@ See [Where things are in wp-admin](/manage-sites/wp-admin-map) for the full map.
 | `Data directory is missing.` | [MU-plugin or data directory notices](/help/mu-plugin-or-data-directory-notice) |
 | `Root .htaccess needs to be updated for tenant routing.` | [Path URLs return 404](/help/path-urls-return-404) |
 | `Could not find the stop-editing marker in wp-config.php. Please add the line manually.` | [The load.php notice](/help/red-notice-load-php) |
+| `wp-config.php has settings that stop GrabWP. Remove every line below.` (**Hosting setup**) | [Settings in wp-config.php that stop GrabWP](/help/hosting-requirements#settings-in-wp-configphp-that-stop-grabwp) |
+| **Tenant file safety** shows **Unsafe** | [Tenant file safety warning](/help/client-cannot-install-plugins#tenant-file-safety-warning) |
+| `GrabWP lost some of its own code in these files and put it back. Other edits were kept:` (on **Tenancy > Status**) | The integrity guard above repaired a GrabWP block. No action needed unless you removed it on purpose. |
 
 A hosting move or a tool that rewrites `wp-config.php` can remove the loader block. Check **Tenancy > Status** after any migration.
 

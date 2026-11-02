@@ -3,8 +3,8 @@ title: "Free settings"
 description: "Every setting on Tenancy > Settings, with its label, default and what it does on your sites."
 sidebar_label: "Free settings"
 tags: [settings, reference, routing, server, plan-base, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** **Tenancy > Settings** sets what admins of your sites can do and a few speed and security limits. These settings apply to every site, not to the main site. With Pro you can change them for one site on its **Overrides** tab.
@@ -29,7 +29,14 @@ What admins of your sites can do.
 | **Disable Plugin & Theme File Editor** | On | Site admins cannot use the built-in code editor for plugin and theme files. |
 | **Hide Plugins Menu** | Off | Removes the Plugins menu from site dashboards. |
 | **Hide Appearance Menu** | Off | Removes the Appearance menu (themes) from site dashboards. |
+| **Hide Themes Screen** | Off | Site admins keep **Customize**, **Menus** and **Widgets** under **Appearance** but cannot browse, install or switch themes. Has no effect when **Hide Appearance Menu** is on. Base 1.1.15 or later. |
 | **Hide GrabWP Plugins** | On | Hides every GrabWP plugin and the SQLite plugin from the site's Plugins list, so admins cannot turn them off by mistake. |
+
+{/* TODO screenshot: Tenant Capabilities tab with the Hide Themes Screen row (Base 1.1.15 or later). The library shot above (08-tenancy-settings-capabilities) predates this setting. */}
+
+When **Hide Themes Screen** is on and a site admin opens the Themes screen directly, the site shows `Themes are managed by your host. You can still customize your current theme, menus and widgets from the Appearance menu.`
+
+If **Disable Install Plugins & Themes** or **Disable Plugin & Theme File Editor** is off, the **Tenant file safety** card on **Tenancy > Status** shows **Unsafe**. See [Tenant file safety warning](/help/client-cannot-install-plugins#tenant-file-safety-warning).
 
 To let clients add their own plugins safely, see [Plugins and themes](/manage-sites/plugins-and-themes).
 

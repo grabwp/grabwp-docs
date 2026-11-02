@@ -3,8 +3,8 @@ title: "Path URLs (/site/...) show 404 or a wrong page"
 description: "Why path-based site URLs return 404 or open the main site, and how to configure Apache, LiteSpeed or Nginx."
 sidebar_label: "Path URLs show 404"
 tags: [troubleshooting, routing, server, plan-base, plan-pro, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** path URLs such as `example.com/site/abc123` need web server rewrite rules before WordPress loads its own permalinks. On Apache or LiteSpeed, use **Auto Fix** on **Tenancy > Status**; on Nginx, add the rewrite rules to your server block configuration.
@@ -17,8 +17,8 @@ Opening a site by its path URL (such as `/site/{tenant_id}` or `/site/{tenant_id
 In wp-admin, you may also see one of these messages:
 
 - `Root .htaccess needs to be updated for tenant routing.`
-- `ℹ .htaccess files are not used by Nginx. Configure tenant routing in your server block instead.`
-- `Path routing requires mod_rewrite. Query string routing (?site=id) will be used as fallback.`
+- `.htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` (note under **Web Server** in **System Information**)
+- `Path routing requires mod_rewrite. Query string routing (?site=id) will be used as fallback.` (note under **mod_rewrite** in **System Information**)
 
 Or, on **Tenancy > All Tenants**, the **Domains** column says "Path access only".
 
@@ -26,8 +26,9 @@ Or, on **Tenancy > All Tenants**, the **Domains** column says "Path access only"
 
 | If you see | It means |
 |---|---|
-| `Root .htaccess needs to be updated for tenant routing.` | On Apache or LiteSpeed, the `# BEGIN GrabWP Tenancy` block in the root `.htaccess` file is missing, uses an old path prefix, or sits below `# BEGIN WordPress`. |
-| `ℹ .htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` | Nginx ignores `.htaccess` files and needs rewrite rules added to the Nginx server block. |
+| `Root .htaccess needs to be updated for tenant routing.` | On Apache or LiteSpeed, the `# BEGIN GrabWP Tenancy` block in the root `.htaccess` file is missing, uses an old path prefix, was written by a version older than Base 1.1.15, or sits below `# BEGIN WordPress`. |
+| The site home page at `/site/{tenant_id}/` works, but its posts, pages, REST or feed URLs return 404 on OpenLiteSpeed (for example on xCloud) | Before Base 1.1.15, path rules needed `.htaccess` to run twice, and OpenLiteSpeed runs it once. Base 1.1.15 routes these URLs in one pass, but the old block stays until you upgrade it (the card shows **⚠ Invalid content**). |
+| `.htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` | Nginx ignores `.htaccess` files and needs rewrite rules added to the Nginx server block. |
 | `Path routing requires mod_rewrite. Query string routing (?site=id) will be used as fallback.` | Apache does not have `mod_rewrite` enabled, so `/site/...` paths cannot be rewritten. |
 | **Routing Mode** is set to `domain` | Path routing is turned off in **Tenancy > Settings > Routing** or pinned by `GRABWP_TENANCY_ROUTING_MODE` in `wp-config.php`. |
 | **Domains** column says "Path access only" | The site was created without a domain. The path URL on Edit is only a preview until a domain is attached. |
@@ -48,6 +49,8 @@ Or, on **Tenancy > All Tenants**, the **Domains** column says "Path access only"
 2. If `.htaccess` is not writable, click **Copy Code** and paste the `# BEGIN GrabWP Tenancy` block at the very top of your root `.htaccess` file, before `# BEGIN WordPress`.
 3. Reload **Tenancy > Status** to confirm the card shows **Installed**.
 
+On OpenLiteSpeed, update GrabWP Tenancy to 1.1.15 or later first, then run **Auto Fix** once so the old block is replaced by the one-pass rules.
+
 ### On Nginx
 
 Nginx does not read `.htaccess`. Add the GrabWP path rewrite rules for your path prefix (default `site`) to your Nginx server block configuration and reload Nginx. See [Site addresses, domains and DNS](/manage-sites/domains-and-dns) and [Web server guide](/help/web-server-guide) for server configuration snippets.
@@ -67,7 +70,7 @@ Test the site with a standard WordPress default theme. If the site works with th
 
 ## Still stuck
 
-If path URLs still return 404 after updating your web server rules, gather your **Web Server** row from **Tenancy > Status** and your `.htaccess` or Nginx configuration block, then follow [What to send when you ask for help](/help/getting-help).
+If path URLs still return 404 after updating your web server rules, click **Copy diagnostics** under **Support diagnostics** on **Tenancy > Status** and send it with your `.htaccess` or Nginx configuration block. See [What to send when you ask for help](/help/getting-help).
 
 ## Related
 

@@ -1,6 +1,7 @@
 # GrabWP facts for the KB (round 2, verified against /tmp/o56-prod)
 
 Prod snapshot: HEAD 07301048 (release commit 2026-10-26). Paths are relative to /tmp/o56-prod.
+O69 update (2026-11-03): re-verified against `~/grabwp-prod` branch `prod` HEAD 15a4090a ("chore: publish O68 release metadata"), release batch Base 1.1.15, Pro 1.1.18, WaaS 1.1.25, Partner 1.4.2, Custom Fields 1.0.0. Release notes: `~/project-hub/grabwp/releases/<plugin>/v<version>.md`. New and changed facts are in section 10; superseded lines below are marked [O69].
 Legend: [OK] r1 was right. [FIXED] r1 was wrong, corrected here. [DROPPED] r1 claim not found in code. [ADDED] missing in r1. UNVERIFIED = could not confirm in code.
 Note: the code strings below are quoted exactly. One status-checker string has an em dash in code; it is shown here with a hyphen.
 
@@ -12,14 +13,15 @@ Versions all [OK] (readme.txt:7 "Stable tag", and the `Version:` header of each 
 
 | Plugin | Version | Hard dependency (`Requires Plugins`) | Source |
 |---|---|---|---|
-| grabwp-tenancy (Base) | 1.1.14 | none | grabwp-tenancy/grabwp-tenancy.php:6 |
-| grabwp-tenancy-pro | 1.1.17 | grabwp-tenancy | grabwp-tenancy-pro/grabwp-tenancy-pro.php:6,17 |
-| grabwp-tenancy-waas | 1.1.24 | grabwp-tenancy, grabwp-tenancy-pro | grabwp-tenancy-waas/grabwp-tenancy-waas.php:6,16 |
+| grabwp-tenancy (Base) | 1.1.15 [O69, was 1.1.14] | none | grabwp-tenancy/grabwp-tenancy.php:6 |
+| grabwp-tenancy-pro | 1.1.18 [O69, was 1.1.17] | grabwp-tenancy | grabwp-tenancy-pro/grabwp-tenancy-pro.php:6,17 |
+| grabwp-tenancy-waas | 1.1.25 [O69, was 1.1.24] | grabwp-tenancy, grabwp-tenancy-pro | grabwp-tenancy-waas/grabwp-tenancy-waas.php:6,16 |
 | grabwp-tenancy-stripe | 1.1.7 | grabwp-tenancy-waas | grabwp-tenancy-stripe/grabwp-tenancy-stripe.php:8,9 |
 | grabwp-tenancy-sepay | 1.1.5 | grabwp-tenancy-waas | grabwp-tenancy-sepay/grabwp-tenancy-sepay.php:8,9 |
 | grabwp-tenancy-xendit | 1.0.5 | grabwp-tenancy-waas | grabwp-tenancy-xendit/grabwp-tenancy-xendit.php:8,9 |
 | grabwp-tenancy-discounts | 1.0.0 | grabwp-tenancy-waas | grabwp-tenancy-discounts/grabwp-tenancy-discounts.php:8,10 |
-| grabwp-tenancy-partner | 1.4.1 | grabwp-tenancy, grabwp-tenancy-pro, grabwp-tenancy-waas | grabwp-tenancy-partner/grabwp-tenancy-partner.php:6,16 |
+| grabwp-tenancy-custom-fields | 1.0.0 [O69, new] | grabwp-tenancy-waas (needs WaaS 1.1.25+) | grabwp-tenancy-custom-fields/grabwp-tenancy-custom-fields.php (header), readme.txt:7 |
+| grabwp-tenancy-partner | 1.4.2 [O69, was 1.4.1] | grabwp-tenancy, grabwp-tenancy-pro, grabwp-tenancy-waas | grabwp-tenancy-partner/grabwp-tenancy-partner.php:6,16 |
 | grabwp-restore | 1.0.5 | none declared | grabwp-restore/grabwp-restore.php:5 |
 | grabwp-templates-shop | 1.0.3 | none declared (needs WooCommerce, see 2) | grabwp-templates-shop/grabwp-templates-shop.php:6 |
 
@@ -199,11 +201,11 @@ Line numbers corrected where r1 was off.
 | `Invalid or expired admin access token.` | grabwp-tenancy/includes/class-grabwp-tenancy-loader.php:302 | Token older than 1800 s (30 min) or signature mismatch. [FIXED line and TTL]. Redirects to wp-login.php?grabwp_token_error=1 (loader.php:360-364). |
 | `Tenant identification failed.` | loader.php:309 | Cause in r1 UNVERIFIED (read lines 305-310 before quoting a cause). |
 | `No admin user found for tenant access.` | loader.php:316 | Tenant database has no administrator to log in as. |
-| `ℹ .htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` | grabwp-tenancy/admin/views/status-general.php:102 (also setup-steps/check.php:128) | Web server reported as Nginx. [ADDED] |
-| `Path routing requires mod_rewrite. Query string routing (?site=id) will be used as fallback.` | status-general.php:114 | Apache without mod_rewrite. [ADDED] |
-| `⚠ Yes. GrabWP Tenancy is not designed for Multisite` | status-general.php:125 | WordPress Multisite is on. [ADDED] |
-| `Auto-install of MU-plugin will not work. Manual installation required.` | status-general.php:159 | mu-plugins folder not writable. [ADDED] |
-| `Plugin needs write access to create tenant directories and manage configuration files.` | status-general.php:148 | Data dir not writable. [ADDED] |
+| `ℹ .htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` | grabwp-tenancy/admin/views/status-general.php:102 (also setup-steps/check.php:128) | Web server reported as Nginx. [ADDED] [O69: in 1.1.15 the text has no `ℹ` and is the note under the **Web Server** row of System Information, grabwp-tenancy/includes/class-grabwp-tenancy-diagnostics.php:227] |
+| `Path routing requires mod_rewrite. Query string routing (?site=id) will be used as fallback.` | status-general.php:114 | Apache without mod_rewrite. [ADDED] [O69: now the note under the **mod_rewrite** System Information row, diagnostics.php:231] |
+| `⚠ Yes. GrabWP Tenancy is not designed for Multisite` | status-general.php:125 | WordPress Multisite is on. [ADDED] [O69: REMOVED in 1.1.15. Now the **WordPress Multisite** System Information row shows Yes with the note `GrabWP Tenancy is not designed for Multisite.` (diagnostics.php:303), plus the Hosting setup card row.] |
+| `Auto-install of MU-plugin will not work. Manual installation required.` | status-general.php:159 | mu-plugins folder not writable. [ADDED] [O69: now the note under **MU-Plugins Dir Writable**, diagnostics.php:285] |
+| `Plugin needs write access to create tenant directories and manage configuration files.` | status-general.php:148 | Data dir not writable. [ADDED] [O69: now the note under **Data Dir Writable**, diagnostics.php:286] |
 | `Could not find the stop-editing marker in wp-config.php. Please add the line manually.` | grabwp-tenancy/includes/class-grabwp-tenancy-installer.php:183 | Automatic wp-config.php edit failed. [ADDED] |
 | `Could not read tenants.php, so nothing was changed. Check the file and its permissions.` | grabwp-tenancy/includes/class-grabwp-tenancy-tenant-crud.php:257 | tenants.php unreadable. [ADDED] |
 | Status checker titles: `Multiple tenants.php files detected`, `Multiple global config.php files detected`, `Data directory inside uploads/`, `Pro config directory inside uploads/`, `SQLite directory inside uploads/`, `Directory paths hardcoded in wp-config.php`, `Multiple tenant-aliases.php files detected` | grabwp-tenancy/includes/class-grabwp-tenancy-status-checker.php:182,209,220,230,241,261,277 | Warnings only. Messages at the next line of each. [ADDED] |
@@ -252,6 +254,7 @@ Tab "Tenant Capabilities" [OK]:
 - "Disable Plugin & Theme File Editor" (`disallow_file_edit`) default on, DISALLOW_FILE_EDIT.
 - "Hide Plugins Menu" (`hide_plugin_management`) default off.
 - "Hide Appearance Menu" (`hide_theme_management`) default off.
+- "Hide Themes Screen" (`hide_theme_switching`) default off. [O69, ADDED in Base 1.1.15; see section 10]
 - "Hide GrabWP Plugins" (`hide_grabwp_plugins`) default on. Help: hides every GrabWP plugin and the SQLite plugin from the tenant Plugins list.
 Tab "Performance & Security":
 - "Disable WP-Cron" (`disable_wp_cron`) default on, DISABLE_WP_CRON. Help: "Run a server cron job instead."
@@ -369,7 +372,55 @@ Pricing, trial length of Pro (14 days), license scope (1 WordPress install per l
 12. Xendit amount units: UNVERIFIED, drop.
 13. Overrides vs global: see term 34.
 14. Moving the data folder: the Status steps are "Deactivate the plugin", rename and move, "Reactivate the plugin" (status.php:95-105). [OK]
-15. [ADDED] xCloud login token loop: tenant dashboard icon leads to `wp-login.php?grabwp_token_error=1`; cause found 2026-10-27 (object cache drop-in shares one salt), fix is in review, workaround is Advanced or Custom isolation (cs/known-issues.md, PS-010). The token window is 30 minutes (matches tenant.php:342).
-16. [ADDED] Tenants can upload plugins only if "Disable Install Plugins & Themes" is turned off; default is on (settings.php:94 defaults, cs/faq-and-workflows.md). A warning for tenants with that capability is built but not released (cs/faq-and-workflows.md, PS-009); do not state it as shipped.
+15. [ADDED] xCloud login token loop: tenant dashboard icon leads to `wp-login.php?grabwp_token_error=1`; cause found 2026-10-27 (object cache drop-in shares one salt), fix is in review, workaround is Advanced or Custom isolation (cs/known-issues.md, PS-010). The token window is 30 minutes (matches tenant.php:342). [O69: FIXED and shipped in Base 1.1.15. A tenant keeps the shared `object-cache.php` only when keys stay separate: xSpeed with a per-tenant salt, Redis Object Cache with the tenant's own `{id}_` prefix; otherwise it is skipped. Filter `grabwp_tenancy_tenant_object_cache_dropin`. grabwp-tenancy/load-helper-cache.php:84-151. Advanced isolation is now only the workaround for older Base.]
+16. [ADDED] Tenants can upload plugins only if "Disable Install Plugins & Themes" is turned off; default is on (settings.php:94 defaults, cs/faq-and-workflows.md). A warning for tenants with that capability is built but not released (cs/faq-and-workflows.md, PS-009); do not state it as shipped. [O69: SHIPPED in Base 1.1.15 as the **Tenant file safety** card (OK / Unsafe), see section 10. Pro 1.1.18 reports per-tenant overrides to it.]
 17. [ADDED] Suspended page needs Base 1.1.12+ and WaaS 1.1.21+; with an older Base, WaaS runs but does not block suspended sites (cs/faq-and-workflows.md).
-18. [ADDED] Release note: git history shows "bump WaaS 1.1.25" on 2026-10-23 (d5739d0b) followed by the 2026-10-26 release commit setting WaaS 1.1.24. Prod header says 1.1.24. Owner should confirm which is the intended public version before the KB quotes a WaaS version.
+18. [ADDED] Release note: git history shows "bump WaaS 1.1.25" on 2026-10-23 (d5739d0b) followed by the 2026-10-26 release commit setting WaaS 1.1.24. Prod header says 1.1.24. Owner should confirm which is the intended public version before the KB quotes a WaaS version. [O69: RESOLVED. WaaS 1.1.25 shipped 2026-11-03; prod header and Stable tag say 1.1.25.]
+
+---
+
+## 10. Release 2026-11-03 (O69): Base 1.1.15, Pro 1.1.18, WaaS 1.1.25, Partner 1.4.2, Custom Fields 1.0.0
+
+Verified in `~/grabwp-prod` prod HEAD 15a4090a. Docs pages updated in branch `docs/o69-release-coverage`.
+
+### Base 1.1.15
+- **Shared server check** [ADDED]: Status > Plugin General and the wizard Welcome step (inside "Show the server checks", open when issues exist, setup-steps/check.php:85-98) render the same partial: env cards, Hosting setup (main site only), "Site can reach itself (loopback)", "Tenant file safety", "System Information" (`<details>`, closed), "Support diagnostics" (a plain div, NOT collapsible; main site only). grabwp-tenancy/admin/views/partials/system-check.php:41-132.
+- **Support diagnostics** [ADDED]: button "Copy diagnostics" (system-check.php:130); copies checks, System Information and the last `LOG_LINES = 50` lines of the GrabWP and WordPress debug logs (diagnostics.php:37), redacted (diagnostics.php:707-767). UI text: "Passwords, keys, salts, emails and file paths are left out. Nothing is sent anywhere" (system-check.php:128). Admin-only read-only REST route also exists (release note, Developer).
+- **Hosting setup card** [ADDED]: title "Hosting setup", header "✓ Ready" or "%1$d of %2$d need attention" (setup-hosting-card.php:72-88). Rows: "Multisite and wp-config.php", "Secure address", "HTTPS behind a proxy", "Subdomains (wildcard)" (:26-30). Buttons: "Remove these settings" / "Undo settings removal" (:175,182), "Switch to https" / "Undo" (:229), "Add HTTPS detection" / "Remove HTTPS detection" (:281), "Check again", "Copy code", details "Lines to remove by hand", "Code to add by hand", "Using xCloud?" (:370-377). Wildcard row reports DNS, address, certificate.
+- **Conflict constants** [ADDED]: `CONFLICT_CONSTANTS` = MULTISITE, SUBDOMAIN_INSTALL, VHOST, DOMAIN_CURRENT_SITE, PATH_CURRENT_SITE, SITE_ID_CURRENT_SITE, BLOG_ID_CURRENT_SITE, SUNRISE, NOBLOGREDIRECT, WP_ALLOW_MULTISITE, WP_HOME, WP_SITEURL, COOKIE_DOMAIN, COOKIEPATH, SITECOOKIEPATH, ADMIN_COOKIE_PATH; plus variable `$base` (class-grabwp-tenancy-status-checker.php:580,588). WP_ALLOW_MULTISITE alone = "optional cleanup".
+- **Remove Multisite settings** [ADDED]: `remove_multisite_settings()` (installer.php:765) only on explicit click, never by Fix; backs up ("pre-multisite" snapshot), saves a plain WP_HOME/WP_SITEURL URL into home/siteurl first, writes atomically, checks the site still loads and rolls back if not (`replace_files()`, installer.php:421-455). Refuses: network with more than one site, tenants, lines inside a condition or still used elsewhere. `.htaccess` never changed (installer.php:637). Undo `undo_multisite_settings()` (:850) refuses when wp-config.php changed since.
+- **Tenant file safety** [ADDED]: card "Tenant file safety", "OK" or "Unsafe" (setup-file-safety-card.php:25-41). Causes: setting off, constant set false before GrabWP, per-tenant override (filter `grabwp_tenancy_unsafe_tenant_file_overrides`, status-checker.php:376-384).
+- **Hide Themes Screen** [ADDED]: setting `hide_theme_switching`, default off (settings.php:87,150-155). Blocks themes.php, theme-install.php, theme-editor.php with "Themes are managed by your host. You can still customize your current theme, menus and widgets from the Appearance menu." (title "Themes unavailable", 403) (theme-screen-lock.php:99). No effect when Hide Appearance Menu is on.
+- **Integrity watchdog** [ADDED]: guards only GrabWP's own `# BEGIN/END GrabWP ...` blocks, adopts other edits, never writes a broken file, atomic repair, notice on Status page (integrity-watchdog.php header, :572-590). D84 docs match.
+- **Single-pass path routing** [ADDED]: `get_site_path_rewrite_rules()` (installer.php:1270); a pre-1.1.15 block is "outdated" (`htaccess_has_site_path_rules()`, :1306), so Status card 3 shows "⚠ Invalid content" and the admin notice "Root .htaccess needs to be updated for tenant routing." fires (admin-notice.php:100-117) until Auto Fix.
+- **Wizard** [ADDED]: routing save creates tenants.php and names the real write error; site step suggests `<title-slug>.<main domain>` and follows the title (setup-wizard.php:1383); entry link "Run setup wizard"/"Resume setup wizard" only on Status (status.php:44, setup-wizard.php:355).
+- **Installer behind a proxy** [ADDED, not in public docs beyond release notes]: retries over HTTPS, proves the answer comes from the new site, bounded wait (filter `grabwp_tenancy_tenant_install_route_wait`).
+
+### Pro 1.1.18
+- Restore: `This backup has no WordPress site data, so nothing was restored. The site is unchanged.` (class-grabwp-tenancy-pro-restore.php:286); failure messages say whether old tables were removed (:294,297); failed restore ends its job.
+- Wizard Site defaults: "Shared from the main site", "Own themes", "Own plugins", "Own plugins and themes" (recommended), "Own uploads folder" (recommended), "Choose each setting" (recommended) (admin/views/setup-steps/defaults.php:40-120).
+- Per-tenant overrides reported to the Base file safety card (needs Base 1.1.15).
+- DB import fails clearly when the target has no usable options table (commit c47b142a; no new UI string found).
+
+### WaaS 1.1.25
+- Storefront step: "Greyed out sites are already templates and cannot be picked here." (admin/views/setup-steps/storefront.php:65); slug prefilled `starter-site`, `starter-site-N` (class-grabwp-tenancy-waas-setup-steps.php:291); warning "The template was saved, but GrabWP could not confirm that WordPress is installed in that site..." (:431).
+- OTP refs lowercase so a persistent object cache finds them (commit 38dfb868); symptom string `Your verification code has expired. Please request a new one.` (class-grabwp-tenancy-waas-signup-otp.php:151).
+- "Run setup wizard" removed from the WaaS dashboard; open from Tenancy > Status.
+- Clone failures log the failed step, error and target database (commit c493e4db).
+- Real subscription and add-on contract IDs stored at signup; free template with an old discount price stays free (no UI string; release notes only).
+- Signup step extension points used by Custom Fields (release note, Developer).
+
+### Custom Fields 1.0.0 (new add-on)
+- Menu **Waas > Custom Fields** (class-grabwp-tenancy-cf-admin.php:39). Readme says "GrabWP WaaS > Custom Fields"; the real top menu label is "Waas".
+- Types Text, Phone, Email, Text area; Stored on Customer profile or Subscription; Placeholder; Default value; Required; Active (edit only). No delete button. Type, storage and key fixed after creation. Master switch "Ask on signup", default off.
+- Signup step "Additional information", ID `custom_fields` (class-grabwp-tenancy-cf-signup.php:28,244); Default preset places it after `account`; unplaced in saved presets comes before review.
+- Values: subscription detail box "Custom fields" / "Save custom fields"; user profile "Additional information" (cf-admin.php:522); customer dashboard Overview card "Your details" (cf-dashboard.php:58).
+- Limits 255 text, 2000 textarea (cf-validator.php:14-15). Unfinished paid checkouts cleaned after 7 days by daily cron. Privacy export/erasure; uninstall removes data.
+- Needs WaaS 1.1.25: `GrabWP Tenancy Custom Fields needs GrabWP Tenancy WaaS %s or newer. Custom fields are off until WaaS is updated.` (grabwp-tenancy-custom-fields.php:120).
+
+### Partner 1.4.2
+- Fix only: a new partner's API key shows after creation on sites with a persistent object cache. There is no public Partner page in the docs; release status for customer docs is still owner-confirmed only (see section 1). Not documented publicly in O69.
+
+### Known gaps after O69
+- **Screenshots**: the admin screenshot library (`~/project-hub/grabwp/assets/admin-screenshots`, last re-shoot 2026-10-24, Status shot shows Base 1.1.12) has no shots of: Hosting setup card, Tenant file safety card, Support diagnostics, the 1.1.15 Plugin General layout, Tenant Capabilities with Hide Themes Screen, the wizard Welcome/Storefront steps, Waas > Custom Fields, the Add-ons tab with the Custom Fields card. Pages carry `{/* TODO screenshot */}` markers; no images were fabricated.
+- **Vietnamese**: no VI markdown mirror exists since O57 (EN only, `/vi` falls back to EN). VI pages for O69 changes are not written.

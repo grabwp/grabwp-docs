@@ -3,8 +3,8 @@ title: "Glossary"
 description: "Plain meaning of terms used across GrabWP Tenancy, Pro and WaaS, organized alphabetically from A to Z."
 sidebar_label: "Glossary"
 tags: [glossary, reference, plan-base, plan-pro, plan-waas, for-customer, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17, WaaS 1.1.24"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18, WaaS 1.1.25"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** this glossary explains the technical terms, settings, and file names used across GrabWP plugins in plain words, organized alphabetically from A to Z.
@@ -121,6 +121,13 @@ last_verified_date: "2026-10-30"
 **Why it matters:** requires the plan benefit `allow_custom_domain`. A site can have at most 2 custom domains and cannot use custom domains while running in path mode.  
 **More:** [A custom domain does not work](/help/custom-domain-not-working) | [Client custom domains](/sell-sites/client-domains)
 
+### Custom fields
+
+**Plain meaning:** extra questions on the WaaS signup form, such as a phone number or company name, added by the GrabWP Tenancy Custom Fields add-on. Each field is stored on the customer profile (asked once) or on the subscription (asked for every site).  
+**Where you see it:** **Waas > Custom Fields**, the **Additional information** signup step, the subscription detail and the customer dashboard **Your details** card.  
+**Why it matters:** needs WaaS 1.1.25 or later, and is off until you turn on **Ask on signup**.  
+**More:** [Custom fields at signup](/sell-sites/custom-fields)
+
 ## D
 
 ### Data directory
@@ -214,6 +221,13 @@ last_verified_date: "2026-10-30"
 **Where you see it:** root `.htaccess` and **Tenancy > Status**.  
 **Why it matters:** must appear before `# BEGIN WordPress` for path routing to function. Nginx does not use `.htaccess` and requires manual server block rules.  
 **More:** [Web server guide](/help/web-server-guide) | [Install GrabWP](/manage-sites/install)
+
+### Hosting setup
+
+**Plain meaning:** a card that checks four hosting points: leftover Multisite settings in `wp-config.php`, an https site address, HTTPS behind a proxy or CDN, and wildcard subdomains.  
+**Where you see it:** **Tenancy > Status > Plugin General** and the setup wizard's **Server check** (Base 1.1.15 or later).  
+**Why it matters:** some rows offer a one-click fix with **Undo**, such as **Remove these settings** or **Add HTTPS detection**.  
+**More:** [Hosting setup checks](/help/hosting-requirements#hosting-setup-checks)
 
 ## I
 
@@ -372,6 +386,13 @@ last_verified_date: "2026-10-30"
 **Why it matters:** before switching drivers, use **Migrate uploads now** to copy files, avoiding broken media links.  
 **More:** [Pro settings](/manage-sites/pro-settings) | [S3 storage](/manage-sites/s3-storage)
 
+### Support diagnostics
+
+**Plain meaning:** a summary of the server checks, **System Information** and the last debug log lines that you copy with **Copy diagnostics** and paste into a support request.  
+**Where you see it:** **Tenancy > Status > Plugin General** and the setup wizard's **Server check** (Base 1.1.15 or later).  
+**Why it matters:** passwords, keys, salts, emails and file paths are left out, and nothing is sent until you paste it.  
+**More:** [What to send when you ask for help](/help/getting-help)
+
 ### Suspended site page
 
 **Plain meaning:** the landing page displayed to visitors (HTTP 503) when a client site is suspended due to non-payment or administrator action.  
@@ -408,6 +429,13 @@ last_verified_date: "2026-10-30"
 **Where you see it:** **Tenancy > All Tenants**.  
 **Why it matters:** each tenant has its own isolated content, uploads, and options, with optional dedicated database and extensions in Pro.  
 **More:** [Create and manage sites](/manage-sites/create-and-manage-sites)
+
+### Tenant file safety
+
+**Plain meaning:** a check that warns when site admins can install or edit plugin and theme code, which runs on the server and can read the secret keys all sites share.  
+**Where you see it:** **Tenancy > Status > Plugin General** and the setup wizard's **Server check**, as **OK** or **Unsafe** (Base 1.1.15 or later).  
+**Why it matters:** it names the setting, `wp-config.php` line or Pro per-site override that allows code changes.  
+**More:** [Tenant file safety warning](/help/client-cannot-install-plugins#tenant-file-safety-warning)
 
 ### Tenant ID
 

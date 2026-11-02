@@ -3,11 +3,11 @@ title: "Site dashboard icon sends me to the login page"
 description: "Why clicking the site wp-admin link redirects to wp-login.php?grabwp_token_error=1 and how to fix token or object cache issues."
 sidebar_label: "Site login fails"
 tags: [troubleshooting, isolation, server, plan-base, plan-pro, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18"
+last_verified_date: "2026-11-03"
 ---
 
-**Short answer:** the dashboard login icon uses a signed token that expires after 30 minutes, so first refresh **Tenancy > All Tenants** and click the link again. If a fresh link still redirects to `wp-login.php?grabwp_token_error=1` on a host with object caching, switch site isolation to **Advanced** or **Custom** under **Tenancy > Pro Settings > Isolation**.
+**Short answer:** the dashboard login icon uses a signed token that expires after 30 minutes, so first refresh **Tenancy > All Tenants** and click the link again. If a fresh link still redirects to `wp-login.php?grabwp_token_error=1` on a host with object caching (for example xCloud), update GrabWP Tenancy to 1.1.15 or later. On older versions, switch site isolation to **Advanced** or **Custom** under **Tenancy > Pro Settings > Isolation**.
 **Needs:** Free
 
 ## Symptom
@@ -27,7 +27,7 @@ In the GrabWP log, one of these three messages is recorded:
 | `Invalid or expired admin access token.` | The `grabwp_token` URL was generated more than 30 minutes ago (1800 seconds, unless `GRABWP_TENANCY_TOKEN_TTL` is set), or the signature did not match. |
 | `Tenant identification failed.` | WordPress opened the request without resolving a site ID, usually because the `load.php` block in `wp-config.php` or the routing rule did not match the URL. |
 | `No admin user found for tenant access.` | GrabWP connected to the site database, but no administrator account was found in the site's user table. |
-| Redirect to `wp-login.php?grabwp_token_error=1` on a new site when **Tenancy > Status** is all green | On some hosts with object caching, a shared `object-cache.php` drop-in shares cached options and users across sites that share `wp-content`, which prevents the new site tables from initializing cleanly. |
+| Redirect to `wp-login.php?grabwp_token_error=1` on a new site when **Tenancy > Status** is all green | Before Base 1.1.15, on some hosts with object caching (such as the xSpeed drop-in on xCloud), a shared `object-cache.php` drop-in shared cached options and users across sites that share `wp-content`, which prevented the new site tables from initializing cleanly. From Base 1.1.15, a client site keeps the shared drop-in only when its cache keys stay separate (xSpeed with a per-site salt, Redis Object Cache with the site's own table prefix). |
 
 ## Check
 
@@ -50,10 +50,10 @@ If you need to log in directly through `wp-login.php` without using the dashboar
 
 When using a host with object caching where shared `wp-content` causes new sites to fail auto-login:
 
-1. In the main site admin, go to **Tenancy > Pro Settings** and open the **Isolation** tab.
-2. Change **Level of isolation for new sites** from **Simple** or **Shared** to **Advanced** (or choose **Custom** with isolated directories).
-3. Save your changes and create a new test site to confirm direct login works.
-4. For sites created while affected, open the site URL directly and complete the WordPress installer if prompted, or recreate the site after enabling **Advanced** isolation.
+1. Update GrabWP Tenancy to 1.1.15 or later on the main site. This fixes the cause for sites that share the main site's `object-cache.php`.
+2. Create a new test site and confirm direct login works.
+3. If you cannot update yet, go to **Tenancy > Pro Settings** and open the **Isolation** tab, change **Level of isolation for new sites** from **Simple** or **Shared** to **Advanced** (or choose **Custom** with isolated directories), and save.
+4. For sites created while affected, open the site URL directly and complete the WordPress installer if prompted, or recreate the site.
 
 :::info If you sell sites
 When selling sites with WaaS, customers can log in to their dashboard via one-time email code under **WAAS Auth (Email signup)** mode, or via standard credentials under **WordPress Auth (Login required)** mode. See [Set up WaaS](/sell-sites/set-up-waas).
@@ -61,7 +61,7 @@ When selling sites with WaaS, customers can log in to their dashboard via one-ti
 
 ## Still stuck
 
-If refreshing the site list and isolating `wp-content` do not resolve the redirect, send your **Tenancy > Status** output and the exact URL parameters shown on the login screen. See [What to send when you ask for help](/help/getting-help).
+If refreshing the site list, updating GrabWP and isolating `wp-content` do not resolve the redirect, click **Copy diagnostics** under **Support diagnostics** on **Tenancy > Status** and send it with the exact URL parameters shown on the login screen. See [What to send when you ask for help](/help/getting-help).
 
 ## Related
 

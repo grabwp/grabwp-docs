@@ -3,8 +3,8 @@ title: "Backup and restore"
 description: "Back up one site at a time, schedule automatic backups, send copies to S3 and restore a site from a backup archive."
 sidebar_label: "Backup and restore"
 tags: [backup, plan-pro, for-operator, for-cs]
-last_verified_version: "Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Pro 1.1.18"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** click **Backup Tenant** on a site's row and then **Start Backup** to get a ZIP of that site. Set a schedule on **Auto Backup Settings**, and restore with **Restore Tenant** from a saved backup or an uploaded ZIP. A restore replaces everything on that site.
@@ -94,6 +94,8 @@ Open **Tenancy > All Tenants** and click **Restore Tenant** on the row (or the *
 Keep the browser tab open while these steps run: **Validating archive**, **Extracting archive**, **Verifying contents**, **Restoring database**, **Restoring isolated content**, **Restoring Pro config**, **Restoring uploads**, **Cleaning up**.
 
 When it finishes you see **Restore complete!**
+
+If the restore fails, the job ends and the screen says whether the site was changed. Since Pro 1.1.18, a backup without WordPress site data is refused before any table is dropped (`This backup has no WordPress site data, so nothing was restored. The site is unchanged.`). See [Backup, restore or save errors](/help/backup-restore-and-save-problems#if-a-restore-fails).
 
 **Check:** open **Homepage** or the site's domain and confirm the restored content.
 

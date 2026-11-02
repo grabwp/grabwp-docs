@@ -3,7 +3,7 @@ title: "Set up WaaS"
 description: "What you need, how to install the three plugins, and how the setup wizard takes you from an empty site to a working signup page."
 sidebar_label: "Set up WaaS"
 tags: [settings, plan-waas, plan-pro, for-operator]
-last_verified_date: "2026-10-30"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** install GrabWP Tenancy, then Pro, then WaaS, and follow the setup wizard. The wizard sets the web address of customer sites, activates your Pro license, picks defaults for new sites, creates your starter template and Free plan, and opens your signup page. Paid plans and payments come after.
@@ -27,6 +27,8 @@ last_verified_date: "2026-10-30"
   ```
 
 - An SSL certificate that covers both `yoursaas.com` and `*.yoursaas.com`. Many hosts offer Let's Encrypt.
+
+After installing GrabWP Tenancy 1.1.15 or later, the **Subdomains (wildcard)** row of the **Hosting setup** card on **Tenancy > Status** tests the DNS record, the address and the certificate for you. See [Hosting setup checks](/help/hosting-requirements#hosting-setup-checks).
 
 If customer sites use path URLs instead (for example `yoursaas.com/site/site-name/`), you need no extra DNS.
 
@@ -63,7 +65,7 @@ If activation fails with a dependency error, activate the plugin before it first
 The wizard opens by itself the first time you activate GrabWP on a site with no customer sites. Later you can open it from:
 
 - the **Continue setup** button on the notice "GrabWP: finish setup to get your first site running",
-- **Run setup wizard** (or **Resume setup wizard**) at the top of **Tenancy > Status**.
+- **Run setup wizard** (or **Resume setup wizard**) at the top of **Tenancy > Status**. Since WaaS 1.1.25 this is the only button; the WaaS dashboard no longer has one.
 
 {/* TODO screenshot: setup wizard with WaaS active, showing the step list (Welcome, Routing, License, Site defaults, Starter site, Storefront, Done) */}
 
@@ -74,12 +76,20 @@ The wizard saves each screen as you go. **Exit setup** pauses it; the steps you 
 | **Welcome** | The wizard checks your server and explains "How your website service works" (the five parts on [How WaaS works](/sell-sites/how-waas-works)). Click **Continue**. |
 | **Routing** | **Choose the web address of your sites**: **Path** (no DNS needed) or **Domain** (a subdomain or your own domain, marked **Recommended**). You can change it later in **Tenancy > Settings > Routing**, which also lets sites use both a path and a domain. |
 | **License** | **Activate your Pro license**. You can skip this and activate later under **Tenancy > License**, but add-on downloads need it. |
-| **Site defaults** | **Defaults for new sites**: **Choose each setting** is selected and marked **Recommended**: you pick the database, plugins, themes and uploads. **Use the simple setup** (each site gets its own uploads folder, plugins and themes are shared from the main site) keeps it to one screen. |
+| **Site defaults** | **Defaults for new sites**: **Choose each setting** is selected and marked **Recommended**: you pick the database, plugins, themes and uploads. For plugins and themes the choices are **Shared from the main site**, **Own themes**, **Own plugins** and **Own plugins and themes**; on a fresh install **Own plugins and themes** and **Own uploads folder** are preselected and marked **Recommended**. **Use the simple setup** (each site gets its own uploads folder, plugins and themes are shared from the main site) keeps it to one screen. |
 | **Starter site** | **Create your starter site**. Customers get a copy of this site when they sign up. Create a new one or pick an existing site. |
 | **Storefront** | Three short screens: **Your template** (turn the starter site into a template: **Template site**, **Template name**, **Template slug**), **Your Free plan** (**Free plan name**, **Description**, **Features**, one per line), and **Your signup page** (**Platform domain** and **Accent color**, the color of buttons and links customers see). |
 | **Done** | **Manage sites** (**Open site admin (1-click)**, **Visit site**, **All sites**), **Manage WaaS** (**Open template gallery**, **Test a signup (use a private window)**, **WaaS dashboard**), plus next steps: **Connect payments**, **Paid plans and trials**, **More templates**. |
 
 The **Platform domain** is required unless customer sites use path URLs. With path URLs you can leave it empty.
+
+On **Your template** (WaaS 1.1.25 or later):
+
+- **Template site** lists each site by name, address and ID. `Greyed out sites are already templates and cannot be picked here.` Use **Manage them in WaaS > Templates** for those.
+- **Template slug** is prefilled with a slug no other template uses (`starter-site`, then `starter-site-2` and so on). If you type a slug that is taken, the step says `That template slug is already used by another template.`
+- If WordPress is not installed in the chosen site yet, the template is still saved, with the warning `The template was saved, but GrabWP could not confirm that WordPress is installed in that site. Open the site and check it before customers sign up.`
+
+{/* TODO screenshot: setup wizard Storefront > Your template on WaaS 1.1.25 (template site list with greyed-out templates and the prefilled slug). No such shot exists in the admin screenshot library yet. */}
 
 WaaS creates the Signup, Dashboard, Templates and Pricing pages for you when it is activated, so after the wizard your signup page already works.
 

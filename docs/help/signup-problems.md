@@ -3,8 +3,8 @@ title: "Signup stops or shows an error"
 description: "What signup validation errors mean, which site names are reserved, and how to retry a stuck provisioning job."
 sidebar_label: "Signup problems"
 tags: [troubleshooting, subscriptions, plan-waas, for-customer, for-operator, for-cs]
-last_verified_version: "WaaS 1.1.24"
-last_verified_date: "2026-10-30"
+last_verified_version: "WaaS 1.1.25"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** signup errors happen either before checkout (when a site name is reserved or already taken) or after checkout while the site is being built. Check **Waas > Settings > Provisioning** in wp-admin to inspect the job state, read the **Last Error** column, and click **Retry**.
@@ -38,6 +38,8 @@ Or after checkout, the provisioning screen stays on the progress bar and does no
 | Provisioning state is `failed_terminal` | The job failed after reaching the maximum automatic retry limit of 12 (`MAX_RETRIES`), or an administrator dismissed it. |
 | Template missing from gallery | The template is marked inactive, restricted from the selected plan, or its source site was deleted. |
 | Nonce or cookie errors on signup page | A full-page caching plugin is caching the signup page, which embeds a REST nonce. |
+| Every new code says `Your verification code has expired. Please request a new one.` right after it arrives | Before WaaS 1.1.25, on sites with a persistent object cache (Redis or Memcached), the one-time code was saved under a key the cache could not find again. Update WaaS to 1.1.25 or later. |
+| A required custom field blocks the signup with `Check these fields: %s.` | The GrabWP Tenancy Custom Fields add-on asks for extra details, and a required field is empty or in the wrong format. See [Custom fields at signup](/sell-sites/custom-fields). |
 
 ## Check
 
@@ -77,7 +79,7 @@ A client site dashboard can display `Your site is being set up.` while media and
 
 1. Open **Waas > Settings > Provisioning**.
 2. On any row in `failed_retriable` or `clone_running` state, click the **Retry** icon under **Actions**. You will see the confirmation notice `Intent re-queued for retry.`.
-3. Open **Waas > Settings > Activity Log** around the same timestamp to see server errors.
+3. Open **Waas > Settings > Activity Log** around the same timestamp to see server errors. Since WaaS 1.1.25, a failed clone also writes the failed step, the error and the target database to the GrabWP debug log (`grabwp_debug.log`). **Copy diagnostics** on **Tenancy > Status** includes the last lines of that log.
 4. Confirm the web server user has write permissions on the directory shown as **WaaS Directory** under **Waas > Settings > General**.
 5. Ensure a server cron job is calling `wp-cron.php` regularly so the background runner (`grabwp_waas_resume_provisioning_intent`) and hourly stuck-job scanner (`grabwp_waas_scan_stale_intents`) run.
 
@@ -92,6 +94,10 @@ A client site dashboard can display `Your site is being set up.` while media and
 ### Exclude the signup page from cache
 
 The signup page sends no-cache headers because it embeds a REST nonce. Exclude your signup page URL (`/signup/` by default) from any server, host, or plugin full-page caching.
+
+### If verification codes always read as expired
+
+Update GrabWP Tenancy WaaS to 1.1.25 or later. Codes sent before the update can still be verified. If a customer's code has really timed out, they request a new one on the signup form.
 
 ## Still stuck
 
