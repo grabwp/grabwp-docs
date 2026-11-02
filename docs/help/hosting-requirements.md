@@ -30,6 +30,7 @@ GrabWP runs inside a standard single-site WordPress installation and uses server
 
 - If `wp-content/grabwp-tenancy` or `wp-content/mu-plugins` is not writable, GrabWP displays `Plugin needs write access to create tenant directories and manage configuration files.` or `Auto-install of MU-plugin will not work. Manual installation required.` on **Tenancy > Status**.
 - If WordPress Multisite is active on the main site, **Tenancy > Status** warns `⚠ Yes. GrabWP Tenancy is not designed for Multisite`.
+- Some lines in `wp-config.php` stop GrabWP from giving each site its own address and login. See [Settings in wp-config.php that stop GrabWP](#settings-in-wp-configphp-that-stop-grabwp).
 - By default, **Disable WP-Cron** (`DISABLE_WP_CRON`) is turned on for client sites, so a server cron job is required for scheduled tasks to run.
 - Without reliable transactional email, customers in **WAAS Auth (Email signup)** mode will not receive their **Verification code** email to complete signup.
 
@@ -47,6 +48,31 @@ Before launching your platform:
 2. Keep page caching off while installing and testing GrabWP, and only re-enable caching after site provisioning is verified.
 3. Configure an SMTP plugin on the main site and send a test email from **Waas > Settings > Email** before opening public signups.
 4. Follow [Set up WaaS](/sell-sites/set-up-waas) and [Install GrabWP](/manage-sites/install).
+
+## Settings in wp-config.php that stop GrabWP
+
+Your `wp-config.php` file may still contain lines left over from WordPress Multisite or from your host. GrabWP sets these values for each of your sites, so if `wp-config.php` sets them first, your sites can open the main site or fail to log in. It does not matter what value the line has.
+
+GrabWP looks for these names:
+
+- The WordPress Multisite settings, such as `MULTISITE`, `SUBDOMAIN_INSTALL` and `DOMAIN_CURRENT_SITE`
+- `WP_HOME` and `WP_SITEURL`
+- `COOKIE_DOMAIN`, `COOKIEPATH`, `SITECOOKIEPATH` and `ADMIN_COOKIE_PATH`
+- A `$base` line
+
+**Where you see the warning:** in the **Hosting** check on **Tenancy > Status**, and in the **Check** step of the setup wizard. The check lists each line it found, with its line number in `wp-config.php`.
+
+**What Fix does:** when you click **Fix** and confirm, GrabWP:
+
+1. Saves a backup copy of `wp-config.php`.
+2. Removes the lines it found. If `WP_HOME` or `WP_SITEURL` holds a plain web address, GrabWP first saves that address in WordPress, so your main site keeps the same address.
+3. Opens your main site to check that it still works. If it does not, GrabWP puts the old `wp-config.php` back right away.
+
+If something looks wrong afterwards, click **Undo** to put back the old `wp-config.php` and the old main site address. GrabWP does not change `.htaccess`.
+
+**When you must remove lines yourself:** GrabWP will not fix the file for you if a line sits inside a condition (an `if` block), is written in an unusual way, or if the same name is used somewhere else in the file. The check then lists those lines. Make a backup of `wp-config.php`, delete the listed lines with your host's file manager or ask your host to do it, then run the check again.
+
+GrabWP also refuses to fix a real WordPress Multisite network that has more than one site. Move off Multisite first.
 
 ## Limits and versions
 
