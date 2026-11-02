@@ -81,6 +81,8 @@ These cards show the pieces GrabWP adds to your server. Expand a card for **Fix 
 
 If a cache plugin on the main site needs to write one of the locked files, click **Unlock shared files**, let it save, then click **Lock shared files** again.
 
+The lock is a separate `0444` setting. On write requests from client sites, an integrity guard watches only the pieces GrabWP owns: the loader and HTTPS proxy blocks in `wp-config.php`, the GrabWP block in `.htaccess`, the MU-plugin and the data folder protection files. If one of those pieces is removed or changed, GrabWP puts back only its own piece and keeps every other edit an admin or plugin made to `wp-config.php` or `.htaccess`. If the file itself is invalid or truncated and cannot be repaired safely, GrabWP does not replace the whole file. It keeps its protected recovery snapshot and reports the problem on **Tenancy > Status** and in the debug log. To remove a GrabWP block on purpose, first turn protection off from **Tenancy > Status**.
+
 On Nginx the page says `.htaccess files are not used by Nginx. Configure tenant routing in your server block instead.` See [Apache, LiteSpeed and Nginx](/help/web-server-guide).
 
 ### Base Plugin
