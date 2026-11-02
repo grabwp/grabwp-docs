@@ -3,8 +3,8 @@ title: "What to send when you ask for help"
 description: "The facts support needs to answer quickly: versions, Status page, web server and the exact error text."
 sidebar_label: "What to send"
 tags: [troubleshooting, for-customer, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17, WaaS 1.1.24"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18, WaaS 1.1.25"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** send the exact text you see, the versions of the GrabWP plugins, what the **Status** page shows, and your web server. With these, support can usually name the cause in one reply.
@@ -20,18 +20,28 @@ Open the **Plugin General** tab (`tab=general`). Use **Auto Fix** on any row tha
 
 | Tab | Use it for |
 |---|---|
-| **Plugin General** | Loader, MU-plugin, rewrite rules, and data directory protection |
+| **Plugin General** | Loader, MU-plugin, rewrite rules, data directory protection, **Hosting setup**, loopback, **Tenant file safety**, **System Information** and **Support diagnostics** |
 | **Base Plugin** | Directories, mappings file, settings file, and capability flags |
 | **Pro Plugin** | Whether Pro is **Active**, plus default isolation and database type |
 
+## Copy diagnostics (Base 1.1.15 or later)
+
+The quickest way to share your setup is **Support diagnostics** at the bottom of **Plugin General**:
+
+1. Open **Tenancy > Status > Plugin General**.
+2. Under **Support diagnostics**, click **Copy diagnostics**.
+3. Paste the result into your support request.
+
+It copies a summary of the checks, the **System Information** values and the last lines (up to 50 each) of the GrabWP and WordPress debug logs. Passwords, keys, salts, emails and file paths are left out, and nothing is sent anywhere until you paste it. Read it over before you share it. See [Install GrabWP](/manage-sites/install#send-diagnostics-to-support).
+
 ## What to collect before you ask for help
 
-Collect these five facts before contacting support:
+Collect these five facts before contacting support (the diagnostics copy already covers 2 to 4):
 
 1. **The exact text.** Copy the notice or error message into your message. Do not retype it from memory. A screenshot of the full screen also helps.
-2. **Plugin versions.** In wp-admin, open **Plugins** and note the version of each GrabWP plugin (Base, Pro, WaaS, and any payment add-ons).
+2. **Plugin versions.** In wp-admin, open **Plugins** and note the version of each GrabWP plugin (Base, Pro, WaaS, and any add-ons).
 3. **Status page.** Open **Tenancy > Status**. Check what each tab shows (**Plugin General**, **Base Plugin**, **Pro Plugin**), especially any warning or error rows.
-4. **Web server.** Apache, LiteSpeed, or Nginx, along with the hosting panel if you use one. The **Plugin General** tab displays the detected server.
+4. **Web server.** Apache, LiteSpeed, or Nginx, along with the hosting panel if you use one. The **Web Server** row in **System Information** displays the detected server.
 5. **What you did just before.** For example: "changed isolation level", "switched storage driver", or "added a custom domain".
 
 For a problem with a specific site, also include the site URL and whether it uses a path URL or a custom domain.

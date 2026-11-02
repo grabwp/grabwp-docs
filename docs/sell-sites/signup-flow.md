@@ -3,7 +3,7 @@ title: "Signup flow"
 description: "Choose which signup steps customers see, in what order, on how many screens, and with what labels, using signup flow presets."
 sidebar_label: "Signup flow"
 tags: [settings, plan-waas, for-operator]
-last_verified_date: "2026-10-30"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** a signup flow preset decides which steps customers see on your signup page, their order and which steps share a screen. The built-in **Default** preset works out of the box. To change it, copy it into your own preset under **Waas > Settings > Signup Flow**, then name that preset on the signup page.
@@ -33,6 +33,8 @@ Its fields are disabled and **Save preset** and **Delete preset** are not shown.
 | Plans | **Choose a plan** (`plan`) and **Billing Cycle** (`cycle`) |
 | (none) | **Optional Services** (`addons`) |
 | (none) | **Payment Method** (`payment`) |
+
+With the GrabWP Tenancy Custom Fields add-on active and asking on signup, **Default** also shows **Additional information** (`custom_fields`) on the account screen, after **Create your account**.
 
 Two steps are not cards in the builder; the form adds them when they apply:
 
@@ -97,6 +99,7 @@ Each placed step shows its name, its ID and these controls:
 | **Optional Services** | `addons` | Must come after **Choose a plan**. Does not move on by itself. |
 | **Billing Cycle** | `cycle` | **Monthly** or **Yearly**. Skipped when nothing in the order renews. |
 | **Payment Method** | `payment` | Must come after **Choose a plan**. Skipped when nothing in the order needs payment. |
+| **Additional information** | `custom_fields` | Only with the GrabWP Tenancy Custom Fields add-on, while **Ask on signup** is on and a field is active. **Default** shows it on the account screen. A saved preset that does not place it shows it just before review. See [Custom fields at signup](/sell-sites/custom-fields). |
 
 Saving fails when a step depends on one that is missing or comes later, when a group is empty, when a step is listed twice, or when **Choose a plan** is **Hidden** without a **Default**.
 

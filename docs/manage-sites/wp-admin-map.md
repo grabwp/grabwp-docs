@@ -3,8 +3,8 @@ title: "Where things are in wp-admin"
 description: "Map of every GrabWP menu, tab, per-site screen and row icon in the main site's wp-admin."
 sidebar_label: "Where things are"
 tags: [reference, settings, plan-base, plan-pro, plan-waas, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17, WaaS 1.1.24"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18, WaaS 1.1.25"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** everything for managing sites is under the **Tenancy** menu on the main site. Per-site tools open from the icons on each row of **Tenancy > All Tenants**, or from the tab bar at the top of a site's screens. Selling tools are under a separate **Waas** menu.
@@ -22,7 +22,7 @@ All GrabWP screens need an administrator on the main site (`manage_options`). Cl
 | **Tenancy > Settings** | **GrabWP Tenancy Settings** | Rules for all sites, in three tabs: **Tenant Capabilities**, **Performance & Security**, **Routing**. Pro adds **Path Prefix** and **Path Alias Routing** to **Routing**. | Free |
 | **Tenancy > Pro Settings** | **Pro Settings** | Defaults for new sites and platform options, in tabs: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **CDN**. | Pro |
 | **Tenancy > License** | **GrabWP Tenancy Pro License** | Activate or revoke your Pro key. | Pro |
-| **Tenancy > Status** | **GrabWP Tenancy Status** | Server checks in three tabs: **Plugin General**, **Base Plugin**, **Pro Plugin**. Also **Run setup wizard**. | Free |
+| **Tenancy > Status** | **GrabWP Tenancy Status** | Server checks in three tabs: **Plugin General**, **Base Plugin**, **Pro Plugin**. **Plugin General** also has **Hosting setup**, **Tenant file safety**, **System Information** and **Support diagnostics**. Also **Run setup wizard**, the only place to reopen the wizard. | Free |
 | **Tenancy > Upgrade to Pro** | **Upgrade to Pro** | Shown only while Pro is not active. | Free |
 
 ## Row icons on All Tenants
@@ -64,7 +64,7 @@ With Pro, every per-site screen has this tab bar at the top:
 
 ## Waas menu (selling sites)
 
-When GrabWP Tenancy WaaS is active, a second top-level menu appears. It is spelled **Waas** in the sidebar, while the settings page title is **WaaS Settings**. Its items are **Dashboard**, **Subscriptions**, **Domains**, **Templates** and **Settings**. See [How WaaS works](/sell-sites/how-waas-works) and [WaaS settings](/sell-sites/waas-settings).
+When GrabWP Tenancy WaaS is active, a second top-level menu appears. It is spelled **Waas** in the sidebar, while the settings page title is **WaaS Settings**. Its items are **Dashboard**, **Subscriptions**, **Domains**, **Templates** and **Settings**. Add-on plugins add their own items, such as **Custom Fields** from GrabWP Tenancy Custom Fields (see [Custom fields at signup](/sell-sites/custom-fields)). See [How WaaS works](/sell-sites/how-waas-works) and [WaaS settings](/sell-sites/waas-settings).
 
 ## Related
 

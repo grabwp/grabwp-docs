@@ -3,7 +3,7 @@ title: "Before you buy"
 description: "What GrabWP does, which plugin you need, whether it runs on your hosting, and the trial, licence and support terms."
 sidebar_label: "Before you buy"
 tags: [plan-base, plan-pro, plan-waas, license, server, for-customer, for-cs]
-last_verified_date: "2026-10-30"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** GrabWP runs many separate WordPress sites from one normal WordPress install. The free plugin creates the sites and sends visitors to the right one. Pro gives each site its own database, plugins, themes and backups, and WaaS lets your customers sign up and pay for a site on their own.
@@ -21,7 +21,7 @@ A visitor reaches a tenant in one of two ways:
 
 You manage every site from one menu in wp-admin: **Tenancy**. When you sell sites with WaaS, a second menu appears: **Waas**.
 
-GrabWP is built for a normal single-site WordPress install. It is not WordPress Multisite and does not need Multisite. If Multisite is turned on, **Tenancy > Status** shows `⚠ Yes. GrabWP Tenancy is not designed for Multisite`.
+GrabWP is built for a normal single-site WordPress install. It is not WordPress Multisite and does not need Multisite. If Multisite is turned on, **Tenancy > Status** reports it in the **Hosting setup** card and in **System Information** (`GrabWP Tenancy is not designed for Multisite.`).
 
 Who uses it:
 
@@ -84,7 +84,7 @@ Most hosting where you control your own files and settings works. Run through th
 6. **Pro with SQLite:** the PHP `pdo_sqlite` extension must be loaded. Without it, new sites use the shared database instead.
 7. **WaaS:** the main site must send email reliably (for example through an SMTP plugin). Customers get a **Verification code** by email when they sign up.
 
-After you install the free plugin, open **Tenancy > Status**. The **Plugin General** tab runs the environment checks for you, and **System Information** (click to open it) shows your PHP version, web server and whether the data folder is writable.
+After you install the free plugin, open **Tenancy > Status**. The **Plugin General** tab runs the environment checks for you, the **Hosting setup** card checks Multisite leftovers, https and wildcard subdomains, and **System Information** (click to open it) shows your PHP version, web server and whether the data folder is writable.
 
 ![The Plugin General tab on Tenancy > Status, with environment checks and system information](./images/grabwp-status.png)
 

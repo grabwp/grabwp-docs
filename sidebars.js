@@ -67,6 +67,7 @@ const sidebars = {
         'sell-sites/templates',
         'sell-sites/frontend-pages',
         'sell-sites/signup-flow',
+        'sell-sites/custom-fields',
         'sell-sites/appearance',
         'sell-sites/payments',
         'sell-sites/trials-and-subscriptions',

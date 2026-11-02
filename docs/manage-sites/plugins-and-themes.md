@@ -3,8 +3,8 @@ title: "Per-site plugins and themes"
 description: "Share plugins and themes from the main site or give a site its own, manage them on the Extensions screen, and decide whether clients may install their own."
 sidebar_label: "Plugins and themes"
 tags: [isolation, settings, plan-base, plan-pro, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** by default every site uses the plugins and themes installed on your main site, and clients cannot install their own. With Pro you can give a site its own plugins and themes, then install and activate them for that site from the **Plugins & Themes** icon on **Tenancy > All Tenants**.
@@ -102,6 +102,7 @@ The settings are on **Tenancy > Settings > Tenant Capabilities** (all sites) and
 | **Disable Plugin & Theme File Editor** | On | No built-in code editor. Sets `DISALLOW_FILE_EDIT`. |
 | **Hide Plugins Menu** | Off | Removes the **Plugins** menu. |
 | **Hide Appearance Menu** | Off | Removes the **Appearance** menu. |
+| **Hide Themes Screen** | Off | Keeps **Customize**, **Menus** and **Widgets** but removes theme browsing, installing and switching. No effect when **Hide Appearance Menu** is on. Base 1.1.15 or later. |
 | **Hide GrabWP Plugins** | On | Hides GrabWP and the SQLite plugin from the site's plugin list, so clients cannot turn them off. |
 
 The safest way to give a client a plugin is to install it for them on the **Extensions** screen above. If you trust a client completely:

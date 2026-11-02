@@ -3,7 +3,7 @@ title: "Benefits, services and add-ons"
 description: "Define what each plan includes, sell extras on top of a plan, and install GrabWP add-on plugins from the Add-ons tab."
 sidebar_label: "Benefits, services and add-ons"
 tags: [billing, subscriptions, addon, plan-waas, for-operator]
-last_verified_date: "2026-10-30"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** a benefit is something a site gets, like a number of backups or permission to use a custom domain. A service is a paid extra customers can buy on top of their plan. The **Add-ons** tab is something else: a catalog of GrabWP plugins (such as the Stripe add-on) that you download and install.
@@ -172,6 +172,10 @@ At signup, services show on the **Optional Services** step. Card text follows th
 **To update an add-on**, click **Update now** on its card. It needs an active license; without one, the card links to **Activate your license to update**. **Check for updates** at the top of the tab refreshes the catalog.
 
 If the catalog is empty, the tab says **No add-ons available right now.**
+
+Add-ons with their own help page: [Custom fields at signup](/sell-sites/custom-fields) (GrabWP Tenancy Custom Fields, needs WaaS 1.1.25 or later) and the payment add-ons on [Payments](/sell-sites/payments).
+
+{/* TODO screenshot: the Add-ons tab image above predates GrabWP Tenancy Custom Fields 1.0.0, so its card is not shown. Re-shoot 05-waas-settings-addons when the library is refreshed. */}
 
 ## Related
 

@@ -3,8 +3,8 @@ title: 'Backup, restore or "Failed to save Pro settings"'
 description: "How to fix Pro config write errors, broken symlinks, S3 storage driver switches and backup or restore warnings."
 sidebar_label: "Backup, restore or save errors"
 tags: [troubleshooting, backup, settings, plan-pro, for-operator, for-cs]
-last_verified_version: "Pro 1.1.17, Restore 1.0.5"
-last_verified_date: "2026-10-30"
+last_verified_version: "Pro 1.1.18, Restore 1.0.5"
+last_verified_date: "2026-11-03"
 ---
 
 **Short answer:** saving Pro settings and running backups both need write access to the GrabWP data folders on disk. Before switching a site's storage driver between local disk and S3, always click **Migrate uploads now** first so existing media files are copied over.
@@ -21,6 +21,9 @@ You see one of these errors or warnings while managing Pro settings, site settin
 - `Saving a different driver does NOT move existing files.`
 - On **Restore Tenant** (Pro):
   - `This will completely overwrite all data for this tenant (database, uploads, config). This action cannot be undone.`
+  - `This backup has no WordPress site data, so nothing was restored. The site is unchanged.`
+  - `The backup database could not be restored. Nothing was changed on the site. Details: ...`
+  - `The backup database could not be restored, and the site's old database tables were already removed. Restore another backup to repair the site. Details: ...`
 - On **Tools > GrabWP Restore** (standalone plugin):
   - `Warning: Destructive Operation`
   - `This will REPLACE your entire WordPress site including the database, uploads, plugins, and themes. Your current admin credentials will be replaced by those from the backup.`
@@ -38,6 +41,9 @@ Or, when testing S3 under **Tenancy > Pro Settings > Storage**, the test returns
 | `The Isolated MySQL password is not available any more.` | The stored MySQL password could not be decrypted (for example, if WordPress security salts in `wp-config.php` were changed after credentials were saved). |
 | Broken media after switching **Local Filesystem** and **S3-Compatible Object Storage** | Switching the storage driver changes where new uploads go, but does not move existing files unless you click **Migrate uploads now** first. |
 | Upload fails on **Restore Tenant** or **Tools > GrabWP Restore** | The backup `.zip` file is larger than your PHP `upload_max_filesize` or `post_max_size` limit. |
+| `This backup has no WordPress site data, so nothing was restored. The site is unchanged.` | The archive's `database.sql` has no WordPress options table, so it cannot be a site backup. Pro 1.1.18 checks this before it drops any table. |
+| `The backup database could not be restored. Nothing was changed on the site.` | The database import failed before the site's old tables were removed, for example because the isolated MySQL connection or the SQLite file could not be opened. The **Details** part names the cause. |
+| `...the site's old database tables were already removed. Restore another backup to repair the site.` | The import failed after the old tables were dropped. The site needs another restore. |
 | **Tools > GrabWP Restore** menu is missing | **GrabWP Restore** is a standalone plugin for single-site WordPress and deliberately hides its menu when WordPress Multisite is enabled. |
 | S3 connection test fails | The endpoint URL, bucket name, region, or S3 API keys are incorrect or unreachable. |
 
@@ -73,6 +79,13 @@ On **Tenancy > Pro Settings > Storage**, when **Test Connection** returns an err
 ### Repair broken symlinks
 
 If site plugins or themes fail to load after a server path change, go to **Tenancy > Pro Settings > Symlink** and click **Fix All Tenant Broken Symlinks** (and **Sync All Tenant Domain Symlinks** if you use domain symlinks).
+
+### If a restore fails
+
+Since Pro 1.1.18, a failed restore ends its job instead of retrying the same step, and the message tells you whether the site was touched:
+
+- `...has no WordPress site data...` or `...Nothing was changed on the site...`: the site is as it was. Check that you picked the right archive, or fix the cause named under **Details** (for example the isolated MySQL credentials), then restore again.
+- `...old database tables were already removed...`: restore another backup of this site right away.
 
 ### Restore a site vs a standalone install
 
