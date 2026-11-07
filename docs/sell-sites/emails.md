@@ -3,7 +3,7 @@ title: "Emails"
 description: "Choose who gets admin notifications, set the email footer and trial reminder days, and edit, preview and test the customer and admin email templates."
 sidebar_label: "Emails"
 tags: [settings, plan-waas, for-operator, for-cs]
-last_verified_date: "2026-10-30"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** WaaS sends emails to customers (welcome, sign-in code, renewals, trials, suspension) and to you (new signup, payments, failures). Edit them under **Waas > Settings > Email**. All are on by default. Send mail through an SMTP plugin so it does not land in spam.
@@ -49,6 +49,8 @@ The **Email templates** table has three columns: **Email** (the name and current
 | **Verification code** | The customer signs up or signs in. |
 
 **Verification code** is required for signup and sign-in: it cannot be turned off, and its body must contain `{otp_code}`.
+
+In **Invoice created**, the `{payment_url}` link opens the provider checkout for that renewal invoice. For Stripe, Polar.sh and Xendit, opening the link creates a fresh provider checkout automatically when the previous one is missing or older than 30 minutes. WooCommerce and SePay links are unchanged, and a paid invoice never reopens a checkout (it redirects to the customer dashboard instead).
 
 **To you** (the **Admin notification recipients**)
 

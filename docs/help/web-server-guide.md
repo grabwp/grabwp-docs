@@ -4,7 +4,7 @@ description: "How Apache, LiteSpeed and Nginx handle path routing, .htaccess rul
 sidebar_label: "Web server guide"
 tags: [server, routing, domains, plan-base, plan-pro, for-operator, for-cs]
 last_verified_version: "Base 1.1.15, Pro 1.1.18"
-last_verified_date: "2026-11-03"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** Apache and LiteSpeed read `.htaccess` files, so GrabWP can write path routing rules automatically. Nginx does not use `.htaccess` files, so you must add routing rules and any Pro domain symlink rules to your Nginx server block manually.
@@ -43,7 +43,7 @@ Your web server passes incoming visitor requests to WordPress so GrabWP can iden
 
 - Verified against Base 1.1.15 and Pro 1.1.18.
 - Beginning in Base 1.1.9, GrabWP locks shared root files (`wp-config.php`, `.htaccess`, `.user.ini`, `web.config`) to read-only (`0444`) by default so site plugins cannot overwrite them; use **Tenancy > Status** to unlock shared files temporarily if a main-site plugin needs to edit `.htaccess`.
-- The lock is a separate setting from the integrity guard. On write requests from client sites, the guard restores only GrabWP's own pieces (the `wp-config.php` loader and HTTPS proxy blocks, the GrabWP `.htaccess` block, the MU-plugin and the data folder protection files) and keeps all other `wp-config.php` and `.htaccess` edits. If a file is invalid or truncated and cannot be repaired safely, GrabWP does not replace the whole file; it keeps its protected recovery snapshot and reports the issue on **Tenancy > Status** and in the debug log. Turn protection off from **Tenancy > Status** before you remove a GrabWP block on purpose. See [Install GrabWP](/manage-sites/install#plugin-general).
+- The lock is a separate setting from the integrity guard. On write requests from client sites, the guard restores only GrabWP's own pieces (the `wp-config.php` loader and HTTPS proxy blocks, the GrabWP `.htaccess` block, the MU-plugin and the data folder protection files) and keeps all other `wp-config.php` and `.htaccess` edits. Each install repairs protected files only from snapshots made by that same install, so two installs sharing one GrabWP data folder do not overwrite each other. If a file is invalid or truncated and cannot be repaired safely, GrabWP does not replace the whole file; it keeps its protected recovery snapshot and reports the issue on **Tenancy > Status** and in the debug log. Turn protection off from **Tenancy > Status** before you remove a GrabWP block on purpose. See [Install GrabWP](/manage-sites/install#plugin-general).
 
 ## Related
 

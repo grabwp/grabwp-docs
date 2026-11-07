@@ -2,6 +2,7 @@
 
 Prod snapshot: HEAD 07301048 (release commit 2026-10-26). Paths are relative to /tmp/o56-prod.
 O69 update (2026-11-03): re-verified against `~/grabwp-prod` branch `prod` HEAD 15a4090a ("chore: publish O68 release metadata"), release batch Base 1.1.15, Pro 1.1.18, WaaS 1.1.25, Partner 1.4.2, Custom Fields 1.0.0. Release notes: `~/project-hub/grabwp/releases/<plugin>/v<version>.md`. New and changed facts are in section 10; superseded lines below are marked [O69].
+O72 update (2026-11-08): verified against `~/grabwp` branch `origin/main` (post-O69 changes for next release: Base tenant Name and Tags, Base per-install integrity watchdog snapshots, Pro SQLite directory removal on tenant delete, WaaS renewal invoice pay link checkout refresh). New and changed facts are in section 11; updated lines below are marked [O72].
 Legend: [OK] r1 was right. [FIXED] r1 was wrong, corrected here. [DROPPED] r1 claim not found in code. [ADDED] missing in r1. UNVERIFIED = could not confirm in code.
 Note: the code strings below are quoted exactly. One status-checker string has an em dash in code; it is shown here with a hyphen.
 
@@ -45,8 +46,8 @@ All pages need `manage_options` unless stated.
 ### Base
 - Top menu label "Tenancy" (page title "GrabWP Tenancy"), slug `grabwp-tenancy`, position 3 (grabwp-tenancy/includes/class-grabwp-tenancy-admin.php:270-278). [OK]
 - Submenus: "All Tenants" (:280), "Add New" (page title "Add New Tenant", slug `grabwp-tenancy-create`, :289), "Settings" (:307), "Status" (:316), "Upgrade to Pro" (:326, only when `should_show_upsell()` is true, i.e. Pro not active). [OK]
-- Hidden pages (parent is a label string, so no menu item): "Edit Tenant" slug `grabwp-tenancy-edit` (:298); "GrabWP setup" slug from `PAGE_SLUG` (grabwp-tenancy/includes/class-grabwp-tenancy-setup-wizard.php:65); "Clone Tenant" slug `grabwp-tenancy-clone`, parent null (grabwp-tenancy/includes/backup/class-grabwp-tenancy-clone-admin.php:76). [OK]
-- Settings tabs: "Tenant Capabilities", "Performance & Security", "Routing" (grabwp-tenancy/admin/views/settings.php:24-26). [OK]
+- Hidden pages (parent is a label string, so no menu item): "Edit Tenant" slug `grabwp-tenancy-edit` (:298); "Tenant Tags" slug `grabwp-tenancy-tags` (registered under `grabwp-tenancy` at :312-319 and removed from `$submenu` on `admin_head` at :361-363, keeping **Tenancy > All Tenants** highlighted at :375-384) [O72, ADDED]; "GrabWP setup" slug from `PAGE_SLUG` (grabwp-tenancy/includes/class-grabwp-tenancy-setup-wizard.php:65); "Clone Tenant" slug `grabwp-tenancy-clone`, parent null (grabwp-tenancy/includes/backup/class-grabwp-tenancy-clone-admin.php:76). [OK]
+- Settings tabs: "Tenant Capabilities", "Performance & Security", "Routing", "Management" (grabwp-tenancy/admin/views/settings.php:25-28). [O72, Management tab ADDED]
 - Status tabs: "Plugin General" (tab=general, default), "Base Plugin" (tab=base), "Pro Plugin" (tab=pro) (grabwp-tenancy/admin/views/status.php:73,77,81). [OK, line numbers corrected]
 - Status has a "run setup wizard" button via `GrabWP_Tenancy_Setup_Wizard::get_entry_link()` (status.php:65-66). [ADDED]
 
@@ -85,10 +86,11 @@ Core
 4. Table prefix [FIXED]: the tenant's tables start with `{tenant_id}_` for example `abc123_posts`, set by `$table_prefix = GRABWP_TENANCY_TENANT_ID . '_'` (grabwp-tenancy/load-helper-boot-constants.php:130; `$wpdb->prefix` at :137). Not `wp_{id}_`. When Pro is active, `grabwp_tenancy_pro_set_database_prefix()` runs instead (load-helper-boot-constants.php:120-122); its exact prefix rule is UNVERIFIED.
 5. Shared database [OK]: UI label "Shared Database (with table prefixes)" (grabwp-tenancy-pro/admin/views/partials/pro-settings-database.php:26).
 6. Isolated MySQL [OK]: UI label "Isolated MySQL Database" (pro-settings-database.php:30). Credentials class is grabwp-tenancy-pro/includes/class-grabwp-tenancy-pro-database-credentials.php [FIXED path; no includes/database/ folder].
-7. Isolated SQLite [OK]: UI label "Isolated SQLite Database" (pro-settings-database.php:34). Needs PHP `pdo_sqlite`; without it new installs default to shared (grabwp-tenancy-pro/includes/class-grabwp-tenancy-pro-config.php:128-130).
-8. Data directory (base dir) [FIXED, replaces r1 "Isolated Uploads" path]: default `wp-content/grabwp-tenancy`; older layouts `wp-content/grabwp` and `wp-content/uploads/grabwp-tenancy` are still read (grabwp-tenancy/load-helper.php:57-74). Tenant uploads live at `{base}/{tenant_id}/uploads` (grabwp-tenancy/includes/class-grabwp-tenancy-path-manager.php:154). r1's `wp-content/uploads/sites/{id}/` is wrong. The Status page warns when data is in uploads/ (status-checker.php:220-221).
+7. Isolated SQLite [OK]: UI label "Isolated SQLite Database" (pro-settings-database.php:34). Needs PHP `pdo_sqlite`; without it new installs default to shared (grabwp-tenancy-pro/includes/class-grabwp-tenancy-pro-config.php:128-130). [O72] Deleting an isolated SQLite tenant also deletes `wp-content/grabwp-tenancy-sqlite/{tenant_id}/` (`GRABWP_TENANCY_SQLITE_DIR . '/' . $tenant_id`) via `remove_tenant_sqlite_dir` hooked on `grabwp_tenancy_after_delete_tenant` (grabwp-tenancy-pro/includes/class-grabwp-tenancy-pro-content.php:60,164-204).
+8. Data directory (base dir) [FIXED, replaces r1 "Isolated Uploads" path]: default `wp-content/grabwp-tenancy`; older layouts `wp-content/grabwp` and `wp-content/uploads/grabwp-tenancy` are still read (grabwp-tenancy/load-helper.php:57-74). Tenant uploads reside at `{base}/{tenant_id}/uploads` (grabwp-tenancy/includes/class-grabwp-tenancy-path-manager.php:154). r1's `wp-content/uploads/sites/{id}/` is wrong. The Status page warns when data is in uploads/ (status-checker.php:220-221).
 9. tenants.php [OK]: the file that maps tenants to domains and holds the routing mode, at `{base}/tenants.php` (grabwp-tenancy/load-helper-tenant-detection.php:30; written only by tenant-crud.php:312).
 10. settings.php [ADDED]: Base settings file, `{base}/settings.php` (grabwp-tenancy/includes/class-grabwp-tenancy-settings.php:5).
+10b. management.php [O72, ADDED]: Base tenant names and tags file, `{base}/management.php` (`GrabWP_Tenancy_Management::FILE = 'management.php'`, lock file `.management.lock`, grabwp-tenancy/includes/class-grabwp-tenancy-management.php:30,36). Stores `enabled` (`bool`, default `true`), `tags` (`slug => ['name' => ...]` sorted by name), and `tenants` (`tenant_id => ['name' => ..., 'tags' => [...]]`). Deleting a tenant removes its entry via `grabwp_tenancy_after_delete_tenant` (:78-80,350-387). Turning **Show tenant names and tags** off sets `enabled => false` and preserves `tags` and `tenants`.
 11. Isolation level [FIXED]: Pro Settings > Isolation, "Level of isolation for new sites", four choices titled "Shared", "Simple", "Advanced", "Custom" (grabwp-tenancy-pro/admin/views/partials/pro-settings-content-isolation.php:41-62,96). Simple = own uploads, shared plugins and themes. A fresh install starts at Simple (pro-settings-content-isolation.php:50, default config isolate_uploads true at class-grabwp-tenancy-pro-config.php:42-47). Advanced = own plugins, themes and uploads (:54). Applies to new sites only (:92).
 12. Extensions [OK]: plugins and themes of one tenant, managed on the tenant "Extensions" tab (admin-pages.php:45).
 13. Install method symlink / copy [OK]: default `symlink` (class-grabwp-tenancy-pro-config.php:56). The Pro readme calls it "Extension Management: Sync, convert (symlink <-> copy), and repair broken symlinks" (grabwp-tenancy-pro/readme.txt:22).
@@ -264,6 +266,7 @@ Tab "Performance & Security":
 - "Block External Requests" (`wp_http_block_external`) default off.
 - "Allowed Hosts When Blocked" (`wp_accessible_hosts`) default `*.wordpress.org,*.grabwp.com`.
 Tab "Routing": "Routing Mode" (`path`, `domain`, `both`; default `both`; `GRABWP_TENANCY_ROUTING_MODE` pins it) (load-helper-tenant-detection.php:89-101). Path prefix and alias fields are drawn by Pro (grabwp-tenancy-pro/admin/views/partials/pro-settings-routing.php); stored under Pro `routing.path_prefix` default `site` and `routing.alias_enabled` (config.php:76-79). Prefix maximum length 20 from r1: UNVERIFIED. [OK otherwise]
+Tab "Management" [O72, ADDED]: "Show tenant names and tags" (checkbox "Yes", default on), help text "Adds a Name and Tags to each site in the tenant list and the Add New and Edit screens. Turning it off hides them and keeps what you saved." (grabwp-tenancy/admin/views/partials/settings-management.php:30-37). Stored in `{base}/management.php` (`enabled` key, grabwp-tenancy/includes/class-grabwp-tenancy-management.php:30,134-137,168-192). See section 11.
 Precedence rule [ADDED]: a constant defined in wp-config.php before GrabWP loads overrules these settings (settings.php:230-256).
 
 ### Pro: Tenancy > Pro Settings (stored in `{pro base}/config.php`; defaults grabwp-tenancy-pro/includes/class-grabwp-tenancy-pro-config.php:41-95)
@@ -424,3 +427,65 @@ Verified in `~/grabwp-prod` prod HEAD 15a4090a. Docs pages updated in branch `do
 ### Known gaps after O69
 - **Screenshots**: the admin screenshot library (`~/project-hub/grabwp/assets/admin-screenshots`, last re-shoot 2026-10-24, Status shot shows Base 1.1.12) has no shots of: Hosting setup card, Tenant file safety card, Support diagnostics, the 1.1.15 Plugin General layout, Tenant Capabilities with Hide Themes Screen, the wizard Welcome/Storefront steps, Waas > Custom Fields, the Add-ons tab with the Custom Fields card. Pages carry `{/* TODO screenshot */}` markers; no images were fabricated.
 - **Vietnamese**: no VI markdown mirror exists since O57 (EN only, `/vi` falls back to EN). VI pages for O69 changes are not written.
+
+---
+
+## 11. Next release (O72, verified against `~/grabwp` `origin/main` on 2026-11-08)
+
+### Base: Tenant Name and Tags
+- **Storage & limits** (`grabwp-tenancy/includes/class-grabwp-tenancy-management.php`):
+  - Stored in `{base}/management.php` (`FILE = 'management.php'`, `:30`) with lock file `{base}/.management.lock` (`LOCK_FILE = '.management.lock'`, `:36`).
+  - Limits: `NAME_MAX = 100` (`:46`), `TAG_NAME_MAX = 50` (`:51`), `SLUG_MAX = 50` (`:56`).
+  - Default enabled state: `true` when `management.php` is absent or readable (`is_enabled()`, `:134-137`, `default_data()`, `:660-666`). If `management.php` exists on disk but is corrupt/unreadable (`is_corrupt()`), `is_enabled()` returns `false` (`:134-136`).
+  - Deleting a tenant hooks `grabwp_tenancy_after_delete_tenant` (`register()`, `:78-80`) and calls `delete_tenant( $tenant_id )` (`:350-387`), removing its name and tag assignments from `management.php`.
+  - Turning **Show tenant names and tags** off hides the UI fields/columns/filters while keeping saved `tags` and `tenants` in `management.php` (`set_enabled()`, `:168-192`).
+- **Settings > Management tab**:
+  - Tab label `Management` (`grabwp-tenancy/admin/views/settings.php:28`), save button `Save Settings` (`:67`).
+  - Partial `grabwp-tenancy/admin/views/partials/settings-management.php`:
+    - Row label: `Show tenant names and tags` (`:30`).
+    - Help tip: `Adds a Name and Tags to each site in the tenant list and the Add New and Edit screens. Turning it off hides them and keeps what you saved.` (`:31`).
+    - Checkbox label: `Yes` (`:37`).
+    - Corrupt file warning: `GrabWP cannot read %s in the GrabWP data folder, so names and tags cannot be saved. Fix or remove the file.` with `management.php` (`:20-21`).
+  - Form handler error notices (`grabwp-tenancy/includes/class-grabwp-tenancy-admin-form-handler.php`):
+    - `The Management setting could not be saved. Check that the GrabWP data folder is writable.` (`:283`).
+    - `Tenant saved, but names and tags could not be written. Check that the GrabWP data folder is writable.` (`:297`).
+- **Add New Tenant / Edit Tenant rows** (`grabwp-tenancy/admin/views/partials/tenant-management-rows.php`):
+  - Rendered on `grabwp-tenancy/admin/views/tenant-create.php:37` (`Add New Tenant`, `:15`; submit `Create Tenant`, `:47`) and `grabwp-tenancy/admin/views/tenant-edit.php:48` (`Edit Tenant`, `:15`; submit `Update Tenant`, `:60`).
+  - Row `Name` (`:24`), description `Optional. A short name to tell this site apart in the tenant list.` (`:28`).
+  - Row `Tags` (`:32`), no-JS empty message `No tags yet.` (`:37`), no-JS input placeholder `New tags, comma separated` (`:47`), description `Optional. Group sites with your own tags, then filter the tenant list by tag.` (`:52`) + link `Manage tags` (`:53`).
+  - Interactive chip selector (`grabwp-tenancy/includes/class-grabwp-tenancy-tenant-tags-admin.php:230-240`, `grabwp-tenancy/admin/js/grabwp-tenant-tags.js`): placeholder `Search or add tags` (`:231`), `No tags found` (`:232`), `Add new tag: %s` (`:234`), `Remove tag %s` (`:236`), `Tag %s added.` (`:238`), `The tag could not be created.` (`:239`).
+- **All Tenants list table** (`grabwp-tenancy/admin/views/tenants.php`, `grabwp-tenancy/admin/class-grabwp-tenancy-list-table.php`):
+  - Header buttons on `tenants.php`: `Add New` (`:18`), `Manage Tags` (`:21`, shown when `GrabWP_Tenancy_Management::is_enabled()`).
+  - Columns (`class-grabwp-tenancy-list-table.php:83-91`): `Tenant ID` (`:84`), `Domains` (`:85`), `Tags` (`:88`, when enabled), `Actions` (`:90`).
+  - `Tenant ID` cell (`:292-313`): shows the site name in bold above the 6-character code badge (or `Main Site` at `:294`).
+  - `Tags` cell (`:398-437`): shows up to 3 tag chips linking to `admin.php?page=grabwp-tenancy&tenant_tag={slug}` plus a `+N` overflow badge (`+%d`, `:429`) whose tooltip lists the remaining tag names.
+  - Filter bar (`:659-684`): screen-reader label `Filter by tag` (`:661`), dropdown default `All tags` (`:663`), options `%1$s (%2$d)` (`:669`), button `Filter` (`:677`), search input placeholder `Search by ID, name, domain or tag...` when enabled (`:680`; `Search by ID or domain...` when disabled), button `Search` (`:681`), `Clear` (`:683`). Empty tag filter state: `No tenants found with this tag.` (`:534`).
+- **Tenant Tags management page** (`grabwp-tenancy/includes/class-grabwp-tenancy-tenant-tags-admin.php`, `grabwp-tenancy/admin/views/tenant-tags.php`, `grabwp-tenancy/admin/views/tenant-tag-edit.php`, `grabwp-tenancy/admin/class-grabwp-tenancy-tag-list-table.php`):
+  - Hidden submenu slug `grabwp-tenancy-tags` (`PAGE = 'grabwp-tenancy-tags'`, `class-grabwp-tenancy-tenant-tags-admin.php:27`), registered under `grabwp-tenancy` and removed from `$submenu` on `admin_head` (`class-grabwp-tenancy-admin.php:312-319,361-363`); keeps `Tenancy > All Tenants` highlighted in the sidebar (`:375-384`).
+  - When disabled (`class-grabwp-tenancy-tenant-tags-admin.php:61-66`): heading `Tenant Tags` (`:62`), `Tenant names and tags are turned off.` (`:63`), link `Turn them on in Settings > Management` (`:64`).
+  - List view (`tenant-tags.php`): heading `Tenant Tags` (`:21`), button `Add New Tag` (`:23`), link `← Back to All Tenants` (`:47`), search button `Search Tags` (`:51`). Notices: `Tag saved.` (`:30`), `Tag deleted.` (`:31`), `%d tag deleted.` / `%d tags deleted.` (`:34`).
+  - Table (`class-grabwp-tenancy-tag-list-table.php`): columns `Name` (`:59`), `Slug` (`:60`), `Tenants` (`:61`, links to `admin.php?page=grabwp-tenancy&tenant_tag={slug}`), `Actions` (`:62`); bulk action `Delete` (`:83`); row icon tooltips `Edit %s` (`:206`) and `Delete %s` (`:208`); confirm dialogs `Delete this tag?` (`:210`) and `Delete this tag? It is removed from %d tenant.` / `Delete this tag? It is removed from %d tenants.` (`:213`); empty states `No tags found.` (`:232`) and `No tags yet.` (`:235`) + `Add New Tag` (`:236`).
+  - Add / Edit view (`tenant-tag-edit.php`): headings `Edit Tag` / `Add New Tag` (`:19`), missing notice `Tag not found. It may have been deleted.` (`:23`), link `← Back to Tags` (`:25`), fields `Name` (`:36`) and `Slug` (`:43`), slug descriptions `Lowercase letters, numbers and hyphens. Changing it updates every tenant that has this tag.` (`:47`) and `Lowercase letters, numbers and hyphens. Leave it empty to make it from the name.` (`:48`), submit `Update Tag` / `Add Tag` (`:59`), `Cancel` (`:60`).
+  - Validation & write errors (`class-grabwp-tenancy-management.php`, `class-grabwp-tenancy-tenant-tags-admin.php`): `Enter a tag name.` (`management.php:227,311`), `The slug can use lowercase letters, numbers and hyphens only.` (`:239`), `That tag no longer exists.` (`:245`), `A tag with that slug already exists.` (`:248`), `Names and tags could not be written. Check that the GrabWP data folder is writable.` (`:728`), `The tag could not be deleted. Check that the GrabWP data folder is writable.` (`tenant-tags-admin.php:150`), `The tags could not be deleted. Check that the GrabWP data folder is writable.` (`:165`).
+
+### Pro: SQLite directory deletion on tenant delete
+- `grabwp-tenancy-pro/includes/class-grabwp-tenancy-pro-content.php`:
+  - Hooks `remove_tenant_sqlite_dir` onto `grabwp_tenancy_after_delete_tenant` (`:60`).
+  - Method `remove_tenant_sqlite_dir( $tenant_id )` (`:164-204`) checks `GrabWP_Tenancy_Path_Manager::validate_tenant_id()`, builds `GRABWP_TENANCY_SQLITE_DIR . '/' . $tenant_id` (default `wp-content/grabwp-tenancy-sqlite/{tenant_id}`), unlinks symlinks without following them (`:176-178,213-220`), verifies `realpath` is a direct child of `realpath( GRABWP_TENANCY_SQLITE_DIR )` (`:185-190`), and recursively removes the directory (`remove_dir_quietly()`, `:197,230-250`).
+  - Before this change, deleting an isolated SQLite tenant left `wp-content/grabwp-tenancy-sqlite/{tenant_id}/` on disk.
+
+### WaaS: Renewal invoice pay link checkout refresh
+- `grabwp-tenancy-waas/includes/api/class-grabwp-tenancy-waas-invoice-rest-controller.php`:
+  - Route: `GET /wp-json/grabwp-waas/v1/invoices/pay/(?P<token>[a-f0-9]{64})` (`:57`), surfaced in the **Invoice created** email via `{payment_url}` (`grabwp-tenancy-waas/includes/class-grabwp-tenancy-waas-email-templates.php:73-78`).
+  - Constants: `CHECKOUT_FRESH_SECONDS = 1800` (30 minutes, filter `grabwp_waas_invoice_checkout_fresh_seconds`, `:30,213`), `REFRESH_LOCK_SECONDS = 60` (`:38`), `REFRESH_PROVIDERS = array( 'stripe', 'polar', 'xendit' )` (filter `grabwp_waas_invoice_pay_link_refresh_providers`, `:49,194`).
+  - Paid invoice (`$invoice->status === 'paid'`, `:99-110`): never reopens a checkout; redirects (`302`) to the customer dashboard with `tenant` and `invoice_paid` query arguments.
+  - Voided or expired invoice (`void`, `expired`, `:113-123`): returns `This invoice has been %s.` (HTTP 410).
+  - Unpaid invoice (`pending`, `open`) on `stripe`, `polar`, or `xendit` (`:129-154,189-217`): when `payment_url` is empty or the stored checkout age (`time() - strtotime( $invoice->updated_at ?: $invoice->created_at )`) is `>= 1800` seconds (30 minutes), `refresh_checkout_url()` acquires a per-invoice transient lock (`grabwp_waas_inv_pay_lock_{id}`) and calls `GrabWP_Tenancy_WaaS_Renewal_Invoice_Generator::refresh_checkout_for_invoice()` (`grabwp-tenancy-waas/includes/class-grabwp-tenancy-waas-renewal-invoice-generator.php:557-577`), which updates the invoice row only if its status is still `pending` or `open` (`update_invoice( ..., array( 'pending', 'open' ) )`, `:446`; `class-grabwp-tenancy-waas-invoice-manager.php:176-220`).
+  - WooCommerce and SePay are not in `REFRESH_PROVIDERS` and remain unchanged.
+  - If no checkout URL is available after refresh, returns `Payment checkout is not available. Please try again later.` (`:161`, HTTP 503).
+
+### Base: Integrity watchdog per-install snapshots
+- `grabwp-tenancy/includes/class-grabwp-tenancy-integrity-watchdog.php`:
+  - `own_snapshot_path( $basename )` (`:61-68`) keys each snapshot filename by a 12-character MD5 hash of `realpath( ABSPATH )` (`$basename . '.' . $key . '.snap.php'`).
+  - `claim_legacy( $snap_dir, $files )` (`:78-117`) migrates pre-existing basename-only snapshots (`$basename . '.snap.php'`) all-or-nothing only when every legacy snapshot matches this install's current live files (`live_matches_snapshot()`, `:128-146`).
+  - Two WordPress installs sharing one GrabWP data folder never repair protected files from each other's snapshots.

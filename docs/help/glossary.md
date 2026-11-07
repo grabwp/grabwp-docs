@@ -4,7 +4,7 @@ description: "Plain meaning of terms used across GrabWP Tenancy, Pro and WaaS, o
 sidebar_label: "Glossary"
 tags: [glossary, reference, plan-base, plan-pro, plan-waas, for-customer, for-operator, for-cs]
 last_verified_version: "Base 1.1.15, Pro 1.1.18, WaaS 1.1.25"
-last_verified_date: "2026-11-03"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** this glossary explains the technical terms, settings, and file names used across GrabWP plugins in plain words, organized alphabetically from A to Z.
@@ -247,9 +247,9 @@ last_verified_date: "2026-11-03"
 
 ### Isolated SQLite
 
-**Plain meaning:** a database isolation mode where a site runs on a dedicated SQLite database file. Needs Pro and the PHP `pdo_sqlite` extension.  
+**Plain meaning:** a database isolation mode where a site runs on a dedicated SQLite database file (`wp-content/grabwp-tenancy-sqlite/{tenant_id}/.ht.sqlite`). Needs Pro and the PHP `pdo_sqlite` extension.  
 **Where you see it:** **Tenancy > Pro Settings > Database**, option **Isolated SQLite Database**.  
-**Why it matters:** provides lightweight, fast per-site database isolation without requiring a MySQL server or separate database users.  
+**Why it matters:** provides lightweight, fast per-site database isolation without requiring a MySQL server or separate database users. Deleting the site also removes its `wp-content/grabwp-tenancy-sqlite/{tenant_id}/` folder.  
 **More:** [Database options](/manage-sites/database-options)
 
 ### Isolation level
@@ -267,6 +267,13 @@ last_verified_date: "2026-11-03"
 **Where you see it:** your primary administrative dashboard domain.  
 **Why it matters:** the server configuration, PHP version, and platform settings on the main site serve as the foundation for all client sites.  
 **More:** [Before you buy](/before-you-buy)
+
+### management.php
+
+**Plain meaning:** the file in the GrabWP data folder (`{base}/management.php`) that stores the **Show tenant names and tags** setting, your tag list, and each site's **Name** and **Tags**.  
+**Where you see it:** in the GrabWP data directory (`wp-content/grabwp-tenancy/management.php` by default), managed from **Tenancy > All Tenants**, **Add New**, **Edit Tenant**, **Tenant Tags**, and **Tenancy > Settings > Management**.  
+**Why it matters:** turning **Show tenant names and tags** off hides the fields in wp-admin while keeping `management.php` intact, and deleting a site removes its name and tags from the file.  
+**More:** [Create and manage sites](/manage-sites/create-and-manage-sites) | [Free settings](/manage-sites/free-settings)
 
 ### MU-plugin
 
@@ -443,6 +450,13 @@ last_verified_date: "2026-11-03"
 **Where you see it:** **Tenancy > All Tenants** and in path routing URLs.  
 **Why it matters:** reserved names (`admin1`, `test01`, `public`, `system`, `config`, `backup`) are blocked from use.  
 **More:** [Create and manage sites](/manage-sites/create-and-manage-sites)
+
+### Tenant name and tags
+
+**Plain meaning:** an optional short **Name** (up to 100 characters) and **Tags** (each up to 50 characters, with a lowercase-letters, numbers and hyphens slug) that help you identify, group and filter sites in wp-admin.  
+**Where you see it:** **Tenancy > All Tenants** (**Tenant ID** and **Tags** columns, **Filter by tag** dropdown, search box, and **Manage Tags** button), **Add New**, **Edit Tenant**, the **Tenant Tags** screen (`admin.php?page=grabwp-tenancy-tags`, not in the sidebar menu), and **Tenancy > Settings > Management** (**Show tenant names and tags**, on by default).  
+**Why it matters:** available on every edition (Free, Pro and WaaS). Turning **Show tenant names and tags** off hides the fields and keeps saved data in `management.php`.  
+**More:** [Create and manage sites](/manage-sites/create-and-manage-sites) | [Free settings](/manage-sites/free-settings)
 
 ### tenants.php
 
