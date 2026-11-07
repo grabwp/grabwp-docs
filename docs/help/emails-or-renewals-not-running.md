@@ -82,7 +82,7 @@ The `{payment_url}` link in the **Invoice created** email points to your site's 
 - **Stripe, Polar.sh and Xendit:** when the invoice is still unpaid and the stored checkout is missing or older than 30 minutes, opening the payment link in the email creates a fresh provider checkout and redirects to it automatically. Ask the customer to click the link in the **Invoice created** email again rather than reloading an old provider checkout tab.
 - **WooCommerce and SePay:** the payment link behavior is unchanged.
 - **Paid invoices:** a paid invoice never reopens a checkout. Opening the link redirects the customer to the customer dashboard (`[grabwp_waas_dashboard]`).
-- **Voided or expired invoices:** if the invoice itself was voided or marked expired, the link displays `This invoice has been void.` or `This invoice has been expired.` The customer can renew from the customer dashboard instead.
+- **Voided or expired invoices:** if the invoice itself was voided or marked expired, the link displays `This invoice has been voided.` or `This invoice has been expired.` The customer can renew from the customer dashboard instead.
 - **Checkout unavailable:** if the billing provider cannot be reached when the link is opened, the page displays `Payment checkout is not available. Please try again later.` Check your provider credentials under **Waas > Settings > Billing Providers**.
 
 ## Still stuck

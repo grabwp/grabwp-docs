@@ -95,7 +95,7 @@ last_verified_date: "2026-11-08"
 | `Settings saved.` / `Signup and Dashboard pages checked.` / `WooCommerce anchor product is ready.` | **Waas > Settings > General** | Success notices after saving settings or running repair tools. | [WaaS settings](/sell-sites/waas-settings) |
 | `New API key generated. Copy it now - it will not be shown again:` | **Waas > Settings > General** (**API Keys**) | Warning notice shown once immediately after generating a REST API key. | [WaaS settings](/sell-sites/waas-settings) |
 | `Payment checkout is not available. Please try again later.` | Renewal invoice payment link (`/wp-json/grabwp-waas/v1/invoices/pay/{token}`) | The invoice has no stored checkout URL and refreshing the provider checkout did not return a URL. | [Emails or renewal checks do not run](/help/emails-or-renewals-not-running#client-says-the-pay-link-shows-an-expired-checkout) |
-| `This invoice has been %s.` | Renewal invoice payment link (`/wp-json/grabwp-waas/v1/invoices/pay/{token}`) | The renewal invoice status is `void` or `expired`. | [Emails or renewal checks do not run](/help/emails-or-renewals-not-running#client-says-the-pay-link-shows-an-expired-checkout) |
+| `This invoice has been %s.` | Renewal invoice payment link (`/wp-json/grabwp-waas/v1/invoices/pay/{token}`) | The renewal invoice status is `voided` or `expired`. | [Emails or renewal checks do not run](/help/emails-or-renewals-not-running#client-says-the-pay-link-shows-an-expired-checkout) |
 
 ## Add-ons and companion plugins
 
