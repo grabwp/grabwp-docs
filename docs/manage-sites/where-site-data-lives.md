@@ -19,7 +19,7 @@ Default: `wp-content/grabwp-tenancy`. Inside it:
 |---|---|
 | `tenants.php` | The list of sites, their domains and the routing mode. |
 | `settings.php` | The [Free settings](/manage-sites/free-settings). |
-| `management.php` | Optional site names and tags, plus the **Show tenant names and tags** setting. Removed for a site when that site is deleted. See [Create and manage sites](/manage-sites/create-and-manage-sites#manage-tags). |
+| `management.php` | Optional site names and tags, plus the **Enable names and tags** setting. Removed for a site when that site is deleted. See [Create and manage sites](/manage-sites/create-and-manage-sites#manage-tags). |
 | `{tenant_id}/uploads` | One site's images and files (when it has its own uploads folder). |
 | `{tenant_id}/plugins` and `{tenant_id}/themes` | One site's own plugins and themes (Pro, when the site has its own). |
 | `suspended/{tenant_id}.php` | Present while a site is blocked (Pro + WaaS). |

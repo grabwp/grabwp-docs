@@ -270,9 +270,9 @@ last_verified_date: "2026-11-08"
 
 ### management.php
 
-**Plain meaning:** the file in the GrabWP data folder (`{base}/management.php`) that stores the **Show tenant names and tags** setting, your tag list, and each site's **Name** and **Tags**.  
+**Plain meaning:** the file in the GrabWP data folder (`{base}/management.php`) that stores the **Enable names and tags** setting, your tag list, and each site's **Name** and **Tags**.  
 **Where you see it:** in the GrabWP data directory (`wp-content/grabwp-tenancy/management.php` by default), managed from **Tenancy > All Tenants**, **Add New**, **Edit Tenant**, **Tenant Tags**, and **Tenancy > Settings > Management**.  
-**Why it matters:** turning **Show tenant names and tags** off hides the fields in wp-admin while keeping `management.php` intact, and deleting a site removes its name and tags from the file.  
+**Why it matters:** turning **Enable names and tags** off hides the fields in wp-admin while keeping `management.php` intact, and deleting a site removes its name and tags from the file.  
 **More:** [Create and manage sites](/manage-sites/create-and-manage-sites) | [Free settings](/manage-sites/free-settings)
 
 ### MU-plugin
@@ -454,8 +454,8 @@ last_verified_date: "2026-11-08"
 ### Tenant name and tags
 
 **Plain meaning:** an optional short **Name** (up to 100 characters) and **Tags** (each up to 50 characters, with a lowercase-letters, numbers and hyphens slug) that help you identify, group and filter sites in wp-admin.  
-**Where you see it:** **Tenancy > All Tenants** (**Tenant ID** and **Tags** columns, **Filter by tag** dropdown, search box, and **Manage Tags** button), **Add New**, **Edit Tenant**, the **Tenant Tags** screen (`admin.php?page=grabwp-tenancy-tags`, not in the sidebar menu), and **Tenancy > Settings > Management** (**Show tenant names and tags**, on by default).  
-**Why it matters:** available on every edition (Free, Pro and WaaS). Turning **Show tenant names and tags** off hides the fields and keeps saved data in `management.php`.  
+**Where you see it:** **Tenancy > All Tenants** (**Tenant ID** and **Tags** columns, **Filter by tag** dropdown, search box, and **Manage Tags** button), **Add New**, **Edit Tenant**, the **Tenant Tags** screen (`admin.php?page=grabwp-tenancy-tags`, not in the sidebar menu), and **Tenancy > Settings > Management** (**Enable names and tags**, on by default).  
+**Why it matters:** available on every edition (Free, Pro and WaaS). Turning **Enable names and tags** off hides the fields and keeps saved data in `management.php`.  
 **More:** [Create and manage sites](/manage-sites/create-and-manage-sites) | [Free settings](/manage-sites/free-settings)
 
 ### tenants.php

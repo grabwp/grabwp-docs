@@ -31,7 +31,7 @@ Open **Tenancy > All Tenants**. The page title is **GrabWP Tenancy**, with **Add
 |---|---|
 | **Tenant ID** | The site's **Name** in bold (when set) above its 6-character ID. Your main install is the starred **Main Site** row. |
 | **Domains** | Domains linked to the site. **Path access only** means no domain yet. **No domains assigned** means the list is empty. |
-| **Tags** | Up to 3 tags in alphabetical order as clickable filter chips, plus `+N` when the site has more (hover to see the rest). Shown when **Show tenant names and tags** is on. |
+| **Tags** | Up to 3 tags in alphabetical order as clickable filter chips, plus `+N` when the site has more (hover to see the rest). Shown when **Enable names and tags** is on. |
 | **Actions** | Icons. Hover for the name. See [Where things are in wp-admin](/manage-sites/wp-admin-map). |
 | **Database**, **Storage**, **Isolation** (Pro) | Database type (**Shared MySQL**, **Isolated MySQL**, **Isolated SQLite**), uploads storage (**Local** or **S3**), and short isolation labels: **WPC** (WP Content), **Th** (Themes), **Plg** (Plugins), **Up** (Uploads). |
 
@@ -120,7 +120,7 @@ The table lists every tag with **Name**, **Slug**, **Tenants** (how many sites c
 
 ### Turn names and tags off or on
 
-Names and tags are on by default. To hide them, go to **Tenancy > Settings**, open the **Management** tab, untick **Show tenant names and tags** (**Yes**) and click **Save Settings**.
+Names and tags are on by default. To hide them, go to **Tenancy > Settings**, open the **Management** tab, untick **Enable names and tags** (**Yes**) and click **Save Settings**.
 
 Turning the setting off hides the **Name** and **Tags** fields, the **Tags** column, the tag filter and the **Manage Tags** button, while keeping everything you already saved in `wp-content/grabwp-tenancy/management.php`. See [Free settings](/manage-sites/free-settings#management).
 

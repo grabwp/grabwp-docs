@@ -74,7 +74,7 @@ Controls whether site names and tags appear in the main site's wp-admin.
 
 | Setting | Default | What it does |
 |---|---|---|
-| **Show tenant names and tags** | On (**Yes**) | Adds a **Name** and **Tags** to each site in **Tenancy > All Tenants** and on the **Add New** and **Edit Tenant** screens, plus the **Manage Tags** button and tag filter. Turning it off hides them and keeps what you saved. |
+| **Enable names and tags** | On (**Yes**) | Adds a **Name** and **Tags** to each site in **Tenancy > All Tenants** and on the **Add New** and **Edit Tenant** screens, plus the **Manage Tags** button and tag filter. Turning it off hides them and keeps what you saved. |
 
 See [Create and manage sites](/manage-sites/create-and-manage-sites#manage-tags) for how to name, tag and filter sites.
 
@@ -92,7 +92,7 @@ With Pro, open the site and its **Overrides** tab. Each setting can use the glob
 
 ## Limits
 
-- Capability and performance settings are saved in `settings.php` inside the data folder. The routing mode is saved in `tenants.php`. **Show tenant names and tags** (together with all site names and tags) is saved in `management.php`. See [Where site data lives](/manage-sites/where-site-data-lives).
+- Capability and performance settings are saved in `settings.php` inside the data folder. The routing mode is saved in `tenants.php`. **Enable names and tags** (together with all site names and tags) is saved in `management.php`. See [Where site data lives](/manage-sites/where-site-data-lives).
 - If the data folder is not writable, saving shows `Failed to save settings. Please check file permissions.` or `The Management setting could not be saved. Check that the GrabWP data folder is writable.`
 - If `management.php` cannot be read as valid data, the **Management** tab shows `GrabWP cannot read management.php in the GrabWP data folder, so names and tags cannot be saved. Fix or remove the file.`
 
