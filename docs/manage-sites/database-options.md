@@ -3,8 +3,8 @@ title: "Database options"
 description: "Shared database, isolated MySQL or isolated SQLite: what each means, what it needs, and how to set the default and one site's choice."
 sidebar_label: "Database options"
 tags: [database, isolation, plan-base, plan-pro, for-operator, for-cs]
-last_verified_version: "Base 1.1.14, Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** on Free, every site keeps its tables in your main WordPress database, each with its own prefix. Pro adds two choices per site: its own MySQL database, or its own SQLite database file. Set the default on **Tenancy > Pro Settings > Database** and change it for one site on **Add New** or **Edit**.
@@ -60,6 +60,8 @@ Click **Test Connection** before **Create Tenant** or **Update Tenant**.
 
 ## Limits
 
+- Deleting a site whose database type is **Isolated SQLite Database** also deletes its SQLite database folder (`wp-content/grabwp-tenancy-sqlite/{tenant_id}/`). On earlier Pro versions, that folder stayed on disk when a site was deleted and can be removed by hand.
+- Deleting a site whose database type is **Isolated MySQL Database** drops the site's tables inside that MySQL database, not the MySQL database itself.
 - To move a site's content to another database type, clone it into a site of that type, or back it up and restore it there. Pro clone and restore both work across shared MySQL, isolated MySQL and SQLite. See [Clone a site](/manage-sites/clone-a-site) and [Backup and restore](/manage-sites/backup-and-restore).
 - If the setup wizard says `The Isolated MySQL password is not available any more.`, type the password again.
 

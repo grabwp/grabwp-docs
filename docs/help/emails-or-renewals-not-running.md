@@ -4,7 +4,7 @@ description: "Why scheduled renewal checks, trial reminders, auto backups or ema
 sidebar_label: "Emails or renewals not running"
 tags: [troubleshooting, server, subscriptions, settings, plan-base, plan-waas, for-operator, for-cs]
 last_verified_version: "Base 1.1.14, Pro 1.1.17, WaaS 1.1.24"
-last_verified_date: "2026-10-30"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** GrabWP turns off browser-triggered WP-Cron by default for performance, so scheduled jobs only run when you configure a server cron job to call `wp-cron.php`. If emails still do not arrive when you click **Send test email**, configure an SMTP plugin on the main site.
@@ -16,6 +16,7 @@ You notice one or more of these issues on your platform:
 
 - Expired subscriptions, trial reminders, renewal invoices, or automatic backups do not run on schedule.
 - Customers do not receive the **Verification code**, **Welcome**, or **Site setup complete** emails.
+- A client says the pay link in a renewal invoice email (**Invoice created**) shows an expired checkout.
 - Clicking **Send test email** under **Waas > Settings > Email** displays:
   - `The test email could not be sent. Check the mail configuration of this site.`
 - Saving the **Verification code** template under **Waas > Settings > Email** displays:
@@ -29,6 +30,7 @@ You notice one or more of these issues on your platform:
 | `The test email could not be sent. Check the mail configuration of this site.` | WordPress `wp_mail()` failed because the server has no outgoing mail transport (SMTP) configured, or the mail provider rejected the sender address. |
 | `Not saved: the verification code email must contain {otp_code} in the body.` | You edited the **Verification code** email template and removed the required `{otp_code}` placeholder token. |
 | Specific notification email is not sent, while test emails work | That template is set to **Disabled** under **Waas > Settings > Email** (all templates except **Verification code** and **Suspended site page** can be turned off). |
+| Client says the pay link in **Invoice created** shows an expired checkout | Hosted checkouts on Stripe, Polar.sh and Xendit expire at the provider after a short window. Opening the `{payment_url}` link in **Invoice created** opens a fresh provider checkout automatically when the old one is missing or older than 30 minutes (WooCommerce and SePay are unchanged, and a paid invoice never reopens). |
 
 ## Check
 
@@ -72,6 +74,16 @@ Replace `https://example.com` with your main platform domain. This runs key WaaS
 Most cloud VPS hosts block default PHP `mail()`. Install an SMTP plugin on the main WordPress site and connect it to a transactional email provider (such as Mailgun or SendLayer).
 
 After configuring SMTP, return to **Waas > Settings > Email**, open any template, and click **Send test email** to verify delivery.
+
+### Client says the pay link shows an expired checkout
+
+The `{payment_url}` link in the **Invoice created** email points to your site's renewal payment address (`/wp-json/grabwp-waas/v1/invoices/pay/{token}`), which sends the customer to the billing provider.
+
+- **Stripe, Polar.sh and Xendit:** when the invoice is still unpaid and the stored checkout is missing or older than 30 minutes, opening the payment link in the email creates a fresh provider checkout and redirects to it automatically. Ask the customer to click the link in the **Invoice created** email again rather than reloading an old provider checkout tab.
+- **WooCommerce and SePay:** the payment link behavior is unchanged.
+- **Paid invoices:** a paid invoice never reopens a checkout. Opening the link redirects the customer to the customer dashboard (`[grabwp_waas_dashboard]`).
+- **Voided or expired invoices:** if the invoice itself was voided or marked expired, the link displays `This invoice has been voided.` or `This invoice has been expired.` The customer can renew from the customer dashboard instead.
+- **Checkout unavailable:** if the billing provider cannot be reached when the link is opened, the page displays `Payment checkout is not available. Please try again later.` Check your provider credentials under **Waas > Settings > Billing Providers**.
 
 ## Still stuck
 

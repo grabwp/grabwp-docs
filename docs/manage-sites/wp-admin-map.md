@@ -4,7 +4,7 @@ description: "Map of every GrabWP menu, tab, per-site screen and row icon in the
 sidebar_label: "Where things are"
 tags: [reference, settings, plan-base, plan-pro, plan-waas, for-operator, for-cs]
 last_verified_version: "Base 1.1.15, Pro 1.1.18, WaaS 1.1.25"
-last_verified_date: "2026-11-03"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** everything for managing sites is under the **Tenancy** menu on the main site. Per-site tools open from the icons on each row of **Tenancy > All Tenants**, or from the tab bar at the top of a site's screens. Selling tools are under a separate **Waas** menu.
@@ -17,9 +17,9 @@ All GrabWP screens need an administrator on the main site (`manage_options`). Cl
 
 | Menu item | Page title | What you do there | Needs |
 |---|---|---|---|
-| **Tenancy > All Tenants** | **GrabWP Tenancy** | List of all sites, search, row icons. | Free |
-| **Tenancy > Add New** | **Add New Tenant** | Create a site. Pro adds isolation, database and storage fields. | Free |
-| **Tenancy > Settings** | **GrabWP Tenancy Settings** | Rules for all sites, in three tabs: **Tenant Capabilities**, **Performance & Security**, **Routing**. Pro adds **Path Prefix** and **Path Alias Routing** to **Routing**. | Free |
+| **Tenancy > All Tenants** | **GrabWP Tenancy** | List of all sites, tag filter, search, row icons, and **Manage Tags** (opens the **Tenant Tags** screen, which is not in the sidebar menu). | Free |
+| **Tenancy > Add New** | **Add New Tenant** | Create a site, with optional **Name** and **Tags**. Pro adds isolation, database and storage fields. | Free |
+| **Tenancy > Settings** | **GrabWP Tenancy Settings** | Rules for all sites, in four tabs: **Tenant Capabilities**, **Performance & Security**, **Routing**, **Management**. Pro adds **Path Prefix** and **Path Alias Routing** to **Routing**. | Free |
 | **Tenancy > Pro Settings** | **Pro Settings** | Defaults for new sites and platform options, in tabs: **Isolation**, **Database**, **Directories**, **Symlink**, **Storage**, **Backup**, **CDN**. | Pro |
 | **Tenancy > License** | **GrabWP Tenancy Pro License** | Activate or revoke your Pro key. | Pro |
 | **Tenancy > Status** | **GrabWP Tenancy Status** | Server checks in three tabs: **Plugin General**, **Base Plugin**, **Pro Plugin**. **Plugin General** also has **Hosting setup**, **Tenant file safety**, **System Information** and **Support diagnostics**. Also **Run setup wizard**, the only place to reopen the wizard. | Free |

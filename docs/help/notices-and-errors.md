@@ -4,7 +4,7 @@ description: "Lookup table of exact admin notices, status warnings and error mes
 sidebar_label: "Notices and errors"
 tags: [reference, troubleshooting, plan-base, plan-pro, plan-waas, addon, for-operator, for-cs]
 last_verified_version: "Base 1.1.15, Pro 1.1.18, WaaS 1.1.25, Custom Fields 1.0.0, Stripe 1.1.7, SePay 1.1.5, Discounts 1.0.0, Restore 1.0.5"
-last_verified_date: "2026-11-03"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** this page lists the exact notice and error texts shown by GrabWP in wp-admin, on the **Status** screen, and during signup or login. Match the text you see to find its cause and the troubleshooting guide that fixes it.
@@ -46,6 +46,11 @@ last_verified_date: "2026-11-03"
 | `Invalid or expired admin access token.` | Site auto-login (`wp-login.php?grabwp_token_error=1`) | The `grabwp_token` is older than 1800 seconds (30 minutes) or its HMAC-SHA256 signature does not match. | [Site dashboard icon sends me to the login page](/help/site-login-fails) |
 | `Tenant identification failed.` | Site auto-login (`wp-login.php?grabwp_token_error=1`) | The plugin could not resolve a valid site ID on the request. | [Site dashboard icon sends me to the login page](/help/site-login-fails) |
 | `No admin user found for tenant access.` | Site auto-login (`wp-login.php?grabwp_token_error=1`) | No administrator account was found in the site's database user table. | [Site dashboard icon sends me to the login page](/help/site-login-fails) |
+| `GrabWP cannot read management.php in the GrabWP data folder, so names and tags cannot be saved. Fix or remove the file.` | **Tenancy > Settings > Management** | `{base}/management.php` exists on disk but does not return a valid array. | [Free settings](/manage-sites/free-settings) |
+| `The Management setting could not be saved. Check that the GrabWP data folder is writable.` | **Tenancy > Settings > Management** | GrabWP could not acquire `.management.lock` or write `{base}/management.php` when saving the **Enable names and tags** toggle. | [Free settings](/manage-sites/free-settings) |
+| `Tenant saved, but names and tags could not be written. Check that the GrabWP data folder is writable.` | **Tenancy > Add New** or **Edit Tenant** | The site was saved to `tenants.php`, but writing its **Name** and **Tags** to `{base}/management.php` failed. | [Create and manage sites](/manage-sites/create-and-manage-sites) |
+| `Names and tags could not be written. Check that the GrabWP data folder is writable.` / `The tag could not be deleted. Check that the GrabWP data folder is writable.` / `The tags could not be deleted. Check that the GrabWP data folder is writable.` | **Tenant Tags** (`admin.php?page=grabwp-tenancy-tags`) | Adding, updating or deleting a tag could not be written to `{base}/management.php`. | [Create and manage sites](/manage-sites/create-and-manage-sites) |
+| `Enter a tag name.` / `The slug can use lowercase letters, numbers and hyphens only.` / `That tag no longer exists.` / `A tag with that slug already exists.` | **Tenant Tags** (`Add New Tag` / `Edit Tag`) | The tag name was empty, the custom slug had characters outside `a-z`, `0-9` and `-`, the edited tag was deleted, or another tag already uses that slug. | [Create and manage sites](/manage-sites/create-and-manage-sites) |
 
 ## Pro (GrabWP Tenancy Pro) notices and errors
 
@@ -89,6 +94,8 @@ last_verified_date: "2026-11-03"
 | `Domain did not respond. Point DNS and add it on the server, then try again.` | Custom domain verification | The HTTP verification request to the custom domain failed or timed out. | [A custom domain does not work](/help/custom-domain-not-working) |
 | `Settings saved.` / `Signup and Dashboard pages checked.` / `WooCommerce anchor product is ready.` | **Waas > Settings > General** | Success notices after saving settings or running repair tools. | [WaaS settings](/sell-sites/waas-settings) |
 | `New API key generated. Copy it now - it will not be shown again:` | **Waas > Settings > General** (**API Keys**) | Warning notice shown once immediately after generating a REST API key. | [WaaS settings](/sell-sites/waas-settings) |
+| `Payment checkout is not available. Please try again later.` | Renewal invoice payment link (`/wp-json/grabwp-waas/v1/invoices/pay/{token}`) | The invoice has no stored checkout URL and refreshing the provider checkout did not return a URL. | [Emails or renewal checks do not run](/help/emails-or-renewals-not-running#client-says-the-pay-link-shows-an-expired-checkout) |
+| `This invoice has been %s.` | Renewal invoice payment link (`/wp-json/grabwp-waas/v1/invoices/pay/{token}`) | The renewal invoice status is `voided` or `expired`. | [Emails or renewal checks do not run](/help/emails-or-renewals-not-running#client-says-the-pay-link-shows-an-expired-checkout) |
 
 ## Add-ons and companion plugins
 

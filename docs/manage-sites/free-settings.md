@@ -4,18 +4,18 @@ description: "Every setting on Tenancy > Settings, with its label, default and w
 sidebar_label: "Free settings"
 tags: [settings, reference, routing, server, plan-base, for-operator, for-cs]
 last_verified_version: "Base 1.1.15, Pro 1.1.18"
-last_verified_date: "2026-11-03"
+last_verified_date: "2026-11-08"
 ---
 
-**Short answer:** **Tenancy > Settings** sets what admins of your sites can do and a few speed and security limits. These settings apply to every site, not to the main site. With Pro you can change them for one site on its **Overrides** tab.
+**Short answer:** **Tenancy > Settings** sets what admins of your sites can do, a few speed and security limits, how visitors reach your sites, and whether site names and tags are shown in wp-admin. Capability and performance settings apply to every site, not to the main site. With Pro you can change them for one site on its **Overrides** tab.
 
 **Needs:** Free. Pro adds per-site overrides and more routing options.
 
 ## How it works
 
-The page title is **GrabWP Tenancy Settings**. It has three tabs: **Tenant Capabilities**, **Performance & Security** and **Routing**. Change what you need and click **Save Settings**.
+The page title is **GrabWP Tenancy Settings**. It has four tabs: **Tenant Capabilities**, **Performance & Security**, **Routing** and **Management**. Change what you need and click **Save Settings**.
 
-Each setting turns into a standard WordPress setting (a constant) when one of your sites loads. The main site is never affected.
+Each capability and performance setting turns into a standard WordPress setting (a constant) when one of your sites loads. The main site is never affected.
 
 ## Tenant Capabilities
 
@@ -66,6 +66,18 @@ How visitors reach your sites.
 
 Pro adds **Path Prefix** (change the word) and **Path Alias Routing** (a readable name instead of the site ID) on this tab. See [Domains and DNS](/manage-sites/domains-and-dns).
 
+## Management
+
+Controls whether site names and tags appear in the main site's wp-admin.
+
+![Management tab](../images/tenancy-settings-management.png)
+
+| Setting | Default | What it does |
+|---|---|---|
+| **Enable names and tags** | On (**Yes**) | Adds a **Name** and **Tags** to each site in **Tenancy > All Tenants** and on the **Add New** and **Edit Tenant** screens, plus the **Manage Tags** button and tag filter. Turning it off hides them and keeps what you saved. |
+
+See [Create and manage sites](/manage-sites/create-and-manage-sites#manage-tags) for how to name, tag and filter sites.
+
 ## When a setting has no effect
 
 - **Set in `wp-config.php`.** If `wp-config.php` already sets the same WordPress constant, a notice under the setting names the constant and its value and says the setting has no effect. Remove that line from `wp-config.php` to let GrabWP control it.
@@ -80,11 +92,13 @@ With Pro, open the site and its **Overrides** tab. Each setting can use the glob
 
 ## Limits
 
-- These settings are saved in `settings.php` inside the data folder. The routing mode is saved in `tenants.php`. See [Where site data lives](/manage-sites/where-site-data-lives).
-- If the data folder is not writable, saving shows `Failed to save settings. Please check file permissions.`
+- Capability and performance settings are saved in `settings.php` inside the data folder. The routing mode is saved in `tenants.php`. **Enable names and tags** (together with all site names and tags) is saved in `management.php`. See [Where site data lives](/manage-sites/where-site-data-lives).
+- If the data folder is not writable, saving shows `Failed to save settings. Please check file permissions.` or `The Management setting could not be saved. Check that the GrabWP data folder is writable.`
+- If `management.php` cannot be read as valid data, the **Management** tab shows `GrabWP cannot read management.php in the GrabWP data folder, so names and tags cannot be saved. Fix or remove the file.`
 
 ## Related
 
+- [Create and manage sites](/manage-sites/create-and-manage-sites)
 - [Pro settings](/manage-sites/pro-settings)
 - [Site settings and overrides](/manage-sites/site-settings)
 - [Plugins and themes](/manage-sites/plugins-and-themes)

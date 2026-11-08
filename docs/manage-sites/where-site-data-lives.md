@@ -3,8 +3,8 @@ title: "Where site data lives"
 description: "The folders GrabWP uses for your sites' files, settings and databases, and how to move an older folder."
 sidebar_label: "Where site data lives"
 tags: [server, database, plan-base, plan-pro, for-operator]
-last_verified_version: "Base 1.1.14, Pro 1.1.17"
-last_verified_date: "2026-10-30"
+last_verified_version: "Base 1.1.15, Pro 1.1.18"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** GrabWP keeps everything about your sites in one data folder, by default `wp-content/grabwp-tenancy`. Each site has a subfolder named after its ID. Pro adds a config folder and, for SQLite sites, a database folder. **Tenancy > Status** warns if a folder is missing or in a risky place.
@@ -19,6 +19,7 @@ Default: `wp-content/grabwp-tenancy`. Inside it:
 |---|---|
 | `tenants.php` | The list of sites, their domains and the routing mode. |
 | `settings.php` | The [Free settings](/manage-sites/free-settings). |
+| `management.php` | Optional site names and tags, plus the **Enable names and tags** setting. Removed for a site when that site is deleted. See [Create and manage sites](/manage-sites/create-and-manage-sites#manage-tags). |
 | `{tenant_id}/uploads` | One site's images and files (when it has its own uploads folder). |
 | `{tenant_id}/plugins` and `{tenant_id}/themes` | One site's own plugins and themes (Pro, when the site has its own). |
 | `suspended/{tenant_id}.php` | Present while a site is blocked (Pro + WaaS). |
@@ -30,7 +31,7 @@ Sites that share uploads with the main site use the main `wp-content/uploads` fo
 | Folder | Default | What it holds |
 |---|---|---|
 | Pro config | `wp-content/grabwp-tenancy-pro` | `config.php` with the [Pro settings](/manage-sites/pro-settings), and one `{tenant_id}/config.php` per site with that site's Pro settings. |
-| SQLite databases | `wp-content/grabwp-tenancy-sqlite` | One folder per site with its database file. |
+| SQLite databases | `wp-content/grabwp-tenancy-sqlite` | One `{tenant_id}` folder per isolated SQLite site with its database file. Removed when you delete the site (folders left on disk by earlier Pro versions can be removed by hand). |
 | Domain symlinks | `wp-content/grabwp-tenancy-domains` | Only used when **Enable Domain Symlink** is on. |
 
 You can move these folders on **Tenancy > Pro Settings > Directories** (or **Domains Directory** on the **Symlink** tab), or with constants in `wp-config.php`. Moving **Pro Config Dir** moves the per-site config files only. The main `config.php` always stays in `wp-content/grabwp-tenancy-pro`.

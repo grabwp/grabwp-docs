@@ -216,5 +216,27 @@
       "src": "08-tenancy-settings-routing"
     }
   },
-  "manual": {}
+  "manual": {
+    "tenant-names-tags-list.png": {
+      "reason": "All Tenants list with tenant names and tag chips; not in screenshot library yet"
+    },
+    "tenant-names-tags-filter.png": {
+      "reason": "All Tenants list filtered by a tag; not in screenshot library yet"
+    },
+    "tenant-names-tags-add.png": {
+      "reason": "Add New Tenant with Name row and open Tags chip selector; not in screenshot library yet"
+    },
+    "tenant-names-tags-edit.png": {
+      "reason": "Edit Tenant with Name and Tags chips; not in screenshot library yet"
+    },
+    "tenant-tags-list.png": {
+      "reason": "Tenant Tags management screen; not in screenshot library yet"
+    },
+    "tenant-tag-edit.png": {
+      "reason": "Edit Tag screen; not in screenshot library yet"
+    },
+    "tenancy-settings-management.png": {
+      "reason": "Tenancy > Settings > Management tab; not in screenshot library yet"
+    }
+  }
 }

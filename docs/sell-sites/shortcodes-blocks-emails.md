@@ -3,7 +3,7 @@ title: "Shortcodes, blocks and emails"
 description: "Lookup tables for the WaaS shortcodes and their attributes, the five blocks, the 18 email and page templates with their tokens, the webhook routes and the scheduled jobs."
 sidebar_label: "Shortcodes, blocks and emails"
 tags: [reference, settings, billing, subscriptions, plan-waas, addon, for-operator]
-last_verified_date: "2026-10-30"
+last_verified_date: "2026-11-08"
 ---
 
 **Short answer:** this is the lookup page for the WaaS building blocks: six shortcodes with every attribute, five editor blocks, the 18 templates on **Waas > Settings > Email** with their default subjects and tokens, the billing webhook routes and the scheduled jobs. For step-by-step setup, start at [Frontend pages](/sell-sites/frontend-pages) or [Emails](/sell-sites/emails).
@@ -143,6 +143,8 @@ Every customer email except **Verification code** also accepts `customer_name`, 
 | **Free trial ending** | `trial_ending` | `{site_name} -- Your free trial ends in {days_left} day(s)` | Same as **Free trial started** |
 | **Free trial ended** | `trial_ended` | `{site_name} -- Your free trial has ended` | Same as **Free trial started** |
 | **Verification code** (required) | `otp` | `[{site_name}] Your verification code: {otp_code}` | Only `customer_name`, `customer_email`, `otp_code`, `expires_minutes` |
+
+When a customer opens `{payment_url}` from **Invoice created** on Stripe, Polar.sh or Xendit, WaaS opens a fresh provider checkout if the stored checkout is missing or older than 30 minutes. WooCommerce and SePay are unchanged, and a paid invoice redirects to the customer dashboard instead of reopening a checkout.
 
 **Admin emails**
 
