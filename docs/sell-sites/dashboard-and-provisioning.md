@@ -27,7 +27,6 @@ Go to **Waas > Dashboard**. The page heading is **WaaS Dashboard**.
 
 Four more cards track built-in trials: **Trials started**, **Trials converted**, **Trials expired** and **Trial conversion rate**.
 
-{/* TODO screenshot: WaaS Dashboard with the trial cards */}
 
 ### Panels
 

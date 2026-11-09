@@ -67,7 +67,7 @@ The wizard opens by itself the first time you activate GrabWP on a site with no 
 - the **Continue setup** button on the notice "GrabWP: finish setup to get your first site running",
 - **Run setup wizard** (or **Resume setup wizard**) at the top of **Tenancy > Status**. Since WaaS 1.1.25 this is the only button; the WaaS dashboard no longer has one.
 
-{/* TODO screenshot: setup wizard with WaaS active, showing the step list (Welcome, Routing, License, Site defaults, Starter site, Storefront, Done) */}
+![Setup wizard Welcome step with the step list](../images/13-setup-wizard-welcome.png)
 
 The wizard saves each screen as you go. **Exit setup** pauses it; the steps you saved are kept and you can resume later. **Back** returns to the previous screen.
 
@@ -89,7 +89,7 @@ On **Your template** (WaaS 1.1.25 or later):
 - **Template slug** is prefilled with a slug no other template uses (`starter-site`, then `starter-site-2` and so on). If you type a slug that is taken, the step says `That template slug is already used by another template.`
 - If WordPress is not installed in the chosen site yet, the template is still saved, with the warning `The template was saved, but GrabWP could not confirm that WordPress is installed in that site. Open the site and check it before customers sign up.`
 
-{/* TODO screenshot: setup wizard Storefront > Your template on WaaS 1.1.25 (template site list with greyed-out templates and the prefilled slug). No such shot exists in the admin screenshot library yet. */}
+![Setup wizard Storefront, Your template](../images/13-setup-wizard-storefront-template.png)
 
 WaaS creates the Signup, Dashboard, Templates and Pricing pages for you when it is activated, so after the wizard your signup page already works.
 
@@ -123,7 +123,7 @@ Leave **Symlink**, **Storage**, **Backup** and **CDN** at their defaults until y
 
 ![Pro Settings Database](../images/11-pro-settings-database.png)
 
-{/* TODO screenshot: Tenancy > Pro Settings > Isolation with the "Level of isolation for new sites" choice (the existing pro-settings.png shows an older layout) */}
+![Pro Settings, Isolation, Level of isolation for new sites](../images/grabwp-tenancy-pro-settings-isolation.png)
 
 ## Step 5: Install payment add-ons (only for Stripe, Sepay or Xendit)
 

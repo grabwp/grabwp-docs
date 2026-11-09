@@ -2,6 +2,12 @@
   "_comment": "SSOT map: docs/images/<key> is GENERATED from the admin-screenshot library. Source of truth = ~/project-hub/grabwp/assets/admin-screenshots (slug = <NN>-<page>.png). Run scripts/sync_docs_images.py after every library re-shoot. auto entries copy (optionally crop) library/<src>.png -> docs/images/<key>; manual entries are hand-made (wizard step crops / non-GrabWP screens), left untouched and reported by the script. Docs keys keep their historical base names (extension standardised to .png).",
   "_library_dir": "~/project-hub/grabwp/assets/admin-screenshots",
   "auto": {
+    "13-setup-wizard-welcome.png": {
+      "src": "13-setup-wizard-welcome"
+    },
+    "13-setup-wizard-storefront-template.png": {
+      "src": "13-setup-wizard-storefront-template"
+    },
     "grabwp-status.png": {
       "src": "09-status-general"
     },
@@ -151,6 +157,9 @@
     },
     "05b-waas-plans-edit-payment.png": {
       "src": "05b-waas-plans-edit-payment"
+    },
+    "05b-waas-plans-edit-trial.png": {
+      "src": "05b-waas-plans-edit-trial"
     },
     "05c-waas-services-add.png": {
       "src": "05c-waas-services-add"

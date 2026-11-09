@@ -54,7 +54,7 @@ When you activate a GrabWP plugin on its own from wp-admin, the **GrabWP setup**
 | **First site** | Creates your first site, with WordPress already installed. When the main site has a domain name, the **Custom domain** field suggests a subdomain made from the site title (for example `my-first-site.example.com`). It follows the title until you type your own domain. |
 | **Done** | Shows the new site and its login details, then **Manage sites**: **Open site admin (1-click)**, **Visit site** and **All sites**. |
 
-{/* TODO screenshot: setup wizard Welcome step with "Show the server checks" open (Hosting setup, Tenant file safety, System Information, Support diagnostics). No such shot exists in the admin screenshot library yet (library shots predate Base 1.1.15). */}
+![Setup wizard Welcome step with the server checks open](../images/13-setup-wizard-welcome.png)
 
 The **Server check** on the Welcome step shows the same checks as **Tenancy > Status > Plugin General**: the environment cards, **Hosting setup**, **Site can reach itself (loopback)**, **Tenant file safety**, **System Information** and **Support diagnostics**. They sit under **Show the server checks**, which opens by itself when something needs attention. When everything passes, the step says `Everything is ready. Nothing to do here.` **System Information** starts closed, so the step stays short. See [What the server check shows](#what-the-server-check-shows).
 
