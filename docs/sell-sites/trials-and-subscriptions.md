@@ -18,7 +18,7 @@ There are three ways to let customers try before paying.
 
 Turn it on per paid plan: **Waas > Settings > Plans**, edit the plan, tab **Name and price**, tick **Built-in trial** (**Offer a free trial that needs no payment and no payment provider**) and set **Trial length (days)** (1 to 365, default 14). Then click **Save Plan**.
 
-{/* TODO screenshot: plan Name and price tab with Built-in trial and Trial length (days) */}
+![Plan Name and price tab with Built-in trial and Trial length (days)](../images/05b-waas-plans-edit-trial.png)
 
 What happens:
 
