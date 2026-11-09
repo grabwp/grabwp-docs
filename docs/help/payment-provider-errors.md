@@ -32,6 +32,7 @@ Or, a customer completed payment, but their subscription remains in **Pending** 
 | `SePay is active. Add VND as primary or secondary currency in WaaS > Settings > Billing Providers before customers can pay with SePay.` | SePay only processes Vietnamese Dong (`VND`), and neither your primary nor secondary currency is set to `VND`. |
 | `Sepay requires VND currency. Please set VND as primary or secondary currency in WaaS settings first.` | A customer attempted a SePay checkout while `VND` was not configured in currency settings. |
 | Customer paid but subscription stays **Pending** | Webhooks from the payment gateway are not reaching your site, or the webhook secret signature does not match. |
+| Provider dashboard shows deliveries answered 200 with `ignored` and a reason such as `unhandled_event`, `not_our_transaction` or `duplicate` | WaaS received the event and deliberately ignored it because it is unused, meant for another site or account, or already processed. This is not an error and needs no fix. Optionally unsubscribe from unused events; see [Payments](/sell-sites/payments). |
 | The reference_id entered has been used before or Invalid parameter(s): billing_cycle | In Xendit, these occur when an existing subscriber attempts an additional purchase or one-time add-on while holding an active plan. |
 | WooCommerce checkout opens an empty cart | The internal WooCommerce anchor product was deleted, trashed, or marked not purchasable. |
 | Discounts do not apply at checkout | Discounts are globally turned off on the **Waas > Discounts** screen. |

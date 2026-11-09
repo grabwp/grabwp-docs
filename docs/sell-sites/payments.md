@@ -40,6 +40,8 @@ The top line reads **Enable providers below. The first enabled provider is the d
 
 Webhook URLs look like `https://yoursaas.com/wp-json/grabwp-waas/v1/webhooks/billing/polar`, ending in `polar`, `stripe`, `sepay` or `xendit`. Use **Copy** instead of typing them.
 
+> **Note:** WaaS answers unused events with 200 and ignores them, so subscribing to everything is harmless but noisy; subscribe only to the events listed below.
+
 ## Currency settings
 
 **Currency Settings** is the card under the providers. Set it before you enable a provider that needs a specific currency.
@@ -82,7 +84,7 @@ You do not need to create products in Polar by hand. Saving a plan with Polar co
    | **Organization ID** | Your Polar organization ID. |
 
 3. Copy the **Webhook URL** with **Copy**.
-4. In Polar, add that URL as a webhook endpoint and use the same secret as in **Webhook Secret**.
+4. In Polar, add that URL as a webhook endpoint and use the same secret as in **Webhook Secret**. Subscribe only to `order.paid`, `subscription.created`, `subscription.updated`, `subscription.active`, `subscription.canceled`, `subscription.uncanceled`, `subscription.revoked` and `customer.state_changed`. Polar has no refund event; WaaS checks refunds on its own schedule.
 5. Click **Save Billing Providers**. The card changes from **Needs Config** to **Active**.
 
 **3. Link your plans**
@@ -99,7 +101,7 @@ You do not need to create products in Polar by hand. Saving a plan with Polar co
 
 1. Install and activate the add-on.
 2. On the **Stripe** card, tick **Enable this provider** and fill **Secret Key**, **Publishable Key** and **Webhook Signing Secret**. **Thin Signing Secret (v2 Events)** is optional.
-3. Copy the **Webhook URL** and add it as a webhook endpoint in your Stripe dashboard. Send at least these events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid` and `charge.refunded`.
+3. Copy the **Webhook URL** and add it as a webhook endpoint in your Stripe dashboard. Select only these events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed` and `charge.refunded`.
 4. Click **Save Billing Providers**.
 5. On each paid plan, open **Payment Configuration** and leave **Stripe Monthly Price ID** and **Stripe Yearly Price ID** blank so WaaS creates them, or paste your own price IDs, then **Save Plan**.
 
@@ -123,7 +125,7 @@ Sepay takes Vietnamese bank transfers by QR code and confirms them through its w
    | **Bank**, **Account Number**, **Account Holder** | The account customers pay into. |
    | **Payment Code Prefix** | Default `DH`. Starts the code customers put in the transfer note. |
 
-4. Copy the **Webhook URL** into your Sepay account.
+4. Copy the **Webhook URL** into your Sepay account. Sepay has no event list and sends incoming transfers; if one account serves several sites, transfers meant for another site are acknowledged and ignored.
 5. Click **Save Billing Providers**.
 
 Sepay adds no product ID fields to plans; the amount comes from the plan price.
@@ -135,7 +137,7 @@ Sepay adds no product ID fields to plans; the amount comes from the plan price.
 1. Install and activate the add-on.
 2. On the **Xendit** card, tick **Enable this provider** and fill **Secret API Key** and **Webhook Verification Token**.
 3. Set **Charge Currency** (`IDR` by default; also `PHP`, `VND`, `THB`, `SGD`, `MYR`, `USD`) and **Country** (Indonesia by default; also the Philippines, Vietnam, Thailand, Singapore and Malaysia).
-4. Copy the **Webhook URL** into your Xendit dashboard.
+4. Copy the **Webhook URL** into your Xendit dashboard. Enable `payment_session.completed`, `payment.succeeded`, `payment_token.activated`, `recurring.plan.activated`, `recurring.plan.inactivated`, `recurring.cycle.succeeded` and `recurring.cycle.failed`. Older names `recurring.plan.activation`, `recurring.plan.deactivated` and `recurring.cycle` are also accepted.
 5. Click **Save Billing Providers**.
 
 Xendit adds no product ID fields to plans.
