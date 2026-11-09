@@ -40,7 +40,8 @@ The customer does not type the site address; WaaS picks it. If the site never ap
 2. Choose a paid plan and a billing cycle.
 3. On **Payment Method**, complete checkout with the provider you enabled.
 4. On **Billing Providers**, hover the help icon next to that provider's **Webhook URL** and check that it shows **Last webhook received** (not for WooCommerce, which has no webhook).
-5. Confirm the site under **Tenancy > All Tenants** and its row under **Waas > Subscriptions**.
+5. In the provider dashboard, confirm the webhook endpoint subscribes only to the events listed for that provider in [Payments](/sell-sites/payments), not every event.
+6. Confirm the site under **Tenancy > All Tenants** and its row under **Waas > Subscriptions**.
 
 If a paid plan offers a built-in free trial, also test a trial signup: it should finish without payment and show **Trial (built-in)** on **Waas > Subscriptions**.
 
