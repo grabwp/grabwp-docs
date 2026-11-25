@@ -53,10 +53,26 @@ Details, including **Undo settings removal**, are on [Settings in wp-config.php 
 
 If you use a different VPS management panel, click **Copy diagnostics** under **Support diagnostics** on **Tenancy > Status** and paste it when contacting support.
 
+## Jetpack, MCP and AI connectors on client sites
+
+Tested by the GrabWP team on xCloud (OpenLiteSpeed) with Base 1.1.17 and Pro 1.1.19, on both path addresses (`/site/{tenant_id}/`) and subdomain addresses.
+
+**Jetpack** works on client sites once xCloud lets requests reach `xmlrpc.php`. xCloud blocks `xmlrpc.php` by default, so WordPress.com cannot reach the site, and Jetpack's connection test says `WordPress.com reached your site but the request was blocked (HTTP 404)`. Turn XML-RPC on for the site in the xCloud panel. This affects the main site as well, not only client sites.
+
+You can keep GrabWP's **Disable XML-RPC** setting (**Tenancy > Settings > Performance & Security**) on. It blocks password logins over XML-RPC, but Jetpack's signed requests from WordPress.com still work.
+
+Then open **Jetpack** in the client site's `wp-admin` and connect it. Each client site connects to WordPress.com on its own.
+
+**MCP connectors such as Easy MCP AI** work on client sites. The MCP address is the client site's own address, for example `https://example.com/site/{tenant_id}/wp-json/easy-mcp-ai/v1/mcp`. AI clients can read and edit posts and SEO metadata (tested with ThinkRank SEO) even when `.htaccess` and `wp-config.php` are read-only, because these connectors work through the WordPress REST API and the database, not through those files.
+
+If `/wp-json/` on a path site returns 404, the root `.htaccess` block is outdated. See step 3 of [How to check](#how-to-check).
+
+Plugins that create MySQL-only tables (for example `JSON` columns) may fail to activate on a client site that uses **Isolated SQLite Database**. ThinkRank SEO is one such plugin: it shows `ThinkRank activation failed`. Use a MySQL database for that client site.
+
 ## Limits and versions
 
 - The OpenLiteSpeed path fix and the object cache change need Base 1.1.15 or later. On older versions, use **Advanced** or **Custom** isolation under **Tenancy > Pro Settings > Isolation** to keep the object cache separate per site.
-- Verified against Base 1.1.15, Pro 1.1.18, and WaaS 1.1.25.
+- Verified against Base 1.1.15, Pro 1.1.18, and WaaS 1.1.25. The Jetpack and MCP section was verified against Base 1.1.17 and Pro 1.1.19.
 
 ## Related
 
