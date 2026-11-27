@@ -17,7 +17,7 @@ docs.grabwp.com is the public knowledge base for GrabWP (Docusaurus). It is the 
 - One topic = one page. If a topic is already covered, edit that page.
 
 ## Stable links (contract)
-- Every section that the plugin UI, `cs/` or the website may link to gets an explicit id: `## Free trials {#free-trials}`.
+- Every section that the plugin UI, `cs/` or the website may link to gets an explicit id: `## Free trials \{#free-trials}`. (escape the brace; unescaped {#id} fails the MDX build)
 - A published `{#id}` never changes, even if the heading text does.
 - Moving or renaming a page always adds a line to `static/_redirects` (`/old /new 301`). Never delete a published route without a redirect.
 - Plugins link only to anchors listed in the anchor map Emmy keeps. Need a new one: ask Emmy first, the page ships before the link.
