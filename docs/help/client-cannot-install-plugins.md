@@ -55,7 +55,7 @@ Only turn off **Disable Install Plugins & Themes** for site owners you trust com
 - **For all sites:** go to **Tenancy > Settings > Tenant Capabilities**, turn off **Disable Install Plugins & Themes**, and save changes.
 - If a warning says the constant is already defined in `wp-config.php`, remove the manual `define( 'DISALLOW_FILE_MODS', true );` line from `wp-config.php` so GrabWP can manage it.
 
-### Third-party premium plugin licenses on client sites
+### Third-party premium plugin licenses on client sites \{#third-party-premium-plugin-licenses-on-client-sites}
 
 Whether one third-party plugin license covers multiple sites depends on that vendor's licensing terms and domain checks. If the vendor allows multi-site or template use and does not lock activation to a single hostname, activate the plugin on a template site and clone that template when provisioning new sites.
 

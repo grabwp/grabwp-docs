@@ -53,7 +53,7 @@ Details, including **Undo settings removal**, are on [Settings in wp-config.php 
 
 If you use a different VPS management panel, click **Copy diagnostics** under **Support diagnostics** on **Tenancy > Status** and paste it when contacting support.
 
-## Jetpack, MCP and AI connectors on client sites
+## Jetpack, MCP and AI connectors on client sites \{#jetpack-mcp-and-ai-connectors-on-client-sites}
 
 Tested by the GrabWP team on xCloud (OpenLiteSpeed) with Base 1.1.17 and Pro 1.1.19, on both path addresses (`/site/{tenant_id}/`) and subdomain addresses.
 
