@@ -142,7 +142,7 @@ Sepay adds no product ID fields to plans; the amount comes from the plan price.
 
 Xendit adds no product ID fields to plans.
 
-## WooCommerce
+## WooCommerce \{#woocommerce}
 
 **Needs:** Pro + WaaS
 

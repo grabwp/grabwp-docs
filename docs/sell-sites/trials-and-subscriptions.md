@@ -10,7 +10,7 @@ last_verified_date: "2026-10-30"
 
 **Needs:** Pro + WaaS
 
-## Free trials
+## Free trials \{#free-trials}
 
 There are three ways to let customers try before paying.
 
@@ -47,7 +47,7 @@ Create a plan priced at `0` with the same benefits as your paid plan. When the c
 Use the built-in trial when you want card-free signups and automatic pausing at the end. Use a provider trial when you want the card on file from day one.
 :::
 
-## What each status does to the site
+## What each status does to the site \{#what-each-status-does-to-the-site}
 
 | Status (list badge) | Site |
 |---|---|

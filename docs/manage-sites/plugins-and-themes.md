@@ -112,7 +112,7 @@ The safest way to give a client a plugin is to install it for them on the **Exte
 
 If a warning says `Your wp-config.php already sets` the constant, that line in `wp-config.php` wins over these settings. Remove it so GrabWP can control the setting.
 
-### Premium plugin licenses
+### Premium plugin licenses \{#premium-plugin-licenses}
 
 Each site has its own database, so a license key saved on the main site is not shared with other sites. Whether one license covers many sites is up to the plugin vendor. If the vendor allows it, activate the plugin on a template site and clone that template for new sites.
 

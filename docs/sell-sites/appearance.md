@@ -89,7 +89,7 @@ Color and corner changes show in the preview before you save. **Container max-wi
 
 **Reset to defaults** clears your changes and returns every field to the defaults above.
 
-## Languages and right-to-left (RTL)
+## Languages and right-to-left (RTL) \{#languages-and-right-to-left-rtl}
 
 - GrabWP Tenancy, Pro, WaaS and the Sepay add-on include translations for Arabic, Spanish, French, Indonesian, Vietnamese and Simplified Chinese. They follow the WordPress site language.
 - Since WaaS 1.1.20, Arabic and other right-to-left languages get a mirrored layout on the customer dashboard, signup, pricing, the template gallery and preview, the WaaS admin screens and the emails.

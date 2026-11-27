@@ -1,0 +1,242 @@
+# GrabWP docs (docs.grabwp.com)
+This is the index for AI agents; released product behaviour wins over docs, and corrections go to the GrabWP team.
+
+## Before you buy
+
+- https://docs.grabwp.com/before-you-buy : Before you buy
+  Short answer: GrabWP runs many separate WordPress sites from one normal WordPress install. The free plugin creates the sites and sends visitors to the right one. Pro gives each site its own database, plugins, themes and backups, and WaaS lets your customers sign up and pay for a site on their own.
+  Anchors: none
+
+## Manage sites
+
+- https://docs.grabwp.com/manage-sites/install : Install GrabWP (Free and Pro)
+  Short answer: install the free GrabWP Tenancy plugin from Plugins > Add New, then upload GrabWP Tenancy Pro if you bought it. A setup wizard opens and checks your server. When Tenancy > Status shows no warnings, you are ready to create sites.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/first-site : Your first site
+  Short answer: open Tenancy > Add New, leave the defaults and click Create Tenant. GrabWP creates a new WordPress site on the same install, with its own content and admin. Click Open site admin (1-click) to log in to it.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/wp-admin-map : Where things are in wp-admin
+  Short answer: everything for managing sites is under the Tenancy menu on the main site. Per-site tools open from the icons on each row of Tenancy > All Tenants, or from the tab bar at the top of a site's screens. Selling tools are under a separate Waas menu.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/create-and-manage-sites : Create and manage sites
+  Short answer: every client site is a "tenant": a separate WordPress site that runs on the same install as your main site. Create one on Tenancy > Add New, give it an optional Name and Tags, find and filter it on Tenancy > All Tenants, manage your tag list from Manage Tags, change a site's details with the Settings icon, and delete it with the trash icon.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/domains-and-dns : Site addresses, domains and DNS
+  Short answer: a site opens either on a path address such as example.com/site/abc123/, which works right away, or on its own domain such as client.com, which needs DNS pointing at your server. You choose which with Routing mode on Tenancy > Settings > Routing.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/direct-login : Log in to a client site
+  Short answer: on Tenancy > All Tenants, click the Admin icon (dashboard icon) on a site's row. You land in that site's wp-admin, logged in, without typing a password. The link works for 30 minutes; after that, reload the list and click again.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/clone-a-site : Clone a site
+  Short answer: click the Clone Tenant icon on a site's row in Tenancy > All Tenants, pick a target site (or create a new one), and click Clone Tenant. The target gets a copy of the source's content and uploads, with its addresses updated. Everything that was on the target before is replaced.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/backup-and-restore : Backup and restore
+  Short answer: click Backup Tenant on a site's row and then Start Backup to get a ZIP of that site. Set a schedule on Auto Backup Settings, and restore with Restore Tenant from a saved backup or an uploaded ZIP. A restore replaces everything on that site.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/plugins-and-themes : Per-site plugins and themes
+  Short answer: by default every site uses the plugins and themes installed on your main site, and clients cannot install their own. With Pro you can give a site its own plugins and themes, then install and activate them for that site from the Plugins & Themes icon on Tenancy > All Tenants.
+  Anchors: premium-plugin-licenses
+
+- https://docs.grabwp.com/manage-sites/database-options : Database options
+  Short answer: on Free, every site keeps its tables in your main WordPress database, each with its own prefix. Pro adds two choices per site: its own MySQL database, or its own SQLite database file. Set the default on Tenancy > Pro Settings > Database and change it for one site on Add New or Edit.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/site-settings : Site settings and overrides
+  Short answer: Pro adds two tabs to every site. Settings edits that site's Site Title, Tagline and Admin Email from the main site. Overrides lets one site use its own value for a rule from Tenancy > Settings, for example allowing one trusted client to install plugins.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/fix-urls : Fix URLs
+  Short answer: if a site shows broken images or links that point at an old address, click Fix URLs on its row in Tenancy > All Tenants. GrabWP fills in the old and the new address for you; check them and click Fix URLs.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/s3-storage : S3 storage
+  Short answer: by default each site's images and files stay on your server's disk. With Pro you can store them in an S3-compatible bucket instead. Add the bucket on Tenancy > Pro Settings > Storage, test it, then choose S3 for new sites or move existing sites' media with Migrate uploads now.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/scheduled-jobs : Scheduled jobs and WP-Cron
+  Short answer: GrabWP's own timed jobs (backups, renewals, signup retries) run from your main site's WP-Cron, which fires when someone visits the main site. Disable WP-Cron only turns the scheduler off on your sites, not on the main site. For reliable timing, add a server cron job.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/wp-cli : WP-CLI commands
+  Short answer: Pro adds wp grabwp commands to move media between disk and S3, fix addresses in a site's database and manage auto backups. WaaS adds one command to fill in missing subscription dates. Run them from your main WordPress folder.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/licence : Pro license
+  Short answer: paste your GRABWPPRO- key on Tenancy > License and click Activate License. While Pro is active without a valid license, you cannot create or edit sites and Pro updates are not offered.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/free-settings : Free settings
+  Short answer: Tenancy > Settings sets what admins of your sites can do, a few speed and security limits, how visitors reach your sites, and whether site names and tags are shown in wp-admin. Capability and performance settings apply to every site, not to the main site. With Pro you can change them for one site on its Overrides tab.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/pro-settings : Pro settings
+  Short answer: Tenancy > Pro Settings holds the defaults for new sites (isolation and database) and platform-wide options for folders, symlinks, S3 storage, backups and CDN. Changing a default does not change sites you already have.
+  Anchors: none
+
+- https://docs.grabwp.com/manage-sites/where-site-data-lives : Where site data lives
+  Short answer: GrabWP keeps everything about your sites in one data folder, by default wp-content/grabwp-tenancy. Each site has a subfolder named after its ID. Pro adds a config folder and, for SQLite sites, a database folder. Tenancy > Status warns if a folder is missing or in a risky place.
+  Anchors: none
+
+## Sell sites
+
+- https://docs.grabwp.com/sell-sites/how-waas-works : How WaaS works
+  Short answer: with GrabWP WaaS, customers sign up on your site and get their own WordPress website, made as a copy of a template you prepare. You decide the plans, the prices and the payment provider. Each customer manages their site, plan and billing from a customer dashboard.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/set-up-waas : Set up WaaS
+  Short answer: install GrabWP Tenancy, then Pro, then WaaS, and follow the setup wizard. The wizard sets the web address of customer sites, activates your Pro license, picks defaults for new sites, creates your starter template and Free plan, and opens your signup page. Paid plans and payments come after.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/go-live-checklist : Go-live checklist
+  Short answer: before you announce your service, walk through this list on the production site and do one free and one paid test signup in a private browser window. Each item links to the page that explains it.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/plans : Create plans
+  Short answer: plans are what customers choose at signup. WaaS creates three to start with: Free (active) and Basic and Pro (inactive until you set them up). Edit them under Waas > Settings > Plans, set the prices and limits, and tick Active when a paid plan is ready to sell.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/benefits-and-add-ons : Benefits, services and add-ons
+  Short answer: a benefit is something a site gets, like a number of backups or permission to use a custom domain. A service is a paid extra customers can buy on top of their plan. The Add-ons tab is something else: a catalog of GrabWP plugins (such as the Stripe add-on) that you download and install.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/templates : Templates
+  Short answer: a template is one of your sites marked as a starting point. When a customer signs up with it, WaaS copies that site to make theirs. Build the site the way you want every copy to start, then add it under Waas > Templates. Keep the source site: deleting it breaks the template.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/frontend-pages : Frontend pages, shortcodes and blocks
+  Short answer: WaaS needs four public pages: Signup, Dashboard, Templates and Pricing. WaaS creates them when you activate it, and Create/Repair Signup and Dashboard Pages recreates any that go missing. Each page holds one shortcode or one block, which you can place on your own designed pages instead.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/signup-flow : Signup flow
+  Short answer: a signup flow preset decides which steps customers see on your signup page, their order and which steps share a screen. The built-in Default preset works out of the box. To change it, copy it into your own preset under Waas > Settings > Signup Flow, then name that preset on the signup page.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/custom-fields : Custom fields at signup
+  Short answer: the GrabWP Tenancy Custom Fields add-on lets your signup form ask for extra details, such as a phone number or a company name. You define the fields under Waas > Custom Fields, turn on Ask on signup, and each answer is saved either on the customer profile (asked once) or on the subscription (asked for every new site).
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/appearance : Appearance
+  Short answer: Waas > Settings > Appearance sets the colors, corners, width and text size of everything your customers see from WaaS: signup, pricing, login, the template gallery and the customer dashboard. A live preview shows your changes before you save. It does not change the look of customer sites themselves; their theme does that.
+  Anchors: languages-and-right-to-left-rtl
+
+- https://docs.grabwp.com/sell-sites/payments : Payments
+  Short answer: WaaS takes payments through a provider you connect under Waas > Settings > Billing Providers. Polar.sh and WooCommerce are built in; Stripe, Sepay and Xendit need their add-on plugin. You can also start without any provider by offering a Free plan or a built-in free trial.
+  Anchors: woocommerce
+
+- https://docs.grabwp.com/sell-sites/trials-and-subscriptions : Free trials and subscriptions
+  Short answer: every customer site has one subscription with a plan, a status and a renewal date. A site stays online while its subscription is active, in a trial or in its grace period, and pauses when it is suspended or expired. You can offer a free trial with no payment at signup, and you can extend, change or suspend any subscription under Waas > Subscriptions.
+  Anchors: free-trials, what-each-status-does-to-the-site
+
+- https://docs.grabwp.com/sell-sites/client-domains : Client custom domains
+  Short answer: a customer can connect their own domain (for example mybusiness.com) to their site from the customer dashboard, if their plan includes the Custom Domains benefit. You pick how domains connect (Cloudflare SaaS (CNAME) or Direct IP (A record)) under Waas > Settings > General, and you check them under Waas > Domains.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/emails : Emails
+  Short answer: WaaS sends emails to customers (welcome, sign-in code, renewals, trials, suspension) and to you (new signup, payments, failures). Edit them under Waas > Settings > Email. All are on by default. Send mail through an SMTP plugin so it does not land in spam.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/dashboard-and-provisioning : Dashboard, activity log and provisioning
+  Short answer: Waas > Dashboard shows your revenue, subscriber, signup, churn and trial numbers at a glance. Waas > Settings > Activity Log lists what happened and when. Waas > Settings > Provisioning shows site builds still in progress or failed, with Retry and Dismiss buttons.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/waas-settings : WaaS settings
+  Short answer: this page lists the settings on Waas > Settings (page title WaaS Settings) with their exact labels and defaults. Most operators only touch Platform Domain, the four page dropdowns, Auth Mode and Grace Period (days). The other tabs have their own pages, linked below.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/shortcodes-blocks-emails : Shortcodes, blocks and emails
+  Short answer: this is the lookup page for the WaaS building blocks: six shortcodes with every attribute, five editor blocks, the 18 templates on Waas > Settings > Email with their default subjects and tokens, the billing webhook routes and the scheduled jobs. For step-by-step setup, start at Frontend pages or Emails.
+  Anchors: none
+
+- https://docs.grabwp.com/sell-sites/statuses : Statuses
+  Short answer: this page lists every status you meet when selling sites: the subscription badges and what each does to the customer's site, why a site was paused, where a site build is, and the invoice, service, discount and license statuses. Use it to answer "why does my customer see this?".
+  Anchors: none
+
+## Help
+
+- https://docs.grabwp.com/help/getting-help : What to send when you ask for help
+  Short answer: send the exact text you see, the versions of the GrabWP plugins, what the Status page shows, and your web server. With these, support can usually name the cause in one reply.
+  Anchors: none
+
+- https://docs.grabwp.com/help/red-notice-load-php : Notice: "load.php is not included in wp-config.php."
+  Short answer: GrabWP Tenancy needs one loader block inside wp-config.php so it can detect which site a visitor is opening before WordPress starts. Open Tenancy > Status and click Auto Fix on the 1. wp-config.php Loader card, or paste the snippet manually before the stop-editing line.
+  Anchors: none
+
+- https://docs.grabwp.com/help/mu-plugin-or-data-directory-notice : Notices about the MU-plugin or data directory
+  Short answer: GrabWP needs a helper file at wp-content/mu-plugins/mu-grabwp-tenancy.php and a writable data folder at wp-content/grabwp-tenancy. Open Tenancy > Status to use Auto Fix, or grant write permissions to wp-content so GrabWP can create both items.
+  Anchors: none
+
+- https://docs.grabwp.com/help/path-urls-return-404 : Path URLs (/site/...) show 404 or a wrong page
+  Short answer: path URLs such as example.com/site/abc123 need web server rewrite rules before WordPress loads its own permalinks. On Apache or LiteSpeed, use Auto Fix on Tenancy > Status; on Nginx, add the rewrite rules to your server block configuration.
+  Anchors: none
+
+- https://docs.grabwp.com/help/site-login-fails : Site dashboard icon sends me to the login page
+  Short answer: the dashboard login icon uses a signed token that expires after 30 minutes, so first refresh Tenancy > All Tenants and click the link again. If a fresh link still redirects to wp-login.php?grabwp_token_error=1 on a host with object caching (for example xCloud), update GrabWP Tenancy to 1.1.15 or later. On older versions, switch site isolation to Advanced or Custom under Tenancy > Pro Settings > Isolation.
+  Anchors: none
+
+- https://docs.grabwp.com/help/custom-domain-not-working : A custom domain does not work
+  Short answer: a custom domain must both point to your server in DNS and be accepted as a domain alias by your web server or Cloudflare for SaaS setup. Check the exact verification message in the customer dashboard or wp-admin to see whether the issue is DNS, server routing, or plan benefits.
+  Anchors: none
+
+- https://docs.grabwp.com/help/client-cannot-install-plugins : A site cannot install or find plugins and themes
+  Short answer: by default, GrabWP blocks site admins from installing, updating, or deleting plugins and themes (DISALLOW_FILE_MODS) so client sites cannot upload arbitrary PHP code. A platform operator can manage extensions for a site from the main site under Tenancy > All Tenants (Plugins & Themes), or allow file modifications globally or per site.
+  Anchors: third-party-premium-plugin-licenses-on-client-sites
+
+- https://docs.grabwp.com/help/backup-restore-and-save-problems : Backup, restore or "Failed to save Pro settings"
+  Short answer: saving Pro settings and running backups both need write access to the GrabWP data folders on disk. Before switching a site's storage driver between local disk and S3, always click Migrate uploads now first so existing media files are copied over.
+  Anchors: none
+
+- https://docs.grabwp.com/help/pro-license-messages : Pro license messages
+  Short answer: GrabWP Tenancy Pro license keys always start with GRABWPPRO- and are managed under Tenancy > License. If activation fails, check the key format, make sure your server can reach the license API over HTTPS, or manage existing activations in the Customer Portal.
+  Anchors: none
+
+- https://docs.grabwp.com/help/signup-problems : Signup stops or shows an error
+  Short answer: signup errors happen either before checkout (when a site name is reserved or already taken) or after checkout while the site is being built. Check Waas > Settings > Provisioning in wp-admin to inspect the job state, read the Last Error column, and click Retry.
+  Anchors: none
+
+- https://docs.grabwp.com/help/site-shows-temporarily-unavailable : A customer site says "temporarily unavailable"
+  Short answer: when a subscription is suspended, expired, or past its cancellation grace period, GrabWP WaaS replaces the site with a 503 unavailable page. A site owner can renew from the customer dashboard on the main platform site, or an operator can restore the site under Waas > Subscriptions.
+  Anchors: none
+
+- https://docs.grabwp.com/help/emails-or-renewals-not-running : Emails or renewal checks do not run
+  Short answer: GrabWP turns off browser-triggered WP-Cron by default for performance, so scheduled jobs only run when you configure a server cron job to call wp-cron.php. If emails still do not arrive when you click Send test email, configure an SMTP plugin on the main site.
+  Anchors: none
+
+- https://docs.grabwp.com/help/payment-provider-errors : Payment provider errors
+  Short answer: most checkout errors happen when a payment provider add-on is missing its API keys, required currency, or webhook configuration under Waas > Settings > Billing Providers. Check the exact error message below to update your keys, currency settings, or WooCommerce anchor product.
+  Anchors: none
+
+- https://docs.grabwp.com/help/for-your-clients : Help for your clients
+  Short answer: if you created or rented a WordPress site on a platform powered by GrabWP, you manage your billing and domains from the platform customer dashboard and edit your website content in your site's own wp-admin. Each answer below explains how it works.
+  Anchors: none
+
+- https://docs.grabwp.com/help/hosting-requirements : Hosting requirements
+  Short answer: GrabWP needs WordPress 5.0 or newer (WordPress 6.2 or newer for GrabWP Restore), PHP 7.4 or newer, and a standard single-site WordPress install (not WordPress Multisite). You also need write access to wp-config.php, wp-content/mu-plugins, and wp-content/grabwp-tenancy, plus a server cron job and transactional email for WaaS.
+  Anchors: none
+
+- https://docs.grabwp.com/help/web-server-guide : Apache, LiteSpeed and Nginx
+  Short answer: Apache and LiteSpeed read .htaccess files, so GrabWP can write path routing rules automatically. Nginx does not use .htaccess files, so you must add routing rules and any Pro domain symlink rules to your Nginx server block manually.
+  Anchors: none
+
+- https://docs.grabwp.com/help/hosting-with-xcloud : Notes for xCloud hosting
+  Short answer: all guidance on this page is tested by the GrabWP team, which runs the GrabWP demo on an Ubuntu VPS managed by xCloud. When setting up on xCloud, use the multisite toggle trick to configure wildcard subdomains, then let the Hosting setup card on Tenancy > Status remove the leftover Multisite settings. Keep page caching off during setup, and run Base 1.1.15 or later, which fixes path permalinks on OpenLiteSpeed and the shared object cache login loop.
+  Anchors: jetpack-mcp-and-ai-connectors-on-client-sites
+
+- https://docs.grabwp.com/help/glossary : Glossary
+  Short answer: this glossary explains the technical terms, settings, and file names used across GrabWP plugins in plain words, organized alphabetically from A to Z.
+  Anchors: none
+
+- https://docs.grabwp.com/help/notices-and-errors : Notices and error messages
+  Short answer: this page lists the exact notice and error texts shown by GrabWP in wp-admin, on the Status screen, and during signup or login. Match the text you see to find its cause and the troubleshooting guide that fixes it.
+  Anchors: none
+
+- https://docs.grabwp.com/help/release-notes : Release notes
+  Short answer: full version-by-version changelogs live on the GrabWP changelog page and in each plugin's readme.txt file. This page tracks when the documentation hub was verified against plugin releases.
+  Anchors: none
